@@ -1,13 +1,14 @@
 import React from 'react';
-import GlobalStyle from './GlobalSyle';
 import Router from './shared/Router';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <>
-      <GlobalStyle />
+    <QueryClientProvider client={queryClient}>
       <Router />
-    </>
+    </QueryClientProvider>
   );
 };
 
