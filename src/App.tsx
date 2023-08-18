@@ -1,7 +1,14 @@
-import React from "react";
+import React from 'react';
+import GlobalStyle from './GlobalSyle';
+import Router from './shared/Router';
 
 const App = () => {
-  return <div>App</div>;
+  return (
+    <>
+      <GlobalStyle />
+      <Router />
+    </>
+  );
 };
 
 export default App;
