@@ -1,13 +1,12 @@
-import React from "react";
-import { styled } from "styled-components";
-import TopBarMenuContainer from "./TopBarMenuContainer";
+import React from 'react';
+import { styled } from 'styled-components';
+import TopBarMenuContainer from './TopBarMenuContainer';
 
 const Header = () => {
   return (
     <S.Area>
       <S.Container>
         <S.LogoContainer>LOGO</S.LogoContainer>
-
         <TopBarMenuContainer />
       </S.Container>
     </S.Area>
@@ -38,5 +37,5 @@ const S = {
     line-height: 20px;
     position: absolute;
     left: 16px;
-  `,
+  `
 };

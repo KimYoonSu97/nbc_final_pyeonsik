@@ -1,8 +1,9 @@
-import React from "react";
-import { styled } from "styled-components";
+import React from 'react';
+import { styled } from 'styled-components';
 
 const TopBarMenuContainer = () => {
   const boolean = false;
+
   return (
     <S.TopBarMenuContainer>
       <S.TopBarListContainer>
@@ -29,6 +30,7 @@ const TopBarMenuContainer = () => {
 };
 
 export default TopBarMenuContainer;
+
 const S = {
   TopBarMenuContainer: styled.div`
     display: flex;
@@ -70,5 +72,5 @@ const S = {
     width: 20px;
     height: 20px;
     background-color: black;
-  `,
+  `
 };

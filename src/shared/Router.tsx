@@ -1,8 +1,10 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React from 'react';
-import Main from '../pages/Main';
-import Layout from '../layout/Layout';
-import { GlobalStyle } from '../styles/GlobalStyle';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { GlobalStyle } from 'src/styles/GlobalStyle';
+import Layout from 'src/layout/Layout';
+import Main from 'src/pages/Main';
+import Write from 'src/pages/Write';
+import Detail from 'src/pages/Detail';
 
 const Router = () => {
   return (
@@ -11,6 +13,8 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
+          <Route path="/write" element={<Write />} />
+          <Route path="/:id" element={<Detail />} />
         </Route>
       </Routes>
     </BrowserRouter>
