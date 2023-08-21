@@ -4,9 +4,12 @@ import MypageSideBarInfo from './MypageSideBarInfo';
 
 const MypageSideBar = () => {
   return (
-    <S.ContentsBox>
-      <MypageSideBarInfo />
-    </S.ContentsBox>
+    <>
+      <S.ContentsBox>
+        <MypageSideBarInfo />
+      </S.ContentsBox>
+      <S.ContentsBox>버튼탭</S.ContentsBox>
+    </>
   );
 };
 
@@ -16,6 +19,7 @@ const S = {
   ContentsBox: styled.div`
     background: white;
     border-radius: 10px;
+    margin-bottom: 20px;
   `,
 
   ProfileArea: styled.div`

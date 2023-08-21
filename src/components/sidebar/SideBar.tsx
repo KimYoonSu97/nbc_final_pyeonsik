@@ -33,7 +33,6 @@ export default SideBar;
 const S = {
   Container: styled.div`
     margin-left: auto;
-    background-color: royalblue;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 50px - 50px - 31px);
