@@ -1,16 +1,21 @@
-import React from "react";
-import { styled } from "styled-components";
-import TopBarMenuContainer from "./TopBarMenuContainer";
+import React from 'react';
+import { styled } from 'styled-components';
+import TopBarMenuContainer from './TopBarMenuContainer';
+import BoardSearchContainer from './BoardSearchContainer';
 
 const Header = () => {
   return (
-    <S.Area>
-      <S.Container>
-        <S.LogoContainer>LOGO</S.LogoContainer>
-
-        <TopBarMenuContainer />
-      </S.Container>
-    </S.Area>
+    <>
+      <S.Area>
+        <S.UpperContainer>
+          <S.LogoContainer>LOGO</S.LogoContainer>
+          <TopBarMenuContainer />
+        </S.UpperContainer>
+        <S.LowerContainer>
+          <BoardSearchContainer></BoardSearchContainer>
+        </S.LowerContainer>
+      </S.Area>
+    </>
   );
 };
 
@@ -20,11 +25,21 @@ const S = {
   Area: styled.div`
     background-color: royalblue;
   `,
-  Container: styled.div`
+  UpperContainer: styled.div`
     width: 1280px;
     height: 56px;
     margin: 0 auto;
     background-color: orange;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    position: relative;
+  `,
+  LowerContainer: styled.div`
+    width: 1280px;
+    height: 50px;
+    background-color: aqua;
+    margin: 0 auto;
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -38,5 +53,5 @@ const S = {
     line-height: 20px;
     position: absolute;
     left: 16px;
-  `,
+  `
 };
