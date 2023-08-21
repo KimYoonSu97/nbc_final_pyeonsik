@@ -22,14 +22,12 @@ const Header = () => {
 export default Header;
 
 const S = {
-  Area: styled.div`
-    background-color: royalblue;
-  `,
+  Area: styled.div``,
   UpperContainer: styled.div`
     width: 1280px;
     height: 56px;
     margin: 0 auto;
-    background-color: orange;
+
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -38,7 +36,7 @@ const S = {
   LowerContainer: styled.div`
     width: 1280px;
     height: 50px;
-    background-color: aqua;
+
     margin: 0 auto;
     display: flex;
     /* justify-content: center; */
