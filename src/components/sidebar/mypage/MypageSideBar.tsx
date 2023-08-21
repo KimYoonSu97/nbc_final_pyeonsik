@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import MypageSideBarInfo from './MypageSideBarInfo';
+import MypageSideBarButtonTab from './MypageSideBarButtonTab';
 
 const MypageSideBar = () => {
   return (
@@ -8,7 +9,9 @@ const MypageSideBar = () => {
       <S.ContentsBox>
         <MypageSideBarInfo />
       </S.ContentsBox>
-      <S.ContentsBox>버튼탭</S.ContentsBox>
+      <S.ContentsBox>
+        <MypageSideBarButtonTab />
+      </S.ContentsBox>
     </>
   );
 };

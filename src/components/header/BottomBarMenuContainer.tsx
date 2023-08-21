@@ -9,10 +9,6 @@ const BottomBarMenuContainer = () => {
         <S.BoardButton>편식조합</S.BoardButton>
         <S.BoardButton>그르르갉</S.BoardButton>
       </S.ButtonArea>
-      <S.QuickButtonArea>
-        <S.QuickPostButton>나만의 편식조합 공유하기</S.QuickPostButton>
-        <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
-      </S.QuickButtonArea>
     </>
   );
 };
@@ -29,7 +25,10 @@ const S = {
     align-items: center;
     height: 50px;
     padding: 3px 18px;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid white;
+    &:hover {
+      border-bottom: 2px solid #000;
+    }
   `,
   QuickButtonArea: styled.div`
     display: flex;
