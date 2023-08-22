@@ -5,20 +5,24 @@ import MypageSideBarButtonTab from './MypageSideBarButtonTab';
 
 const MypageSideBar = () => {
   return (
-    <>
+    <S.Container>
       <S.ContentsBox>
         <MypageSideBarInfo />
       </S.ContentsBox>
       <S.ContentsBox>
         <MypageSideBarButtonTab />
       </S.ContentsBox>
-    </>
+    </S.Container>
   );
 };
 
 export default MypageSideBar;
 
 const S = {
+  Container: styled.div`
+    position: fixed;
+    right: calc(((100vw - 1280px) / 2) + 16px);
+  `,
   ContentsBox: styled.div`
     background: white;
     border-radius: 10px;
@@ -28,10 +32,8 @@ const S = {
   ProfileArea: styled.div`
     display: flex;
     align-items: center;
-
     gap: 12px;
-    margin: 24px 16px 32px 16px;
-    background-color: royalblue;
+    padding: 24px 16px 32px 16px;
   `,
   ProfileImg: styled.div`
     width: 60px;

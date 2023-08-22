@@ -8,12 +8,14 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <S.Container>
-        <S.ContentsArea>
-          <Outlet />
-        </S.ContentsArea>
-        <SideBar />
-      </S.Container>
+      <S.BottomContainer>
+        <S.Container>
+          <S.ContentsArea>
+            <Outlet />
+          </S.ContentsArea>
+          <SideBar />
+        </S.Container>
+      </S.BottomContainer>
     </>
   );
 };
@@ -29,12 +31,15 @@ const S = {
     display: flex;
     gap: 62px;
   `,
-  ContentsArea: styled.div`
-    width: 100%;
-    height: calc(100vh - 50px - 50px - 31px);
+  BottomContainer: styled.div`
+    background: var(--background, #f6f7f9);
+    height: calc(100vh - 50px - 56px);
     overflow-y: scroll;
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
       display: none;
     }
+  `,
+  ContentsArea: styled.div`
+    width: 890px;
   `
 };

@@ -9,8 +9,10 @@ export default Mypage;
 
 const S = {
   ContentsBox: styled.div`
-    background: #fff;
-    height: 424px;
+    background: orange;
+    height: 4000px;
+
+    /* height: 424px; */
     border-radius: 10px;
   `
 };
