@@ -41,5 +41,9 @@ const S = {
   `,
   ContentsArea: styled.div`
     width: 890px;
+  `,
+  PositionBox: styled.div`
+    width: 296px;
+    height: 10px;
   `
 };

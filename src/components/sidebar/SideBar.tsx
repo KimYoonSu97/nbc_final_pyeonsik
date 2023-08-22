@@ -33,6 +33,7 @@ export default SideBar;
 
 const S = {
   Container: styled.div`
+    /* width: 296px; */
     margin-left: auto;
     display: flex;
     flex-direction: column;

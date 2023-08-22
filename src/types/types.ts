@@ -12,3 +12,8 @@ export interface Post {
 export interface RankProps {
   isFirst?: boolean;
 }
+
+export interface RenderComponents {
+  type: string;
+  component: JSX.Element;
+}

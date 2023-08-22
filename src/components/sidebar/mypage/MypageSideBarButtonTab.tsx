@@ -1,10 +1,18 @@
+import { useAtom } from 'jotai';
+import { myPageTabAtom } from 'src/globalState/jotai';
 import React from 'react';
 import styled from 'styled-components';
 
 const MypageSideBarButtonTab = () => {
+  const [MyPageTap, setMyPageTap] = useAtom(myPageTabAtom);
+
   return (
     <S.Container>
-      <S.TapButton>
+      <S.TapButton
+        onClick={() => {
+          setMyPageTap('1');
+        }}
+      >
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />
@@ -16,7 +24,11 @@ const MypageSideBarButtonTab = () => {
         </S.Icon>
         프로필
       </S.TapButton>
-      <S.TapButton>
+      <S.TapButton
+        onClick={() => {
+          setMyPageTap('2');
+        }}
+      >
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />
@@ -28,7 +40,11 @@ const MypageSideBarButtonTab = () => {
         </S.Icon>
         보관함
       </S.TapButton>
-      <S.TapButton>
+      <S.TapButton
+        onClick={() => {
+          setMyPageTap('3');
+        }}
+      >
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />
@@ -58,13 +74,6 @@ const MypageSideBarButtonTab = () => {
 
 export default MypageSideBarButtonTab;
 
-const Icon = {
-  Bell: styled.svg`
-    path {
-    }
-  `
-};
-
 const S = {
   Container: styled.div`
     display: flex;
@@ -85,6 +94,7 @@ const S = {
     font-weight: 400;
     line-height: 16px;
     border-radius: 10px;
+    cursor: pointer;
     &:hover {
       background: #efefef;
     }
