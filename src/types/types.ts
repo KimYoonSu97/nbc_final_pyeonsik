@@ -7,6 +7,7 @@ export interface Post {
   img: string;
   body: string;
   likes: string;
+  likesCount: number;
 }
 
 export interface RankProps {
@@ -16,4 +17,9 @@ export interface RankProps {
 export interface RenderComponents {
   type: string;
   component: JSX.Element;
+}
+
+export interface Likes {
+  id: string;
+  likes: string;
 }
