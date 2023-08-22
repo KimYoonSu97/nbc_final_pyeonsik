@@ -1,36 +1,24 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
-import { addPost } from '../api/posts';
 
 const PostWriteForm = () => {
   const navigate = useNavigate();
+  const { addPostMutation } = usePost();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-
   const postRef = useRef<HTMLInputElement>(null);
-
-  const queryClient = useQueryClient();
-
-  const diaryMutation = useMutation(addPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Post'] });
-    }
-  });
 
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const newPost = {
       title,
       body
     };
-
-    diaryMutation.mutate(newPost);
-
+    addPostMutation.mutate(newPost);
     navigate(`/`);
   };
 

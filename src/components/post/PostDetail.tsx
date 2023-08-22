@@ -1,23 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Post } from 'src/types/types';
-import { deletePost, getPost } from '../api/posts';
+import { getPost } from '../api/posts';
+import usePost from 'src/hooks/usePost';
 
 const PostDetail = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
   const { id } = useParams<string>();
-
-  const deleteMutation = useMutation(deletePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Post'] });
-    }
-  });
+  const navigate = useNavigate();
+  const { deletePostMutation } = usePost();
 
   // read
   const { isLoading, data } = useQuery({ queryKey: ['Post'], queryFn: () => getPost(id!) });
-
   if (isLoading) {
     return <p>Loading…</p>;
   }
@@ -27,12 +21,11 @@ const PostDetail = () => {
   if (data?.data.length === 0) {
     return <p>none</p>;
   }
-
   const post = data?.data[0] as Post;
 
   // delete
   const clickDelete = (id: string) => {
-    deleteMutation.mutate(id);
+    deletePostMutation.mutate(id);
     navigate('/');
   };
 
