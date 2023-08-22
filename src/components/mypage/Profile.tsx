@@ -7,13 +7,11 @@ const Profile = () => {
   const [user, setUser] = useState<any>(null);
   //닉네임 //
   const [nickname, setNickname] = useState<any>();
-
   const [isRender, setIsRender] = useState(false);
 
   //그럼 이 함수랑 useEffect도 없어도 됨...
   const fetchUserData = async () => {
     //로그인한 유저 정보 필요함
-
     const id = 'be029d54-dc65-4332-84dc-10213d299c53';
     const { data, error } = await supabase.from('users').select('*').single();
     // console.log(data);

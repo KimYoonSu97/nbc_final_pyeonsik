@@ -1,11 +1,12 @@
 import React, { ReactComponentElement, ReactElement } from 'react';
+import { useAtom } from 'jotai';
+import { myPageTabAtom } from 'src/globalState/jotai';
+import { RenderComponents } from 'src/types/types';
+import { styled } from 'styled-components';
+
 import MyAchievement from 'src/components/mypage/MyAchievement';
 import MyPost from 'src/components/mypage/MyPost';
 import Profile from 'src/components/mypage/Profile';
-import { myPageTabAtom } from 'src/globalState/jotai';
-import { styled } from 'styled-components';
-import { useAtom } from 'jotai';
-import { RenderComponents } from 'src/types/types';
 
 const renderPage = [
   {
