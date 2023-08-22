@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import { myPagePostAtom } from 'src/globalState/jotai';
 import MyPostCard from './MyPostCard';
 import _ from 'lodash';
-import { getMyBookMarkById } from '../api/posts';
+import { getMyBookMarkById } from '../../api/posts';
 import { useQuery } from '@tanstack/react-query';
 
 interface BookMark {

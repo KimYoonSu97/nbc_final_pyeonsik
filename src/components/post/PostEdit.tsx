@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getPosts } from '../api/posts';
+import { getPosts } from '../../api/posts';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
