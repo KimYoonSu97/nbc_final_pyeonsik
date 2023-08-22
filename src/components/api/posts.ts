@@ -6,7 +6,18 @@ const getPosts = async () => {
   return response;
 };
 
-// post = posts[0]
+const getMyPostsById = async (id: string) => {
+  const response = await supabase.from('posts').select('*').eq('userId', id);
+  return response;
+};
+
+const getMyBookMarkById = async (id: string) => {
+  console.log(id);
+  const response = await supabase.from('posts').select('*');
+  console.log(response);
+  return response;
+};
+
 const getPost = async (id: string) => {
   const response = await supabase.from('posts').select('*').eq('id', id);
   return response;
@@ -24,4 +35,4 @@ const deletePost = async (id: string) => {
   await supabase.from('posts').delete().eq('id', id);
 };
 
-export { getPosts, getPost, addPost, updatePost, deletePost };
+export { getPosts, getMyPostsById, getMyBookMarkById, getPost, addPost, updatePost, deletePost };
