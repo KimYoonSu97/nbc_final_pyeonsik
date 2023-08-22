@@ -60,7 +60,7 @@ const S = {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 24px 16px 32px 16px;
+    padding: 24px 16px 32px 16px;
   `,
   ProfileImg: styled.div`
     width: 60px;

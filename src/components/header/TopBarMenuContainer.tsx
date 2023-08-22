@@ -5,11 +5,12 @@ const TopBarMenuContainer = () => {
   const boolean = true;
   return (
     <S.TopBarMenuContainer>
-      <S.TopBarListContainer>
-        <S.TopBarMenu>제품 요청</S.TopBarMenu>
-        <S.TopBarMenu>행사 목록</S.TopBarMenu>
-        {boolean ? <S.TopBarMenu>마이페이지</S.TopBarMenu> : <></>}
-      </S.TopBarListContainer>
+      <S.QuickButtonArea>
+        <S.QuickPostButton>나만의 편식조합 공유하기</S.QuickPostButton>
+        <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
+        <S.QuickPostButton>행사 제품</S.QuickPostButton>
+      </S.QuickButtonArea>
+      {/* {boolean && <S.TopBarMenu>마이페이지</S.TopBarMenu>} */}
       <S.TopBarLogContainer $logged={boolean}>
         {/* 로그인 전 후 분기 */}
         {boolean ? (
@@ -54,12 +55,26 @@ const S = {
   TopBarMenuContainer: styled.div`
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 24px;
+
     position: absolute;
     right: 16px;
   `,
   TopBarListContainer: styled.ul`
     display: flex;
+  `,
+  QuickButtonArea: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  `,
+  QuickPostButton: styled.div`
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    background-color: #f5f5f5;
+    padding: 3px 18px;
+    height: 34px;
   `,
   TopBarMenu: styled.li`
     padding: 5px 13px;
@@ -77,6 +92,10 @@ const S = {
     align-items: center;
   `,
   TopBarLogButton: styled.li`
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    border-radius: 4px;
+
     display: flex;
     justify-content: center;
     align-items: center;

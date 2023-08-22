@@ -91,7 +91,10 @@ export const SideFotter = styled.div`
 `;
 
 export const FotterContainer = styled.div`
+  position: fixed;
+  right: calc(((100vw - 1280px) / 2) + 16px);
   width: 296px;
+  bottom: 0px;
   border-top: 1px solid black;
   margin-top: auto;
 `;
