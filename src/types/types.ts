@@ -1,3 +1,14 @@
+// input custom hook
+export interface InputProps {
+  type: string;
+  name: string;
+  id?: string;
+  title: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  autoFocus?: boolean;
+}
+
 export interface Post {
   id: string;
   created_at: string;
@@ -12,6 +23,7 @@ export interface Post {
   likes: string;
 }
 
+// 게시글 작성할 때 사용하는 임시 type
 export interface NewPost {
   // orgPostId: string;
   // postCategory: string;

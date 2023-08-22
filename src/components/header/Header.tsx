@@ -2,20 +2,21 @@ import React from 'react';
 import { styled } from 'styled-components';
 import TopBarMenuContainer from './TopBarMenuContainer';
 import BoardSearchContainer from './BoardSearchContainer';
+import { useNavigate } from 'react-router';
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <S.Area>
-        <S.UpperContainer>
-          <S.LogoContainer>LOGO</S.LogoContainer>
-          <TopBarMenuContainer />
-        </S.UpperContainer>
-        <S.LowerContainer>
-          <BoardSearchContainer></BoardSearchContainer>
-        </S.LowerContainer>
-      </S.Area>
-    </>
+    <S.Area>
+      <S.UpperContainer>
+        <S.LogoContainer onClick={() => navigate('/')}>LOGO</S.LogoContainer>
+        <TopBarMenuContainer />
+      </S.UpperContainer>
+      <S.LowerContainer>
+        <BoardSearchContainer></BoardSearchContainer>
+      </S.LowerContainer>
+    </S.Area>
   );
 };
 

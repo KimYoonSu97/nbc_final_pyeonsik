@@ -1,6 +1,6 @@
+import React from 'react';
 import { useAtom } from 'jotai';
 import { myPageTabAtom } from 'src/globalState/jotai';
-import React from 'react';
 import styled from 'styled-components';
 
 const MypageSideBarButtonTab = () => {

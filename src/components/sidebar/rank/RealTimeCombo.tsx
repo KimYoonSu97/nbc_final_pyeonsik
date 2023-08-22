@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-
 import { Post } from 'src/types/types';
+import { postsAtom } from '../FetchPosts';
 import {
   RealTimeContainer,
   PostContainer,
@@ -13,7 +13,6 @@ import {
   HeadTitle,
   Rank
 } from '../StyledSideBar';
-import { postsAtom } from '../FetchPosts';
 
 const RealTimeCombo = () => {
   //Jotai의 useAtom을 사용해서 전역선언한 Posts데이터를 가져오기

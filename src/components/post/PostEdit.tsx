@@ -1,73 +1,41 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PostWriteInput from './PostWriteInput';
-import supabase from 'src/lib/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '../api/posts';
+import usePost from 'src/hooks/usePost';
+import PostWriteInput from './PostWriteInput';
 
 const PostEditForm = () => {
   const { id } = useParams<string>();
   const navigate = useNavigate();
+  const { updatePostMutation } = usePost();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-
   const postRef = useRef<HTMLInputElement>(null);
 
   // read
-  // const { isLoading, data } = useQuery({ queryKey: ['Post'], queryFn: () => getPosts() });
+  const { isLoading, data } = useQuery({ queryKey: ['Post'], queryFn: () => getPosts() });
+  if (isLoading) {
+    return <p>Loading…</p>;
+  }
+  if (data?.error) {
+    return <p>Error</p>;
+  }
+  if (data?.data.length === 0) {
+    return <p>none</p>;
+  }
+  const post = data?.data.find((post) => post.id === id);
 
-  // if (isLoading) {
-  //   return <p>Loading…</p>;
-  // }
-  // if (data?.error) {
-  //   return <p>Error</p>;
-  // }
-  // if (data?.data.length === 0) {
-  //   return <p>none</p>;
-  // }
-
-  // const posts = data?.data;
-  // const post = posts?.find((post) => post.id === id);
-
-  // setTitle(post.title);
-  // setTitle(post.body);
-
-  useEffect(() => {
-    const getPost = async () => {
-      const { data, error } = await supabase.from('posts').select('*').eq('id', `${id}`);
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        setTitle(data[0].title);
-        setBody(data[0].body);
-      }
-      console.log(data);
-    };
-    getPost();
-  }, []);
-
+  // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const editPost = {
+      id: post.id,
       title,
-      body: body
+      body
     };
-
-    // supabase
-    const addPost = async () => {
-      const { data, error } = await supabase.from('posts').update(editPost).eq('id', `${id}`).select();
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        console.log(data);
-      }
-    };
-    addPost();
-
+    updatePostMutation.mutate(editPost);
     navigate(`/detail/${id}`);
   };
 

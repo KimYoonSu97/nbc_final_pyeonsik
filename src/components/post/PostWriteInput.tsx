@@ -1,14 +1,5 @@
 import React, { forwardRef, Ref } from 'react';
-
-interface InputProps {
-  type: string;
-  name: string;
-  id?: string;
-  title: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  autoFocus?: boolean;
-}
+import { InputProps } from 'src/types/types';
 
 const PostWriteInput = (
   { type, name, id = name, title, value, onChange, autoFocus }: InputProps,
