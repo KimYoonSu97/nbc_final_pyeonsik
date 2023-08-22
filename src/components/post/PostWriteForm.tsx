@@ -1,35 +1,37 @@
 import React from 'react';
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import PostWriteInput from './PostWriteInput';
-import supabase from 'src/lib/supabaseClient';
+import { addPost } from '../api/posts';
 
 const PostWriteForm = () => {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
 
   const postRef = useRef<HTMLInputElement>(null);
+
+  const queryClient = useQueryClient();
+
+  const diaryMutation = useMutation(addPost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Post'] });
+    }
+  });
 
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newPost = {
       title,
-      body: body
+      body
     };
 
-    const addPost = async () => {
-      const { data, error } = await supabase.from('posts').insert([newPost]).select();
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        console.log(data);
-      }
-    };
-    addPost();
+    diaryMutation.mutate(newPost);
 
-    setTitle('');
-    setBody('');
+    navigate(`/`);
   };
 
   return (

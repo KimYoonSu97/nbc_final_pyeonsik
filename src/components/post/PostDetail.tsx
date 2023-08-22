@@ -1,41 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import supabase from 'src/lib/supabaseClient';
-
-interface Post {
-  id: string;
-  title: string;
-  body: string;
-}
+import { Post } from 'src/types/types';
+import { deletePost, getPost } from '../api/posts';
 
 const PostDetail = () => {
-  const { id } = useParams<string>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const [post, setPost] = useState<Post>();
+  const { id } = useParams<string>();
 
-  useEffect(() => {
-    const getPost = async () => {
-      const { data, error } = await supabase.from('posts').select('*').eq('id', `${id}`);
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        setPost(data[0]);
-      }
-      console.log(data);
-    };
-    getPost();
-  }, []);
+  const deleteMutation = useMutation(deletePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Post'] });
+    }
+  });
 
-  const clickDelete = () => {
-    const deletePost = async () => {
-      const { error } = await supabase.from('posts').delete().eq('id', `${id}`);
-      if (error) {
-        console.log(error);
-      }
-    };
-    deletePost();
+  // read
+  const { isLoading, data } = useQuery({ queryKey: ['Post'], queryFn: () => getPost(id!) });
+
+  if (isLoading) {
+    return <p>Loading…</p>;
+  }
+  if (data?.error) {
+    return <p>Error</p>;
+  }
+  if (data?.data.length === 0) {
+    return <p>none</p>;
+  }
+
+  const post = data?.data[0] as Post;
+
+  // delete
+  const clickDelete = (id: string) => {
+    deleteMutation.mutate(id);
+    navigate('/');
   };
 
   const clickEdit = () => {
@@ -44,9 +42,9 @@ const PostDetail = () => {
 
   return (
     <div>
-      <div>{post?.title}</div>
-      <div>{post?.body}</div>
-      <button onClick={clickDelete}>delete</button>
+      <div>{post.title}</div>
+      <div>{post.body}</div>
+      <button onClick={() => clickDelete(post.id)}>delete</button>
       <button onClick={clickEdit}>edit</button>
     </div>
   );

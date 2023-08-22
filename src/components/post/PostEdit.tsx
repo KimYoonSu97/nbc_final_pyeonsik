@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import supabase from 'src/lib/supabaseClient';
 import PostWriteInput from './PostWriteInput';
+import supabase from 'src/lib/supabaseClient';
+import { useQuery } from '@tanstack/react-query';
+import { getPosts } from '../api/posts';
 
-const PostEdit = () => {
+const PostEditForm = () => {
   const { id } = useParams<string>();
   const navigate = useNavigate();
 
@@ -11,6 +13,25 @@ const PostEdit = () => {
   const [body, setBody] = useState<string>('');
 
   const postRef = useRef<HTMLInputElement>(null);
+
+  // read
+  // const { isLoading, data } = useQuery({ queryKey: ['Post'], queryFn: () => getPosts() });
+
+  // if (isLoading) {
+  //   return <p>Loading…</p>;
+  // }
+  // if (data?.error) {
+  //   return <p>Error</p>;
+  // }
+  // if (data?.data.length === 0) {
+  //   return <p>none</p>;
+  // }
+
+  // const posts = data?.data;
+  // const post = posts?.find((post) => post.id === id);
+
+  // setTitle(post.title);
+  // setTitle(post.body);
 
   useEffect(() => {
     const getPost = async () => {
@@ -35,6 +56,7 @@ const PostEdit = () => {
       body: body
     };
 
+    // supabase
     const addPost = async () => {
       const { data, error } = await supabase.from('posts').update(editPost).eq('id', `${id}`).select();
       if (error) {
@@ -45,9 +67,6 @@ const PostEdit = () => {
       }
     };
     addPost();
-
-    setTitle('');
-    setBody('');
 
     navigate(`/detail/${id}`);
   };
@@ -86,4 +105,4 @@ const PostEdit = () => {
   );
 };
 
-export default PostEdit;
+export default PostEditForm;
