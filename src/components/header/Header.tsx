@@ -1,15 +1,21 @@
-import React from "react";
-import { styled } from "styled-components";
-import TopBarMenuContainer from "./TopBarMenuContainer";
+import React from 'react';
+import { styled } from 'styled-components';
+import TopBarMenuContainer from './TopBarMenuContainer';
+import BoardSearchContainer from './BoardSearchContainer';
+import { useNavigate } from 'react-router';
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <S.Area>
-      <S.Container>
-        <S.LogoContainer>LOGO</S.LogoContainer>
-
+      <S.UpperContainer>
+        <S.LogoContainer onClick={() => navigate('/')}>LOGO</S.LogoContainer>
         <TopBarMenuContainer />
-      </S.Container>
+      </S.UpperContainer>
+      <S.LowerContainer>
+        <BoardSearchContainer></BoardSearchContainer>
+      </S.LowerContainer>
     </S.Area>
   );
 };
@@ -17,14 +23,22 @@ const Header = () => {
 export default Header;
 
 const S = {
-  Area: styled.div`
-    background-color: royalblue;
-  `,
-  Container: styled.div`
+  Area: styled.div``,
+  UpperContainer: styled.div`
     width: 1280px;
     height: 56px;
     margin: 0 auto;
-    background-color: orange;
+
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    position: relative;
+  `,
+  LowerContainer: styled.div`
+    width: 1280px;
+    height: 50px;
+
+    margin: 0 auto;
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -38,5 +52,5 @@ const S = {
     line-height: 20px;
     position: absolute;
     left: 16px;
-  `,
+  `
 };
