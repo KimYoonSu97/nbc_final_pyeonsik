@@ -3,18 +3,20 @@ import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 
 const Profile = () => {
+  //이 유저나 기타의 것들도 프라이빗 라우터가 있으면 그냥 거기서 받아다 쓰면 될듯..?
   const [user, setUser] = useState<any>(null);
   //닉네임 //
   const [nickname, setNickname] = useState<any>();
 
   const [isRender, setIsRender] = useState(false);
 
+  //그럼 이 함수랑 useEffect도 없어도 됨...
   const fetchUserData = async () => {
     //로그인한 유저 정보 필요함
 
     const id = 'be029d54-dc65-4332-84dc-10213d299c53';
     const { data, error } = await supabase.from('users').select('*').single();
-    console.log(data);
+    // console.log(data);
     setNickname(data.nickname);
     setUser(data);
     setIsRender(!isRender);
@@ -22,10 +24,6 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserData();
-    console.log('내정보 컴포넌트 마운트됨');
-    return () => {
-      console.log('내정보 컴포넌트 언마운트됨');
-    };
   }, []);
 
   return (
@@ -37,7 +35,7 @@ const Profile = () => {
           </S.SubjectArea>
           <S.InfoArea>
             <S.ProfileBox>
-              <S.ProfileImgArea></S.ProfileImgArea>
+              <S.ProfileImgArea $url={user?.profileImg}></S.ProfileImgArea>
             </S.ProfileBox>
             <S.InfoBox>
               <S.InputWrapper>
@@ -82,6 +80,10 @@ const Profile = () => {
 
 export default Profile;
 
+interface ProfileImgProps {
+  $url: string;
+}
+
 const S = {
   Container: styled.div`
     width: 100%;
@@ -102,12 +104,20 @@ const S = {
     /* background-color: royalblue; */
   `,
   ProfileBox: styled.div``,
-  ProfileImgArea: styled.div`
+  ProfileImgArea: styled.div<ProfileImgProps>`
+    border: solid 1px black;
     width: 80px;
     height: 80px;
-    background: #d9d9d9;
     border-radius: 100px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(${(props) => props.$url});
+    background-position: center;
+    background-size: contain;
   `,
+  ProfileImg: styled.img``,
   InfoBox: styled.div``,
   InputWrapper: styled.div``,
   InfoCaption: styled.div`
