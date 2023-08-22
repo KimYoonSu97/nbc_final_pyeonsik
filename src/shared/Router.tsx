@@ -1,21 +1,22 @@
-import React from 'react'
-import { BrowserRouter,Routes,Route } from 'react-router-dom'
-import Home from '../pages/Home'
-import Sign from '../pages/Sign'
-import Detail from '../pages/Detail'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import Main from '../pages/Main';
+import Layout from '../layout/Layout';
+import { GlobalStyle } from '../styles/GlobalStyle';
+import Detail from 'src/pages/Detail';
 
 const Router = () => {
   return (
-    <>
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<Home/>}></Route>
-                <Route path='/sign' element={<Sign/>}></Route>
-                <Route path='/detail/:postId' element={<Detail/>}></Route>
-            </Routes>
-        </BrowserRouter>
-    </>
-  )
-}
+    <BrowserRouter>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Main />} />
+          <Route path='/detail/:postId' element={<Detail/>}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-export default Router
+export default Router;
