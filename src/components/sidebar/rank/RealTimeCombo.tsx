@@ -12,8 +12,8 @@ import {
   ImageWrapper,
   HeadTitle,
   Rank
-} from './StyledSideBar';
-import { postsAtom } from './FetchPosts';
+} from '../StyledSideBar';
+import { postsAtom } from '../FetchPosts';
 
 const RealTimeCombo = () => {
   //Jotai의 useAtom을 사용해서 전역선언한 Posts데이터를 가져오기

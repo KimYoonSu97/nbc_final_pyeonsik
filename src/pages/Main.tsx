@@ -1,12 +1,7 @@
 import React from 'react';
-import SideBar from 'src/components/sidebar/SideBar';
 
 const Main = () => {
-  return (
-    <div>
-      <SideBar />
-    </div>
-  );
+  return <div style={{ height: '4240px', width: '200px' }}>메인컴포넌트</div>;
 };
 
 export default Main;
