@@ -44,13 +44,6 @@ const TopBarMenuContainer = () => {
 
 export default TopBarMenuContainer;
 
-const Icon = {
-  Bell: styled.svg`
-    path {
-    }
-  `
-};
-
 const S = {
   TopBarMenuContainer: styled.div`
     display: flex;

@@ -1,8 +1,11 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React from 'react';
-import Main from '../pages/Main';
-import Layout from '../layout/Layout';
-import { GlobalStyle } from '../styles/GlobalStyle';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { GlobalStyle } from 'src/styles/GlobalStyle';
+import Layout from 'src/layout/Layout';
+import Main from 'src/pages/Main';
+import Write from 'src/pages/Write';
+import Detail from 'src/pages/Detail';
+import Edit from 'src/pages/Edit';
 import Mypage from 'src/pages/Mypage';
 
 const Router = () => {
@@ -12,6 +15,9 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
+          <Route path="/write" element={<Write />} />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/edit/:id" element={<Edit />} />
           <Route path="/mypage" element={<Mypage />} />
         </Route>
       </Routes>
