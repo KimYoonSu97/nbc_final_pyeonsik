@@ -6,6 +6,8 @@ import supabase from 'src/lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
 import { User } from '@supabase/supabase-js';
+import { useMutation } from '@tanstack/react-query';
+import { UserType } from 'src/types/types';
 
 export const userAtom = atom<User | null>(null);
 
@@ -14,6 +16,12 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [userData, setUserData] = useState<Omit<UserType, 'nickname'>>({
+    uid: '',
+    email: '',
+    password: '',
+    profileimg: null
+  });
   const navigate = useNavigate();
 
   // Atom 생성
@@ -26,6 +34,22 @@ const Login = () => {
   const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+
+  const loginService = async (userData: Omit<UserType, 'nickname' | 'profileImg'>) => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: userData.email,
+        password: userData.password
+      });
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   const handleLogin = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({

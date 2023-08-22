@@ -12,8 +12,8 @@ import {
   ImageWrapper,
   HeadTitle,
   Rank
-} from './StyledSideBar';
-import { postsAtom } from './FetchPosts';
+} from '../StyledSideBar';
+import { postsAtom } from '../FetchPosts';
 
 const RealTimeCombo = () => {
   //Jotai의 useAtom을 사용해서 전역선언한 Posts데이터를 가져오기
@@ -21,10 +21,10 @@ const RealTimeCombo = () => {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
   //가져온 포스트 목록에서 likes의 길이 순으로 정렬해서 좋아요 순 5개까지 디스플레이
-  useEffect(() => {
-    const sortedPosts = [...posts].sort((a, b) => b.likes.length - a.likes.length).slice(0, 5);
-    setFilteredPosts(sortedPosts);
-  }, [posts]);
+  // useEffect(() => {
+  //   const sortedPosts = [...posts].sort((a, b) => b.likes.length - a.likes.length).slice(0, 5);
+  //   setFilteredPosts(sortedPosts);
+  // }, [posts]);
 
   return (
     <RealTimeContainer>

@@ -1,12 +1,30 @@
 export interface Post {
-  id: number;
+  id: string;
   created_at: string;
-  orgPostid: string;
-  postCategory: String;
+  orgPostId: string;
+  postCategory: string;
   title: string;
   img: string;
   body: string;
+  product: [];
+  bookmark: [];
+  userId: string;
   likes: string;
+}
+
+export interface NewPost {
+  // orgPostId: string;
+  // postCategory: string;
+  title: string;
+  // img: string;
+  body: string;
+  // userId: string;
+}
+
+export interface EditPost {
+  id: string;
+  title: string;
+  body: string;
 }
 
 export interface RankProps {
@@ -27,4 +45,9 @@ export interface UserTypes {
   password: string | null;
   nickname: string | null;
   profileimg: File | string | null;
+}
+
+export interface RenderComponents {
+  type: string;
+  component: JSX.Element;
 }

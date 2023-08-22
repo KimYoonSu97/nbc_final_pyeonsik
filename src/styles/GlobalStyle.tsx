@@ -1,23 +1,25 @@
-import React from "react";
-import { createGlobalStyle } from "styled-components";
+import React from 'react';
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
+// 폰트 스타일
 
 
-// 폰트 스타일을 적용합니다.
-
-// 폰트 크기를 변수로 선언 합니다.
+// 폰트 크기를 변수로 선언
 
 
-
-// reset.css 내용을 적용합니다.
+// reset.css
 *{
     box-sizing:border-box;
 }
+
 button{
     outline:none;
     border:none;
+	
+	// button cursor style 추가
+	cursor: pointer;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -40,25 +42,31 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;

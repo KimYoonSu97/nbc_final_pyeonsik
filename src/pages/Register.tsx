@@ -1,5 +1,5 @@
 import { atom, useAtom } from 'jotai';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import { UserType } from 'src/types/types';
@@ -14,6 +14,58 @@ export const userDataAtom = atom<UserType>({
   nickname: '',
   profileimg: null
 });
+const uploadProfileImage = async (selectedProfileImg: File) => {
+  try {
+    const { data, error } = await supabase.storage
+      .from('1st')
+      .upload(`profileimgs/${selectedProfileImg.name}`, selectedProfileImg);
+    if (error) {
+      throw new Error(error.message);
+    }
+    console.log('profileImgFile', selectedProfileImg);
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// 회원가입
+export const signUpService = async (userData: UserType) => {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: userData.email,
+      password: userData.password
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    let profileImgUrl = '';
+
+    if (userData.profileimg) {
+      const profileImgFile = new File([userData.profileimg], userData.profileimg?.name);
+      const uploadData = await uploadProfileImage(profileImgFile);
+      profileImgUrl = uploadData.path;
+    }
+
+    const userInsertData = {
+      uid: data.user?.id,
+      nickname: userData.nickname,
+      profileimg: profileImgUrl,
+      email: userData.email
+    };
+
+    const { error: insertError } = await supabase.from('users').insert(userInsertData);
+    if (insertError) {
+      throw new Error(insertError.message);
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 const Register = () => {
   // 초기 UserData
@@ -115,78 +167,77 @@ const Register = () => {
       console.log(error);
       throw error;
     }
-  }
-    const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      setEmail(e.target.value);
-    };
+  };
+  const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
 
-    const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      setPassword(e.target.value);
-    };
-    const nickNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      setNickName(e.target.value);
-    };
+  const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+  const nickNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickName(e.target.value);
+  };
 
-    const checkPasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      setCheckPassword(e.target.value);
-    };
+  const checkPasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setCheckPassword(e.target.value);
+  };
 
-    // 이미지 변환 핸들러
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFile = e.target.files && e.target.files[0];
-      if (selectedFile) {
-        const originalFileName = selectedFile.name;
-        const fileExtension = originalFileName.split('.').pop();
-        const randomFileName = uuidv4() + '.' + fileExtension;
-        setSelectedProfileImg(new File([selectedFile], randomFileName));
-        setPreviewImageUrl(URL.createObjectURL(selectedFile)); // 추가된 부분
-      } else {
-        setErrorMessage('이미지를 선택해주세요!');
-        setPreviewImageUrl(null); // 이미지 선택이 취소되었을 때 미리보기 이미지 초기화
-      }
-    };
+  // 이미지 변환 핸들러
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files && e.target.files[0];
+    if (selectedFile) {
+      const originalFileName = selectedFile.name;
+      const fileExtension = originalFileName.split('.').pop();
+      const randomFileName = uuidv4() + '.' + fileExtension;
+      setSelectedProfileImg(new File([selectedFile], randomFileName));
+      setPreviewImageUrl(URL.createObjectURL(selectedFile)); // 추가된 부분
+    } else {
+      setErrorMessage('이미지를 선택해주세요!');
+      setPreviewImageUrl(null); // 이미지 선택이 취소되었을 때 미리보기 이미지 초기화
+    }
+  };
 
-    return (
-      <>
-        <RegisterFormContainer>
-          <SuccessMessage>{successMessage}</SuccessMessage>
-          <ErrorMessage>{errorMessage}</ErrorMessage>
+  return (
+    <>
+      <RegisterFormContainer>
+        <SuccessMessage>{successMessage}</SuccessMessage>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
 
-          <Label>이메일</Label>
-          <Input type="text" placeholder="이메일을 입력하세요" value={email} onChange={emailHandler} />
-          <Label>패스워드</Label>
-          <Input
-            maxLength={20}
-            type="password"
-            placeholder="패스워드을 입력하세요"
-            value={password}
-            onChange={passwordHandler}
-          />
-          <Label>패스워드 확인</Label>
-          <Input
-            maxLength={20}
-            type="password"
-            placeholder="패스워드을 다시 입력하세요"
-            value={checkPassword}
-            onChange={checkPasswordHandler}
-          />
-          <Label>닉네임</Label>
-          <Input
-            maxLength={10}
-            type="text"
-            placeholder="닉네임을 입력하세요"
-            value={nickname}
-            onChange={nickNameHandler}
-          />
+        <Label>이메일</Label>
+        <Input type="text" placeholder="이메일을 입력하세요" value={email} onChange={emailHandler} />
+        <Label>패스워드</Label>
+        <Input
+          maxLength={20}
+          type="password"
+          placeholder="패스워드을 입력하세요"
+          value={password}
+          onChange={passwordHandler}
+        />
+        <Label>패스워드 확인</Label>
+        <Input
+          maxLength={20}
+          type="password"
+          placeholder="패스워드을 다시 입력하세요"
+          value={checkPassword}
+          onChange={checkPasswordHandler}
+        />
+        <Label>닉네임</Label>
+        <Input
+          maxLength={10}
+          type="text"
+          placeholder="닉네임을 입력하세요"
+          value={nickname}
+          onChange={nickNameHandler}
+        />
 
-          <Input type="file" accept="image/*" onChange={handleImageChange} />
-          {previewImageUrl && <PreviewImage src={previewImageUrl} alt="이미지 미리보기" />}
-          <Button onClick={handleSignUp}>회원가입</Button>
-          <br />
-        </RegisterFormContainer>
-      </>
-    );
-
+        <Input type="file" accept="image/*" onChange={handleImageChange} />
+        {previewImageUrl && <PreviewImage src={previewImageUrl} alt="이미지 미리보기" />}
+        <Button onClick={handleSignUp}>회원가입</Button>
+        <br />
+      </RegisterFormContainer>
+    </>
+  );
 };
 export default Register;
 
