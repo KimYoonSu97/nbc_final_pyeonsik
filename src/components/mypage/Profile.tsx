@@ -3,14 +3,21 @@ import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 
 const Profile = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<any>(null);
+  //닉네임 //
+  const [nickname, setNickname] = useState<any>();
+
+  const [isRender, setIsRender] = useState(false);
 
   const fetchUserData = async () => {
     //로그인한 유저 정보 필요함
+
     const id = 'be029d54-dc65-4332-84dc-10213d299c53';
     const { data, error } = await supabase.from('users').select('*').single();
     console.log(data);
+    setNickname(data.nickname);
     setUser(data);
+    setIsRender(!isRender);
   };
 
   useEffect(() => {
@@ -22,44 +29,54 @@ const Profile = () => {
   }, []);
 
   return (
-    <S.Container>
-      <S.SubjectArea>
-        <S.Subject>프로필 설정</S.Subject>
-      </S.SubjectArea>
-      <S.InfoArea>
-        <S.ProfileBox>
-          <S.ProfileImgArea></S.ProfileImgArea>
-        </S.ProfileBox>
-        <S.InfoBox>
-          <S.InputWrapper>
-            <S.InfoCaption>닉네임</S.InfoCaption>
-            <S.InfoInputBox>
-              <S.InfoInputArea></S.InfoInputArea>
-              <S.InfoSubmitButton>변경</S.InfoSubmitButton>
-            </S.InfoInputBox>
-          </S.InputWrapper>
-          <S.InputWrapper>
-            <S.InfoCaption>이메일</S.InfoCaption>
-            <S.InfoInputBox>
-              <S.InfoInputArea></S.InfoInputArea>
-            </S.InfoInputBox>
-          </S.InputWrapper>
-          <S.InputWrapper>
-            <S.InfoCaption>로그인 된 소셜 계정</S.InfoCaption>
-            <S.InfoInputBox>
-              <S.InfoInputArea></S.InfoInputArea>
-            </S.InfoInputBox>
-          </S.InputWrapper>
-          <S.InputWrapper>
-            <S.InfoCaption>비밀번호 변경</S.InfoCaption>
-            <S.InfoInputBox>
-              <S.InfoInputArea></S.InfoInputArea>
-              <S.InfoSubmitButton>변경</S.InfoSubmitButton>
-            </S.InfoInputBox>
-          </S.InputWrapper>
-        </S.InfoBox>
-      </S.InfoArea>
-    </S.Container>
+    <>
+      {isRender ? (
+        <S.Container>
+          <S.SubjectArea>
+            <S.Subject>프로필 설정</S.Subject>
+          </S.SubjectArea>
+          <S.InfoArea>
+            <S.ProfileBox>
+              <S.ProfileImgArea></S.ProfileImgArea>
+            </S.ProfileBox>
+            <S.InfoBox>
+              <S.InputWrapper>
+                <S.InfoCaption>닉네임</S.InfoCaption>
+                <S.InfoInputBox>
+                  <S.InfoInputArea
+                    type="text"
+                    value={nickname}
+                    onChange={(e) => {
+                      setNickname(e.target.value);
+                    }}
+                  ></S.InfoInputArea>
+                  <S.InfoSubmitButton>변경</S.InfoSubmitButton>
+                </S.InfoInputBox>
+              </S.InputWrapper>
+              <S.InputWrapper>
+                <S.InfoCaption>이메일</S.InfoCaption>
+                <S.InfoInputBox>{user?.email}</S.InfoInputBox>
+              </S.InputWrapper>
+              <S.InputWrapper>
+                <S.InfoCaption>로그인 된 소셜 계정</S.InfoCaption>
+                <S.InfoInputBox>
+                  <S.InfoInputArea></S.InfoInputArea>
+                </S.InfoInputBox>
+              </S.InputWrapper>
+              <S.InputWrapper>
+                <S.InfoCaption>비밀번호 변경</S.InfoCaption>
+                <S.InfoInputBox>
+                  <S.InfoInputArea></S.InfoInputArea>
+                  <S.InfoSubmitButton>변경</S.InfoSubmitButton>
+                </S.InfoInputBox>
+              </S.InputWrapper>
+            </S.InfoBox>
+          </S.InfoArea>
+        </S.Container>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 
