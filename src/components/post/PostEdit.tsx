@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getPosts } from '../api/posts';
+import { getPosts } from '../../api/posts';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
@@ -16,6 +16,11 @@ const PostEditForm = () => {
 
   // read
   const { isLoading, data } = useQuery({ queryKey: ['Post'], queryFn: () => getPosts() });
+
+  useEffect(() => {
+    setTitle(post.title);
+  }, []);
+
   if (isLoading) {
     return <p>Loading…</p>;
   }

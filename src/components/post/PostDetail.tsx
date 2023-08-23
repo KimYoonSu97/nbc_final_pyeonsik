@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Post } from 'src/types/types';
-import { getPost } from '../api/posts';
+import { getPost } from '../../api/posts';
 import usePost from 'src/hooks/usePost';
 
 const PostDetail = () => {
