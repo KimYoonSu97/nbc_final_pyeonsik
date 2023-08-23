@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
-import { myPagePostAtom } from 'src/globalState/jotai';
+import { myPagePostAtom } from 'src/globalState/GlobalState';
 
 const MypageSideBarInfo = () => {
   const [post] = useAtom(myPagePostAtom);

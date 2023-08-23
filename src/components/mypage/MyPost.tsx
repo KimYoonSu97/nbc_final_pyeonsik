@@ -1,43 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { useAtom } from 'jotai';
-import { myPagePostAtom } from 'src/globalState/jotai';
 import MyPostCards from './MyPostCards';
-import _ from 'lodash';
-import { getMyBookMarkById, getMyLikePostById } from '../../api/posts';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from 'src/supabse';
+import { getMyBookMarkById, getMyLikePostById, getMyPostsById } from '../../api/posts';
+import { useQueries } from '@tanstack/react-query';
 import { Post } from 'src/types/types';
-
-interface BookMark {
-  userId: string;
-}
 
 const MyPost = () => {
   //유저정보 가져와야됨..
   const id = 'be029d54-dc65-4332-84dc-10213d299c53';
-  const [post] = useAtom(myPagePostAtom);
   const [filterHandler, setFilterHandler] = useState(3);
 
-  //내가 북마크 한 글만
-  // const { isLoading: bookmarkLoading, data: myBookmarkPosts } = useQuery({
-  //   queryKey: ['MyBookMarkPost'],
-  //   queryFn: () => getMyBookMarkById(id!)
-  // });
-  // const { isLoading: likeLoading, data: myLikePosts } = useQuery({
-  //   queryKey: ['MyLikePost'],
-  //   queryFn: () => getMyLikePostById(id!)
-  // });
-  // if (bookmarkLoading || likeLoading) {
-  //   return <p>Loading…</p>;
-  // }
-  // if (myBookmarkPosts?.error || myLikePosts?.error) {
-  //   return <p>Error</p>;
-  // }
-  // console.log('북마크', myBookmarkPosts);
-  // console.log('좋아요', myLikePosts);
-  // console.log('북마크', myBookmarkPosts?.data);
-  // console.log('좋아요', myLikePosts?.data);
+  const [
+    { isLoading: bookmarkLoading, data: bookmark },
+    { isLoading: likeLoading, data: like },
+    { isLoading: myPostLoading, data: myPost }
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ['MyBookMarkPost'],
+        queryFn: () => getMyBookMarkById(id!),
+        enabled: filterHandler === 1
+      },
+      {
+        queryKey: ['MyLikePost'],
+        queryFn: () => getMyLikePostById(id!),
+        enabled: filterHandler === 2
+      },
+      {
+        queryKey: ['MyPost'],
+        queryFn: () => getMyPostsById(id!),
+        enabled: filterHandler === 3
+      }
+    ]
+  });
+
+  if (filterHandler === 1) {
+    if (bookmarkLoading) {
+      return <div>Loading</div>;
+    }
+  } else if (filterHandler === 2) {
+    if (likeLoading) {
+      return <div>Loading</div>;
+    }
+  } else {
+    if (myPostLoading) {
+      return <div>Loading</div>;
+    }
+  }
+
+  let bookmarkData;
+  let likeData;
+  if (filterHandler === 1) {
+    bookmarkData = bookmark!.data!.map((item) => {
+      return item.postId;
+    });
+  } else if (filterHandler === 2) {
+    likeData = like!.data!.map((item) => {
+      return item.postId;
+    });
+  }
+
   return (
     <>
       <S.ButtonArea>
@@ -56,7 +78,7 @@ const MyPost = () => {
           좋아요
         </S.FilterButton>
         <S.FilterButton
-          onClick={(e) => {
+          onClick={() => {
             setFilterHandler(3);
           }}
         >
@@ -64,16 +86,18 @@ const MyPost = () => {
         </S.FilterButton>
       </S.ButtonArea>
       <S.ContentsArea>
-        {/* {(() => {
+        {(() => {
           switch (filterHandler) {
             case 1:
-              return <MyPostCards data={myBookmarkPosts!.data as unknown as Post[]} />;
+              return <MyPostCards data={bookmarkData as unknown as Post[]} />;
             case 2:
-              return <MyPostCards data={myLikePosts!.data as unknown as Post[]} />;
+              return <MyPostCards data={likeData as unknown as Post[]} />;
+            case 3:
+              return <MyPostCards data={myPost?.data as unknown as Post[]} />;
             default:
-              return <MyPostCards data={post} />;
+              return <></>;
           }
-        })()} */}
+        })()}
       </S.ContentsArea>
     </>
   );
@@ -102,22 +126,3 @@ const S = {
     line-height: 16px;
   `
 };
-
-// {
-// (()=>{
-
-// })()
-// filterHandler ? (
-//   <>
-//     {/* {BookMark.map((item) => {
-//       return <MyPostCard key={item.id} data={item} />;
-//     })} */}
-//   </>
-// ) : (
-//   <>
-//     {post.map((item) => {
-//       return <MyPostCard key={item.id} data={item} />;
-//     })}
-//   </>
-// }
-// )

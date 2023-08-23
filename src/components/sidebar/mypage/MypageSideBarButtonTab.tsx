@@ -6,7 +6,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 const MypageSideBarButtonTab = () => {
   const location = useLocation();
-  console.log(location);
 
   return (
     <S.Container>

@@ -12,12 +12,12 @@ const getMyPostsById = async (id: string) => {
 };
 
 const getMyBookMarkById = async (id: string) => {
-  const response = await supabase.from('post_bookmark').select('posts(*)').eq('userId', id);
+  const response = await supabase.from('post_bookmark').select('postId(*)').eq('userId', id);
   return response;
 };
 
 const getMyLikePostById = async (id: string) => {
-  const response = await supabase.from('post_likes_test').select('posts(*)').eq('userId', id);
+  const response = await supabase.from('post_likes_test').select('postId(*)').eq('userId', id);
   return response;
 };
 

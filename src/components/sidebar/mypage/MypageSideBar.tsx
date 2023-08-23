@@ -5,7 +5,7 @@ import MypageSideBarButtonTab from './MypageSideBarButtonTab';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPostsById } from 'src/api/posts';
 import { useAtom } from 'jotai';
-import { myPagePostAtom } from 'src/globalState/jotai';
+import { myPagePostAtom } from 'src/globalState/GlobalState';
 
 const MypageSideBar = () => {
   //여기서 데이터 패치 해와서 조타이 전역으로 관리하고
