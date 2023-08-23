@@ -17,10 +17,10 @@ const Router = () => {
     <BrowserRouter>
       <GlobalStyle />
       <Routes>
+          <Route path="/register" element={<Register />} />
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
 
           <Route path="/write" element={<Write />} />
           <Route path="/detail/:id" element={<Detail />} />

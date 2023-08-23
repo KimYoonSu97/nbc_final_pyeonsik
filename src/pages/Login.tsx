@@ -6,8 +6,6 @@ import supabase from 'src/lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
 import { User } from '@supabase/supabase-js';
-import { useMutation } from '@tanstack/react-query';
-import { UserType } from 'src/types/types';
 
 export const userAtom = atom<User | null>(null);
 
@@ -16,12 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [userData, setUserData] = useState<Omit<UserType, 'nickname'>>({
-    uid: '',
-    email: '',
-    password: '',
-    profileimg: null
-  });
+
   const navigate = useNavigate();
 
   // Atom 생성
@@ -35,22 +28,6 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const loginService = async (userData: Omit<UserType, 'nickname' | 'profileImg'>) => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: userData.email,
-        password: userData.password
-      });
-      if (error) {
-        throw new Error(error.message);
-      }
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
   const handleLogin = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
@@ -58,6 +35,7 @@ const Login = () => {
     });
 
     if (data.user) {
+      alert('로그인 완료!');
       setSuccessMessage('로그인 완료!');
       setUser(data.user);
 
@@ -68,17 +46,6 @@ const Login = () => {
       setErrorMessage('Error logging in: ' + error.message);
     } else {
       console.log('Registration successful:', data);
-    }
-  };
-
-  const handleCurrentUser = () => {
-    alert(supabase.auth);
-  };
-
-  const handlePasswordReset = async () => {
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) {
-      setErrorMessage('Error passrest: ' + error.message);
     }
   };
 
@@ -120,10 +87,6 @@ const Login = () => {
 
         <Button onClick={handleLogin}>로그인</Button>
         <br />
-
-        <Button onClick={handlePasswordReset}>비밀번호 재설정(삭제예정)</Button>
-        <br />
-        <Button onClick={handleCurrentUser}>현재 유저(삭제예정)</Button>
       </LoginFormContainer>
     </>
   );
