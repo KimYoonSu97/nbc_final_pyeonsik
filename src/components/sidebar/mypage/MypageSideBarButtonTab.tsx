@@ -1,18 +1,16 @@
 import React from 'react';
 import { useAtom } from 'jotai';
-import { myPageTabAtom } from 'src/globalState/jotai';
-import styled from 'styled-components';
+
+import styled, { css } from 'styled-components';
+import { Link, useLocation } from 'react-router-dom';
 
 const MypageSideBarButtonTab = () => {
-  const [MyPageTap, setMyPageTap] = useAtom(myPageTabAtom);
+  const location = useLocation();
+  console.log(location);
 
   return (
     <S.Container>
-      <S.TapButton
-        onClick={() => {
-          setMyPageTap('1');
-        }}
-      >
+      <S.TapButton to={'mypage/profile'} $type={'/mypage/profile'} $location={location.pathname}>
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />
@@ -24,11 +22,8 @@ const MypageSideBarButtonTab = () => {
         </S.Icon>
         프로필
       </S.TapButton>
-      <S.TapButton
-        onClick={() => {
-          setMyPageTap('2');
-        }}
-      >
+
+      <S.TapButton to={'mypage/mypost'} $type={'/mypage/mypost'} $location={location.pathname}>
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />
@@ -40,11 +35,8 @@ const MypageSideBarButtonTab = () => {
         </S.Icon>
         보관함
       </S.TapButton>
-      <S.TapButton
-        onClick={() => {
-          setMyPageTap('3');
-        }}
-      >
+
+      <S.TapButton to={'mypage/achievement'} $type={'/mypage/achievement'} $location={location.pathname}>
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />
@@ -56,7 +48,8 @@ const MypageSideBarButtonTab = () => {
         </S.Icon>
         편식 업적
       </S.TapButton>
-      <S.TapButton>
+
+      {/* <S.TapButton to={'/'}>
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />
@@ -67,12 +60,17 @@ const MypageSideBarButtonTab = () => {
           </svg>
         </S.Icon>
         고객센터
-      </S.TapButton>
+      </S.TapButton> */}
     </S.Container>
   );
 };
 
 export default MypageSideBarButtonTab;
+
+type Props = {
+  $location: string;
+  $type: string;
+};
 
 const S = {
   Container: styled.div`
@@ -86,7 +84,7 @@ const S = {
     height: 20px;
     margin-right: 4px;
   `,
-  TapButton: styled.div`
+  TapButton: styled(Link)<Props>`
     display: flex;
     align-items: center;
     padding: 10px 12px;
@@ -94,9 +92,18 @@ const S = {
     font-weight: 400;
     line-height: 16px;
     border-radius: 10px;
+    text-decoration: none;
+    color: black;
     cursor: pointer;
+    ${(props) =>
+      // if(!props.$type) {return;}
+
+      props.$type === props.$location &&
+      css`
+        background-color: #efefef;
+      `}
     &:hover {
-      background: #efefef;
+      background-color: #efefef;
     }
   `
 };

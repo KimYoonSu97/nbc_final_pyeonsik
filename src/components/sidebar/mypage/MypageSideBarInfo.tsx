@@ -5,7 +5,6 @@ import { myPagePostAtom } from 'src/globalState/jotai';
 
 const MypageSideBarInfo = () => {
   const [post] = useAtom(myPagePostAtom);
-  console.log('사이드 바 유저정보 표기를 위한 post데이터', post);
   return (
     <>
       <S.ProfileArea>

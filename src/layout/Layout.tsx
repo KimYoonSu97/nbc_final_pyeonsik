@@ -32,6 +32,7 @@ const S = {
     gap: 62px;
   `,
   BottomContainer: styled.div`
+    margin-top: 106px;
     background: var(--background, #f6f7f9);
     height: calc(100vh - 50px - 56px);
     overflow-y: scroll;

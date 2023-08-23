@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { useAtom } from 'jotai';
 import { myPagePostAtom } from 'src/globalState/jotai';
-import MyPostCard from './MyPostCard';
+import MyPostCards from './MyPostCards';
 import _ from 'lodash';
-import { getMyBookMarkById } from '../../api/posts';
+import { getMyBookMarkById, getMyLikePostById } from '../../api/posts';
 import { useQuery } from '@tanstack/react-query';
+import { supabase } from 'src/supabse';
+import { Post } from 'src/types/types';
 
 interface BookMark {
   userId: string;
@@ -15,62 +17,63 @@ const MyPost = () => {
   //유저정보 가져와야됨..
   const id = 'be029d54-dc65-4332-84dc-10213d299c53';
   const [post] = useAtom(myPagePostAtom);
-  const [filterHandler, setFilterHandler] = useState(true);
-  console.log('내가쓴 글과 북마크 글을 보기위한 컴포넌트를 위한 데이터', post);
+  const [filterHandler, setFilterHandler] = useState(3);
 
-  //요런 로직추가해서 미리 분기해놓고 분기한것만 map함수 사용
-  const { isLoading, data } = useQuery({ queryKey: ['MyBookMarkPost'], queryFn: () => getMyBookMarkById(id!) });
-  // const [, setMyPost] = useAtom(myPagePostAtom);
-  if (isLoading) {
-    return <p>Loading…</p>;
-  }
-  if (data?.error) {
-    return <p>Error</p>;
-  }
-  if (data?.data.length === 0) {
-    return <p>none</p>;
-  }
-  console.log(data!.data);
-  // console.log(data!.data);
-
-  //포스트 내부의
-  const myPost = post.filter((item) => {
-    return item.userId === id;
-  });
-
+  //내가 북마크 한 글만
+  // const { isLoading: bookmarkLoading, data: myBookmarkPosts } = useQuery({
+  //   queryKey: ['MyBookMarkPost'],
+  //   queryFn: () => getMyBookMarkById(id!)
+  // });
+  // const { isLoading: likeLoading, data: myLikePosts } = useQuery({
+  //   queryKey: ['MyLikePost'],
+  //   queryFn: () => getMyLikePostById(id!)
+  // });
+  // if (bookmarkLoading || likeLoading) {
+  //   return <p>Loading…</p>;
+  // }
+  // if (myBookmarkPosts?.error || myLikePosts?.error) {
+  //   return <p>Error</p>;
+  // }
+  // console.log('북마크', myBookmarkPosts);
+  // console.log('좋아요', myLikePosts);
+  // console.log('북마크', myBookmarkPosts?.data);
+  // console.log('좋아요', myLikePosts?.data);
   return (
     <>
       <S.ButtonArea>
         <S.FilterButton
           onClick={() => {
-            setFilterHandler(true);
+            setFilterHandler(1);
           }}
         >
-          저장 레시피
+          북마크
         </S.FilterButton>
         <S.FilterButton
           onClick={() => {
-            setFilterHandler(false);
+            setFilterHandler(2);
+          }}
+        >
+          좋아요
+        </S.FilterButton>
+        <S.FilterButton
+          onClick={(e) => {
+            setFilterHandler(3);
           }}
         >
           내가 쓴 글
         </S.FilterButton>
       </S.ButtonArea>
       <S.ContentsArea>
-        카드 영역
-        {filterHandler ? (
-          <>
-            {/* {BookMark.map((item) => {
-              return <MyPostCard key={item.id} data={item} />;
-            })} */}
-          </>
-        ) : (
-          <>
-            {myPost.map((item) => {
-              return <MyPostCard key={item.id} data={item} />;
-            })}
-          </>
-        )}
+        {/* {(() => {
+          switch (filterHandler) {
+            case 1:
+              return <MyPostCards data={myBookmarkPosts!.data as unknown as Post[]} />;
+            case 2:
+              return <MyPostCards data={myLikePosts!.data as unknown as Post[]} />;
+            default:
+              return <MyPostCards data={post} />;
+          }
+        })()} */}
       </S.ContentsArea>
     </>
   );
@@ -89,7 +92,7 @@ const S = {
     z-index: 999;
   `,
   ContentsArea: styled.div``,
-  FilterButton: styled.button`
+  FilterButton: styled.div`
     padding: 5px 11px;
     display: flex;
     justify-content: center;
@@ -99,3 +102,22 @@ const S = {
     line-height: 16px;
   `
 };
+
+// {
+// (()=>{
+
+// })()
+// filterHandler ? (
+//   <>
+//     {/* {BookMark.map((item) => {
+//       return <MyPostCard key={item.id} data={item} />;
+//     })} */}
+//   </>
+// ) : (
+//   <>
+//     {post.map((item) => {
+//       return <MyPostCard key={item.id} data={item} />;
+//     })}
+//   </>
+// }
+// )

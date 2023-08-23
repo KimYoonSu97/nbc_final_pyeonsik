@@ -12,9 +12,12 @@ const getMyPostsById = async (id: string) => {
 };
 
 const getMyBookMarkById = async (id: string) => {
-  console.log(id);
-  const response = await supabase.from('posts').select('*');
-  console.log(response);
+  const response = await supabase.from('post_bookmark').select('posts(*)').eq('userId', id);
+  return response;
+};
+
+const getMyLikePostById = async (id: string) => {
+  const response = await supabase.from('post_likes_test').select('posts(*)').eq('userId', id);
   return response;
 };
 
@@ -35,4 +38,4 @@ const deletePost = async (id: string) => {
   await supabase.from('posts').delete().eq('id', id);
 };
 
-export { getPosts, getMyPostsById, getMyBookMarkById, getPost, addPost, updatePost, deletePost };
+export { getPosts, getMyPostsById, getMyLikePostById, getMyBookMarkById, getPost, addPost, updatePost, deletePost };
