@@ -51,6 +51,7 @@ const S = {
     position: relative;
   `,
   LogoContainer: styled.div`
+    color: white;
     background-color: black;
     padding: 5px 13px;
     font-size: 14px;
