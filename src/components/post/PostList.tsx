@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getPosts } from 'src/api/posts';
 import { Post } from 'src/types/types';
 import { styled } from 'styled-components';
+import PostCards from '../renderPosts/PostCards';
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -24,15 +25,16 @@ const PostList = () => {
   posts.sort((a: Post, b: Post) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
 
   return (
-    <div>
-      {posts.map((post) => (
-        <S.PostBox key={post.id} onClick={() => navigate(`/detail/${post.id}`)}>
-          <div>{post.id}</div>
-          <div>{post.title}</div>
-          <div>{post.body}</div>
-        </S.PostBox>
-      ))}
-    </div>
+    <PostCards data={posts}></PostCards>
+    // <div>
+    //   {posts.map((post) => (
+    //     <S.PostBox key={post.id} >
+    //       <div>{post.id}</div>
+    //       <div>{post.title}</div>
+    //       <div>{post.body}</div>
+    //     </S.PostBox>
+    //   ))}
+    // </div>
   );
 };
 

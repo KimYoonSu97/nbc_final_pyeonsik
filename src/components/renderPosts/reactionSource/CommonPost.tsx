@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { LikeCount, CommentCount, BookmarkCount, RepostCount } from 'src/components/renderPosts/reactionSource';
 import { Post, PostUserProfile } from 'src/types/types';
+import { useNavigate } from 'react-router';
 
 interface Props {
   item: Post;
@@ -17,10 +18,11 @@ interface Props {
 // }
 
 const CommonPost = ({ item }: Props) => {
+  const navigate = useNavigate();
   const { nickname, profileImg } = item.userId as PostUserProfile;
   const { id, postCategory, body, title } = item;
   return (
-    <S.Container key={id}>
+    <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}>
       <S.UserArea>
         <S.ProfileImg $url={profileImg}></S.ProfileImg>
         <S.Level>Lv.점장</S.Level>
