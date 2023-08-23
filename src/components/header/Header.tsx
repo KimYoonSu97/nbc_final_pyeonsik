@@ -27,6 +27,7 @@ const S = {
     width: 100vw;
     height: 106px;
     position: fixed;
+    left: 0;
     top: 0;
     background-color: white;
   `,

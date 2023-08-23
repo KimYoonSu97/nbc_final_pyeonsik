@@ -22,7 +22,7 @@ const MypageSideBarButtonTab = () => {
         프로필
       </S.TapButton>
 
-      <S.TapButton to={'mypage/mypost'} $type={'/mypage/mypost'} $location={location.pathname}>
+      <S.TapButton to={'mypage/mypost?=mypost'} $type={'/mypage/mypost'} $location={location.pathname}>
         <S.Icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect width="100%" height="100%" fill="none" />

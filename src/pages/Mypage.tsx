@@ -1,5 +1,4 @@
-import React, { ReactComponentElement, ReactElement } from 'react';
-import { useAtom } from 'jotai';
+import React from 'react';
 import { RenderComponents } from 'src/types/types';
 import { styled } from 'styled-components';
 import MyAchievement from 'src/components/mypage/MyAchievement';

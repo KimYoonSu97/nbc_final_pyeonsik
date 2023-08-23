@@ -1,10 +1,12 @@
 import React from 'react';
 import Header from '../components/header/Header';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import SideBar from 'src/components/sidebar/SideBar';
 import styled from 'styled-components';
 
 const Layout = () => {
+  const location = useLocation();
+
   return (
     <>
       <Header />
@@ -13,7 +15,7 @@ const Layout = () => {
           <S.ContentsArea>
             <Outlet />
           </S.ContentsArea>
-          <SideBar />
+          {location.pathname === '/login' || location.pathname === '/register' ? <></> : <SideBar />}
         </S.Container>
       </S.BottomContainer>
     </>
@@ -30,6 +32,7 @@ const S = {
     background: var(--background, #f6f7f9);
     display: flex;
     gap: 62px;
+    justify-content: center;
   `,
   BottomContainer: styled.div`
     margin-top: 106px;
@@ -41,6 +44,7 @@ const S = {
     }
   `,
   ContentsArea: styled.div`
+    position: relative;
     width: 890px;
   `,
   PositionBox: styled.div`

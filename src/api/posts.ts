@@ -7,17 +7,17 @@ const getPosts = async () => {
 };
 
 const getMyPostsById = async (id: string) => {
-  const response = await supabase.from('posts').select('*').eq('userId', id);
+  const response = await supabase.from('posts').select('*,userId(nickname,profileImg)').eq('userId', id);
   return response;
 };
 
 const getMyBookMarkById = async (id: string) => {
-  const response = await supabase.from('post_bookmark').select('postId(*)').eq('userId', id);
+  const response = await supabase.from('post_bookmark').select('postId(*,userId(*))').eq('userId', id);
   return response;
 };
 
 const getMyLikePostById = async (id: string) => {
-  const response = await supabase.from('post_likes_test').select('postId(*)').eq('userId', id);
+  const response = await supabase.from('post_likes_test').select('postId(*,userId(*))').eq('userId', id);
   return response;
 };
 

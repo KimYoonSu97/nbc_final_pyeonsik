@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import MyPostCards from './MyPostCards';
+import PostCards from '../renderPosts/PostCards';
 import { getMyBookMarkById, getMyLikePostById, getMyPostsById } from '../../api/posts';
 import { useQueries } from '@tanstack/react-query';
 import { Post } from 'src/types/types';
+import { useLocation, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const MyPost = () => {
-  //유저정보 가져와야됨..
+  const { search } = useLocation();
   const id = 'be029d54-dc65-4332-84dc-10213d299c53';
-  const [filterHandler, setFilterHandler] = useState(3);
+  const [filterHandler, setFilterHandler] = useState(search);
 
   const [
     { isLoading: bookmarkLoading, data: bookmark },
@@ -19,26 +21,26 @@ const MyPost = () => {
       {
         queryKey: ['MyBookMarkPost'],
         queryFn: () => getMyBookMarkById(id!),
-        enabled: filterHandler === 1
+        enabled: filterHandler === '?=bookmark'
       },
       {
         queryKey: ['MyLikePost'],
         queryFn: () => getMyLikePostById(id!),
-        enabled: filterHandler === 2
+        enabled: filterHandler === '?=like'
       },
       {
         queryKey: ['MyPost'],
         queryFn: () => getMyPostsById(id!),
-        enabled: filterHandler === 3
+        enabled: filterHandler === '?=mypost'
       }
     ]
   });
 
-  if (filterHandler === 1) {
+  if (filterHandler === '?=bookmark') {
     if (bookmarkLoading) {
       return <div>Loading</div>;
     }
-  } else if (filterHandler === 2) {
+  } else if (filterHandler === '?=like') {
     if (likeLoading) {
       return <div>Loading</div>;
     }
@@ -50,11 +52,11 @@ const MyPost = () => {
 
   let bookmarkData;
   let likeData;
-  if (filterHandler === 1) {
+  if (filterHandler === '?=bookmark') {
     bookmarkData = bookmark!.data!.map((item) => {
       return item.postId;
     });
-  } else if (filterHandler === 2) {
+  } else if (filterHandler === '?=like') {
     likeData = like!.data!.map((item) => {
       return item.postId;
     });
@@ -64,22 +66,25 @@ const MyPost = () => {
     <>
       <S.ButtonArea>
         <S.FilterButton
+          to="?=bookmark"
           onClick={() => {
-            setFilterHandler(1);
+            setFilterHandler('?=bookmark');
           }}
         >
           북마크
         </S.FilterButton>
         <S.FilterButton
+          to="?=like"
           onClick={() => {
-            setFilterHandler(2);
+            setFilterHandler('?=like');
           }}
         >
           좋아요
         </S.FilterButton>
         <S.FilterButton
+          to="?=mypost"
           onClick={() => {
-            setFilterHandler(3);
+            setFilterHandler('?=mypost');
           }}
         >
           내가 쓴 글
@@ -88,12 +93,12 @@ const MyPost = () => {
       <S.ContentsArea>
         {(() => {
           switch (filterHandler) {
-            case 1:
-              return <MyPostCards data={bookmarkData as unknown as Post[]} />;
-            case 2:
-              return <MyPostCards data={likeData as unknown as Post[]} />;
-            case 3:
-              return <MyPostCards data={myPost?.data as unknown as Post[]} />;
+            case '?=bookmark':
+              return <PostCards data={bookmarkData as unknown as Post[]} />;
+            case '?=like':
+              return <PostCards data={likeData as unknown as Post[]} />;
+            case '?=mypost':
+              return <PostCards data={myPost?.data as unknown as Post[]} />;
             default:
               return <></>;
           }
@@ -116,7 +121,7 @@ const S = {
     z-index: 999;
   `,
   ContentsArea: styled.div``,
-  FilterButton: styled.div`
+  FilterButton: styled(Link)`
     padding: 5px 11px;
     display: flex;
     justify-content: center;
@@ -124,5 +129,7 @@ const S = {
     font-size: 12px;
     font-weight: 700;
     line-height: 16px;
+    text-decoration: none;
+    color: black;
   `
 };
