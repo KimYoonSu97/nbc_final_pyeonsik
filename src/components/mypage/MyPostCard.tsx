@@ -1,6 +1,11 @@
 import React from 'react';
+import { Post } from 'src/types/types';
 
-const MyPostCard = () => {
+interface Props {
+  data: Post;
+}
+
+const MyPostCard = ({ data }: Props) => {
   return <div>MyPostCard</div>;
 };
 
