@@ -26,7 +26,6 @@ const Comment = () => {
     }
   };
 
-
   //포스트 아이디와 같은 댓글 데이터 가져오기
   const { data: commentData } = useQuery(['comment'], () => getCommentData(postId!));
 
@@ -62,7 +61,6 @@ const Comment = () => {
       alert('삭제가 취소되었습니다.');
     }
   };
-
 
   //작성 날짜 월일로 변환
   const commentWriteDate = (date: string) => {
