@@ -3,12 +3,15 @@ import { Post, PostUserProfile } from 'src/types/types';
 import { styled } from 'styled-components';
 import { LikeCount, CommentCount, BookmarkCount, RepostCount } from 'src/components/renderPosts/reactionSource';
 import CommonPost from './reactionSource/CommonPost';
+import { useNavigate } from 'react-router';
 
 interface Props {
   data: Post[];
 }
 
 const PostCards = ({ data }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <S.Area>
       {data?.map((item: Post) => {
@@ -18,28 +21,6 @@ const PostCards = ({ data }: Props) => {
           //레시피 게시물 보여주는 컴포넌트 따로 짜야댐
           return <CommonPost key={item.id} item={item}></CommonPost>;
         }
-
-        // <S.Container key={id}>
-        //   <S.UserArea>
-        //     <S.ProfileImg $url={profileImg}></S.ProfileImg>
-        //     <S.Level>Lv.점장</S.Level>
-        //     <S.Nickname_Category>{nickname}</S.Nickname_Category>
-        //     <S.Caption>님의</S.Caption>
-        //     <S.Nickname_Category>{postCategory === 'common' ? '그르르갉' : '편식조합'}</S.Nickname_Category>
-        //   </S.UserArea>
-        //   <S.PostBox>
-        //     <S.GradientArea></S.GradientArea>
-        //     <S.BottomArea>
-        //       <CommentCount />
-        //       <LikeCount />
-        //       <RepostCount />
-        //       <BookmarkCount />
-        //     </S.BottomArea>
-        //     <S.TitleArea>{title}</S.TitleArea>
-        //     <S.BodyArea>{body}</S.BodyArea>
-        //   </S.PostBox>
-        // </S.Container>
-        // );
       })}
     </S.Area>
   );

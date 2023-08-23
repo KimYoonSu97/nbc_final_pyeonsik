@@ -2,7 +2,9 @@ import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost } from 'src/types/types';
 
 const getPosts = async () => {
-  const response = await supabase.from('posts').select('*');
+  const response = await supabase.from('posts').select('*,userId(nickname,profileImg)');
+  console.log(response.error);
+  console.log(response.data);
   return response;
 };
 
