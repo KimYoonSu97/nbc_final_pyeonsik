@@ -38,7 +38,8 @@ const PostDetail = () => {
       <div>{post.title}</div>
       <div>{post.body}</div>
       <button onClick={() => clickDelete(post.id)}>delete</button>
-      <button onClick={clickEdit}>edit</button>
+      <button onClick={() => clickEdit()}>edit</button>
+      <button>like</button>
     </div>
   );
 };

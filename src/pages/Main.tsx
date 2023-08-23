@@ -7,9 +7,9 @@ const Main = () => {
 
   return (
     <div style={{ height: '4240px', width: '200px' }}>
-      메인컴포넌트
-      <PostList />
+      <div>Main</div>
       <button onClick={() => navigate('/write')}>write</button>
+      <PostList />
     </div>
   );
 };
