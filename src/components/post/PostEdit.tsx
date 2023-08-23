@@ -16,11 +16,6 @@ const PostEditForm = () => {
 
   // read
   const { isLoading, data } = useQuery({ queryKey: ['Post'], queryFn: () => getPosts() });
-
-  useEffect(() => {
-    setTitle(post.title);
-  }, []);
-
   if (isLoading) {
     return <p>Loading…</p>;
   }
