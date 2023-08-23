@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import MypageSideBarInfo from './MypageSideBarInfo';
 import MypageSideBarButtonTab from './MypageSideBarButtonTab';
 import { useQuery } from '@tanstack/react-query';
-import { getMyPostsById } from 'src/components/api/posts';
+import { getMyPostsById } from 'src/api/posts';
 import { useAtom } from 'jotai';
 import { myPagePostAtom } from 'src/globalState/jotai';
 
