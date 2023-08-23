@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import usePost from 'src/hooks/usePost';
+import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
 const PostWriteForm = () => {
   const navigate = useNavigate();
-  const { addPostMutation } = usePost();
+  const { addMutate } = useMutate('posts');
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
@@ -18,7 +18,7 @@ const PostWriteForm = () => {
       title,
       body
     };
-    addPostMutation.mutate(newPost);
+    addMutate.mutate(newPost);
     navigate(`/`);
   };
 

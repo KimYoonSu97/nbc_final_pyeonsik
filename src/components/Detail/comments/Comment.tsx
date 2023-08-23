@@ -13,14 +13,10 @@ const Comment = () => {
   const queryClient = useQueryClient();
   const { postId } = useParams();
 
-  const [user, setUser] = useState<any>({id:"f3f322f0-2439-4580-b817-c9e0b7757cae",nickname:"가나다라"});
+  const [user, setUser] = useState<any>({ id: 'f3f322f0-2439-4580-b817-c9e0b7757cae', nickname: '가나다라' });
   const [comment, setComment] = useState('');
 
-
-
-
-
-  console.log(user,"userididididiid")
+  console.log(user, 'userididididiid');
 
   // useEffect(() => {
   //   getData();
@@ -42,7 +38,7 @@ const Comment = () => {
     getCommentData('1c27cfc8-fbd5-48cd-81e4-dff6148f3456')
   );
 
-  console.log(commentData)
+  console.log(commentData);
 
   //댓글 작성시 바로 렌더링
   const writeMutation = useMutation(WriteCommentData, {
@@ -86,10 +82,7 @@ const Comment = () => {
     return `${month}월 ${day}일`;
   };
 
-
- //좋아요 부분 ------------------------------------------------------------------------------------
-  
-
+  //좋아요 부분 ------------------------------------------------------------------------------------
 
   return (
     <>
@@ -117,10 +110,10 @@ const Comment = () => {
               <h2>{comment.comment}</h2>
               <div>{comment.id}</div>
               <p>{commentWriteDate(comment.created_at)}</p>
-              <CommentLikes commentId={comment.id}/>
+              <CommentLikes commentId={comment.id} />
               <button>답글달기</button>
               <ReComment parentCommentId={comment.id} />
-              { user&& comment.userId === user.id && (
+              {user && comment.userId === user.id && (
                 <div>
                   <button onClick={() => deleteCommentButton(comment.id)}>삭제하기</button>
                 </div>
