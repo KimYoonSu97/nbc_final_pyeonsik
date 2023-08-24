@@ -29,46 +29,47 @@ const TopBarMenuContainer = () => {
     const setUserName = async () => {
       if (user) {
         const { data, error } = await supabase.from('users').select('nickname').eq('email', user.email).single();
-
         if (data) {
           setNickName(data.nickname);
         }
       }
     };
+
     setUserName();
   }, [user]);
 
   // 유저의 프로필 이미지를 가져온다
+
   useEffect(() => {
-    const fetchImageUrl = async () => {
-      if (user && user.email) {
+    const setProfileImg = async () => {
+      if (user) {
         const { data, error } = await supabase.from('users').select('profileImg').eq('email', user.email).single();
-        console.log(user);
-        console.log('hi');
-        console.log(data);
         if (data) {
           setImageUrl(data.profileImg);
         }
       }
     };
 
-    fetchImageUrl();
-  }, []);
+    setProfileImg();
+  }, [user]);
+
+  // 소셜로그인 시 프로필 적용
+
+  // if (user !== null && user.identities?.[0]?.identity_data) {
+  //   const socialData = user.identities[0].identity_data;
+  //   setImageUrl(socialData.avatar_url);
+  //   setNickName(socialData.name);
+  //   setUser(user);
+  // }
 
   // 현재 유저의 정보 가져오기!
   const checkUser = async () => {
     const {
       data: { user }
     } = await supabase.auth.getUser();
-    setUser(user);
 
-    // 소셜로그인 시 프로필 적용
-    if (user !== null && user.identities?.[0]?.identity_data) {
-      const socialData = user.identities[0].identity_data;
-      setImageUrl(socialData.avatar_url);
-      setNickName(socialData.name);
-      setUser(user);
-    }
+    console.log(user);
+    setUser(user);
   };
   useEffect(() => {
     checkUser();

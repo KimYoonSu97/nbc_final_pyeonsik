@@ -8,6 +8,7 @@ interface LikeType {
 
 const getLike = async () => {
   const { data } = await supabase.from('comment_likes_test').select('commentId,userId');
+
   return data;
 };
 

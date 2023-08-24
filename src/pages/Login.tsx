@@ -37,6 +37,7 @@ const Login = () => {
     if (data.user) {
       alert('로그인 완료!');
       setSuccessMessage('로그인 완료!');
+
       setUser(data.user);
 
       navigate('/');
@@ -45,7 +46,7 @@ const Login = () => {
     if (error) {
       setErrorMessage('Error logging in: ' + error.message);
     } else {
-      console.log('Registration successful:', data);
+      // console.log('Registration successful:', data);
     }
   };
 
@@ -56,7 +57,7 @@ const Login = () => {
         if (newPassword !== null) {
           const { data, error } = await supabase.auth.updateUser({
             password: newPassword
-          });
+          }); 
         }
       }
     });
