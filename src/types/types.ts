@@ -30,13 +30,24 @@ export interface NewPost {
   title: string;
   // img: string;
   body: string;
-  // userId: string;
+  userId: string;
 }
 
 export interface EditPost {
   id: string;
   title: string;
   body: string;
+}
+
+export interface PostLike {
+  id: string;
+  postId: string;
+  userId: string;
+}
+
+export interface NewPostLike {
+  postId: string;
+  userId: string;
 }
 
 export interface RankProps {

@@ -37,7 +37,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       alert(`error, ${error}`);
       return;
     }
-    console.log(data);
+    // console.log(data);
     setUserEmail(email);
     setNextStep(true);
     // navigate('/')
