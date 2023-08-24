@@ -2,65 +2,49 @@ import { atom, useAtom } from 'jotai';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
-import { userAtom } from 'src/pages/Login';
+import { userAtom } from 'src/globalState/jotai';
 import { styled } from 'styled-components';
-import useLoginUserId from 'src/hooks/useLoginUserId';
+
+interface User {
+  email: string;
+  id: string;
+  nickname: string;
+  profileImg: string;
+}
 
 const TopBarMenuContainer = () => {
-  const userId = useLoginUserId();
+  const [userData, setUserData] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [userLogin, setUserLogin] = useAtom(userAtom);
 
-  const [user, setUser] = useState<any>('');
-  const [checkLogin] = useAtom(userAtom);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  useEffect(() => {
+    const token = localStorage.getItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
+    if (token) {
+      const { user } = JSON.parse(token);
+      getUserDataForHeader(user.id);
+    } else {
+      setUserData(null);
+    }
+  }, [userLogin]);
+
+  const getUserDataForHeader = async (id: string) => {
+    const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
+    if (error) {
+    }
+    setUserData(data as User);
+  };
 
   // 로그아웃 핸들러
   const signOutHandler = async () => {
     let { error } = await supabase.auth.signOut();
-    alert('로그아웃 완료!');
-    setUser('');
-    navigate('/');
-    console.error(error);
-  };
-
-  const setUserData = async () => {
-    if (checkLogin) {
-      const { data, error } = await supabase.from('users').select('*').eq('id', checkLogin!.id).single();
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        console.log(data);
-        setUser(data);
-      }
-    } else {
-      const { data, error } = await supabase.from('users').select('*').eq('id', userId).single();
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        console.log(data);
-        setUser(data);
-      }
+    if (error) {
+      alert(error);
+      return;
     }
+    setUserLogin('logout');
+    alert('로그아웃 완료!');
+    navigate('/');
   };
-
-  useEffect(() => {
-    setUserData();
-    console.log('이펙트실행됨');
-  }, [checkLogin]);
-
-  // 유저의 프로필 이미지를 가져온다
-
-  // 소셜로그인 시 프로필 적용
-
-  // if (user !== null && user.identities?.[0]?.identity_data) {
-  //   const socialData = user.identities[0].identity_data;
-  //   setImageUrl(socialData.avatar_url);
-  //   setNickName(socialData.name);
-  //   setUser(user);
-  // }
 
   return (
     <S.TopBarMenuContainer>
@@ -69,10 +53,18 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
         <S.QuickPostButton>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
-      {user && <S.TopBarMenu>마이페이지</S.TopBarMenu>}
-      <S.TopBarLogContainer $logged={user ? true : false}>
+      {userData && <>{/* <S.TopBarMenu onClick={() => navigate('/mypage/profile')}>마이페이지</S.TopBarMenu> */}</>}
+      <S.TopBarLogContainer $logged={userData ? true : false}>
         {/* 로그인 전 후 분기 */}
-        {user ? (
+        {!userData ? (
+          <>
+            <S.TopBarLogButton onClick={() => navigate('/login')}>로그인</S.TopBarLogButton>
+            <S.TopBarLogButton onClick={() => navigate('/register')}>회원가입</S.TopBarLogButton>
+            <br />
+            {/* <SuccessMessage>{successMessage}</SuccessMessage> */}
+            {/* <ErrorMessage>{errorMessage}</ErrorMessage> */}
+          </>
+        ) : (
           <>
             <S.Icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -88,19 +80,9 @@ const TopBarMenuContainer = () => {
               </svg>
             </S.Icon>
             <S.Level>Lv. 식신</S.Level>
-            <p>Hello, {user?.nickname}</p>
-            <S.ProfileImg src={user?.profileImg} alt="프로필 사진"></S.ProfileImg>
-            <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton>
-          </>
-        ) : (
-          <>
-            <S.TopBarLogButton onClick={() => navigate('/login')}>로그인</S.TopBarLogButton>
-
-            <S.TopBarLogButton onClick={() => navigate('/register')}>회원가입</S.TopBarLogButton>
-            <br />
-
-            <SuccessMessage>{successMessage}</SuccessMessage>
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            {/* <p>Hello, {userData?.nickname}</p> */}
+            <S.ProfileImg src={userData?.profileImg} alt="프로필 사진"></S.ProfileImg>
+            {/* <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton> */}
           </>
         )}
       </S.TopBarLogContainer>

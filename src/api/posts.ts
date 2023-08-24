@@ -25,17 +25,22 @@ const deletePost = async (id: string) => {
 
 // MyPosts
 const getMyPostsById = async (id: string) => {
+  console.log('이건 에이피아이에서 찍은거셈', id);
   const response = await supabase.from('posts').select('*,userId(nickname,profileImg)').eq('userId', id);
   return response;
 };
 
 const getMyBookMarkById = async (id: string) => {
   const response = await supabase.from('post_bookmark').select('postId(*,userId(*))').eq('userId', id);
+  console.log(response.error);
+  console.log(response.data);
   return response;
 };
 
 const getMyLikePostById = async (id: string) => {
   const response = await supabase.from('post_likes').select('postId(*,userId(*))').eq('userId', id);
+  console.log(response.error);
+  console.log(response.data);
   return response;
 };
 
