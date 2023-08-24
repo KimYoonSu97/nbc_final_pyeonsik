@@ -7,9 +7,11 @@ import styled from 'styled-components';
 const RankSideBar = () => {
   return (
     <S.Container>
-      <FetchPosts />
-      <RealTimeCombo />
-      <NewReview />
+      <S.ContentsBox>
+        <FetchPosts />
+        <RealTimeCombo />
+      </S.ContentsBox>
+      {/* <NewReview /> */}
     </S.Container>
   );
 };
@@ -20,5 +22,10 @@ const S = {
   Container: styled.div`
     position: fixed;
     right: calc(((100vw - 1280px) / 2) + 16px);
+  `,
+  ContentsBox: styled.div`
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
   `
 };

@@ -1,4 +1,4 @@
-import { supabase } from 'src/supabse';
+import supabase from 'src/lib/supabaseClient';
 
 export type CommentType = {
   comment: string;
@@ -11,7 +11,6 @@ export type CommentType = {
 // 포스트에 아이디에 해당하는 댓글 가져오기
 const getCommentData = async (id: string) => {
   const { data } = await supabase.from('detail_comments').select(`"*",users("*")`).eq('postId', id);
-  // console.log("commentData",data)
   return data;
 };
 

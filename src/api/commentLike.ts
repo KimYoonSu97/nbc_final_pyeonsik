@@ -1,4 +1,4 @@
-import { supabase } from 'src/supabse';
+import supabase from 'src/lib/supabaseClient';
 
 interface LikeType {
   id: string;
@@ -8,7 +8,7 @@ interface LikeType {
 
 const getLike = async () => {
   const { data } = await supabase.from('comment_likes_test').select('commentId,userId');
-  //   console.log(data,"likedataaaaaaaa")
+
   return data;
 };
 

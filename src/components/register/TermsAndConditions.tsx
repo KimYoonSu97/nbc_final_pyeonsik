@@ -1,51 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const TermsCheckbox = styled.input`
-  /* 체크박스 스타일링 */
-  margin-right: 8px;
-`;
-
-const ModalButton = styled.button`
-  /* 모달 버튼 스타일링 */
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-const TermsModal = styled.div`
-  /* 모달 배경 스타일링 */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  /* 모달 내용 스타일링 */
-  background-color: white;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-`;
-const AllAgreeLabel = styled.label`
-  /* 모달 내용 스타일링 */
-  background-color: white;
-
-  font-weight: bold;
-
-`;
-
-
-
 interface TermsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -95,7 +50,7 @@ const TermsAndConditions: React.FC = () => {
           <TermsCheckbox type="checkbox" checked={allAgreed} onChange={toggleAllAgree} />
           전체 동의합니다.
         </AllAgreeLabel>
-        <br/>
+        <br />
         <TermsCheckbox type="checkbox" checked={terms1Agreed} onChange={() => setTerms1Agreed(!terms1Agreed)} />
         이용약관 1에 동의합니다.
         <button onClick={() => setTerms1ModalOpen(true)}>보기</button>
@@ -122,3 +77,45 @@ const TermsAndConditions: React.FC = () => {
 };
 
 export default TermsAndConditions;
+
+const TermsCheckbox = styled.input`
+  /* 체크박스 스타일링 */
+  margin-right: 8px;
+`;
+
+const ModalButton = styled.button`
+  /* 모달 버튼 스타일링 */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+const TermsModal = styled.div`
+  /* 모달 배경 스타일링 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContent = styled.div`
+  /* 모달 내용 스타일링 */
+  background-color: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+const AllAgreeLabel = styled.label`
+  /* 모달 내용 스타일링 */
+  background-color: white;
+
+  font-weight: bold;
+`;

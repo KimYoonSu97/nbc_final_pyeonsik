@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from '../components/header/Header';
 import { Outlet, useLocation } from 'react-router-dom';
-import SideBar from 'src/components/sidebar/SideBar';
 import styled from 'styled-components';
+import SideBar from 'src/components/sidebar/SideBar';
 
 const Layout = () => {
   const location = useLocation();
@@ -34,6 +34,7 @@ const S = {
     gap: 62px;
     justify-content: center;
   `,
+
   BottomContainer: styled.div`
     margin-top: 106px;
     background: var(--background, #f6f7f9);
@@ -43,10 +44,12 @@ const S = {
       display: none;
     }
   `,
+
   ContentsArea: styled.div`
     position: relative;
     width: 890px;
   `,
+
   PositionBox: styled.div`
     width: 296px;
     height: 10px;

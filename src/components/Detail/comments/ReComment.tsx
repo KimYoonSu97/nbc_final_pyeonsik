@@ -1,7 +1,6 @@
+import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState, useEffect } from 'react';
 import { getReCommentData, writeReCommentData } from 'src/api/ReComment';
-import { supabase } from 'src/supabse';
 import { CommentWrap, CommentWriteWrap } from './styledComments';
 
 interface ReCommentProps {
@@ -29,6 +28,7 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
     };
     WriteReCommentMutation.mutate(newReComment);
   };
+
   return (
     <>
       <CommentWriteWrap>

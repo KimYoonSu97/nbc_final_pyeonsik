@@ -20,6 +20,11 @@ export interface Post {
   body: string;
   product: [];
   userId?: PostUserProfile | string;
+  likes: string;
+  likesCount: number;
+  // postImge tag (유길님)
+  tags: { x: number; y: number; prodData: string; img: string; price: string }[];
+  tagimage: string;
 }
 
 // 게시글 작성할 때 사용하는 임시 type
@@ -63,7 +68,7 @@ export interface NewPostBookmark {
 }
 
 export interface RankProps {
-  isFirst?: boolean;
+  $isfirst?: boolean;
 }
 
 export interface UserType {
@@ -82,4 +87,49 @@ export interface PostUserProfile {
 export interface RenderComponents {
   type: string;
   component: JSX.Element;
+}
+
+export interface Likes {
+  id: string;
+  likes: string;
+  postId: string;
+}
+
+// 이 아래가 내가 가져온 타입선언
+export interface Tag {
+  x: number;
+  y: number;
+  prodData: string;
+  img: string;
+  price: string;
+}
+
+export interface ImageData {
+  url: string[];
+  tags: Tag[];
+}
+
+export interface Data {
+  prodName: string;
+  prodImg: string;
+  prodBrand: string;
+  prodCategory: string;
+  price: string;
+}
+
+// export interface Post {
+//   id: string;
+//   tags: { x: number; y: number; text: string; img: string; price: string }[];
+//   url: string;
+// }
+
+// export interface Result {
+//   img: string;
+//   title: string;
+//   price: string;
+// }
+
+export interface ImageTagProps {
+  onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
+  onImageSelect: (selectedImage: File) => void;
 }

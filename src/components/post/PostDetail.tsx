@@ -2,15 +2,18 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PostBookmark, PostLike } from 'src/types/types';
-import { getPost } from 'src/api/posts';
-import { getPostLike } from 'src/api/postLikes';
+// custom hoooks
+import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
+// api
+import { getPost } from 'src/api/posts';
+import { getPostLike } from 'src/api/postLikes';
 
 const PostDetail = () => {
-  // user id 윤수님
-  const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
+  // user id
+  const userId: string | undefined = useLoginUserId();
 
   const { id } = useParams<string>();
   const navigate = useNavigate();
@@ -43,10 +46,12 @@ const PostDetail = () => {
     if (!postLike) {
       const newPostLike = {
         postId: post.id,
-        userId
+        userId: userId as unknown as string
       };
+      console.log('추가임', newPostLike);
       addPostLikeMutate.mutate(newPostLike);
     } else {
+      console.log('삭제임', postLike);
       deletePostLikeMutate.mutate(postLike.id);
     }
   };

@@ -94,8 +94,6 @@ const S = {
     color: black;
     cursor: pointer;
     ${(props) =>
-      // if(!props.$type) {return;}
-
       props.$type === props.$location &&
       css`
         background-color: #efefef;

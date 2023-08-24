@@ -89,7 +89,6 @@ const S = {
   `,
   Nickname_Category: styled.div`
     color: #000;
-    /* body-medium */
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

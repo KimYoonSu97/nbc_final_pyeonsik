@@ -1,11 +1,12 @@
 import React from 'react';
 import { useRef, useState, useMemo } from 'react';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { ImageResize } from 'quill-image-resize-module-ts';
-import PostWriteInput from './PostWriteInput';
 import { useNavigate } from 'react-router';
+
+import ReactQuill, { Quill } from 'react-quill';
+import { ImageResize } from 'quill-image-resize-module-ts';
+import 'react-quill/dist/quill.snow.css';
 import useMutate from 'src/hooks/usePost';
+import PostWriteInput from './PostWriteInput';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -18,6 +19,7 @@ const PostWriteCommon = () => {
   const { addPostMutate } = useMutate();
 
   const QuillRef = useRef<ReactQuill>();
+
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const postRef = useRef<HTMLInputElement>(null);

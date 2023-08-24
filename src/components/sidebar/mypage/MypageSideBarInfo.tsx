@@ -2,9 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
 import { myPagePostAtom } from 'src/globalState/jotai';
+import { useQuery } from '@tanstack/react-query';
+import { getMyPostsById } from 'src/api/posts';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const MypageSideBarInfo = () => {
-  const [post] = useAtom(myPagePostAtom);
+  const id = useLoginUserId();
+
+  const { isLoading, data } = useQuery({
+    queryKey: ['MyPost'],
+    queryFn: () => getMyPostsById(id),
+    enabled: id ? true : false
+  });
+
+  if (isLoading) {
+    return <p>Loading…</p>;
+  }
+  if (data?.error) {
+    return <p>Error</p>;
+  }
+  if (data?.data.length === 0) {
+    return <p>none</p>;
+  }
+
   return (
     <>
       <S.ProfileArea>
