@@ -55,7 +55,7 @@ export interface NewPostLike {
 }
 
 export interface RankProps {
-  isfirst?: boolean;
+  $isfirst?: boolean;
 }
 
 export interface UserType {

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 import { getMyBookMarkById, getMyLikePostById, getMyPostsById } from '../../api/posts';
 import { useQueries } from '@tanstack/react-query';
 import { Post } from 'src/types/types';
-import { useLocation, useParams } from 'react-router';
+import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const MyPost = () => {
+  const id = useLoginUserId();
   const { search } = useLocation();
-  const id = 'be029d54-dc65-4332-84dc-10213d299c53';
   const [filterHandler, setFilterHandler] = useState(search);
 
   const [
@@ -21,17 +22,17 @@ const MyPost = () => {
       {
         queryKey: ['MyBookMarkPost'],
         queryFn: () => getMyBookMarkById(id!),
-        enabled: filterHandler === '?=bookmark'
+        enabled: filterHandler === '?=bookmark' && id ? true : false
       },
       {
         queryKey: ['MyLikePost'],
         queryFn: () => getMyLikePostById(id!),
-        enabled: filterHandler === '?=like'
+        enabled: filterHandler === '?=like' && id ? true : false
       },
       {
         queryKey: ['MyPost'],
         queryFn: () => getMyPostsById(id!),
-        enabled: filterHandler === '?=mypost'
+        enabled: filterHandler === '?=mypost' && id ? true : false
       }
     ]
   });
@@ -67,6 +68,8 @@ const MyPost = () => {
       <S.ButtonArea>
         <S.FilterButton
           to="?=bookmark"
+          $type={'?=bookmark'}
+          $location={search}
           onClick={() => {
             setFilterHandler('?=bookmark');
           }}
@@ -75,6 +78,8 @@ const MyPost = () => {
         </S.FilterButton>
         <S.FilterButton
           to="?=like"
+          $type={'?=like'}
+          $location={search}
           onClick={() => {
             setFilterHandler('?=like');
           }}
@@ -83,8 +88,10 @@ const MyPost = () => {
         </S.FilterButton>
         <S.FilterButton
           to="?=mypost"
+          $type={'?=mypost'}
+          $location={search}
           onClick={() => {
-            setFilterHandler('?=mypost');
+            setFilterHandler('');
           }}
         >
           내가 쓴 글
@@ -121,15 +128,27 @@ const S = {
     z-index: 999;
   `,
   ContentsArea: styled.div``,
-  FilterButton: styled(Link)`
+  FilterButton: styled(Link)<{ $type: string; $location: string }>`
     padding: 5px 11px;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #000;
     font-size: 12px;
-    font-weight: 700;
-    line-height: 16px;
+
+    line-height: 16px; /* 133.333% */
     text-decoration: none;
     color: black;
+    border-radius: 100px;
+
+    ${(props) => {
+      if (props.$type === props.$location) {
+        return css`
+          color: #000;
+          font-weight: 700;
+          background-color: white;
+        `;
+      }
+    }}
   `
 };

@@ -5,10 +5,8 @@ import OAuthLogin from '../components/OAuthLogin';
 import supabase from 'src/lib/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
-import { User } from '@supabase/supabase-js';
 import { Link } from 'react-router-dom';
-
-export const userAtom = atom<User | null>(null);
+import { userAtom } from 'src/globalState/jotai';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +18,7 @@ const Login = () => {
 
   // Atom 생성
 
-  const [_, setUser] = useAtom(userAtom);
+  const [_, setUserLogin] = useAtom(userAtom);
 
   const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -38,9 +36,7 @@ const Login = () => {
     if (data.user) {
       alert('로그인 완료!');
       setSuccessMessage('로그인 완료!');
-
-      setUser(data.user);
-
+      setUserLogin('login');
       navigate('/');
     }
 
@@ -107,7 +103,7 @@ export default Login;
 const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   width: 500px;
   margin: 0 auto;
   padding: 20px;

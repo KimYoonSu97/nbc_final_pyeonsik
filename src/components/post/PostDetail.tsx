@@ -11,7 +11,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 const PostDetail = () => {
   // user id 윤수님
   const userId: string | undefined = useLoginUserId();
-  console.log(userId);
+
   const { id } = useParams<string>();
   const navigate = useNavigate();
 
