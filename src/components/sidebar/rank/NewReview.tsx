@@ -20,10 +20,10 @@ const NewReview = () => {
 
   //컴포넌트 마운트 시 패치해 온 posts 중 시간순으로 정렬해서 5개 디스플레이
   useEffect(() => {
-    const sortedPosts = [...posts]
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-      .slice(0, 5);
-    setFilteredPosts(sortedPosts);
+    const sortedPosts = [...posts];
+    //   .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    //   .slice(0, 5);
+    // setFilteredPosts(sortedPosts);
   }, [posts]);
 
   return (

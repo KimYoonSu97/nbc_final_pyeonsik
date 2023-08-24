@@ -1,15 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { addLike, deleteLike, getLike } from 'src/api/CommentLike';
+import { addLike, deleteLike, getLike } from 'src/api/commentLike';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 interface CommentIdProps {
   commentId: string;
 }
 const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   const queryClient = useQueryClient();
-  const [user, setUser] = useState<any>({ id: 'f3f322f0-2439-4580-b817-c9e0b7757cae', nickname: '가나다라' });
+  const userId = useLoginUserId();
 
   //좋아요 데이터 받기
   const { data: likeData } = useQuery(['likes'], getLike);
+
 
   //클릭시 좋아요 데이터에 추가
   const addLikeMutation = useMutation(addLike, {
@@ -25,18 +27,19 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   });
 
   const toggleLike = (commentId: string) => {
+
     const changeLike = likeData?.find((like) => {
-      return like.commentId === commentId && like.userId === user.id;
+      return like.commentId === commentId && like.userId === userId;
     });
 
     if (changeLike) {
-      deleteLikeMutation.mutate({ commentId, userId: user.id });
+      deleteLikeMutation.mutate({ commentId, userId });
     } else {
-      addLikeMutation.mutate({ commentId, userId: user.id });
+      addLikeMutation.mutate({ commentId, userId });
     }
   };
 
-  const checkLike = (commentId: string, userId: string, likeData: any) => {
+  const checkLike = (commentId: string, userId: string| undefined, likeData: any) => {
     let answer = false;
     let array: any = [];
     if (likeData) {
@@ -55,10 +58,10 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
     const commentLikesCount = likeData?.filter((like: any) => like.commentId === commentId).length;
     return commentLikesCount || 0;
   };
-  
+
   return (
     <button onClick={() => toggleLike(commentId)}>
-      {checkLike(commentId, user.id, likeData) ? '♥' : '♡'}
+      {checkLike(commentId, userId, likeData) ? '♥' : '♡'}
       {getCommentLikesCount(commentId)}
       {/* <좋아요컴포넌트 comment.id user.id> 배열을 불러온 useQuery [likeData]=1초 => fetch => http 100번 0초  </좋아용> */}
     </button>

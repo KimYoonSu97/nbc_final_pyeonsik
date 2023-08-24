@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 import { supabase } from 'src/supabse';
 import styled from 'styled-components';
 
@@ -7,19 +9,32 @@ const Report = () => {
   const [email, setEmail] = useState('');
   const [selectedInquiry1, setSelectedInquiry1] = useState('');
   const [selectedInquiry2, setSelectedInquiry2] = useState('');
-  const [image,setImage] = useState('')
-  const [urlLink,setUrlLink] = useState('')
+  const [image, setImage] = useState('');
+  const [urlLink, setUrlLink] = useState('');
   const [message, setMessage] = useState('');
+
+  const userId = useLoginUserId();
+  console.log(userId);
+
+  const navigate = useNavigate();
+
+  const { data: reprtData }: any = supabase.from('reports').select('*');
+  console.log(reprtData);
+
+  const reportImage = async (event:any) => {
+    const uploadimage = event?.target.files[0]
+    console.log(uploadimage,"uploadimage")
+    const {data}:any = await supabase.storage.from('photos').upload(`report/${uploadimage.name}`,uploadimage)
+    console.log(data?.path,"imagesssssssssdataaaaaa")
+    setImage(data?.path)
+  }
+  
 
   const nextStep = () => setStep(step + 1);
 
-  const {data:reprtData}:any = supabase.from('reports').select("*")
-  console.log(reprtData)
-
   const handleOptionClick = (option: any) => {
-
-        setSelectedInquiry1(option);
-        console.log(option);
+    setSelectedInquiry1(option);
+    console.log(option);
   };
 
   const handleOption2Click = (option: any) => {
@@ -27,25 +42,36 @@ const Report = () => {
     console.log(option);
   };
 
-  const handleSubmitButton = async() => {
+  const handleSubmitButton = async () => {
     const reportData = {
-        email,
-        inquiry1:selectedInquiry1,
-        inquiry2:selectedInquiry2,
-        detailReport : {
-            image,
-            urlLink,
-            message,
-        }
-    }
-    await supabase.from('reports').insert([reportData])
+      email,
+      userId,
+      inquiry1: selectedInquiry1,
+      inquiry2: selectedInquiry2,
+      detailReport: {
+        image,
+        urlLink,
+        message
+      }
+    };
+    await supabase.from('reports').insert([reportData]);
+    nextStep();
   };
 
   const handleNext = () => {
-
-        nextStep();
-
+    if(selectedInquiry1){
+      nextStep();
+    }else{
+      alert("문의항목을 선택해 주세요.")
+    }
   };
+  const handleNext2 = () => {
+    if(selectedInquiry2){
+      nextStep();
+    }else{
+      alert("항목을 선택해 주세요.")
+    }
+  }
 
   const options1 = ['유저 신고', '오류 제보', '기타'];
   const options2 = [
@@ -69,10 +95,17 @@ const Report = () => {
               <span>식신을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
             </h2>
           </div>
-          <div>
-            <h2>이메일 입력</h2>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='이메일을 적어주세요.'></input>
-          </div>
+          {userId ? null : (
+            <div>
+              <h2>이메일 입력</h2>
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="이메일을 적어주세요."
+              ></input>
+            </div>
+          )}
+
           <div>
             <h2>문의 항목</h2>
             <div className="options-box">
@@ -106,17 +139,42 @@ const Report = () => {
               );
             })}
           </div>
-          <button onClick={handleNext}>선택완료</button>
+          <button onClick={handleNext2}>선택완료</button>
         </ReportInner>
       )}
       {step === 3 && (
         <ReportInner>
           <h2>해당 내용에 대해 확인 할 수 있는 사진,파일,링크를 업로드 해주세요.</h2>
-          <input type='file' onChange={(e)=>setImage(e.target.value)} id='fileupload' placeholder="클릭하여 파일을 선택해주세요."></input>
-          <input value={urlLink} onChange={(e)=>setUrlLink(e.target.value)} placeholder="주소 링크를 입력해주세요."></input>
-          <input value={message} onChange={(e)=>setMessage(e.target.value)} placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."></input>
+          <input
+            type="file"
+            onChange={reportImage}
+            id="fileupload"
+            placeholder="클릭하여 파일을 선택해주세요."
+          ></input>
+          <input
+            value={urlLink}
+            onChange={(e) => setUrlLink(e.target.value)}
+            placeholder="주소 링크를 입력해주세요."
+          ></input>
+          <input
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
+          ></input>
           <button onClick={handleSubmitButton}>제출하기</button>
           {/* 확인 페이지 내용 */}
+        </ReportInner>
+      )}
+      {step === 4 && (
+        <ReportInner>
+          <h1>제출이 완료되었습니다.</h1>
+          <button
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            홈으로 가기
+          </button>
         </ReportInner>
       )}
     </ReportWrap>
@@ -142,6 +200,6 @@ const ReportInner = styled.div`
     padding: 10px;
     text-align: left;
     border-radius: 5px;
-    background-color: #CED4DA;
+    background-color: #ced4da;
   }
 `;

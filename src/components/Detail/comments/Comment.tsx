@@ -1,46 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { WriteCommentData, deleteCommentData, getCommentData } from 'src/api/Comment';
+import { WriteCommentData, deleteCommentData, getCommentData } from 'src/api/comment';
 import ReComment from './ReComment';
 
 import { CommentWriteWrap, CommentWrap, CommentInner } from './styledComments';
 import CommentLikes from './CommentLikes';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const Comment = () => {
   const queryClient = useQueryClient();
-  const { postId } = useParams();
+  const { id } = useParams<string>();
+  console.log(id);
 
-  const [user, setUser] = useState<any>({id:"f3f322f0-2439-4580-b817-c9e0b7757cae",nickname:"가나다라"});
+  const userId = useLoginUserId();
   const [comment, setComment] = useState('');
 
-
-
-
-
-  console.log(user,"userididididiid")
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
-  // const getData = async () => {
-  //   const { data }: any = await supabase.auth.getSession();
-  //   console.log('userdatataaa', data.session.user);
-  //   if (data) {
-  //     setUser(data.session.user);
-  //   }
-  // };
-  interface UsersType {
-    nickname: string;
-  }
   //포스트 아이디와 같은 댓글 데이터 가져오기
-  // const { data: commentData } = useQuery(['comment'], () => getCommentData(postId!));
-  const { data: commentData } = useQuery<any>(['detailcomments'], () =>
-    getCommentData('1c27cfc8-fbd5-48cd-81e4-dff6148f3456')
-  );
-
-  console.log(commentData)
+  const { data: commentData } = useQuery(['detailcomments'], () => getCommentData(id!));
+  console.log(commentData);
 
   //댓글 작성시 바로 렌더링
   const writeMutation = useMutation(WriteCommentData, {
@@ -59,9 +37,8 @@ const Comment = () => {
   const WriteCommentButton = () => {
     const newComment = {
       comment,
-      // postId
-      userId: 'be029d54-dc65-4332-84dc-10213d299c53',
-      postId: '1c27cfc8-fbd5-48cd-81e4-dff6148f3456'
+      userId,
+      postId: id
     };
     writeMutation.mutate(newComment);
     setComment('');
@@ -77,17 +54,14 @@ const Comment = () => {
   };
 
   //작성 날짜 월일로 변환
-  const commentWriteDate = (date: string) => {
+   const commentWriteDate = (date: string) => {
     const writeDate = new Date(date);
     const month = writeDate.getMonth() + 1;
     const day = writeDate.getDate();
     return `${month}월 ${day}일`;
   };
 
-
- //좋아요 부분 ------------------------------------------------------------------------------------
-  
-
+  //좋아요 부분 ------------------------------------------------------------------------------------
 
   return (
     <>
@@ -98,9 +72,6 @@ const Comment = () => {
             WriteCommentButton();
           }}
         >
-          <p>
-            <img></img>
-          </p>
           <input value={comment} onChange={(e) => setComment(e.target.value)} placeholder="댓글을 남겨보세요!"></input>
           <button>
             <img src="/images/commentWriteImg2.png" alt="댓글작성버튼"></img>
@@ -111,14 +82,19 @@ const Comment = () => {
         {commentData?.map((comment: any) => {
           return (
             <CommentInner key={comment.id}>
-              <h1>{comment.users.nickname}</h1>
+              <div className='commentInfo'>
+                <div>
+                    <img src={comment.users.profileImg}></img>
+                    <h1>{comment.users.nickname}</h1>
+                    <span>{commentWriteDate(comment.created_at)}</span>
+                </div>
+                <CommentLikes commentId={comment.id} />
+              </div>
               <h2>{comment.comment}</h2>
-              <div>{comment.id}</div>
-              <p>{commentWriteDate(comment.created_at)}</p>
-              <CommentLikes commentId={comment.id}/>
+
               <button>답글달기</button>
               <ReComment parentCommentId={comment.id} />
-              { user&& comment.userId === user.id && (
+              {userId && comment.userId === userId && (
                 <div>
                   <button onClick={() => deleteCommentButton(comment.id)}>삭제하기</button>
                 </div>

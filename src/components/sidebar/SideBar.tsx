@@ -7,11 +7,10 @@ import Fotter from './Fotter';
 
 const SideBar = () => {
   const location = useLocation();
-
   return (
     <S.Container>
       <S.FixedContainer>
-        {location.pathname === '/mypage' ? <MypageSideBar /> : <RankSideBar />}
+        {location.pathname.includes('/mypage') ? <MypageSideBar /> : <RankSideBar />}
         <Fotter />
       </S.FixedContainer>
     </S.Container>

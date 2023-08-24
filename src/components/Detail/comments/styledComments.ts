@@ -46,8 +46,35 @@ export const CommentWriteWrap = styled.div`
 export const CommentWrap = styled.div``;
 export const CommentInner = styled.div`
   margin: 12px 0px;
+  .commentInfo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div{
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    img{
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+    span{
+      font-size: 13px;
+      letter-spacing: -.5px;
+      color: #777;
+    }
+  }
+  h1{
+    
+  }
   h2 {
     border: solid 1px #eee;
     padding: 10px 14px;
+    background-color: #fff;
+    border-radius: 6px;
+    
   }
+
 `;

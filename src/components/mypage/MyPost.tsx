@@ -1,76 +1,108 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { useAtom } from 'jotai';
-import { myPagePostAtom } from 'src/globalState/jotai';
-import MyPostCard from './MyPostCard';
-import _ from 'lodash';
-import { getMyBookMarkById } from '../../api/posts';
-import { useQuery } from '@tanstack/react-query';
-
-interface BookMark {
-  userId: string;
-}
+import PostCards from '../renderPosts/PostCards';
+import { getMyBookMarkById, getMyLikePostById, getMyPostsById } from '../../api/posts';
+import { useQueries } from '@tanstack/react-query';
+import { Post } from 'src/types/types';
+import { useLocation, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const MyPost = () => {
-  //유저정보 가져와야됨..
+  const { search } = useLocation();
   const id = 'be029d54-dc65-4332-84dc-10213d299c53';
-  const [post] = useAtom(myPagePostAtom);
-  const [filterHandler, setFilterHandler] = useState(true);
-  console.log('내가쓴 글과 북마크 글을 보기위한 컴포넌트를 위한 데이터', post);
+  const [filterHandler, setFilterHandler] = useState(search);
 
-  //요런 로직추가해서 미리 분기해놓고 분기한것만 map함수 사용
-  const { isLoading, data } = useQuery({ queryKey: ['MyBookMarkPost'], queryFn: () => getMyBookMarkById(id!) });
-  // const [, setMyPost] = useAtom(myPagePostAtom);
-  if (isLoading) {
-    return <p>Loading…</p>;
-  }
-  if (data?.error) {
-    return <p>Error</p>;
-  }
-  if (data?.data.length === 0) {
-    return <p>none</p>;
-  }
-  console.log(data!.data);
-  // console.log(data!.data);
-
-  //포스트 내부의
-  const myPost = post.filter((item) => {
-    return item.userId === id;
+  const [
+    { isLoading: bookmarkLoading, data: bookmark },
+    { isLoading: likeLoading, data: like },
+    { isLoading: myPostLoading, data: myPost }
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ['MyBookMarkPost'],
+        queryFn: () => getMyBookMarkById(id!),
+        enabled: filterHandler === '?=bookmark'
+      },
+      {
+        queryKey: ['MyLikePost'],
+        queryFn: () => getMyLikePostById(id!),
+        enabled: filterHandler === '?=like'
+      },
+      {
+        queryKey: ['MyPost'],
+        queryFn: () => getMyPostsById(id!),
+        enabled: filterHandler === '?=mypost'
+      }
+    ]
   });
+
+  if (filterHandler === '?=bookmark') {
+    if (bookmarkLoading) {
+      return <div>Loading</div>;
+    }
+  } else if (filterHandler === '?=like') {
+    if (likeLoading) {
+      return <div>Loading</div>;
+    }
+  } else {
+    if (myPostLoading) {
+      return <div>Loading</div>;
+    }
+  }
+
+  let bookmarkData;
+  let likeData;
+  if (filterHandler === '?=bookmark') {
+    bookmarkData = bookmark!.data!.map((item) => {
+      return item.postId;
+    });
+  } else if (filterHandler === '?=like') {
+    likeData = like!.data!.map((item) => {
+      return item.postId;
+    });
+  }
 
   return (
     <>
       <S.ButtonArea>
         <S.FilterButton
+          to="?=bookmark"
           onClick={() => {
-            setFilterHandler(true);
+            setFilterHandler('?=bookmark');
           }}
         >
-          저장 레시피
+          북마크
         </S.FilterButton>
         <S.FilterButton
+          to="?=like"
           onClick={() => {
-            setFilterHandler(false);
+            setFilterHandler('?=like');
+          }}
+        >
+          좋아요
+        </S.FilterButton>
+        <S.FilterButton
+          to="?=mypost"
+          onClick={() => {
+            setFilterHandler('?=mypost');
           }}
         >
           내가 쓴 글
         </S.FilterButton>
       </S.ButtonArea>
       <S.ContentsArea>
-        카드 영역
-        {filterHandler ? (
-          <>
-            {/* {BookMark.map((item) => {
-              return <MyPostCard key={item.id} data={item} />;
-            })} */}
-          </>
-        ) : (
-          <>
-            {myPost.map((item) => {
-              return <MyPostCard key={item.id} data={item} />;
-            })}
-          </>
-        )}
+        {(() => {
+          switch (filterHandler) {
+            case '?=bookmark':
+              return <PostCards data={bookmarkData as unknown as Post[]} />;
+            case '?=like':
+              return <PostCards data={likeData as unknown as Post[]} />;
+            case '?=mypost':
+              return <PostCards data={myPost?.data as unknown as Post[]} />;
+            default:
+              return <></>;
+          }
+        })()}
       </S.ContentsArea>
     </>
   );
@@ -89,7 +121,7 @@ const S = {
     z-index: 999;
   `,
   ContentsArea: styled.div``,
-  FilterButton: styled.button`
+  FilterButton: styled(Link)`
     padding: 5px 11px;
     display: flex;
     justify-content: center;
@@ -97,5 +129,7 @@ const S = {
     font-size: 12px;
     font-weight: 700;
     line-height: 16px;
+    text-decoration: none;
+    color: black;
   `
 };
