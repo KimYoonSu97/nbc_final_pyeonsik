@@ -9,24 +9,6 @@ import { myPagePostAtom } from 'src/globalState/jotai';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const MypageSideBar = () => {
-  //여기서 데이터 패치 해와서 조타이 전역으로 관리하고
-  const userId = useLoginUserId();
-
-  const { isLoading, data } = useQuery({ queryKey: ['MyPost'], queryFn: () => getMyPostsById(userId!) });
-  const [, setMyPost] = useAtom(myPagePostAtom);
-
-  if (isLoading) {
-    return <p>Loading…</p>;
-  }
-  if (data?.error) {
-    return <p>Error</p>;
-  }
-  if (data?.data.length === 0) {
-    return <p>none</p>;
-  }
-
-  setMyPost(data!.data);
-
   return (
     <S.Container>
       <S.ContentsBox>
