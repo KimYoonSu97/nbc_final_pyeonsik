@@ -25,6 +25,8 @@ const PostEditForm = () => {
     setBody(post?.body);
   }, [data]);
 
+  console.log('post', post);
+
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

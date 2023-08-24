@@ -7,6 +7,7 @@ import useMutate from 'src/hooks/useMutate';
 import PostWriteInput from './PostWriteInput';
 import ImageTag from './ImageTag';
 import { Data, Tag } from 'src/types/types';
+// import FetchData from './FetchData';
 
 const PostWriteForm = () => {
   // user id 윤수님
@@ -46,8 +47,6 @@ const PostWriteForm = () => {
       imageUrl = data.path;
     }
 
-    console.log('imageUrl', imageUrl);
-
     const newPost = {
       userId,
       title,
@@ -58,8 +57,6 @@ const PostWriteForm = () => {
     addMutate.mutate(newPost);
     navigate(`/`);
   };
-
-  console.log('selectedImage', selectedImage);
 
   return (
     <>
@@ -91,6 +88,7 @@ const PostWriteForm = () => {
         />
         <button type="submit">add</button>
       </form>
+      {/* <FetchData /> */}
     </>
   );
 };
