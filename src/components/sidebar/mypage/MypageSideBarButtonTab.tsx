@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAtom } from 'jotai';
-
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 
