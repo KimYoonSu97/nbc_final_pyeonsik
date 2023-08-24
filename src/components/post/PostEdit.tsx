@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getPosts } from '../../api/posts';
-import useMutate from 'src/hooks/usePost';
+import { getPosts } from 'src/api/posts';
+import useMutate from 'src/hooks/useMutate';
 import PostWriteInput from './PostWriteInput';
 
 const PostEditForm = () => {
-  const { id } = useParams<string>();
+  const { id: prams } = useParams<string>();
   const navigate = useNavigate();
   const { updateMutate } = useMutate('posts');
 
@@ -16,14 +16,14 @@ const PostEditForm = () => {
 
   // read
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
-  const post = data?.data?.find((post) => post.id === id);
-  // console.log(post);
+  const post = data?.data?.find((post) => post.id === prams);
 
   // useEffect 순서 확인하기!
   useEffect(() => {
     console.log('3', post);
     setTitle(post?.title);
-  }, [post]);
+    setBody(post?.body);
+  }, [data]);
 
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,11 +34,11 @@ const PostEditForm = () => {
       body
     };
     updateMutate.mutate(editPost);
-    navigate(`/detail/${id}`);
+    navigate(`/detail/${prams}`);
   };
 
   const clickCancle = () => {
-    navigate(`/detail/${id}`);
+    navigate(`/detail/${prams}`);
   };
 
   console.log('0');
@@ -62,7 +62,7 @@ const PostEditForm = () => {
           type="text"
           name="title"
           title="title"
-          value={title}
+          value={title || ''}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
@@ -72,7 +72,7 @@ const PostEditForm = () => {
           type="text"
           name="body"
           title="body"
-          value={body}
+          value={body || ''}
           onChange={(e) => {
             setBody(e.target.value);
           }}

@@ -45,7 +45,7 @@ const Login = () => {
     if (error) {
       setErrorMessage('Error logging in: ' + error.message);
     } else {
-      console.log('Registration successful:', data);
+      // console.log('Registration successful:', data);
     }
   };
 

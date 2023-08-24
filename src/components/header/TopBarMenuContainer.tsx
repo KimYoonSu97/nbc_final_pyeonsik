@@ -43,9 +43,9 @@ const TopBarMenuContainer = () => {
     const fetchImageUrl = async () => {
       if (user && user.email) {
         const { data, error } = await supabase.from('users').select('profileImg').eq('email', user.email).single();
-        console.log(user);
-        console.log('hi');
-        console.log(data);
+        // console.log(user);
+        // console.log('hi');
+        // console.log(data);
         if (data) {
           setImageUrl(data.profileImg);
         }
