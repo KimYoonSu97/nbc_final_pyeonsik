@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { supabase } from 'src/supabse';
 import styled from 'styled-components';
@@ -7,24 +7,39 @@ const PasswordReset: React.FC = () => {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [password, setPassword] = useState('');
 
-  //   TODO: 기능 정상 작동 안됨.
+  // TODO: 아무것도 안보내짐..
+
+  /**
+   * 작성한 이메일로 비밀번호 변경 링크 발송
+   */
   const handleResetPassword = async () => {
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
-
-      if (error) {
-        setErrorMessage(error.message);
-        console.error('Error sending reset password email:', error.message);
-      } else {
-        const successMessage = 'Password reset email sent successfully.';
-        setSuccessMessage(successMessage);
-        console.log(successMessage);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+    console.log(data);
+    if (!error) {
+      alert('성공적으로 해당 이메일로 발신하였습니다.');
     }
+    console.log(error);
   };
+
+  // 발송된 링크 클릭 후 돌아오면 리셋 이벤트 발생
+  useEffect(() => {
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event == 'PASSWORD_RECOVERY') {
+        const newPassword = prompt('What would you like your new password to be?');
+        if (newPassword === null) {
+          alert('비밀번호가 공백입니다!');
+          return;
+        }
+        setPassword(newPassword);
+        const { data, error } = await supabase.auth.updateUser({ password: password });
+
+        if (data) alert('Password updated successfully!');
+        if (error) alert('There was an error updating your password.');
+      }
+    });
+  }, []);
 
   return (
     <ResetFormContainer>

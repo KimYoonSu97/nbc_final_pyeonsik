@@ -142,8 +142,9 @@ const Button = styled.button`
 `;
 const RowContainer = styled.div`
   display: flex;
-  align-items: center;
-  flex-direction: row;
+  justify-content: center; /* 요소들을 수평 가운데로 정렬 */
+  align-items: center; /* 요소들을 수직 가운데로 정렬 */
+  flex-direction: row; /* 요소들을 세로 방향으로 배치 */
 `;
 const ColumnContainer = styled.div`
   display: flex;

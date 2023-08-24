@@ -13,7 +13,7 @@ const PasswordChange: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const [user] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
 
   const handleResetPassword = async () => {
     if (password !== checkPassword) {
@@ -31,12 +31,15 @@ const PasswordChange: React.FC = () => {
 
       if (!error) {
         alert('비밀번호 재설정 완료!');
+        setUser(null);
         supabase.auth.signOut();
         navigate('/login');
         const successMsg = 'Password changed successfully';
         setSuccessMessage(successMsg);
         console.log(successMsg);
       } else {
+        alert(error);
+        setErrorMessage(error.message);
         console.error('Error changing password:', error.message);
       }
     }
