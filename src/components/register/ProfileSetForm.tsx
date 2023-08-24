@@ -12,41 +12,43 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
-  
+  const [baseImg] = useState(baseImage);
 
-  
   const encodeFileTobase64 = (fileBlob: Blob) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise(() => {
       reader.onload = () => {
         setProfileImgSrc(reader.result as string);
-      
       };
     });
   };
 
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const selectedFile = e.target.files && e.target.files[0];
-  //   if (selectedFile) {
-  //     //미리보기를 위한 /
-  //     // const imgURL = URL.createObjectURL(selectedFile);
-  //     // const img = atob(selectedFile)
-  //     setProfileImgSrc(img);
-  //   }
-  // };
-
   const setProfile = async () => {
+    // Check if nickname already exists
+    const { data: existingUsers, error: existingUsersError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('nickname', nickname)
+      .maybeSingle();
+    console.log(existingUsers);
+    
+    // TODO: 중복이어도 return이 안됨..
+    if (existingUsers) {
+      alert('이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.');
+      return;
+    }
+
     const newUser = {
       email: userEmail,
       nickname,
-      profileImg: profileImgSrc.length < 5 ? "" : profileImgSrc
+      profileImg: profileImgSrc.length < 5 ? '' : profileImgSrc
     };
     if (!nickname) {
       alert('닉네임을 입력해주세요');
       return;
     }
-    if (profileImgSrc === baseImage) {
+    if (profileImgSrc === '') {
       alert('사진을 등록해주세요');
       return;
     }
@@ -63,10 +65,15 @@ const ProfileSetForm = ({ userEmail }: Props) => {
           <ProfileImgLabel>프로필 설정</ProfileImgLabel>
 
           <div>
-            <PreviewImage src={profileImgSrc} alt="프로필 이미지" />
-            <ProfileImgInput src={baseImage} type="file" accept="image/*" onChange={(e)=>{
-              encodeFileTobase64(e.target.files![0] as Blob)
-            }} />
+            <PreviewImage src={profileImgSrc || baseImg} alt="프로필 이미지" />
+            <ProfileImgInput
+              src={baseImg}
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                encodeFileTobase64(e.target.files![0] as Blob);
+              }}
+            />
           </div>
         </ProfileImgnameBox>
         <Label>닉네임</Label>

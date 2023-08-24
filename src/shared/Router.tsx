@@ -11,6 +11,8 @@ import Write from 'src/pages/Write';
 import Detail from 'src/pages/Detail';
 import Edit from 'src/pages/Edit';
 import Mypage from 'src/pages/Mypage';
+import PasswordReset from 'src/pages/PasswordReset';
+import PasswordChange from 'src/pages/PasswordChange';
 
 const Router = () => {
   return (
@@ -21,6 +23,9 @@ const Router = () => {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/password_reset" element={<PasswordReset />} />
+          <Route path="/password_change" element={<PasswordChange />} />
+
           <Route path="/detail/:id" element={<Detail />} />
           <Route element={<PrivateRoute />}>
             <Route path="/write" element={<Write />} />
