@@ -9,7 +9,7 @@ import usePostLikes from 'src/hooks/usePostLikes';
 
 const PostDetail = () => {
   // user id 윤수님
-  const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
+  const userId = 'f3ca6e65-7572-4f63-z6wx-2555872d6a70';
 
   const { id } = useParams<string>();
   const navigate = useNavigate();
