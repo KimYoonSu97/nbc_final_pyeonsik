@@ -11,6 +11,7 @@ import Write from 'src/pages/Write';
 import Detail from 'src/pages/Detail';
 import Edit from 'src/pages/Edit';
 import Mypage from 'src/pages/Mypage';
+import Report from 'src/components/sidebar/Report';
 
 const Router = () => {
   return (
@@ -26,6 +27,7 @@ const Router = () => {
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path='/report' element={<Report/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

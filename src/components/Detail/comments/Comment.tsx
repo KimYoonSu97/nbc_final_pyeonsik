@@ -1,12 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { CommentType, WriteCommentData, deleteCommentData, getCommentData } from 'src/api/comment';
-import { supabase } from 'src/supabse';
+import { WriteCommentData, deleteCommentData, getCommentData } from 'src/api/Comment';
 import ReComment from './ReComment';
 
 import { CommentWriteWrap, CommentWrap, CommentInner } from './styledComments';
-import { addLike, deleteLike, getLike } from 'src/api/commentLike';
 import CommentLikes from './CommentLikes';
 
 const Comment = () => {

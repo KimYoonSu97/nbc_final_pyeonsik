@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getReCommentData, writeReCommentData } from 'src/api/ReComment';
 import { supabase } from 'src/supabse';
 import { CommentWrap, CommentWriteWrap } from './styledComments';
+import ReCommentLikes from './ReCommentLikes';
 
 interface ReCommentProps {
   parentCommentId: string;
@@ -11,10 +12,9 @@ interface ReCommentProps {
 const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
   const [reComment, setReComment] = useState('');
   const queryClient = useQueryClient();
-  console.log(parentCommentId,"aaaaaaaaaaaaaaaa")
+
 
   const { data: reCommentData } = useQuery(['reComment'], () => getReCommentData(parentCommentId));
-  console.log(reCommentData);
 
   const WriteReCommentMutation = useMutation(writeReCommentData, {
     onSuccess: () => {
@@ -57,8 +57,10 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
           .map((item) => {
             return (
               <>
+              <h1>{item.id}</h1>
                 <h2>{item.comment}</h2>
                 {/* <div>{item.created_at}</div> */}
+                <ReCommentLikes commentId={item.id}/>
               </>
             );
           })}
