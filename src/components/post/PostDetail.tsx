@@ -6,11 +6,12 @@ import { getPost } from 'src/api/posts';
 import { getPostLike } from 'src/api/postLikes';
 import useMutate from 'src/hooks/useMutate';
 import usePostLikes from 'src/hooks/usePostLikes';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const PostDetail = () => {
   // user id 윤수님
-  const userId = 'f3ca6e65-7572-4f63-z6wx-2555872d6a70';
-
+  const userId: string | undefined = useLoginUserId();
+  console.log(userId);
   const { id } = useParams<string>();
   const navigate = useNavigate();
 
@@ -39,10 +40,12 @@ const PostDetail = () => {
     if (!postLike) {
       const newPostLike = {
         postId: post.id,
-        userId
+        userId: userId as unknown as string
       };
+      console.log('추가임', newPostLike);
       addPostLikeMutate.mutate(newPostLike);
     } else {
+      console.log('삭제임', postLike);
       deletePostLikeMutate.mutate(postLike.id);
     }
   };

@@ -4,7 +4,7 @@ const useLoginUserId = () => {
   const [loginUserId, setLoginUserId] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
+    const token = localStorage.getItem('sb-qjjxqwpcfnnfeoikbzav-auth-token');
     if (token) {
       const { user } = JSON.parse(token);
 
