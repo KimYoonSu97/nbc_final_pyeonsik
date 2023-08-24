@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { atom, useAtom } from 'jotai';
-
 import supabase from 'src/lib/supabaseClient';
 import { Post, Likes } from 'src/types/types';
 

@@ -1,28 +1,16 @@
 import React from 'react';
-import NewReview from './rank/NewReview';
-import RealTimeCombo from './rank/RealTimeCombo';
-import FetchPosts from './FetchPosts';
-import Fotter from './Fotter';
-import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import MypageSideBar from './mypage/MypageSideBar';
 import RankSideBar from './rank/RankSideBar';
+import Fotter from './Fotter';
 
 const SideBar = () => {
   const location = useLocation();
-
   return (
     <S.Container>
       <S.FixedContainer>
-        {location.pathname === '/mypage' ? (
-          <>
-            <MypageSideBar />
-          </>
-        ) : (
-          <>
-            <RankSideBar />
-          </>
-        )}
+        {location.pathname.includes('/mypage') ? <MypageSideBar /> : <RankSideBar />}
         <Fotter />
       </S.FixedContainer>
     </S.Container>

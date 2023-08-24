@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAtom } from 'jotai';
+import { myPagePostAtom } from 'src/globalState/jotai';
 
 const MypageSideBarInfo = () => {
+  const [post] = useAtom(myPagePostAtom);
   return (
     <>
       <S.ProfileArea>

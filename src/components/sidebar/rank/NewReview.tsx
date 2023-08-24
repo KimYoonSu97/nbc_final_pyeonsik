@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-
 import { Post } from 'src/types/types';
+import { postsAtom } from '../FetchPosts';
 import {
   NewReviewContainer,
   PostContainer,
@@ -12,7 +12,6 @@ import {
   ImageWrapper,
   HeadTitle
 } from '../StyledSideBar';
-import { postsAtom } from '../FetchPosts';
 
 const NewReview = () => {
   //Jotai의 useAtom을 사용해서 전역선언한 Posts데이터를 가져오기
@@ -30,23 +29,21 @@ const NewReview = () => {
   console.log('posts', posts);
 
   return (
-    <>
-      <NewReviewContainer>
-        <HeadTitle>편의점 신제품 리뷰</HeadTitle>
-        <PostContainer>
-          {filteredPosts.map((post) => (
-            <PostCard key={post.id}>
-              <ImageWrapper>
-                <Image src={post.img} alt={post.title} />
-              </ImageWrapper>
-              <Title>{post.title}</Title>
-              {/* <Body>{post.body}</Body> */}
-              {/* {post.created_at} */}
-            </PostCard>
-          ))}
-        </PostContainer>
-      </NewReviewContainer>
-    </>
+    <NewReviewContainer>
+      <HeadTitle>편의점 신제품 리뷰</HeadTitle>
+      <PostContainer>
+        {filteredPosts.map((post) => (
+          <PostCard key={post.id}>
+            <ImageWrapper>
+              <Image src={post.img} alt={post.title} />
+            </ImageWrapper>
+            <Title>{post.title}</Title>
+            {/* <Body>{post.body}</Body> */}
+            {/* {post.created_at} */}
+          </PostCard>
+        ))}
+      </PostContainer>
+    </NewReviewContainer>
   );
 };
 

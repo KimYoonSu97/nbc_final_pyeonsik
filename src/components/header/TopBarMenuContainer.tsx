@@ -1,8 +1,80 @@
-import React from 'react';
+import { atom, useAtom } from 'jotai';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import supabase from 'src/lib/supabaseClient';
+import { userAtom } from 'src/pages/Login';
 import { styled } from 'styled-components';
 
 const TopBarMenuContainer = () => {
-  const boolean = true;
+  const navigate = useNavigate();
+  const [user, setUser] = useAtom(userAtom);
+  const [nickName, setNickName] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [imageUrl, setImageUrl] = useState('');
+
+  // 로그아웃 핸들러
+  const signOutHandler = async () => {
+    let { error } = await supabase.auth.signOut();
+
+    setUser(null); // userData 초기화
+    setImageUrl('');
+    navigate('/');
+    alert('로그아웃 완료!');
+    console.error(error);
+  };
+  // 유저 닉네임 적용
+  useEffect(() => {
+    const setUserName = async () => {
+      if (user) {
+        const { data, error } = await supabase.from('users').select('nickname').eq('email', user.email).single();
+        if (data) {
+          setNickName(data.nickname);
+        }
+      }
+    };
+
+    setUserName();
+  }, [user]);
+
+  // 유저의 프로필 이미지를 가져온다
+
+  useEffect(() => {
+    const setProfileImg = async () => {
+      if (user) {
+        const { data, error } = await supabase.from('users').select('profileImg').eq('email', user.email).single();
+        if (data) {
+          setImageUrl(data.profileImg);
+        }
+      }
+    };
+
+    setProfileImg();
+  }, [user]);
+
+  // 소셜로그인 시 프로필 적용
+
+  // if (user !== null && user.identities?.[0]?.identity_data) {
+  //   const socialData = user.identities[0].identity_data;
+  //   setImageUrl(socialData.avatar_url);
+  //   setNickName(socialData.name);
+  //   setUser(user);
+  // }
+
+  // 현재 유저의 정보 가져오기!
+  const checkUser = async () => {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    console.log(user);
+    setUser(user);
+  };
+  useEffect(() => {
+    checkUser();
+  }, []);
+
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
@@ -11,9 +83,9 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
       {/* {boolean && <S.TopBarMenu>마이페이지</S.TopBarMenu>} */}
-      <S.TopBarLogContainer $logged={boolean}>
+      <S.TopBarLogContainer $logged={user ? true : false}>
         {/* 로그인 전 후 분기 */}
-        {boolean ? (
+        {user ? (
           <>
             <S.Icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -29,12 +101,19 @@ const TopBarMenuContainer = () => {
               </svg>
             </S.Icon>
             <S.Level>Lv. 식신</S.Level>
-            <S.ProfileImg></S.ProfileImg>
+            <p>Hello, {nickName}</p>
+            <S.ProfileImg src={imageUrl} alt="프로필 사진"></S.ProfileImg>
+            <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton>
           </>
         ) : (
           <>
-            <S.TopBarLogButton>로그인</S.TopBarLogButton>
-            <S.TopBarLogButton>회원가입</S.TopBarLogButton>
+            <S.TopBarLogButton onClick={() => navigate('/login')}>로그인</S.TopBarLogButton>
+
+            <S.TopBarLogButton onClick={() => navigate('/register')}>회원가입</S.TopBarLogButton>
+            <br />
+
+            <SuccessMessage>{successMessage}</SuccessMessage>
+            <ErrorMessage>{errorMessage}</ErrorMessage>
           </>
         )}
       </S.TopBarLogContainer>
@@ -43,13 +122,6 @@ const TopBarMenuContainer = () => {
 };
 
 export default TopBarMenuContainer;
-
-const Icon = {
-  Bell: styled.svg`
-    path {
-    }
-  `
-};
 
 const S = {
   TopBarMenuContainer: styled.div`
@@ -124,7 +196,7 @@ const S = {
     background: #d9d9d9;
     margin-left: 8px;
   `,
-  ProfileImg: styled.div`
+  ProfileImg: styled.img`
     width: 36px;
     height: 36px;
     margin-left: 4px;
@@ -132,3 +204,14 @@ const S = {
     border-radius: 100px;
   `
 };
+
+const SuccessMessage = styled.div`
+  margin-top: 10px;
+  color: blue;
+  font-size: 14px;
+`;
+const ErrorMessage = styled.div`
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
+`;
