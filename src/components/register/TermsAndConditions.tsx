@@ -41,10 +41,7 @@ const AllAgreeLabel = styled.label`
   background-color: white;
 
   font-weight: bold;
-
 `;
-
-
 
 interface TermsModalProps {
   isOpen: boolean;
@@ -95,7 +92,7 @@ const TermsAndConditions: React.FC = () => {
           <TermsCheckbox type="checkbox" checked={allAgreed} onChange={toggleAllAgree} />
           전체 동의합니다.
         </AllAgreeLabel>
-        <br/>
+        <br />
         <TermsCheckbox type="checkbox" checked={terms1Agreed} onChange={() => setTerms1Agreed(!terms1Agreed)} />
         이용약관 1에 동의합니다.
         <button onClick={() => setTerms1ModalOpen(true)}>보기</button>
