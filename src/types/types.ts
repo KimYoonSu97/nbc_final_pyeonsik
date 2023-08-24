@@ -9,6 +9,7 @@ export interface InputProps {
   autoFocus?: boolean;
 }
 
+// post
 export interface Post {
   id: string;
   created_at: string;
@@ -18,15 +19,13 @@ export interface Post {
   img: string;
   body: string;
   product: [];
-  bookmark: [];
   userId?: PostUserProfile | string;
-  likes: string;
 }
 
 // 게시글 작성할 때 사용하는 임시 type
 export interface NewPost {
   // orgPostId: string;
-  // postCategory: string;
+  postCategory: string;
   title: string;
   // img: string;
   body: string;
@@ -39,6 +38,7 @@ export interface EditPost {
   body: string;
 }
 
+// post like
 export interface PostLike {
   id: string;
   postId: string;
@@ -46,6 +46,18 @@ export interface PostLike {
 }
 
 export interface NewPostLike {
+  postId: string;
+  userId: string;
+}
+
+// post bookmark
+export interface PostBookmark {
+  id: string;
+  postId: string;
+  userId: string;
+}
+
+export interface NewPostBookmark {
   postId: string;
   userId: string;
 }

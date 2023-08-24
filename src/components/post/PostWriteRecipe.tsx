@@ -1,15 +1,16 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import useMutate from 'src/hooks/useMutate';
+import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
-const PostWriteForm = () => {
+// recipe, common write component 정리 필요
+const PostWriteRecipe = () => {
   // user id 윤수님
   const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
 
   const navigate = useNavigate();
-  const { addMutate } = useMutate('posts');
+  const { addPostMutate } = useMutate();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
@@ -18,11 +19,12 @@ const PostWriteForm = () => {
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newPost = {
+      postCategory: 'recipe',
       userId,
       title,
       body
     };
-    addMutate.mutate(newPost);
+    addPostMutate.mutate(newPost);
     navigate(`/`);
   };
 
@@ -53,4 +55,4 @@ const PostWriteForm = () => {
   );
 };
 
-export default PostWriteForm;
+export default PostWriteRecipe;

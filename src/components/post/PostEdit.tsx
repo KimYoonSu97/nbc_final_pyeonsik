@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPosts } from 'src/api/posts';
-import useMutate from 'src/hooks/useMutate';
+import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
-const PostEditForm = () => {
+const PostEdit = () => {
   const { id: prams } = useParams<string>();
   const navigate = useNavigate();
-  const { updateMutate } = useMutate('posts');
+  const { updatePostMutate } = useMutate();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
@@ -33,7 +33,7 @@ const PostEditForm = () => {
       title,
       body
     };
-    updateMutate.mutate(editPost);
+    updatePostMutate.mutate(editPost);
     navigate(`/detail/${prams}`);
   };
 
@@ -84,4 +84,4 @@ const PostEditForm = () => {
   );
 };
 
-export default PostEditForm;
+export default PostEdit;

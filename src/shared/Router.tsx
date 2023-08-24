@@ -11,6 +11,7 @@ import Write from 'src/pages/Write';
 import Detail from 'src/pages/Detail';
 import Edit from 'src/pages/Edit';
 import Mypage from 'src/pages/Mypage';
+import PostWriteCommon from 'src/components/post/PostWriteCommon';
 
 const Router = () => {
   return (

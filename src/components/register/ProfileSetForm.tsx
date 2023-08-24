@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import shortid from 'shortid';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 
@@ -29,7 +28,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     };
 
     const { data, error } = await supabase.from('users').insert(newUser).select();
-    alert('회원가입 완료!')
+    alert('회원가입 완료!');
     navigate('/');
   };
 
