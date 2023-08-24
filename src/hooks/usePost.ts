@@ -1,20 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addPost, deletePost, updatePost } from 'src/api/posts';
 
-const usePost = () => {
+const useMutate = (argument: string) => {
   const queryClient = useQueryClient();
 
   const success = {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Post'] });
+      queryClient.invalidateQueries({ queryKey: [argument] });
     }
   };
 
-  const addPostMutation = useMutation(addPost, success);
-  const updatePostMutation = useMutation(updatePost, success);
-  const deletePostMutation = useMutation(deletePost, success);
+  const addMutate = useMutation(addPost, success);
+  const updateMutate = useMutation(updatePost, success);
+  const deleteMutate = useMutation(deletePost, success);
 
-  return { addPostMutation, updatePostMutation, deletePostMutation };
+  return { addMutate, updateMutate, deleteMutate };
 };
 
-export default usePost;
+export default useMutate;

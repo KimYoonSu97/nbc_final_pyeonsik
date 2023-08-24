@@ -19,7 +19,7 @@ export interface Post {
   body: string;
   product: [];
   bookmark: [];
-  userId: string;
+  userId?: PostUserProfile | string;
   likes: string;
 }
 
@@ -51,12 +51,9 @@ export interface UserType {
   profileimg: File | null;
 }
 
-export interface UserTypes {
-  uid: string | null;
-  email: string | null;
-  password: string | null;
-  nickname: string | null;
-  profileimg: File | string | null;
+export interface PostUserProfile {
+  nickname: string;
+  profileImg: string;
 }
 
 export interface RenderComponents {
