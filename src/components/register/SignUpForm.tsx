@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
+import { Link } from 'react-router-dom';
+import TermsAndConditions from './TermsAndConditions';
 
 interface Props {
   setNextStep: React.Dispatch<React.SetStateAction<boolean>>;
@@ -52,6 +54,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const checkPasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCheckPassword(e.target.value);
   };
+  
 
   return (
     <RegisterFormContainer>
@@ -75,9 +78,11 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
         value={checkPassword}
         onChange={checkPasswordHandler}
       />
+      <TermsAndConditions/>
 
-      <Button onClick={handleSignUp}>회원가입</Button>
-      <br />
+      <Button onClick={handleSignUp}>가입하기</Button>
+      <AskMessage>이미 편식 계정이 있으신가요?</AskMessage>
+      <StyledLink to={'/login'}>기존 계정으로 로그인하기</StyledLink>
     </RegisterFormContainer>
   );
 };
@@ -136,4 +141,21 @@ const SelectedFileName = styled.div`
   margin-top: 10px;
   color: #666;
   font-size: 14px;
+`;
+
+const AskMessage = styled.div`
+  margin-top: 10px;
+  color: #d9d9d9;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  /* 여기에 스타일을 추가하세요 */
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  /* 추가적인 스타일링을 원하는 대로 적용하세요 */
 `;
