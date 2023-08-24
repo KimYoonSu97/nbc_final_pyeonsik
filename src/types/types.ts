@@ -21,6 +21,7 @@ export interface Post {
   bookmark: [];
   userId?: PostUserProfile | string;
   likes: string;
+  likesCount: number;
   //아래 두개 원유길이 추가
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
   tagimage: string;
@@ -75,6 +76,10 @@ export interface RenderComponents {
   component: JSX.Element;
 }
 
+export interface Likes {
+  id: string;
+  likes: string;
+}
 // 이 아래가 내가 가져온 타입선언
 export interface Tag {
   x: number;

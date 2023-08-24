@@ -8,7 +8,6 @@ interface ReCommentType {
 
 const getReCommentData = async (id: string) => {
   const { data } = await supabase.from('replay_comments').select('*');
-  // console.log("re",data)
   return data;
 };
 

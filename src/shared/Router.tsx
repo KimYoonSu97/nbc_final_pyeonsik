@@ -6,7 +6,7 @@ import Login from 'src/pages/Login';
 import Register from 'src/pages/Register';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+import { PrivateRoute } from './PrivateRoute';
 import Write from 'src/pages/Write';
 import Detail from 'src/pages/Detail';
 import Edit from 'src/pages/Edit';
@@ -20,11 +20,13 @@ const Router = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/detail/:id" element={<Detail />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/write" element={<Write />} />
-          <Route path="/edit/:id" element={<Edit />} />
-          <Route path="/mypage/:tab" element={<Mypage />} />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/write" element={<Write />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/mypage/:tab" element={<Mypage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
