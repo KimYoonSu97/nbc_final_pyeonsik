@@ -3,17 +3,7 @@ import { useAtom } from 'jotai';
 import { Post } from 'src/types/types';
 import { postsAtom } from '../FetchPosts';
 import { likesAtom } from '../FetchPosts';
-import {
-  RealTimeContainer,
-  PostContainer,
-  PostCard,
-  Title,
-  Body,
-  Image,
-  ImageWrapper,
-  HeadTitle,
-  Rank
-} from '../StyledSideBar';
+import { RealTimeContainer, PostContainer, PostCard, Title, ImageWrapper, HeadTitle, Rank } from '../StyledSideBar';
 
 const RealTimeCombo = () => {
   // Jotai의 useAtom을 사용해서 전역선언한 Posts 데이터와 Likes 데이터를 가져오기
@@ -41,10 +31,14 @@ const RealTimeCombo = () => {
       <PostContainer>
         {filteredPosts.map((post, index) => (
           <PostCard key={post.id}>
-            <Rank isFirst={index === 0}>{index + 1}</Rank>
-            <ImageWrapper>{post.img && <Image src={post.img} alt={'1'} />}</ImageWrapper>
+            <Rank isfirst={index === 0}>{index + 1}</Rank>
+            <ImageWrapper>
+              {post.tagimage && (
+                <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`} alt={`${post.id}`} />
+              )}
+            </ImageWrapper>
             <Title>{post.title}</Title>
-            {/* {post.likesCount} */}
+            {post.likesCount}
           </PostCard>
         ))}
       </PostContainer>

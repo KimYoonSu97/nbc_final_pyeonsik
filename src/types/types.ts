@@ -22,7 +22,7 @@ export interface Post {
   userId?: PostUserProfile | string;
   likes: string;
   likesCount: number;
-  //아래 두개 원유길이 추가
+  //아래 두t개 원유길이 추가
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
   tagimage: string;
 }
@@ -55,7 +55,7 @@ export interface NewPostLike {
 }
 
 export interface RankProps {
-  isFirst?: boolean;
+  isfirst?: boolean;
 }
 
 export interface UserType {

@@ -26,8 +26,6 @@ const NewReview = () => {
     // setFilteredPosts(sortedPosts);
   }, [posts]);
 
-  console.log('posts', posts);
-
   return (
     <NewReviewContainer>
       <HeadTitle>편의점 신제품 리뷰</HeadTitle>

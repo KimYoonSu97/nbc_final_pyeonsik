@@ -7,12 +7,13 @@ import { getPost } from 'src/api/posts';
 import { getPostLike } from 'src/api/postLikes';
 import useMutate from 'src/hooks/useMutate';
 import usePostLikes from 'src/hooks/usePostLikes';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 import { Tag } from 'src/types/types';
 
 const PostDetail = () => {
   // user id 윤수님
-  const userId = 'q2466fwz-5aep-41b0-9f3e-3628e67bf59b';
-
+  const userId: string | undefined = useLoginUserId();
+  console.log(userId);
   const { id } = useParams<string>();
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ const PostDetail = () => {
     if (!postLike) {
       const newPostLike = {
         postId: post.id,
-        userId
+        userId: userId as unknown as string
       };
       addPostLikeMutate.mutate(newPostLike);
     } else {
