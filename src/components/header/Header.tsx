@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <S.Area>
+    <S.Area className="TopbarAea">
       <S.UpperContainer>
         <S.LogoContainer onClick={() => navigate('/')}>LOGO</S.LogoContainer>
         <TopBarMenuContainer />
@@ -23,7 +23,14 @@ const Header = () => {
 export default Header;
 
 const S = {
-  Area: styled.div``,
+  Area: styled.div`
+    width: 100vw;
+    height: 106px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: white;
+  `,
   UpperContainer: styled.div`
     width: 1280px;
     height: 56px;
@@ -45,6 +52,7 @@ const S = {
     position: relative;
   `,
   LogoContainer: styled.div`
+    color: white;
     background-color: black;
     padding: 5px 13px;
     font-size: 14px;

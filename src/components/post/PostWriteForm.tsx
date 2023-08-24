@@ -3,15 +3,17 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 
 import supabase from 'src/lib/supabaseClient';
-import usePost from 'src/hooks/usePost';
+import useMutate from 'src/hooks/useMutate';
 import PostWriteInput from './PostWriteInput';
 import ImageTag from './ImageTag';
-import FetchData from './FetchData';
 import { Data, Tag } from 'src/types/types';
 
 const PostWriteForm = () => {
+  // user id 윤수님
+  const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
+
   const navigate = useNavigate();
-  const { addPostMutation } = usePost();
+  const { addMutate } = useMutate('posts');
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
@@ -47,13 +49,13 @@ const PostWriteForm = () => {
     console.log('imageUrl', imageUrl);
 
     const newPost = {
+      userId,
       title,
       body: body,
       tags: tagsAndResults.tags,
       tagimage: imageUrl
     };
-
-    addPostMutation.mutate(newPost);
+    addMutate.mutate(newPost);
     navigate(`/`);
   };
 
@@ -89,7 +91,6 @@ const PostWriteForm = () => {
         />
         <button type="submit">add</button>
       </form>
-      <FetchData />
     </>
   );
 };

@@ -19,7 +19,7 @@ export interface Post {
   body: string;
   product: [];
   bookmark: [];
-  userId: string;
+  userId?: PostUserProfile | string;
   likes: string;
   //아래 두개 원유길이 추가
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
@@ -33,7 +33,7 @@ export interface NewPost {
   title: string;
   // img: string;
   body: string;
-  // userId: string;
+  userId: string;
 }
 
 export interface EditPost {
@@ -42,8 +42,32 @@ export interface EditPost {
   body: string;
 }
 
+export interface PostLike {
+  id: string;
+  postId: string;
+  userId: string;
+}
+
+export interface NewPostLike {
+  postId: string;
+  userId: string;
+}
+
 export interface RankProps {
   isFirst?: boolean;
+}
+
+export interface UserType {
+  uid: string;
+  email: string;
+  password: string;
+  nickname: string;
+  profileimg: File | null;
+}
+
+export interface PostUserProfile {
+  nickname: string;
+  profileImg: string;
 }
 
 export interface RenderComponents {
