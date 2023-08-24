@@ -1,14 +1,11 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 import { getPosts } from 'src/api/posts';
 import { Post } from 'src/types/types';
 import { styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 
 const PostList = () => {
-  const navigate = useNavigate();
-
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
   if (isLoading) {
     return <p>Loading…</p>;
@@ -24,18 +21,7 @@ const PostList = () => {
   // 게시글 최신순 정렬
   posts.sort((a: Post, b: Post) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
 
-  return (
-    <PostCards data={posts}></PostCards>
-    // <div>
-    //   {posts.map((post) => (
-    //     <S.PostBox key={post.id} >
-    //       <div>{post.id}</div>
-    //       <div>{post.title}</div>
-    //       <div>{post.body}</div>
-    //     </S.PostBox>
-    //   ))}
-    // </div>
-  );
+  return <PostCards data={posts}></PostCards>;
 };
 
 export default PostList;

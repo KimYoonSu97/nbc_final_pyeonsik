@@ -11,10 +11,10 @@ interface ReCommentProps {
 const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
   const [reComment, setReComment] = useState('');
   const queryClient = useQueryClient();
-  console.log(parentCommentId,"aaaaaaaaaaaaaaaa")
+  // console.log(parentCommentId,"aaaaaaaaaaaaaaaa")
 
   const { data: reCommentData } = useQuery(['reComment'], () => getReCommentData(parentCommentId));
-  console.log(reCommentData);
+  // console.log(reCommentData);
 
   const WriteReCommentMutation = useMutation(writeReCommentData, {
     onSuccess: () => {
@@ -24,7 +24,7 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
 
   const writeReCommentButton = () => {
     const newReComment = {
-      comment:reComment,
+      comment: reComment,
       parent_commentId: parentCommentId
     };
     WriteReCommentMutation.mutate(newReComment);

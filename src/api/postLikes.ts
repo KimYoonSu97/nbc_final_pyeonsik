@@ -1,5 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
-import { EditPost, NewPost } from 'src/types/types';
+import { NewPostLike } from 'src/types/types';
 
 const getPostLikes = async () => {
   const response = await supabase.from('post_likes').select('*');
@@ -11,8 +11,8 @@ const getPostLike = async (postId: string) => {
   return response;
 };
 
-const addPostLike = async (postLike: string) => {
-  await supabase.from('post_likes').insert(postLike).select();
+const addPostLike = async (newPostLike: NewPostLike) => {
+  await supabase.from('post_likes').insert(newPostLike).select();
 };
 
 const deletePostLike = async (id: string) => {

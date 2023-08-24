@@ -16,29 +16,13 @@ const Comment = () => {
   const [user, setUser] = useState<any>({ id: 'f3f322f0-2439-4580-b817-c9e0b7757cae', nickname: '가나다라' });
   const [comment, setComment] = useState('');
 
-  console.log(user, 'userididididiid');
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
-  // const getData = async () => {
-  //   const { data }: any = await supabase.auth.getSession();
-  //   console.log('userdatataaa', data.session.user);
-  //   if (data) {
-  //     setUser(data.session.user);
-  //   }
-  // };
-  interface UsersType {
-    nickname: string;
-  }
   //포스트 아이디와 같은 댓글 데이터 가져오기
   // const { data: commentData } = useQuery(['comment'], () => getCommentData(postId!));
   const { data: commentData } = useQuery<any>(['detailcomments'], () =>
     getCommentData('1c27cfc8-fbd5-48cd-81e4-dff6148f3456')
   );
 
-  console.log(commentData);
+  // console.log(commentData);
 
   //댓글 작성시 바로 렌더링
   const writeMutation = useMutation(WriteCommentData, {

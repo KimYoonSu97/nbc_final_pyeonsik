@@ -75,7 +75,6 @@ const TopBarMenuContainer = () => {
     checkUser();
   }, []);
 
-  const boolean = false;
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
@@ -84,7 +83,7 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
       {/* {boolean && <S.TopBarMenu>마이페이지</S.TopBarMenu>} */}
-      <S.TopBarLogContainer $logged={boolean}>
+      <S.TopBarLogContainer $logged={user ? true : false}>
         {/* 로그인 전 후 분기 */}
         {user ? (
           <>
@@ -216,73 +215,3 @@ const ErrorMessage = styled.div`
   color: red;
   font-size: 14px;
 `;
-
-//  // 소셜 로그인 토큰 생성 => jotaiUserData
-//  useEffect(() => {
-//   if (!socialUser?.identities) {
-//     return;
-//   } else if (socialUser?.identities[0].provider !== 'email') {
-//     const tokenKey = localStorage.getItem('sb-bbakvkybkyfoiijevbec-auth-token');
-
-//     const parsedToken = tokenKey ? JSON.parse(tokenKey) : null;
-
-//     const userId = parsedToken?.user.id;
-//     const userName = parsedToken?.user.user_metadata.name;
-//     const userEmail = parsedToken?.user.email;
-
-//     const userInsertData = {
-//       uid: userId,
-//       nickname: userName,
-//       profileimg: 'neverdelete/461839d7-4ae5-4981-a29c-7793179d98ac.jpeg',
-//       email: userEmail,
-//       password: ''
-//     };
-//     const userDataString = JSON.stringify(userInsertData);
-//     localStorage.setItem('jotaiUserData', userDataString);
-//     setJotaiUserData(userInsertData);
-//   }
-// }, [socialUser]);
-
-// // 생성한 토큰 가져와서 새로고침 방지
-// useEffect(() => {
-//   const storedUserData = localStorage.getItem('jotaiUserData');
-//   if (storedUserData) {
-//     const parsedUserData = JSON.parse(storedUserData);
-//     setJotaiUserData(parsedUserData);
-//   }
-// }, []);
-
-// // 현재 유저의 정보 가져오기!
-// const checkUser = async () => {
-//   const {
-//     data: { user }
-//   } = await supabase.auth.getUser();
-
-//   if (!user?.identities) {
-//     return;
-//   } else if (
-//     user?.identities[0].provider == 'github' ||
-//     user?.identities[0].provider == 'google' ||
-//     user?.identities[0].provider == 'kakao'
-//   ) {
-//     setSocialUser(user);
-//   }
-//   console.log(user);
-// };
-// useEffect(() => {
-//   checkUser();
-//   window.addEventListener('hashchange', function () {
-//     checkUser();
-//   });
-// }, []);
-
-// 일반 회원/ 소셜 로그인 구별
-
-// 소셜로그인 시 프로필 적용
-
-// if (user !== null && user.identities?.[0]?.identity_data) {
-//   const socialData = user.identities[0].identity_data;
-//   setImageUrl(socialData.avatar_url);
-//   setNickName(socialData.name);
-//   setUser(user);
-// }
