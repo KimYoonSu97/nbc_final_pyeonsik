@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PostWriteForm from 'src/components/post/PostWriteForm';
 
 const Write = () => {
