@@ -11,7 +11,7 @@ import { Tag } from 'src/types/types';
 
 const PostDetail = () => {
   // user id 윤수님
-  const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
+  const userId = 'q2466fwz-5aep-41b0-9f3e-3628e67bf59b';
 
   const { id } = useParams<string>();
   const navigate = useNavigate();

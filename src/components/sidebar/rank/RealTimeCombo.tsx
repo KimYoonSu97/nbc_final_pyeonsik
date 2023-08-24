@@ -20,13 +20,14 @@ const RealTimeCombo = () => {
   const [posts] = useAtom(postsAtom);
   const [likes] = useAtom(likesAtom);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  console.log('posts', posts);
+  console.log('likes', likes);
 
   // 가져온 포스트 목록에서 likes의 길이 순으로 정렬해서 좋아요 순 5개까지 디스플레이
   useEffect(() => {
     const postsWithLikesCount = posts.map((post) => {
-      const postLikes = likes.find((like) => like.id.toString() === post.id.toString());
-      const likesCount = postLikes ? Object.keys(postLikes.likes).length : 0;
-      console.log('likesCount', likesCount);
+      const postLikes = likes.filter((like) => like.postId === post.id);
+      const likesCount = postLikes.length;
       return { ...post, likesCount };
     });
 
