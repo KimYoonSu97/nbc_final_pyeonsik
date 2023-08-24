@@ -4,6 +4,7 @@ import { Navigate, Outlet } from 'react-router';
 export const PrivateRoute = () => {
 
   const token = localStorage.getItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
+
   const tokenCheck = (token: string | null) => {
     if (token) {
       return true;
@@ -12,5 +13,6 @@ export const PrivateRoute = () => {
       return false;
     }
   };
+  
   return tokenCheck(token) ? <Outlet /> : <Navigate to="/" />;
 };
