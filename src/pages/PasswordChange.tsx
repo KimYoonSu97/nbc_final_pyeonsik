@@ -1,11 +1,9 @@
 import { useAtom } from 'jotai';
 import React, { useState } from 'react';
-
-import styled from 'styled-components';
-
-import supabase from 'src/lib/supabaseClient';
 import { useNavigate } from 'react-router';
 import { userAtom } from 'src/globalState/jotai';
+import supabase from 'src/lib/supabaseClient';
+import styled from 'styled-components';
 
 const PasswordChange: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +11,6 @@ const PasswordChange: React.FC = () => {
   const [checkPassword, setCheckPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-
   const [user, setUser] = useAtom(userAtom);
 
   const handleResetPassword = async () => {
@@ -42,7 +39,7 @@ const PasswordChange: React.FC = () => {
 
       if (!error) {
         alert('비밀번호 재설정 완료!');
-        setUser("");
+        setUser('');
         supabase.auth.signOut();
         navigate('/login');
         const successMsg = 'Password changed successfully';
@@ -72,7 +69,6 @@ const PasswordChange: React.FC = () => {
         value={checkPassword}
         onChange={(e) => setCheckPassword(e.target.value)}
       />
-
       <SuccessMessage>{successMessage}</SuccessMessage>
       <ErrorMessage>
         {errorMessage && (
@@ -99,6 +95,7 @@ const ResetFormContainer = styled.div`
   border: 1px solid #ccc;
   border-radius: 8px;
 `;
+
 const ResetTitle = styled.div`
   font-weight: bold; /* 굵게 설정 */
   font-size: 24px; /* 큰 텍스트 크기 */
@@ -134,6 +131,7 @@ const SuccessMessage = styled.div`
   color: blue;
   font-size: 14px;
 `;
+
 const ErrorMessage = styled.div`
   margin-top: 0px;
   color: red;

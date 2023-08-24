@@ -6,7 +6,7 @@ const Detail = () => {
   return (
     <div>
       <PostDetail />
-      {/* <Comment /> */}
+      <Comment />
     </div>
   );
 };

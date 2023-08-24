@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useEffect, useMemo, useState } from 'react';
 import { userAtom } from 'src/globalState/jotai';
-import { supabase } from 'src/supabse';
+import supabase from 'src/lib/supabaseClient';
 
 const useLoginUserId = () => {
   const [loginUserId, setLoginUserId] = useState<string>('');

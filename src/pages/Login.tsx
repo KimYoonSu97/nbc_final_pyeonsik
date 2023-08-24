@@ -1,23 +1,20 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import OAuthLogin from '../components/OAuthLogin';
-import supabase from 'src/lib/supabaseClient';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
-import { Link } from 'react-router-dom';
 import { userAtom } from 'src/globalState/jotai';
+import styled from 'styled-components';
+import supabase from 'src/lib/supabaseClient';
+import OAuthLogin from '../components/OAuthLogin';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const navigate = useNavigate();
-
   // Atom 생성
-
   const [_, setUserLogin] = useAtom(userAtom);
 
   const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,9 +63,7 @@ const Login = () => {
         {/* 로고 영역 */}
         <img src=""></img>
         <About>뻔하지 않고 Fun한, 편의점 음식을 조합하여 먹고 공유하자!</About>
-
         <Input value={email} onChange={emailHandler} type="text" id="email" placeholder="이메일을 입력하세요" />
-
         <Input
           value={password}
           onChange={passwordHandler}
@@ -78,7 +73,6 @@ const Login = () => {
         />
         <SuccessMessage>{successMessage}</SuccessMessage>
         <ErrorMessage>{errorMessage}</ErrorMessage>
-
         <Button onClick={handleLogin}>로그인</Button>
         <RowContainer>
           <StyledLink to={'/password_reset'}>비밀번호 재설정</StyledLink>
@@ -110,6 +104,7 @@ const LoginFormContainer = styled.div`
   border: 1px solid #ccc;
   border-radius: 8px;
 `;
+
 const About = styled.div`
   color: gray;
   margin: 25px 0px;
@@ -136,12 +131,14 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
+
 const RowContainer = styled.div`
   display: flex;
   justify-content: center; /* 요소들을 수평 가운데로 정렬 */
   align-items: center; /* 요소들을 수직 가운데로 정렬 */
   flex-direction: row; /* 요소들을 세로 방향으로 배치 */
 `;
+
 const ColumnContainer = styled.div`
   display: flex;
   align-items: center;
@@ -154,6 +151,7 @@ const SuccessMessage = styled.div`
   color: blue;
   font-size: 14px;
 `;
+
 const ErrorMessage = styled.div`
   margin-top: 10px;
   color: red;

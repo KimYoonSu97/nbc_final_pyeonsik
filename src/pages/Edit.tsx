@@ -1,10 +1,10 @@
 import React from 'react';
-import PostEditForm from 'src/components/post/PostEdit';
+import PostEdit from 'src/components/post/PostEdit';
 
 const Edit = () => {
   return (
     <div>
-      <PostEditForm />
+      <PostEdit />
     </div>
   );
 };

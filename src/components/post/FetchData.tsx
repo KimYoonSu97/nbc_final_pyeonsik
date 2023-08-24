@@ -17,7 +17,6 @@ const Fetch = () => {
         setPosts(data);
       }
     };
-
     fetchPosts();
   }, []);
 

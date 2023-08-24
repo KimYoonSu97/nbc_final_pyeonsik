@@ -1,19 +1,20 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-
-import supabase from 'src/lib/supabaseClient';
-import useMutate from 'src/hooks/useMutate';
-import PostWriteInput from './PostWriteInput';
-import ImageTag from './ImageTag';
 import { Data, Tag } from 'src/types/types';
 
-const PostWriteForm = () => {
+import supabase from 'src/lib/supabaseClient';
+import usePost from 'src/hooks/usePost';
+import PostWriteInput from './PostWriteInput';
+import ImageTag from './ImageTag';
+
+// recipe, common write component 정리 필요
+const PostWriteRecipe = () => {
   // user id 윤수님
   const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
 
   const navigate = useNavigate();
-  const { addMutate } = useMutate('posts');
+  const { addPostMutate } = usePost();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
@@ -22,7 +23,6 @@ const PostWriteForm = () => {
     tags: [],
     searchResults: []
   });
-
   const postRef = useRef<HTMLInputElement>(null);
 
   const handleImageSelect = (image: File) => {
@@ -33,29 +33,27 @@ const PostWriteForm = () => {
     e.preventDefault();
 
     let imageUrl = null;
-
     if (selectedImage) {
       const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
-
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
         alert('이미지 업로드 중 에러가 발생했습니다!');
         return;
       }
-
       imageUrl = data.path;
     }
-
     console.log('imageUrl', imageUrl);
 
     const newPost = {
+      postCategory: 'recipe',
       userId,
       title,
       body: body,
       tags: tagsAndResults.tags,
       tagimage: imageUrl
     };
-    addMutate.mutate(newPost);
+
+    addPostMutate.mutate(newPost);
     navigate(`/`);
   };
 
@@ -95,4 +93,4 @@ const PostWriteForm = () => {
   );
 };
 
-export default PostWriteForm;
+export default PostWriteRecipe;

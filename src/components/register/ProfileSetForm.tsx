@@ -32,7 +32,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       .eq('nickname', nickname)
       .maybeSingle();
     console.log(existingUsers);
-    
+
     // TODO: 중복이어도 return이 안됨..
     if (existingUsers) {
       alert('이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.');
@@ -63,7 +63,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       <RegisterFormContainer>
         <ProfileImgnameBox>
           <ProfileImgLabel>프로필 설정</ProfileImgLabel>
-
           <div>
             <PreviewImage src={profileImgSrc || baseImg} alt="프로필 이미지" />
             <ProfileImgInput
@@ -87,7 +86,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
           }}
         />
         <InformMessage>편식에서만의 닉네임을 사용해보세요!</InformMessage>
-
         <Button onClick={setProfile}>편식 시작하기</Button>
       </RegisterFormContainer>
     </>
@@ -117,6 +115,7 @@ const ProfileImgnameBox = styled.div`
 
   flex-direction: column;
 `;
+
 const InformMessage = styled.div`
   font-size: 10px;
   color: blue;

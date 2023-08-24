@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
-import { supabase } from 'src/supabse';
+import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 
 const PasswordReset: React.FC = () => {
@@ -46,7 +45,6 @@ const PasswordReset: React.FC = () => {
       <ResetTitle>비밀번호 재설정</ResetTitle>
       <AskMessage>비밀번호 재설정을 위해서 가입하신 이메일을 입력해주세요.</AskMessage>
       <Input type="email" placeholder="이메일 입력" value={email} onChange={(e) => setEmail(e.target.value)} />
-
       <SuccessMessage>{successMessage}</SuccessMessage>
       <ErrorMessage>
         {errorMessage && (
@@ -108,6 +106,7 @@ const SuccessMessage = styled.div`
   color: blue;
   font-size: 14px;
 `;
+
 const ErrorMessage = styled.div`
   margin-top: 0px;
   color: red;

@@ -18,6 +18,7 @@ const S = {
     display: flex;
     margin-right: 14px;
   `,
+
   BoardButton: styled.div`
     display: flex;
     align-items: center;
@@ -28,11 +29,13 @@ const S = {
       border-bottom: 2px solid #000;
     }
   `,
+
   QuickButtonArea: styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
   `,
+
   QuickPostButton: styled.div`
     display: flex;
     align-items: center;

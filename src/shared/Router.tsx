@@ -1,18 +1,18 @@
 import React from 'react';
-import Main from '../pages/Main';
-import Layout from '../layout/Layout';
 import { GlobalStyle } from '../styles/GlobalStyle';
-import Login from 'src/pages/Login';
-import Register from 'src/pages/Register';
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
-import Write from 'src/pages/Write';
-import Detail from 'src/pages/Detail';
-import Edit from 'src/pages/Edit';
-import Mypage from 'src/pages/Mypage';
+import Layout from '../layout/Layout';
+// pages
+import Main from '../pages/Main';
+import Login from 'src/pages/Login';
+import Register from 'src/pages/Register';
 import PasswordReset from 'src/pages/PasswordReset';
 import PasswordChange from 'src/pages/PasswordChange';
+import Detail from 'src/pages/Detail';
+import Write from 'src/pages/Write';
+import Edit from 'src/pages/Edit';
+import Mypage from 'src/pages/Mypage';
 
 const Router = () => {
   return (
@@ -25,7 +25,6 @@ const Router = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/password_reset" element={<PasswordReset />} />
           <Route path="/password_change" element={<PasswordChange />} />
-
           <Route path="/detail/:id" element={<Detail />} />
           <Route element={<PrivateRoute />}>
             <Route path="/write" element={<Write />} />

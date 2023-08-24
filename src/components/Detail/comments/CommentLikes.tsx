@@ -1,9 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addLike, deleteLike, getLike } from 'src/api/commentLike';
+
 interface CommentIdProps {
   commentId: string;
 }
+
 const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   const queryClient = useQueryClient();
   const [user, setUser] = useState<any>({ id: 'f3f322f0-2439-4580-b817-c9e0b7757cae', nickname: '가나다라' });
@@ -58,6 +60,7 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
     const commentLikesCount = likeData?.filter((like: any) => like.commentId === commentId).length;
     return commentLikesCount || 0;
   };
+
   return (
     <button onClick={() => toggleLike(commentId)}>
       {checkLike(commentId, user.id, likeData) ? '♥' : '♡'}

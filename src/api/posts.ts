@@ -44,4 +44,4 @@ const getMyLikePostById = async (id: string) => {
   return response;
 };
 
-export { getPosts, getMyPostsById, getMyLikePostById, getMyBookMarkById, getPost, addPost, updatePost, deletePost };
+export { getPosts, getPost, addPost, updatePost, deletePost, getMyPostsById, getMyLikePostById, getMyBookMarkById };

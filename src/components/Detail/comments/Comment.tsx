@@ -1,13 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { CommentType, WriteCommentData, deleteCommentData, getCommentData } from 'src/api/comment';
-import { supabase } from 'src/supabse';
-import ReComment from './ReComment';
-
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { WriteCommentData, deleteCommentData, getCommentData } from 'src/api/comment';
 import { CommentWriteWrap, CommentWrap, CommentInner } from './styledComments';
-import { addLike, deleteLike, getLike } from 'src/api/commentLike';
 import CommentLikes from './CommentLikes';
+import ReComment from './ReComment';
 
 const Comment = () => {
   const queryClient = useQueryClient();
@@ -21,7 +18,6 @@ const Comment = () => {
   const { data: commentData } = useQuery<any>(['detailcomments'], () =>
     getCommentData('1c27cfc8-fbd5-48cd-81e4-dff6148f3456')
   );
-
   // console.log(commentData);
 
   //댓글 작성시 바로 렌더링
@@ -30,6 +26,7 @@ const Comment = () => {
       queryClient.invalidateQueries(['detailcomments']);
     }
   });
+
   //댓글 삭제시 바로 렌더링
   const deleteMutation = useMutation(deleteCommentData, {
     onSuccess: () => {

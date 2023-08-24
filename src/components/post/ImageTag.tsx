@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-import { Tag, Data } from 'src/types/types';
 import supabase from 'src/lib/supabaseClient';
+import { Tag, Data } from 'src/types/types';
 import { ImageTagProps } from 'src/types/types';
 
 const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSelect }) => {
@@ -37,7 +36,6 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
 
       const newTag = { x, y, prodData: '', img: '', price: '' };
       setTags([...updatedTags, newTag]);
-
       setSelectedTagIndex(updatedTags.length);
       setselectedTagVisible(true);
       setSearchFormHandler(true);
@@ -64,17 +62,14 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
   // 검색을 수행하는 함수
   const performSearch = async () => {
     if (!searchKeyword) return;
-
     const { data: filteredResults, error } = await supabase
       .from('products')
       .select('*')
       .filter('prodName', 'ilike', `%${searchKeyword}%`);
-
     if (error) {
       console.error('Error fetching search results:', error);
       return;
     }
-
     setSearchResults(filteredResults);
   };
 
@@ -89,7 +84,6 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
       setSelectedTagIndex(null);
       setTags(tags.filter((_, index) => index !== selectedTagIndex));
     }
-
     setSearchFormHandler(false);
   };
 
@@ -101,7 +95,6 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
       const fileExtension = originalFileName.split('.').pop();
       const randomFileName = uuidv4() + '.' + fileExtension;
       setSelectedImage(new File([file], randomFileName));
-
       onImageSelect(new File([file], randomFileName));
     }
   };
@@ -133,81 +126,78 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
   };
 
   return (
-    <>
-      <div>
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setAddingTagMode(!addTagMode);
-          }}
-        >
-          {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
-        </button>
-        {/* 이미지 선택 후 태그가 찍힐 부분 */}
-        {selectedImage && (
-          <div style={{ position: 'relative' }}>
-            <img src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
-            {tags.map((tag, index) => (
+    <div>
+      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setAddingTagMode(!addTagMode);
+        }}
+      >
+        {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
+      </button>
+      {/* 이미지 선택 후 태그가 찍힐 부분 */}
+      {selectedImage && (
+        <div style={{ position: 'relative' }}>
+          <img src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
+          {tags.map((tag, index) => (
+            <div
+              key={index}
+              onClick={() => handleTagClick(index)}
+              style={{
+                position: 'absolute',
+                left: tag.x,
+                top: tag.y,
+                backgroundColor: 'red',
+                display: 'flex',
+                width: '40px',
+                height: '40px'
+              }}
+            >
+              {selectedTagIndex === index && selectedTagVisible && (
+                <div>
+                  {tag.prodData && <div> {tag.prodData}</div>}
+                  {tag.price && <div> {tag.price}</div>}
+                  {tag.img && <img src={`${tag.img}`} alt="이미지" />}
+                  {tag.prodData || tag.price || tag.img ? (
+                    <button onClick={() => handleDeleteTag(index)}>삭제</button>
+                  ) : null}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+      {/* 검색창과 검색결과 부분 */}
+      {selectedTagIndex !== null && searchFormHandler && (
+        <div className="tag-search-modal">
+          <input
+            type="text"
+            value={searchKeyword}
+            onChange={(event) => handleSearchTextChange(event.target.value)}
+            placeholder="검색어를 입력하세요"
+          />
+          <button onClick={performSearch}>검색하기</button>
+          <div>
+            {searchResults.map((result, index) => (
               <div
                 key={index}
-                onClick={() => handleTagClick(index)}
-                style={{
-                  position: 'absolute',
-                  left: tag.x,
-                  top: tag.y,
-                  backgroundColor: 'red',
-                  display: 'flex',
-                  width: '40px',
-                  height: '40px'
-                }}
+                onClick={() => handleSelectResult(result)}
+                style={{ cursor: 'pointer', marginBottom: '10px' }}
               >
-                {selectedTagIndex === index && selectedTagVisible && (
-                  <div>
-                    {tag.prodData && <div> {tag.prodData}</div>}
-                    {tag.price && <div> {tag.price}</div>}
-                    {tag.img && <img src={`${tag.img}`} alt="이미지" />}
-                    {tag.prodData || tag.price || tag.img ? (
-                      <button onClick={() => handleDeleteTag(index)}>삭제</button>
-                    ) : null}
-                  </div>
-                )}
+                <div> {result.prodName}</div>
+                <div> {result.prodBrand}</div>
+                <div> {result.price}</div>
+                <div>
+                  <img src={result.prodImg} alt="이미지" />
+                </div>
               </div>
             ))}
           </div>
-        )}
-        {/* 검색창과 검색결과 부분 */}
-        {selectedTagIndex !== null && searchFormHandler && (
-          <div className="tag-search-modal">
-            <input
-              type="text"
-              value={searchKeyword}
-              onChange={(event) => handleSearchTextChange(event.target.value)}
-              placeholder="검색어를 입력하세요"
-            />
-            <button onClick={performSearch}>검색하기</button>
-            <div>
-              {searchResults.map((result, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleSelectResult(result)}
-                  style={{ cursor: 'pointer', marginBottom: '10px' }}
-                >
-                  <div> {result.prodName}</div>
-                  <div> {result.prodBrand}</div>
-                  <div> {result.price}</div>
-                  <div>
-                    <img src={result.prodImg} alt="이미지" />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button onClick={handleSearchModalClose}>닫기</button>
-          </div>
-        )}
-      </div>
-    </>
+          <button onClick={handleSearchModalClose}>닫기</button>
+        </div>
+      )}
+    </div>
   );
 };
 

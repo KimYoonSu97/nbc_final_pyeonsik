@@ -1,10 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router';
 import { RenderComponents } from 'src/types/types';
 import { styled } from 'styled-components';
-import MyAchievement from 'src/components/mypage/MyAchievement';
-import MyPost from 'src/components/mypage/MyPost';
 import Profile from 'src/components/mypage/Profile';
-import { useParams } from 'react-router';
+import MyPost from 'src/components/mypage/MyPost';
+import MyAchievement from 'src/components/mypage/MyAchievement';
 
 const renderPage = [
   {

@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { css, styled } from 'styled-components';
-import PostCards from '../renderPosts/PostCards';
-import { getMyBookMarkById, getMyLikePostById, getMyPostsById } from '../../api/posts';
-import { useQueries } from '@tanstack/react-query';
-import { Post } from 'src/types/types';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useQueries } from '@tanstack/react-query';
+import { getMyBookMarkById, getMyLikePostById, getMyPostsById } from '../../api/posts';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+import { Post } from 'src/types/types';
+import { css, styled } from 'styled-components';
+import PostCards from '../renderPosts/PostCards';
 
 const MyPost = () => {
   const id = useLoginUserId();
   const { search } = useLocation();
   const [filterHandler, setFilterHandler] = useState(search);
-
   const [
     { isLoading: bookmarkLoading, data: bookmark },
     { isLoading: likeLoading, data: like },
@@ -127,6 +126,7 @@ const S = {
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
     z-index: 999;
   `,
+
   ContentsArea: styled.div``,
   FilterButton: styled(Link)<{ $type: string; $location: string }>`
     padding: 5px 11px;

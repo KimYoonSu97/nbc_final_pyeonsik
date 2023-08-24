@@ -1,11 +1,9 @@
-import { atom, useAtom } from 'jotai';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import supabase from 'src/lib/supabaseClient';
+import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
+import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import useLoginUserId from 'src/hooks/useLoginUserId';
-import { Link } from 'react-router-dom';
 
 interface User {
   email: string;
@@ -53,10 +51,8 @@ const TopBarMenuContainer = () => {
       <S.QuickButtonArea>
         <S.QuickPostButton>나만의 편식조합 공유하기</S.QuickPostButton>
         <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
-
         <S.QuickPostButton>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
-
       {userData && <S.TopBarMenu>마이페이지</S.TopBarMenu>}
       <S.TopBarLogContainer $logged={userData ? true : false}>
         {/* 로그인 전 후 분기 */}
@@ -95,14 +91,17 @@ const S = {
     position: absolute;
     right: 16px;
   `,
+
   TopBarListContainer: styled.ul`
     display: flex;
   `,
+
   QuickButtonArea: styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
   `,
+
   QuickPostButton: styled.div`
     display: flex;
     align-items: center;
@@ -111,6 +110,7 @@ const S = {
     padding: 3px 18px;
     height: 34px;
   `,
+
   TopBarMenu: styled.li`
     padding: 5px 13px;
     height: 30px;
@@ -121,11 +121,13 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
+
   TopBarLogContainer: styled.ul<{ $logged: boolean }>`
     display: flex;
     gap: ${(props) => (props.$logged ? '0px' : '12px')};
     align-items: center;
   `,
+
   TopBarLogButton: styled.li`
     border: 1px solid #d9d9d9;
     background: #fff;
@@ -140,11 +142,13 @@ const S = {
     font-weight: 400;
     line-height: 20px;
   `,
+
   Icon: styled.div`
     width: 20px;
     height: 20px;
     background-color: black;
   `,
+
   Level: styled.div`
     border-radius: 100px;
     /* width: 58px; */
@@ -159,6 +163,7 @@ const S = {
     background: #d9d9d9;
     margin-left: 8px;
   `,
+
   ProfileImg: styled.img`
     width: 36px;
     height: 36px;
@@ -173,6 +178,7 @@ const SuccessMessage = styled.div`
   color: blue;
   font-size: 14px;
 `;
+
 const ErrorMessage = styled.div`
   margin-top: 10px;
   color: red;
