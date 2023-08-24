@@ -17,21 +17,6 @@ const Comment = () => {
   const [comment, setComment] = useState('');
 
   console.log(user, 'userididididiid');
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
-  // const getData = async () => {
-  //   const { data }: any = await supabase.auth.getSession();
-  //   console.log('userdatataaa', data.session.user);
-  //   if (data) {
-  //     setUser(data.session.user);
-  //   }
-  // };
-  interface UsersType {
-    nickname: string;
-  }
   //포스트 아이디와 같은 댓글 데이터 가져오기
   // const { data: commentData } = useQuery(['comment'], () => getCommentData(postId!));
   const { data: commentData } = useQuery<any>(['detailcomments'], () =>
