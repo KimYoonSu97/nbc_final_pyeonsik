@@ -11,21 +11,36 @@ interface Props {
 const ProfileSetForm = ({ userEmail }: Props) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
-  const [profileImgSrc, setProfileImgSrc] = useState<string>(baseImage);
+  const [profileImgSrc, setProfileImgSrc] = useState<string>('');
+  
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files && e.target.files[0];
-    if (selectedFile) {
-      const imgURL = URL.createObjectURL(selectedFile);
-      setProfileImgSrc(imgURL);
-    }
+  
+  const encodeFileTobase64 = (fileBlob: Blob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise(() => {
+      reader.onload = () => {
+        setProfileImgSrc(reader.result as string);
+      
+      };
+    });
   };
+
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files && e.target.files[0];
+  //   if (selectedFile) {
+  //     //미리보기를 위한 /
+  //     // const imgURL = URL.createObjectURL(selectedFile);
+  //     // const img = atob(selectedFile)
+  //     setProfileImgSrc(img);
+  //   }
+  // };
 
   const setProfile = async () => {
     const newUser = {
       email: userEmail,
       nickname,
-      profileImg: profileImgSrc || ''
+      profileImg: profileImgSrc.length < 5 ? "" : profileImgSrc
     };
     if (!nickname) {
       alert('닉네임을 입력해주세요');
@@ -49,7 +64,9 @@ const ProfileSetForm = ({ userEmail }: Props) => {
 
           <div>
             <PreviewImage src={profileImgSrc} alt="프로필 이미지" />
-            <ProfileImgInput src={baseImage} type="file" accept="image/*" onChange={handleImageChange} />
+            <ProfileImgInput src={baseImage} type="file" accept="image/*" onChange={(e)=>{
+              encodeFileTobase64(e.target.files![0] as Blob)
+            }} />
           </div>
         </ProfileImgnameBox>
         <Label>닉네임</Label>
@@ -96,7 +113,6 @@ const ProfileImgnameBox = styled.div`
 const InformMessage = styled.div`
   font-size: 10px;
   color: blue;
-  
 `;
 
 const PreviewImage = styled.img`
@@ -127,7 +143,7 @@ const Label = styled.label`
 const NickNameInput = styled.input`
   padding: 10px;
   width: 150px;
-  
+
   border: 1px solid #ccc;
   border-radius: 4px;
 `;

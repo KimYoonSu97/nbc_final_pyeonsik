@@ -4,54 +4,54 @@ import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import { userAtom } from 'src/pages/Login';
 import { styled } from 'styled-components';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const TopBarMenuContainer = () => {
+  const userId = useLoginUserId();
   const navigate = useNavigate();
-  const [user, setUser] = useAtom(userAtom);
-  const [nickName, setNickName] = useState('');
+
+  const [user, setUser] = useState<any>('');
+  const [checkLogin] = useAtom(userAtom);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  const [imageUrl, setImageUrl] = useState('');
 
   // 로그아웃 핸들러
   const signOutHandler = async () => {
     let { error } = await supabase.auth.signOut();
-
-    setUser(null); // userData 초기화
-    setImageUrl('');
-    navigate('/');
     alert('로그아웃 완료!');
+    setUser('');
+    navigate('/');
     console.error(error);
   };
-  // 유저 닉네임 적용
-  useEffect(() => {
-    const setUserName = async () => {
-      if (user) {
-        const { data, error } = await supabase.from('users').select('nickname').eq('email', user.email).single();
-        if (data) {
-          setNickName(data.nickname);
-        }
-      }
-    };
 
-    setUserName();
-  }, [user]);
+  const setUserData = async () => {
+    if (checkLogin) {
+      const { data, error } = await supabase.from('users').select('*').eq('id', checkLogin!.id).single();
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        console.log(data);
+        setUser(data);
+      }
+    } else {
+      const { data, error } = await supabase.from('users').select('*').eq('id', userId).single();
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        console.log(data);
+        setUser(data);
+      }
+    }
+  };
+
+  useEffect(() => {
+    setUserData();
+    console.log('이펙트실행됨');
+  }, [checkLogin]);
 
   // 유저의 프로필 이미지를 가져온다
-
-  useEffect(() => {
-    const setProfileImg = async () => {
-      if (user) {
-        const { data, error } = await supabase.from('users').select('profileImg').eq('email', user.email).single();
-        if (data) {
-          setImageUrl(data.profileImg);
-        }
-      }
-    };
-
-    setProfileImg();
-  }, [user]);
 
   // 소셜로그인 시 프로필 적용
 
@@ -62,19 +62,6 @@ const TopBarMenuContainer = () => {
   //   setUser(user);
   // }
 
-  // 현재 유저의 정보 가져오기!
-  const checkUser = async () => {
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
-
-    console.log(user);
-    setUser(user);
-  };
-  useEffect(() => {
-    checkUser();
-  }, []);
-
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
@@ -82,7 +69,7 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
         <S.QuickPostButton>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
-      {/* {boolean && <S.TopBarMenu>마이페이지</S.TopBarMenu>} */}
+      {user && <S.TopBarMenu>마이페이지</S.TopBarMenu>}
       <S.TopBarLogContainer $logged={user ? true : false}>
         {/* 로그인 전 후 분기 */}
         {user ? (
@@ -101,8 +88,8 @@ const TopBarMenuContainer = () => {
               </svg>
             </S.Icon>
             <S.Level>Lv. 식신</S.Level>
-            <p>Hello, {nickName}</p>
-            <S.ProfileImg src={imageUrl} alt="프로필 사진"></S.ProfileImg>
+            <p>Hello, {user?.nickname}</p>
+            <S.ProfileImg src={user?.profileImg} alt="프로필 사진"></S.ProfileImg>
             <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton>
           </>
         ) : (

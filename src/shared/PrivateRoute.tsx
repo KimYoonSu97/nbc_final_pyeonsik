@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router';
 
 export const PrivateRoute = () => {
+
   const token = localStorage.getItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
   const tokenCheck = (token: string | null) => {
     if (token) {

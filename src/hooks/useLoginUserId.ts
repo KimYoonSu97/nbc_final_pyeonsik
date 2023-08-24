@@ -10,6 +10,7 @@ const useLoginUserId = () => {
 
       setLoginUserId(user.id);
     }
+    
   }, []);
 
   const userId = useMemo(() => {
