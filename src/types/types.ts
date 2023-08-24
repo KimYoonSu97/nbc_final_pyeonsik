@@ -55,7 +55,7 @@ export interface NewPostLike {
 }
 
 export interface RankProps {
-  isFirst?: boolean;
+  isfirst?: boolean;
 }
 
 export interface UserType {
@@ -79,6 +79,7 @@ export interface RenderComponents {
 export interface Likes {
   id: string;
   likes: string;
+  postId: string;
 }
 // 이 아래가 내가 가져온 타입선언
 export interface Tag {

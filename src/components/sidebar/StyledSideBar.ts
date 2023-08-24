@@ -71,7 +71,7 @@ export const Rank = styled.div<RankProps>`
   height: 18px;
   margin-top: 14px;
   margin-right: 10px;
-  background-color: ${({ isFirst }) => (isFirst ? 'gray' : 'white')};
+  background-color: ${({ isfirst }) => (isfirst ? 'gray' : 'white')};
   border: 1px solid black;
   border-radius: 50%;
   display: flex;
@@ -79,7 +79,7 @@ export const Rank = styled.div<RankProps>`
   align-items: center;
   font-weight: bold;
   font-size: 16px;
-  color: ${({ isFirst }) => (isFirst ? '#gray' : 'black')};
+  color: ${({ isfirst }) => (isfirst ? '#gray' : 'black')};
 `;
 
 export const SideFotter = styled.div`
