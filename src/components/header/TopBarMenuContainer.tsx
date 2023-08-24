@@ -5,6 +5,7 @@ import supabase from 'src/lib/supabaseClient';
 import { userAtom } from 'src/pages/Login';
 import { styled } from 'styled-components';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+import { Link } from 'react-router-dom';
 
 const TopBarMenuContainer = () => {
   const userId = useLoginUserId();
@@ -67,8 +68,10 @@ const TopBarMenuContainer = () => {
       <S.QuickButtonArea>
         <S.QuickPostButton>나만의 편식조합 공유하기</S.QuickPostButton>
         <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
+
         <S.QuickPostButton>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
+
       {user && <S.TopBarMenu>마이페이지</S.TopBarMenu>}
       <S.TopBarLogContainer $logged={user ? true : false}>
         {/* 로그인 전 후 분기 */}
@@ -91,6 +94,8 @@ const TopBarMenuContainer = () => {
             <p>Hello, {user?.nickname}</p>
             <S.ProfileImg src={user?.profileImg} alt="프로필 사진"></S.ProfileImg>
             <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton>
+            {/* 임시로 지정 */}
+            <Link to={'password_change'}>패스워드 재설정</Link>
           </>
         ) : (
           <>

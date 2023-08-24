@@ -85,7 +85,7 @@ const Login = () => {
 
         <Button onClick={handleLogin}>로그인</Button>
         <RowContainer>
-          <StyledLink to={'/register'}>비밀번호 재설정</StyledLink>
+          <StyledLink to={'/password_reset'}>비밀번호 재설정</StyledLink>
           <div>|</div>
           <StyledLink to={'/register'}>회원가입</StyledLink>
         </RowContainer>
@@ -107,7 +107,7 @@ export default Login;
 const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   width: 500px;
   margin: 0 auto;
   padding: 20px;
