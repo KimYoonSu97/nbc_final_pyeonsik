@@ -16,6 +16,16 @@ const PasswordChange: React.FC = () => {
   const [user, setUser] = useAtom(userAtom);
 
   const handleResetPassword = async () => {
+    // 유효성 검사
+
+    // 빈 값이 있을 시
+    if (!password || !checkPassword) {
+      setErrorMessage('빈 값이 존재합니다.');
+      setPassword('');
+      setCheckPassword('');
+      return;
+    }
+
     if (password !== checkPassword) {
       setErrorMessage('비밀번호가 다릅니다.');
       setPassword('');
