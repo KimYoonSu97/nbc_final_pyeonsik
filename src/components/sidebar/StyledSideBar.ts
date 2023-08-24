@@ -63,7 +63,7 @@ export const ImageWrapper = styled.div`
 export const HeadTitle = styled.h1`
   width: 296px;
   height: 26px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 `;
 
 export const Rank = styled.div<RankProps>`
@@ -94,7 +94,7 @@ export const FotterContainer = styled.div`
   position: fixed;
   right: calc(((100vw - 1280px) / 2) + 16px);
   width: 296px;
-  bottom: 0px;
+  bottom: 5px;
   border-top: 1px solid black;
   margin-top: auto;
 `;
