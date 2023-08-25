@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
@@ -11,7 +11,6 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   // Atom 생성
@@ -32,7 +31,6 @@ const Login = () => {
 
     if (data.user) {
       alert('로그인 완료!');
-      setSuccessMessage('로그인 완료!');
       setUserLogin('login');
       navigate('/');
     }
@@ -43,19 +41,6 @@ const Login = () => {
       // console.log('Registration successful:', data);
     }
   };
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event == 'PASSWORD_RECOVERY') {
-        const newPassword = prompt('What would you like your new password to be?');
-        if (newPassword !== null) {
-          const { data, error } = await supabase.auth.updateUser({
-            password: newPassword
-          });
-        }
-      }
-    });
-  }, []);
 
   return (
     <>
@@ -71,7 +56,7 @@ const Login = () => {
           id="password"
           placeholder="비밀번호를 입력하세요"
         />
-        <SuccessMessage>{successMessage}</SuccessMessage>
+
         <ErrorMessage>{errorMessage}</ErrorMessage>
         <Button onClick={handleLogin}>로그인</Button>
         <RowContainer>
@@ -144,12 +129,6 @@ const ColumnContainer = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center; /* 추가 */
-`;
-
-const SuccessMessage = styled.div`
-  margin-top: 10px;
-  color: blue;
-  font-size: 14px;
 `;
 
 const ErrorMessage = styled.div`
