@@ -55,7 +55,7 @@ const TopBarMenuContainer = () => {
 
         const newSocialUser: User = {
           email: data.email,
-          nickname: data.name,
+          nickname: data.name || data.user_name, // goggle, kakao: name  / github : user_name
           profileImg: data.avatar_url
         };
         const { data: userData, error } = await supabase.from('users').insert(newSocialUser).select('*');

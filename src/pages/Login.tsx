@@ -66,11 +66,11 @@ const Login = () => {
         </RowContainer>
         <ColumnContainer>
           <SocialLabel>간편한 소셜 로그인</SocialLabel>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <SocialContainer>
             <OAuthLogin provider="google" />
             <OAuthLogin provider="kakao" />
             <OAuthLogin provider="github" />
-          </div>
+          </SocialContainer>
         </ColumnContainer>
       </LoginFormContainer>
     </>
@@ -115,6 +115,10 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+const SocialContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const RowContainer = styled.div`
