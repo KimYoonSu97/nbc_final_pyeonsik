@@ -6,7 +6,6 @@ import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
 import { Link } from 'react-router-dom';
-import { sosialUserAtom } from '../OAuthLogin';
 
 interface User {
   email: string;
@@ -18,7 +17,7 @@ interface User {
 const TopBarMenuContainer = () => {
   const [userData, setUserData] = useState<User | null>(null);
   const navigate = useNavigate();
-  const [userLogin, setUserLogin] = useAtom(userAtom);
+  const [_, setUserLogin] = useAtom(userAtom);
   const social = localStorage.getItem('social');
 
   useEffect(() => {
@@ -72,6 +71,7 @@ const TopBarMenuContainer = () => {
     const user = await supabase.auth.getUser();
 
     // 저장된 정보에 따른 소셜로그인 데이터 가져오기
+    // social === "google" | "github" | "kakao"
     const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
 
     if (socialData !== undefined && socialData[0].identity_data && user.data.user) {

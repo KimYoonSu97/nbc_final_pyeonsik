@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';

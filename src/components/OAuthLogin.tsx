@@ -1,7 +1,6 @@
-import { atom, useAtom } from 'jotai';
+import { atom } from 'jotai';
 import React from 'react';
 import supabase from 'src/lib/supabaseClient';
-import { User } from '@supabase/supabase-js';
 
 export const sosialUserAtom = atom<string | null>(null);
 
