@@ -21,11 +21,10 @@ const PostEdit = () => {
   // read
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
   const post = data?.data?.[0];
-  console.log(data);
 
   // useEffect 순서 확인하기!
   useEffect(() => {
-    console.log('3', post);
+    console.log('3');
     setTitle(post?.title);
     setBody(post?.body);
   }, [data]);
@@ -52,7 +51,7 @@ const PostEdit = () => {
   if (data?.error) {
     return <p>Error</p>;
   }
-  if (post?.userId !== userId) {
+  if (userId && post?.userId.id !== userId) {
     alert('접근할 수 없습니다.');
     return <Navigate to="/" />;
   }
