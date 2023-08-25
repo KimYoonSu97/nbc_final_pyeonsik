@@ -3,7 +3,7 @@ import React from 'react';
 import supabase from 'src/lib/supabaseClient';
 import { User } from '@supabase/supabase-js';
 
-export const sosialUserAtom = atom<User | null>(null);
+export const sosialUserAtom = atom<string | null>(null);
 
 type Provider = 'google' | 'kakao' | 'github';
 
@@ -12,15 +12,13 @@ interface OAuthLoginProps {
 }
 
 const OAuthLogin = ({ provider }: OAuthLoginProps) => {
-  const [user, setUser] = useAtom(sosialUserAtom);
-
   const handleLogin = async () => {
     try {
       await supabase.auth.signInWithOAuth({
         provider: provider
       });
 
-      setUser(user);
+      localStorage.setItem('social', provider);
     } catch (error) {
       console.log(error);
     }
