@@ -1,25 +1,21 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import OAuthLogin from '../components/OAuthLogin';
-import supabase from 'src/lib/supabaseClient';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
-import { User } from '@supabase/supabase-js';
-
-export const userAtom = atom<User | null>(null);
+import { userAtom } from 'src/globalState/jotai';
+import styled from 'styled-components';
+import supabase from 'src/lib/supabaseClient';
+import OAuthLogin from '../components/OAuthLogin';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const navigate = useNavigate();
-
   // Atom 생성
-
-  const [_, setUser] = useAtom(userAtom);
+  const [_, setUserLogin] = useAtom(userAtom);
 
   const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -37,9 +33,7 @@ const Login = () => {
     if (data.user) {
       alert('로그인 완료!');
       setSuccessMessage('로그인 완료!');
-
-      setUser(data.user);
-
+      setUserLogin('login');
       navigate('/');
     }
 
@@ -57,7 +51,7 @@ const Login = () => {
         if (newPassword !== null) {
           const { data, error } = await supabase.auth.updateUser({
             password: newPassword
-          }); 
+          });
         }
       }
     });
@@ -66,16 +60,10 @@ const Login = () => {
   return (
     <>
       <LoginFormContainer>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <OAuthLogin provider="google" />
-          <OAuthLogin provider="kakao" />
-          <OAuthLogin provider="github" />
-        </div>
-
-        <Label htmlFor="email">이메일</Label>
+        {/* 로고 영역 */}
+        <img src=""></img>
+        <About>뻔하지 않고 Fun한, 편의점 음식을 조합하여 먹고 공유하자!</About>
         <Input value={email} onChange={emailHandler} type="text" id="email" placeholder="이메일을 입력하세요" />
-
-        <Label htmlFor="password">비밀번호</Label>
         <Input
           value={password}
           onChange={passwordHandler}
@@ -85,9 +73,20 @@ const Login = () => {
         />
         <SuccessMessage>{successMessage}</SuccessMessage>
         <ErrorMessage>{errorMessage}</ErrorMessage>
-
         <Button onClick={handleLogin}>로그인</Button>
-        <br />
+        <RowContainer>
+          <StyledLink to={'/password_reset'}>비밀번호 재설정</StyledLink>
+          <div>|</div>
+          <StyledLink to={'/register'}>회원가입</StyledLink>
+        </RowContainer>
+        <ColumnContainer>
+          <SocialLabel>간편한 소셜 로그인</SocialLabel>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <OAuthLogin provider="google" />
+            <OAuthLogin provider="kakao" />
+            <OAuthLogin provider="github" />
+          </div>
+        </ColumnContainer>
       </LoginFormContainer>
     </>
   );
@@ -98,16 +97,23 @@ export default Login;
 const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
+
+  width: 500px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
 `;
 
-const Label = styled.label`
+const About = styled.div`
+  color: gray;
+  margin: 25px 0px;
+`;
+
+const SocialLabel = styled.label`
   font-size: 14px;
   margin-bottom: 6px;
+  margin-top: 50px;
 `;
 
 const Input = styled.input`
@@ -126,13 +132,39 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const RowContainer = styled.div`
+  display: flex;
+  justify-content: center; /* 요소들을 수평 가운데로 정렬 */
+  align-items: center; /* 요소들을 수직 가운데로 정렬 */
+  flex-direction: row; /* 요소들을 세로 방향으로 배치 */
+`;
+
+const ColumnContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center; /* 추가 */
+`;
+
 const SuccessMessage = styled.div`
   margin-top: 10px;
   color: blue;
   font-size: 14px;
 `;
+
 const ErrorMessage = styled.div`
   margin-top: 10px;
   color: red;
   font-size: 14px;
+`;
+
+const StyledLink = styled(Link)`
+  /* 여기에 스타일을 추가하세요 */
+  text-decoration: none;
+  color: #999999;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  margin: 15px;
+  /* 추가적인 스타일링을 원하는 대로 적용하세요 */
 `;

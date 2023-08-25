@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { Tag, Data } from 'src/types/types';
 
 import { ImageTagProps } from 'src/types/types';
-import ImageUploader from '../ImageTag/ImageUploader';
-import Search from '../ImageTag/Search';
+import ImageUploader from './ImageUploader';
+import Search from './Search';
+import PostWriteInput from '../post/PostWriteInput';
 
-const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSelect }) => {
+const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSelect, onContentsChange }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [tags, setTags] = useState<Tag[]>([]);
   const [addTagMode, setAddingTagMode] = useState(false);
   const [selectedTagIndex, setSelectedTagIndex] = useState<number | null>(null);
   const [searchFormHandler, setSearchFormHandler] = useState(false);
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
+  const [contents, setContents] = useState('');
+
+  console.log('나는 ImageTag', contents);
+
+  const postRef = useRef<HTMLInputElement>(null);
+
+  console.log('selectedImage', selectedImage?.name);
 
   //이미지 클릭 시 태그를 찍는 함수 x,y 값과 text, img, price를 갖고있다
   const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
@@ -34,8 +42,10 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
         updatedTags.splice(tags.length - 1 - lastEmptyTagIndex, 1);
       }
 
-      const newTag = { x, y, prodData: '', img: '', price: '' };
+      const newTag = { x, y, prodData: '', img: '', price: '', selectedimg: selectedImage?.name };
       setTags([...updatedTags, newTag]);
+
+      setContents(contents);
 
       setSelectedTagIndex(updatedTags.length);
       setselectedTagVisible(true);
@@ -100,6 +110,18 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
   return (
     <>
       <div>
+        <PostWriteInput
+          ref={postRef}
+          type="text"
+          name="body"
+          title="body"
+          value={contents}
+          onChange={(e) => {
+            setContents(e.target.value);
+            onContentsChange(e.target.value);
+          }}
+        />
+
         <ImageUploader onImageSelect={handleImageSelect} />
         <button
           onClick={(e) => {

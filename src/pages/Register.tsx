@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import SignUpForm from 'src/components/register/SignUpForm';
 import ProfileSetForm from 'src/components/register/ProfileSetForm';
+import SignUpForm from 'src/components/register/SignUpForm';
 
 // 회원가입
-
 const Register = () => {
   const [nextStep, setNextStep] = useState(false);
   const [userEmail, setUserEmail] = useState('');

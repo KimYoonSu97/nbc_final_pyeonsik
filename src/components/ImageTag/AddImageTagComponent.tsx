@@ -1,40 +1,45 @@
+// AddImageTagComponent.tsx
 import React, { useState } from 'react';
-import ImageTag from '../post/ImageTag';
-import { Tag, Data } from 'src/types/types';
+import ImageTag from './ImageTag';
+import { atom, useAtom } from 'jotai';
+import { ImageTagProps } from 'src/types/types';
 
-interface AddImageTagComponentProps {
-  onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
-  onImageSelect: (image: File) => void;
-}
+export const contentsAtom = atom<string[]>([]);
 
-const AddImageTagComponent: React.FC<AddImageTagComponentProps> = ({ onTagsAndResultsChange, onImageSelect }) => {
-  const [imageTagComponents, setImageTagComponents] = useState<
-    { component: JSX.Element; tags: Tag[]; searchResults: Data[] }[]
-  >([]);
+const AddImageTagComponent: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSelect, onContentsChange }) => {
+  const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
+  const [inputData, setInputData] = useAtom(contentsAtom);
 
   const addImageTagComponent = () => {
     const newImageTagComponent = (
-      <ImageTag key={Date.now()} onTagsAndResultsChange={onTagsAndResultsChange} onImageSelect={onImageSelect} />
+      <div key={Date.now()}>
+        <ImageTag
+          onTagsAndResultsChange={onTagsAndResultsChange}
+          onImageSelect={onImageSelect}
+          onContentsChange={(newContents) => handleContentsChange(imageTagComponents.length, newContents)}
+        />
+      </div>
     );
 
-    const newImageTagData = {
-      component: newImageTagComponent,
-      tags: [],
-      searchResults: []
-    };
-
-    console.log('newImageTagData.component', newImageTagData.component);
-    console.log('newImageTagData.tags', newImageTagData.tags);
-    console.log('newImageTagData.searchResults', newImageTagData.searchResults);
-
-    setImageTagComponents((prevComponents) => [...prevComponents, newImageTagData]);
+    setImageTagComponents((prevComponents) => [...prevComponents, newImageTagComponent]);
+    setInputData((prevInputData) => [...prevInputData, '']);
   };
+
+  const handleContentsChange = (index: number, newContents: string) => {
+    setInputData((prevInputData) => {
+      const updatedInputData = [...prevInputData];
+      updatedInputData[index] = newContents;
+      return updatedInputData;
+    });
+  };
+
+  console.log('나는 AddImageTag', inputData);
 
   return (
     <div>
       <button onClick={addImageTagComponent}>이미지 추가</button>
-      {imageTagComponents.map((imageTagData, index) => (
-        <div key={index}>{imageTagData.component}</div>
+      {imageTagComponents.map((component, index) => (
+        <div key={index}>{component}</div>
       ))}
     </div>
   );

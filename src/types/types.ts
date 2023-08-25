@@ -9,6 +9,7 @@ export interface InputProps {
   autoFocus?: boolean;
 }
 
+// post
 export interface Post {
   id: string;
   created_at: string;
@@ -18,7 +19,6 @@ export interface Post {
   img: string;
   body: string;
   product: [];
-  bookmark: [];
   userId?: PostUserProfile | string;
   likes: string;
   likesCount: number;
@@ -30,10 +30,18 @@ export interface Post {
 // 게시글 작성할 때 사용하는 임시 type
 export interface NewPost {
   // orgPostId: string;
-  // postCategory: string;
+  postCategory: string;
   title: string;
   // img: string;
   body: string;
+  userId: string;
+}
+export interface NewPost2 {
+  // orgPostId: string;
+  postCategory: string;
+  title: string;
+  // img: string;
+  body: string[];
   userId: string;
 }
 
@@ -43,6 +51,7 @@ export interface EditPost {
   body: string;
 }
 
+// post like
 export interface PostLike {
   id: string;
   postId: string;
@@ -54,8 +63,20 @@ export interface NewPostLike {
   userId: string;
 }
 
+// post bookmark
+export interface PostBookmark {
+  id: string;
+  postId: string;
+  userId: string;
+}
+
+export interface NewPostBookmark {
+  postId: string;
+  userId: string;
+}
+
 export interface RankProps {
-  isfirst?: boolean;
+  $isfirst?: boolean;
 }
 
 export interface UserType {
@@ -89,6 +110,23 @@ export interface Tag {
   img: string;
   price: string;
 }
+export interface ImageTag {
+  x: number;
+  y: number;
+  prodData: string;
+  img: string;
+  price: string;
+  selectedimg: string;
+}
+
+export interface ManyTag {
+  x: number;
+  y: number;
+  prodData: string;
+  img: string;
+  price: string;
+  imageIndex: number;
+}
 
 export interface ImageData {
   url: string[];
@@ -106,6 +144,7 @@ export interface Data {
 export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
+  onContentsChange: (contents: string) => void;
 }
 
 export interface SearchProps {

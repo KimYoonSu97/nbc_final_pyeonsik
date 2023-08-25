@@ -40,7 +40,6 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     // console.log(data);
     setUserEmail(email);
     setNextStep(true);
-    // navigate('/')
   };
 
   const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +53,6 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const checkPasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCheckPassword(e.target.value);
   };
-  
 
   return (
     <RegisterFormContainer>
@@ -78,7 +76,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
         value={checkPassword}
         onChange={checkPasswordHandler}
       />
-      <TermsAndConditions/>
+      <TermsAndConditions />
 
       <Button onClick={handleSignUp}>가입하기</Button>
       <AskMessage>이미 편식 계정이 있으신가요?</AskMessage>

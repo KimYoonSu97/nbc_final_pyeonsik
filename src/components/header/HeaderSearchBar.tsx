@@ -33,6 +33,7 @@ const S = {
     right: 16px;
     position: absolute;
   `,
+
   SearchArea: styled.input`
     background-color: transparent;
     outline: none;

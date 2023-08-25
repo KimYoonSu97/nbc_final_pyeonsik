@@ -39,7 +39,8 @@ const CommonPost = ({ item }: Props) => {
           <BookmarkCount />
         </S.BottomArea>
         <S.TitleArea>{title}</S.TitleArea>
-        <S.BodyArea>{body}</S.BodyArea>
+        {/* editor 내용 변환 */}
+        <S.BodyArea dangerouslySetInnerHTML={{ __html: body }} />
       </S.PostBox>
     </S.Container>
   );
@@ -118,7 +119,7 @@ const S = {
     line-height: 28px;
     margin-bottom: 22px;
   `,
-  BodyArea: styled.div`
+  BodyArea: styled.pre`
     font-size: 16px;
     font-weight: 400;
     line-height: 28px;

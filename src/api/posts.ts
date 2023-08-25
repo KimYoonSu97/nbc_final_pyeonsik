@@ -1,5 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
-import { EditPost, NewPost } from 'src/types/types';
+import { EditPost, NewPost, NewPost2 } from 'src/types/types';
 
 const getPosts = async () => {
   const response = await supabase.from('posts').select('*,userId(nickname,profileImg)');
@@ -14,6 +14,9 @@ const getPost = async (id: string) => {
 const addPost = async (post: NewPost) => {
   await supabase.from('posts').insert(post).select();
 };
+const addPost2 = async (post: NewPost2) => {
+  await supabase.from('posts').insert(post).select();
+};
 
 const updatePost = async (post: EditPost) => {
   await supabase.from('posts').update(post).eq('id', post.id).select();
@@ -25,18 +28,33 @@ const deletePost = async (id: string) => {
 
 // MyPosts
 const getMyPostsById = async (id: string) => {
+  console.log('이건 에이피아이에서 찍은거셈', id);
   const response = await supabase.from('posts').select('*,userId(nickname,profileImg)').eq('userId', id);
   return response;
 };
 
 const getMyBookMarkById = async (id: string) => {
   const response = await supabase.from('post_bookmark').select('postId(*,userId(*))').eq('userId', id);
+  console.log(response.error);
+  console.log(response.data);
   return response;
 };
 
 const getMyLikePostById = async (id: string) => {
   const response = await supabase.from('post_likes').select('postId(*,userId(*))').eq('userId', id);
+  console.log(response.error);
+  console.log(response.data);
   return response;
 };
 
-export { getPosts, getMyPostsById, getMyLikePostById, getMyBookMarkById, getPost, addPost, updatePost, deletePost };
+export {
+  getPosts,
+  getPost,
+  addPost,
+  updatePost,
+  deletePost,
+  getMyPostsById,
+  getMyLikePostById,
+  getMyBookMarkById,
+  addPost2
+};
