@@ -1,10 +1,10 @@
 import React from 'react';
 import { useRef, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router';
-
 import ReactQuill, { Quill } from 'react-quill';
 import { ImageResize } from 'quill-image-resize-module-ts';
 import 'react-quill/dist/quill.snow.css';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
@@ -12,9 +12,6 @@ Quill.register('modules/ImageResize', ImageResize);
 
 // recipe, common write component 정리 필요
 const PostWriteCommon = () => {
-  // user id 윤수님
-  const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
-
   const navigate = useNavigate();
   const { addPostMutate } = useMutate();
 
@@ -23,6 +20,9 @@ const PostWriteCommon = () => {
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const postRef = useRef<HTMLInputElement>(null);
+
+  // current user id
+  const userId: string | undefined = useLoginUserId();
 
   // quill에서 사용할 module 설정 code
   // key 입력 시 imageHandler로 인한 focus 풀림 방지
