@@ -14,7 +14,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
   const [baseImg] = useState(baseImage);
 
-  
   // Blob 형태를 string으로 변환
   const encodeFileTobase64 = (fileBlob: Blob) => {
     const reader = new FileReader();
@@ -44,7 +43,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     const newUser = {
       email: userEmail,
       nickname,
-      profileImg: profileImgSrc.length < 5 ? '' : profileImgSrc
+      profileImg: profileImgSrc.length < 5 ? '' : ''
     };
     if (!nickname) {
       alert('닉네임을 입력해주세요');

@@ -30,7 +30,7 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
   };
 
   return (
-    <>
+    <div>
       <CommentWriteWrap>
         <form
           onSubmit={(e) => {
@@ -43,7 +43,7 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
             onChange={(e) => {
               setReComment(e.target.value);
             }}
-          ></input>
+          />
           <button>
             <img src="/images/commentWriteImg2.png" alt="답글작성버튼"></img>
           </button>
@@ -63,7 +63,7 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
             );
           })}
       </CommentWrap>
-    </>
+    </div>
   );
 };
 

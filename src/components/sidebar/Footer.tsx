@@ -1,7 +1,7 @@
 import React from 'react';
 import { SideFotter, FotterContainer } from './StyledSideBar';
 
-const Fotter = () => {
+const Footer = () => {
   return (
     <FotterContainer>
       <SideFotter>팀원 소개 · 이용약관 · 개인정보처리방침 </SideFotter>
@@ -11,4 +11,4 @@ const Fotter = () => {
   );
 };
 
-export default Fotter;
+export default Footer;

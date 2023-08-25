@@ -3,15 +3,26 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import MypageSideBar from './mypage/MypageSideBar';
 import RankSideBar from './rank/RankSideBar';
-import Fotter from './Fotter';
+import Footer from './Footer';
+import EventSideBar from './event/EventSideBar';
 
 const SideBar = () => {
   const location = useLocation();
+
   return (
     <S.Container>
       <S.FixedContainer>
-        {location.pathname.includes('/mypage') ? <MypageSideBar /> : <RankSideBar />}
-        <Fotter />
+        {(() => {
+          switch (location.pathname) {
+            case '/':
+              return <RankSideBar />;
+            case '/event':
+              return <EventSideBar />;
+            default:
+              return <MypageSideBar />;
+          }
+        })()}
+        <Footer />
       </S.FixedContainer>
     </S.Container>
   );
