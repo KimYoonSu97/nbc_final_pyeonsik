@@ -27,8 +27,7 @@ const useLoginUserId = () => {
       return loginUserId;
     }
   }, [loginUserId]);
-
-  console.log('유저 훅에서 찍은 유저 아이디', userId);
+  // console.log('유저 훅에서 찍은 유저 아이디', userId);
   return userId as string;
 };
 

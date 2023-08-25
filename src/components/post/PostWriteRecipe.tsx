@@ -4,15 +4,13 @@ import { useNavigate } from 'react-router';
 import { Data, Tag } from 'src/types/types';
 
 import supabase from 'src/lib/supabaseClient';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 import ImageTag from './ImageTag';
 
 // recipe, common write component 정리 필요
 const PostWriteRecipe = () => {
-  // user id 윤수님
-  const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
-
   const navigate = useNavigate();
   const { addPostMutate } = usePost();
 
@@ -24,6 +22,9 @@ const PostWriteRecipe = () => {
     searchResults: []
   });
   const postRef = useRef<HTMLInputElement>(null);
+
+  // current user id
+  const userId: string | undefined = useLoginUserId();
 
   const handleImageSelect = (image: File) => {
     setSelectedImage(image);

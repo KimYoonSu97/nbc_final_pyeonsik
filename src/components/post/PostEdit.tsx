@@ -1,22 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getPosts } from 'src/api/posts';
+import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const PostEdit = () => {
-  const { id: prams } = useParams<string>();
   const navigate = useNavigate();
+  const { id: prams } = useParams<string>();
   const { updatePostMutate } = useMutate();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const postRef = useRef<HTMLInputElement>(null);
 
+  // current user id
+  const userId: string | undefined = useLoginUserId();
+
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
-  const post = data?.data?.find((post) => post.id === prams);
+  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
+  const post = data?.data?.[0];
+  console.log(data);
 
   // useEffect 순서 확인하기!
   useEffect(() => {
@@ -41,18 +46,16 @@ const PostEdit = () => {
     navigate(`/detail/${prams}`);
   };
 
-  console.log('0');
   if (isLoading) {
-    console.log('1');
     return <p>Loading…</p>;
   }
   if (data?.error) {
     return <p>Error</p>;
   }
-  if (data?.data.length === 0) {
-    return <p>none</p>;
+  if (post?.userId !== userId) {
+    alert('접근할 수 없습니다.');
+    return <Navigate to="/" />;
   }
-  console.log('2');
 
   return (
     <div>
