@@ -29,7 +29,10 @@ const RealTimeCombo = () => {
       {filteredPosts.map((post, index) => (
         <S.ContentWrapper key={post.id}>
           <S.RankNum $isfirst={index === 0}>{index + 1}</S.RankNum>
-          <S.ImageBox $url={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`}></S.ImageBox>
+
+          {post.tagimage && (
+            <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`} alt={`${post.id}`} />
+          )}
           <S.PostTitle>{post.title}</S.PostTitle>
           {/* <Rank ></Rank> */}
           {/*<ImageWrapper>
