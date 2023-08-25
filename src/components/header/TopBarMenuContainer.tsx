@@ -80,7 +80,7 @@ const TopBarMenuContainer = () => {
       const myUser: User = {
         email: data.email,
         id: user.data.user.id,
-        nickname: data.user_name,
+        nickname: data.name || data.user_name, // goggle, kakao: name  / github : user_name
         profileImg: data.avatar_url
       };
       setUserData(myUser as User);
