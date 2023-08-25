@@ -13,6 +13,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [nickname, setNickname] = useState('');
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
   const [baseImg] = useState(baseImage);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Blob 형태를 string으로 변환
   const encodeFileTobase64 = (fileBlob: Blob) => {
@@ -33,10 +34,20 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       .eq('nickname', nickname)
       .maybeSingle();
     console.log(existingUsers);
-
-    // TODO: 중복이어도 return이 안됨..
+    // 유효성 검사
+    // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
+    const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
+    if (!nicknamePattern.test(nickname)) {
+      setErrorMessage('올바른 닉네임 형식이 아닙니다.');
+      return;
+    }
+    if (nickname.length < 2) {
+      setErrorMessage('2글자 이상 이어야 합니다.');
+      return;
+    }
     if (existingUsers) {
-      alert('이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.');
+      // TODO: 중복이어도 return이 안됨..
+      setErrorMessage('이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.');
       return;
     }
 
@@ -76,6 +87,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
             />
           </div>
         </ProfileImgnameBox>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
         <Label>닉네임</Label>
         <NickNameInput
           maxLength={15}
@@ -162,4 +174,10 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+const ErrorMessage = styled.div`
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
 `;
