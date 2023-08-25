@@ -2,7 +2,7 @@ import supabase from 'src/lib/supabaseClient';
 
 const getEventProd = async (page: number) => {
   console.log(page);
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('products')
     .select('*')
     .not('event', 'is', null)
