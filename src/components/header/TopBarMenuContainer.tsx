@@ -4,10 +4,12 @@ import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
+import baseImage from '../../images/baseprofile.jpeg';
+import { Link } from 'react-router-dom';
 
 interface User {
   email: string;
-  id: string;
+  id?: string;
   nickname: string;
   profileImg: string;
 }
@@ -18,20 +20,48 @@ const TopBarMenuContainer = () => {
   const [userLogin, setUserLogin] = useAtom(userAtom);
 
   useEffect(() => {
+    const social = localStorage.getItem('social');
     const token = localStorage.getItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
     if (token) {
       const { user } = JSON.parse(token);
       getUserDataForHeader(user.id);
+    } else if (social && !token) {
+      socialLogin(social);
     } else {
       setUserData(null);
     }
   }, [userLogin]);
+  // 새로고침
 
   const getUserDataForHeader = async (id: string) => {
     const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
     if (error) {
     }
     setUserData(data as User);
+  };
+
+  // 소셜로그인
+  const socialLogin = async (social: string) => {
+    const user = await supabase.auth.getUser();
+    const { data, error } = await supabase.from('users').select('*').eq('id', user.data.user?.id).single();
+    if (data) {
+      console.log(data);
+      setUserData(data as User);
+    } else {
+      const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
+      console.log(socialData);
+      if (socialData !== undefined && socialData[0].identity_data && user.data.user) {
+        const data = socialData[0].identity_data;
+
+        const newSocialUser: User = {
+          email: data.email,
+          nickname: data.name,
+          profileImg: data.avatar_url
+        };
+        const { data: userData, error } = await supabase.from('users').insert(newSocialUser).select('*');
+        setUserData(newSocialUser as User);
+      }
+    }
   };
 
   // 로그아웃 핸들러
@@ -41,9 +71,10 @@ const TopBarMenuContainer = () => {
       alert(error);
       return;
     }
+    localStorage.setItem('social', '');
     setUserLogin('logout');
     alert('로그아웃 완료!');
-    navigate('/');
+    // handleRefresh();
   };
 
   return (
@@ -53,14 +84,14 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
         <S.QuickPostButton onClick={() => navigate('/event')}>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
-      {userData && <>{/* <S.TopBarMenu onClick={() => navigate('/mypage/profile')}>마이페이지</S.TopBarMenu> */}</>}
       <S.TopBarLogContainer $logged={userData ? true : false}>
-        {/* 로그인 전 후 분기 */}
+        {userData && <>{/* <S.TopBarMenu onClick={() => navigate('/mypage/profile')}>마이페이지</S.TopBarMenu> */}</>}
+        {/* 공통 */}
+        {/* 로그인 전 */}
         {!userData ? (
           <>
             <S.TopBarLogButton onClick={() => navigate('/login')}>로그인</S.TopBarLogButton>
             <S.TopBarLogButton onClick={() => navigate('/register')}>회원가입</S.TopBarLogButton>
-            <br />
           </>
         ) : (
           <>
@@ -80,7 +111,7 @@ const TopBarMenuContainer = () => {
             <S.Level>Lv. 식신</S.Level>
             {/* <p>Hello, {userData?.nickname}</p> */}
             <S.ProfileImg src={userData?.profileImg} alt="프로필 사진"></S.ProfileImg>
-            {/* <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton> */}
+            <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton>
           </>
         )}
       </S.TopBarLogContainer>
@@ -180,15 +211,3 @@ const S = {
     border-radius: 100px;
   `
 };
-
-const SuccessMessage = styled.div`
-  margin-top: 10px;
-  color: blue;
-  font-size: 14px;
-`;
-
-const ErrorMessage = styled.div`
-  margin-top: 10px;
-  color: red;
-  font-size: 14px;
-`;
