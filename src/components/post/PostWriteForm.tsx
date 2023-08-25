@@ -5,9 +5,8 @@ import { useNavigate } from 'react-router';
 import supabase from 'src/lib/supabaseClient';
 import useMutate from 'src/hooks/useMutate';
 import PostWriteInput from './PostWriteInput';
-import ImageTag from './ImageTag';
-import { Data, Tag } from 'src/types/types';
-// import FetchData from './FetchData';
+import { Tag } from 'src/types/types';
+import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
 
 const PostWriteForm = () => {
   // user id 윤수님
@@ -19,9 +18,8 @@ const PostWriteForm = () => {
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [tagsAndResults, setTagsAndResults] = useState<{ tags: Tag[]; searchResults: Data[] }>({
-    tags: [],
-    searchResults: []
+  const [tags, setTags] = useState<{ tags: Tag[] }>({
+    tags: []
   });
 
   const postRef = useRef<HTMLInputElement>(null);
@@ -29,6 +27,9 @@ const PostWriteForm = () => {
   const handleImageSelect = (image: File) => {
     setSelectedImage(image);
   };
+
+  // console.log('selectedImage', selectedImage);
+  // console.log('tags', tags);
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ const PostWriteForm = () => {
       userId,
       title,
       body: body,
-      tags: tagsAndResults.tags,
+      tags: tags.tags,
       tagimage: imageUrl
     };
     addMutate.mutate(newPost);
@@ -60,10 +61,8 @@ const PostWriteForm = () => {
 
   return (
     <>
-      <ImageTag
-        onTagsAndResultsChange={(tags, searchResults) => setTagsAndResults({ tags, searchResults })}
-        onImageSelect={handleImageSelect}
-      />
+      <AddImageTagComponent onTagsAndResultsChange={(tags) => setTags({ tags })} onImageSelect={handleImageSelect} />
+
       <form onSubmit={submitPost}>
         <PostWriteInput
           ref={postRef}
@@ -72,7 +71,6 @@ const PostWriteForm = () => {
           title="title"
           value={title}
           onChange={(e) => {
-            e.preventDefault();
             setTitle(e.target.value);
           }}
           autoFocus
@@ -88,7 +86,6 @@ const PostWriteForm = () => {
         />
         <button type="submit">add</button>
       </form>
-      {/* <FetchData /> */}
     </>
   );
 };

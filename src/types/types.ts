@@ -81,7 +81,7 @@ export interface Likes {
   likes: string;
   postId: string;
 }
-// 이 아래가 내가 가져온 타입선언
+// 이 아래는 이미지 태그 관련 프롭스입니다! 위에 포스트에도 살짝 있긴합니다
 export interface Tag {
   x: number;
   y: number;
@@ -103,19 +103,16 @@ export interface Data {
   price: string;
 }
 
-// export interface Post {
-//   id: string;
-//   tags: { x: number; y: number; text: string; img: string; price: string }[];
-//   url: string;
-// }
-
-// export interface Result {
-//   img: string;
-//   title: string;
-//   price: string;
-// }
-
 export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
 }
+
+export interface SearchProps {
+  onSearchResultSelect: (result: Data) => void;
+}
+
+export interface ImageUploaderProps {
+  onImageSelect: (imageFile: File) => void;
+}
+//여기까지
