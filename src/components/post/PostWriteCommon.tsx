@@ -57,6 +57,11 @@ const PostWriteCommon = () => {
     navigate(`/`);
   };
 
+  const coordImage = (event: React.MouseEvent<HTMLImageElement>) => {
+    console.log('X', event.clientX);
+    console.log('Y', event.clientY);
+  };
+
   return (
     <form onSubmit={submitPost}>
       <PostWriteInput
@@ -83,6 +88,10 @@ const PostWriteCommon = () => {
         placeholder="내용을 입력해주세요."
       />
       <button>add</button>
+      {/* <img
+        src="https://wwkfivwrtwucsiwsnisz.supabase.co/storage/v1/object/public/photos/report/dev_jeans.png"
+        onClick={coordImage}
+      /> */}
     </form>
   );
 };

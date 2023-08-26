@@ -16,15 +16,15 @@ export interface Post {
   orgPostId: string;
   postCategory: string;
   title: string;
-  img: string;
   body: string;
   product: [];
   userId?: PostUserProfile | string;
   likes: string;
   likesCount: number;
+  img: string;
   // postImge tag (유길님)
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
-  tagimage: string;
+  tagimage?: string;
 }
 
 // 게시글 작성할 때 사용하는 임시 type

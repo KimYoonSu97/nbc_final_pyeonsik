@@ -2,7 +2,11 @@ import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost } from 'src/types/types';
 
 const getPosts = async () => {
-  const response = await supabase.from('posts').select('*,userId(nickname,profileImg)');
+  const response = await supabase
+    .from('posts')
+    .select('*,userId(nickname,profileImg)')
+    .order('created_at', { ascending: false });
+  // .range(0, 9);
   return response;
 };
 

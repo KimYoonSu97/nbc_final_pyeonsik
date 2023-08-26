@@ -7,7 +7,6 @@ import PostCards from '../renderPosts/PostCards';
 
 const PostList = () => {
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
-
   if (isLoading) {
     return <p>Loading…</p>;
   }
@@ -18,9 +17,6 @@ const PostList = () => {
     return <p>none</p>;
   }
   const posts = data?.data as Post[];
-
-  // 게시글 최신순 정렬
-  posts.sort((a: Post, b: Post) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
 
   return <PostCards data={posts}></PostCards>;
 };

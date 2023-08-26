@@ -13,6 +13,7 @@ import Detail from 'src/pages/Detail';
 import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import Mypage from 'src/pages/Mypage';
+import Test from 'src/Test';
 
 const Router = () => {
   return (
@@ -26,6 +27,8 @@ const Router = () => {
           <Route path="/password_reset" element={<PasswordReset />} />
           <Route path="/password_change" element={<PasswordChange />} />
           <Route path="/detail/:id" element={<Detail />} />
+          {/* test */}
+          <Route path="/test" element={<Test />} />
           <Route element={<PrivateRoute />}>
             <Route path="/write" element={<Write />} />
             <Route path="/edit/:id" element={<Edit />} />
