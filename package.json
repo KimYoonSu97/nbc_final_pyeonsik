@@ -24,6 +24,7 @@
     "quill-image-resize-module-ts": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.5.2",
     "react-query": "^3.39.3",
     "react-quill": "^2.0.0",
     "react-router": "^6.15.0",
@@ -60,5 +61,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "source-map-loader": "^4.0.1"
   }
 }

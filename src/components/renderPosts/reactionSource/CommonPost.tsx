@@ -24,7 +24,7 @@ const CommonPost = ({ item }: Props) => {
   return (
     <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}>
       <S.UserArea>
-        <S.ProfileImg $url={profileImg}></S.ProfileImg>
+        {/* <S.ProfileImg $url={profileImg}></S.ProfileImg> */}
         <S.Level>Lv.점장</S.Level>
         <S.Nickname_Category>{nickname}</S.Nickname_Category>
         <S.Caption>님의</S.Caption>

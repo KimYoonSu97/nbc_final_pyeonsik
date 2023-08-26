@@ -48,8 +48,16 @@ const Login = () => {
         {/* 로고 영역 */}
         <img src=""></img>
         <About>뻔하지 않고 Fun한, 편의점 음식을 조합하여 먹고 공유하자!</About>
-        <Input value={email} onChange={emailHandler} type="text" id="email" placeholder="이메일을 입력하세요" />
         <Input
+          maxLength={30}
+          value={email}
+          onChange={emailHandler}
+          type="text"
+          id="email"
+          placeholder="이메일을 입력하세요"
+        />
+        <Input
+          maxLength={15}
           value={password}
           onChange={passwordHandler}
           type="password"
@@ -66,11 +74,11 @@ const Login = () => {
         </RowContainer>
         <ColumnContainer>
           <SocialLabel>간편한 소셜 로그인</SocialLabel>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <SocialContainer>
             <OAuthLogin provider="google" />
             <OAuthLogin provider="kakao" />
             <OAuthLogin provider="github" />
-          </div>
+          </SocialContainer>
         </ColumnContainer>
       </LoginFormContainer>
     </>
@@ -115,6 +123,10 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+const SocialContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const RowContainer = styled.div`

@@ -11,7 +11,7 @@ const Layout = () => {
     <>
       <Header />
       <S.BottomContainer>
-        <S.Container>
+        <S.Container id="scroll">
           <S.ContentsArea>
             <Outlet />
           </S.ContentsArea>

@@ -13,6 +13,7 @@ import Detail from 'src/pages/Detail';
 import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import Mypage from 'src/pages/Mypage';
+import EventProd from 'src/pages/EventProd';
 import Test from 'src/Test';
 
 const Router = () => {
@@ -27,6 +28,7 @@ const Router = () => {
           <Route path="/password_reset" element={<PasswordReset />} />
           <Route path="/password_change" element={<PasswordChange />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/event" element={<EventProd />} />
           {/* test */}
           <Route path="/test" element={<Test />} />
           <Route element={<PrivateRoute />}>

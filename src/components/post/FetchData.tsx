@@ -33,7 +33,7 @@ const Fetch = () => {
         <div key={post.id}>
           {post.tagimage && (
             <div style={{ position: 'relative' }}>
-              <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`} alt={`${post.id}`} />
+              {/* <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`} alt={`${post.id}`} /> */}
               {/* 여기서 불러온 이미지에 태그를 찍는다 */}
               {post.tags.map((tag, tagIndex) => (
                 <div
