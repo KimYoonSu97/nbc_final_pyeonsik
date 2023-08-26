@@ -1,20 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ProdEvent, Product } from 'src/types/types';
 
-interface ProdEvent {
-  type: string;
-}
-interface Product {
-  created_at: string;
-  event: ProdEvent | null;
-  id: string;
-  new: boolean;
-  price: string;
-  prodBrand: string;
-  prodCategory: string;
-  prodImg: string;
-  prodName: string;
-}
 interface Props {
   data: Product;
 }

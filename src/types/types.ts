@@ -133,3 +133,25 @@ export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
 }
+
+/// 무한스크롤 관련
+export interface ProdEvent {
+  type: string;
+}
+export interface Product {
+  created_at: string;
+  event: ProdEvent | null;
+  id: string;
+  new: boolean;
+  price: string;
+  prodBrand: string;
+  prodCategory: string;
+  prodImg: string;
+  prodName: string;
+}
+export interface InfinityProductList {
+  products: Product[];
+  page: number;
+  total_pages: number;
+  total_results: number | null;
+}
