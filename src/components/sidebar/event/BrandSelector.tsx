@@ -5,17 +5,17 @@ import { Link, useLocation } from 'react-router-dom';
 const brands = [
   {
     name: 'GS25',
-    path: '?=gs25',
+    path: '?=GS25',
     logoImg: ''
   },
   {
     name: 'CU',
-    path: '?=cu',
+    path: '?=CU',
     logoImg: ''
   },
   {
     name: 'SEVEN ELEVEN',
-    path: '?=seveneleven',
+    path: '?=7-ELEVEn',
     logoImg: ''
   },
   {
@@ -36,7 +36,7 @@ const BrandSelector = () => {
       {brands.map((brand) => {
         return (
           <S.TapButton key={brand.name} to={`event${brand.path}`} $type={brand.path} $location={location.search}>
-            프로필
+            {brand.name}
             <S.Icon></S.Icon>
           </S.TapButton>
         );
