@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { PostBookmark, PostLike } from 'src/types/types';
 // custom hoooks
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -13,13 +13,13 @@ import { getPostLike } from 'src/api/postLikes';
 import { Tag, ImageTag } from 'src/types/types';
 
 const PostDetail = () => {
-  // user id
+  // current user id
   const userId: string | undefined = useLoginUserId();
 
   const { id } = useParams<string>();
   const navigate = useNavigate();
 
-  // 게시글 삭제, 좋아요, 좋아요 취소
+  // 게시글 삭제, 좋아요, 좋아요 취소, 저장, 저장 취소
   const { deletePostMutate } = useMutate();
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
@@ -30,6 +30,7 @@ const PostDetail = () => {
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
   const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostLike(id!) });
   const post = data?.data?.[0];
+  const postWriter = post?.userId;
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
 
@@ -43,7 +44,7 @@ const PostDetail = () => {
     navigate(`/edit/${id}`);
   };
 
-  // 좋아요 기능
+  // 좋아요
   const clickPostLike = (postLike: PostLike) => {
     if (!postLike) {
       const newPostLike = {
@@ -56,6 +57,7 @@ const PostDetail = () => {
     }
   };
 
+  // bookmark
   const clickPostBookmark = (postBookmark: PostBookmark) => {
     if (!postBookmark) {
       const newPostBookmark = {
@@ -75,7 +77,7 @@ const PostDetail = () => {
     return <p>Error</p>;
   }
   if (data?.data.length === 0) {
-    return <p>none</p>;
+    return <Navigate to="/" />;
   }
   const handleTagClick = (tag: Tag) => {
     setSelectedTag(selectedTag === tag ? null : tag);
@@ -83,6 +85,10 @@ const PostDetail = () => {
 
   return (
     <div>
+      <img src={postWriter.profileImg} />
+      <div>작성자 등급</div>
+      <div>{postWriter.nickname}</div>
+      <div>{post.created_at}</div>
       <div>{post.title}</div>
       {post.postCategory === 'common' ? (
         <pre dangerouslySetInnerHTML={{ __html: post.body }} />
@@ -136,11 +142,16 @@ const PostDetail = () => {
             </div>
           )}
 
-          <button onClick={() => clickDelete(post.id)}>delete</button>
-          <button onClick={clickEdit}>edit</button>
+          {userId === postWriter.id && (
+            <>
+              <button onClick={() => clickDelete(post.id)}>delete</button>
+              <button onClick={clickEdit}>edit</button>
+            </>
+          )}
           <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
           <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
           <button>인용하기</button>
+          <button>공유하기</button>
         </div>
       )}
     </div>

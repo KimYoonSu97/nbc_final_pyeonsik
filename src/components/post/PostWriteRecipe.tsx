@@ -5,11 +5,11 @@ import { useAtom } from 'jotai';
 
 import AddImageTagComponent, { contentsAtom, tagsDataAtom } from '../ImageTag/AddImageTagComponent';
 import supabase from 'src/lib/supabaseClient';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
 const PostWriteRecipe = () => {
-  const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
   const navigate = useNavigate();
   //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
   const { addRecipePostMutate } = usePost();
@@ -23,6 +23,9 @@ const PostWriteRecipe = () => {
 
   const [allContents] = useAtom(contentsAtom);
   const [allTags] = useAtom(tagsDataAtom);
+
+  // current user id
+  const userId: string | undefined = useLoginUserId();
 
   const handleImageSelect = (image: File) => {
     setAllSelectedImages((prevImages) => [...prevImages, image]);

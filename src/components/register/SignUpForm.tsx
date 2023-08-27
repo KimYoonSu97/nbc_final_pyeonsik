@@ -17,10 +17,18 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // 이메일 정규식 표현
+  const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
+
   const handleSignUp = async () => {
     //유효성 검사
     if (!email || !password || !checkPassword) {
       setErrorMessage('빈 값이 있습니다!');
+      return;
+    }
+    // 이메일 검사
+    if (!emailPattern.test(email)) {  
+      setErrorMessage('올바른 이메일 형식으로 입력해주세요!');
       return;
     }
     if (password !== checkPassword) {
@@ -34,7 +42,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     });
 
     if (error) {
-      alert(`error, ${error}`);
+      setErrorMessage(error.message);
       return;
     }
     // console.log(data);
@@ -62,7 +70,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       <Input maxLength={30} type="text" placeholder="이메일을 입력하세요" value={email} onChange={emailHandler} />
       <Label>패스워드</Label>
       <Input
-        maxLength={20}
+        maxLength={15}
         type="password"
         placeholder="패스워드을 입력하세요"
         value={password}
@@ -70,7 +78,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       />
       <Label>패스워드 확인</Label>
       <Input
-        maxLength={20}
+        maxLength={15}
         type="password"
         placeholder="패스워드을 다시 입력하세요"
         value={checkPassword}

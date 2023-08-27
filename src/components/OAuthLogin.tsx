@@ -1,9 +1,8 @@
 import { atom, useAtom } from 'jotai';
 import React from 'react';
+import { useNavigate } from 'react-router';
+import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
-import { User } from '@supabase/supabase-js';
-
-export const sosialUserAtom = atom<User | null>(null);
 
 type Provider = 'google' | 'kakao' | 'github';
 
@@ -12,15 +11,16 @@ interface OAuthLoginProps {
 }
 
 const OAuthLogin = ({ provider }: OAuthLoginProps) => {
-  const [user, setUser] = useAtom(sosialUserAtom);
+  const navigate = useNavigate();
+
+  const [, setUserLogin] = useAtom(userAtom);
 
   const handleLogin = async () => {
     try {
-      await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider
       });
-
-      setUser(user);
+      localStorage.setItem('social', provider);
     } catch (error) {
       console.log(error);
     }

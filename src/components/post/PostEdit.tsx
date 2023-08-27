@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import { getPosts } from 'src/api/posts';
+import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import supabase from 'src/lib/supabaseClient';
-// import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const PostEdit = () => {
-  // const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
   const [inputData, setInputData] = useState<string[]>([]);
   const [tagsData, setTagsData] = useState<Tag[][]>([]);
 
@@ -20,20 +19,22 @@ const PostEdit = () => {
   const { tagUpdatePostMutate } = useMutate();
 
   const [title, setTitle] = useState<string>('');
-  // const [body, setBody] = useState<string>('');
   const [body, setBody] = useState<string[]>([]);
-  // const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
   const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
   const [tagData, setTagData] = useState<Tag[][]>([]);
 
+  console.log('여기입니다!', body);
+  console.log('여기입니다!', allSelectedImages);
+  console.log('여기입니다!', tagData);
+
   const postRef = useRef<HTMLInputElement>(null);
 
-  console.log('allSelectedImages', allSelectedImages);
-  console.log('tagData', tagData);
+  // current user id
+  const userId: string | undefined = useLoginUserId();
 
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
-  const post = data?.data?.find((post) => post.id === prams);
+  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
+  const post = data?.data?.[0];
 
   // useEffect 순서 확인하기!
   useEffect(() => {
@@ -43,7 +44,6 @@ const PostEdit = () => {
     setTagData(post?.tags);
     setTagsData(post?.tags);
     setInputData(post?.body);
-    console.log('몇 번 실행되냐?');
   }, [post]);
 
   // edit
@@ -88,18 +88,16 @@ const PostEdit = () => {
     navigate(`/detail/${prams}`);
   };
 
-  console.log('0');
   if (isLoading) {
-    console.log('1');
     return <p>Loading…</p>;
   }
   if (data?.error) {
     return <p>Error</p>;
   }
-  if (data?.data.length === 0) {
-    return <p>none</p>;
+  if (userId && post?.userId.id !== userId) {
+    alert('접근할 수 없습니다.');
+    return <Navigate to="/" />;
   }
-  console.log('2');
 
   //각 컴포넌트의 Tag 값을 배열로 저장하는 함수
   const handleTagsChange = (index: number, tags: Tag[]) => {
@@ -129,7 +127,7 @@ const PostEdit = () => {
     <div>
       {/* <AddImageTagComponent onImageSelect={handleImageSelect} /> */}
 
-      {body.map((bodyValue, index) => (
+      {tagData.map((_, index) => (
         <ImageTag
           key={index}
           onTagsAndResultsChange={(tags) => handleTagsChange(index, tags)}
