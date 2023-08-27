@@ -12,7 +12,7 @@ import { getPost } from 'src/api/posts';
 import { getPostLike } from 'src/api/postLikes';
 import { styled } from 'styled-components';
 
-const PostDetail = () => {
+const PostDetailCommon = () => {
   const navigate = useNavigate();
   const { id } = useParams<string>();
   const { pathname } = useLocation();
@@ -150,7 +150,7 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default PostDetailCommon;
 
 const S = {
   test: styled.pre``

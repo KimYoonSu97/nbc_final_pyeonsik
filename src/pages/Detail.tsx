@@ -1,11 +1,11 @@
 import React from 'react';
 import Comment from 'src/components/Detail/comments/Comment';
-import PostDetail from 'src/components/post/PostDetail';
+import PostDetailCommon from 'src/components/post/PostDetailCommon';
 
 const Detail = () => {
   return (
     <div>
-      <PostDetail />
+      <PostDetailCommon />
       <Comment />
     </div>
   );

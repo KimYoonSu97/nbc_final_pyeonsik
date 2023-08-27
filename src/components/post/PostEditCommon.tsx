@@ -6,7 +6,7 @@ import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
-const PostEdit = () => {
+const PostEditCommon = () => {
   const navigate = useNavigate();
   const { id: prams } = useParams<string>();
   const { updatePostMutate } = useMutate();
@@ -22,7 +22,7 @@ const PostEdit = () => {
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
   const post = data?.data?.[0];
   const orgPost = post?.orgPostId;
-  const orgUserNickname = post?.orgUserId?.nickname;
+  const orgUserId = post?.orgUserId;
 
   // useEffect 순서 확인하기!
   useEffect(() => {
@@ -33,11 +33,13 @@ const PostEdit = () => {
 
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log('이거', post?.id);
+    console.log(orgPost?.id);
     e.preventDefault();
     const editPost = {
-      orgPostId: post.orgPostId,
-      orgUserId: post.orgUserId,
-      id: post.id,
+      orgPostId: orgPost.id,
+      orgUserId: orgUserId.id,
+      id: post?.id,
       title,
       body
     };
@@ -88,7 +90,7 @@ const PostEdit = () => {
             인용 게시글
             <div>{orgPost.title}</div>
             <pre dangerouslySetInnerHTML={{ __html: orgPost.body }} />
-            <div>{orgUserNickname}</div>
+            <div>{orgUserId.nickname}</div>
             <div>{orgPost.created_at}</div>
           </div>
         )}
@@ -99,4 +101,4 @@ const PostEdit = () => {
   );
 };
 
-export default PostEdit;
+export default PostEditCommon;

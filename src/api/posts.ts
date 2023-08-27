@@ -20,6 +20,8 @@ const addPost = async (post: NewPost) => {
 };
 
 const updatePost = async (post: EditPost) => {
+  console.log('들어왔지?');
+
   await supabase.from('posts').update(post).eq('id', post.id).select();
 };
 
