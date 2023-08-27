@@ -7,7 +7,7 @@ const Detail = () => {
   return (
     <div>
       <PostDetailCommon />
-      <PostDetailRecipe />
+      {/* <PostDetailRecipe /> */}
       <Comment />
     </div>
   );
