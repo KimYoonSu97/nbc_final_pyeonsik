@@ -23,6 +23,7 @@ export interface Post {
   likesCount: number;
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
   tagimage?: string;
+  img: string;
 }
 
 // 게시글 작성할 때 사용하는 임시 type
