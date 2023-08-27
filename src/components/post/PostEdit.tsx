@@ -21,6 +21,8 @@ const PostEdit = () => {
   // read
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
   const post = data?.data?.[0];
+  const orgPost = post?.orgPostId;
+  const orgUserNickname = post?.orgUserId?.nickname;
 
   // useEffect 순서 확인하기!
   useEffect(() => {
@@ -33,6 +35,8 @@ const PostEdit = () => {
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const editPost = {
+      orgPostId: post.orgPostId,
+      orgUserId: post.orgUserId,
       id: post.id,
       title,
       body
@@ -79,6 +83,15 @@ const PostEdit = () => {
             setBody(e.target.value);
           }}
         />
+        {orgPost && (
+          <div>
+            인용 게시글
+            <div>{orgPost.title}</div>
+            <pre dangerouslySetInnerHTML={{ __html: orgPost.body }} />
+            <div>{orgUserNickname}</div>
+            <div>{orgPost.created_at}</div>
+          </div>
+        )}
         <button type="submit">save</button>
       </form>
       <button onClick={clickCancle}>cancle</button>

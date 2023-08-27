@@ -29,7 +29,8 @@ export interface Post {
 
 // 게시글 작성할 때 사용하는 임시 type
 export interface NewPost {
-  // orgPostId: string;
+  orgPostId: string | null;
+  orgUserId: string | null;
   postCategory: string;
   title: string;
   // img: string;
@@ -38,6 +39,8 @@ export interface NewPost {
 }
 
 export interface EditPost {
+  orgPostId: string | null;
+  orgUserId: string | null;
   id: string;
   title: string;
   body: string;

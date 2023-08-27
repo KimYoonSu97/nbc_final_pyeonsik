@@ -11,7 +11,7 @@ const getPosts = async () => {
 };
 
 const getPost = async (id: string) => {
-  const response = await supabase.from('posts').select('*,userId(*)').eq('id', id);
+  const response = await supabase.from('posts').select('*,userId(*),orgPostId(*),orgUserId(*)').eq('id', id);
   return response;
 };
 

@@ -9,8 +9,13 @@ import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 import ImageTag from './ImageTag';
 
+interface orgPostIdProbs {
+  orgPostId: string;
+  orgUserId: string;
+}
+
 // recipe, common write component 정리 필요
-const PostWriteRecipe = () => {
+const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
   const navigate = useNavigate();
   const { addPostMutate } = usePost();
 
@@ -45,7 +50,11 @@ const PostWriteRecipe = () => {
     }
     console.log('imageUrl', imageUrl);
 
+    // orgin post
+
     const newPost = {
+      orgPostId,
+      orgUserId,
       postCategory: 'recipe',
       userId,
       title,
@@ -62,11 +71,8 @@ const PostWriteRecipe = () => {
 
   return (
     <>
-      <ImageTag
-        onTagsAndResultsChange={(tags, searchResults) => setTagsAndResults({ tags, searchResults })}
-        onImageSelect={handleImageSelect}
-      />
       <form onSubmit={submitPost}>
+        <button type="submit">add</button>
         <PostWriteInput
           ref={postRef}
           type="text"
@@ -79,6 +85,10 @@ const PostWriteRecipe = () => {
           }}
           autoFocus
         />
+        <ImageTag
+          onTagsAndResultsChange={(tags, searchResults) => setTagsAndResults({ tags, searchResults })}
+          onImageSelect={handleImageSelect}
+        />
         <PostWriteInput
           type="text"
           name="body"
@@ -88,7 +98,6 @@ const PostWriteRecipe = () => {
             setBody(e.target.value);
           }}
         />
-        <button type="submit">add</button>
       </form>
     </>
   );
