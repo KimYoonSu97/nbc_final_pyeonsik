@@ -12,7 +12,7 @@ import { getPost } from 'src/api/posts';
 import { getPostLike } from 'src/api/postLikes';
 import { Tag, ImageTag } from 'src/types/types';
 
-const PostDetail = () => {
+const PostDetailRecipe = () => {
   // current user id
   const userId: string | undefined = useLoginUserId();
 
@@ -158,4 +158,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default PostDetailRecipe;

@@ -10,16 +10,22 @@ import PostWriteInput from './PostWriteInput';
 
 Quill.register('modules/ImageResize', ImageResize);
 
+interface orgPostIdProbs {
+  orgPostId: string;
+  orgUserId: string;
+}
+
 // recipe, common write component 정리 필요
-const PostWriteCommon = () => {
+const PostWriteCommon = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
   const navigate = useNavigate();
-  const { addPostMutate } = useMutate();
 
   const QuillRef = useRef<ReactQuill>();
+  const postRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const postRef = useRef<HTMLInputElement>(null);
+
+  const { addPostMutate } = useMutate();
 
   // current user id
   const userId: string | undefined = useLoginUserId();
@@ -49,9 +55,11 @@ const PostWriteCommon = () => {
     e.preventDefault();
     const newPost = {
       postCategory: 'common',
-      userId,
+      orgPostId,
+      orgUserId,
       title,
-      body
+      body,
+      userId
     };
     addPostMutate.mutate(newPost);
     navigate(`/`);
@@ -59,6 +67,7 @@ const PostWriteCommon = () => {
 
   return (
     <form onSubmit={submitPost}>
+      <button>add</button>
       <PostWriteInput
         ref={postRef}
         type="text"
@@ -82,7 +91,6 @@ const PostWriteCommon = () => {
         theme="snow"
         placeholder="내용을 입력해주세요."
       />
-      <button>add</button>
     </form>
   );
 };

@@ -10,7 +10,7 @@ import ImageTag from '../ImageTag/ImageTag';
 import supabase from 'src/lib/supabaseClient';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
-const PostEdit = () => {
+const PostEditRecipe = () => {
   const [inputData, setInputData] = useState<string[]>([]);
   const [tagsData, setTagsData] = useState<Tag[][]>([]);
 
@@ -160,4 +160,4 @@ const PostEdit = () => {
   );
 };
 
-export default PostEdit;
+export default PostEditRecipe;

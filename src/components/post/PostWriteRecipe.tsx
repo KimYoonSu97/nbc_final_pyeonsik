@@ -9,7 +9,13 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 
-const PostWriteRecipe = () => {
+interface orgPostIdProbs {
+  orgPostId: string;
+  orgUserId: string;
+}
+
+// recipe, common write component 정리 필요
+const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
   const navigate = useNavigate();
   //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
   const { addRecipePostMutate } = usePost();
@@ -55,7 +61,11 @@ const PostWriteRecipe = () => {
       imageUrls.push(data.path);
     }
 
+    // orgin post
+
     const newPost = {
+      orgPostId,
+      orgUserId,
       postCategory: 'recipe',
       userId,
       title,
@@ -75,8 +85,8 @@ const PostWriteRecipe = () => {
   return (
     <>
       <AddImageTagComponent onImageSelect={handleImageSelect} onRemovedImage={handleRemovedImage} />
-
       <form onSubmit={submitPost}>
+        <button type="submit">add</button>
         <PostWriteInput
           ref={postRef}
           type="text"
@@ -88,7 +98,6 @@ const PostWriteRecipe = () => {
           }}
           autoFocus
         />
-
         <button type="submit">add</button>
       </form>
     </>

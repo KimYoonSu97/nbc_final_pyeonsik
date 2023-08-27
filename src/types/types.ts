@@ -21,14 +21,15 @@ export interface Post {
   userId?: PostUserProfile | string;
   likes: string;
   likesCount: number;
-  //아래 두t개 원유길이 추가
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
-  tagimage: string;
+  tagimage?: string;
+  img: string;
 }
 
 // 게시글 작성할 때 사용하는 임시 type
 export interface NewPost {
-  // orgPostId: string;
+  orgPostId: string | null;
+  orgUserId: string | null;
   postCategory: string;
   title: string;
   // img: string;
@@ -43,6 +44,8 @@ export interface RecipeNewPost {
 }
 
 export interface EditPost {
+  orgPostId: string | null;
+  orgUserId: string | null;
   id: string;
   title: string;
   body: string;

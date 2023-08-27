@@ -28,6 +28,7 @@ const Router = () => {
           <Route path="/password_change" element={<PasswordChange />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/event" element={<EventProd />} />
+
           <Route element={<PrivateRoute />}>
             <Route path="/write" element={<Write />} />
             <Route path="/edit/:id" element={<Edit />} />
