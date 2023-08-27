@@ -2,12 +2,16 @@ import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost, RecipeNewPost, TagEditPost } from 'src/types/types';
 
 const getPosts = async () => {
-  const response = await supabase.from('posts').select('*,userId(nickname,profileImg)');
+  const response = await supabase
+    .from('posts')
+    .select('*,userId(nickname,profileImg)')
+    .order('created_at', { ascending: false });
+  // .range(0, 9);
   return response;
 };
 
 const getPost = async (id: string) => {
-  const response = await supabase.from('posts').select('*,userId(*)').eq('id', id);
+  const response = await supabase.from('posts').select('*,userId(*),orgPostId(*),orgUserId(*)').eq('id', id);
   return response;
 };
 
@@ -20,6 +24,8 @@ const addRecipePost = async (post: RecipeNewPost) => {
 };
 
 const updatePost = async (post: EditPost) => {
+  console.log('들어왔지?');
+
   await supabase.from('posts').update(post).eq('id', post.id).select();
 };
 
