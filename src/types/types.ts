@@ -16,7 +16,6 @@ export interface Post {
   orgPostId: string;
   postCategory: string;
   title: string;
-  img: string;
   body: string;
   product: [];
   userId?: PostUserProfile | string;

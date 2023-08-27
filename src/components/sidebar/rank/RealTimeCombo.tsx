@@ -30,16 +30,17 @@ const RealTimeCombo = () => {
         <S.ContentWrapper key={post.id}>
           <S.RankNum $isfirst={index === 0}>{index + 1}</S.RankNum>
 
-          {post.tagimage && (
-            <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`} alt={`${post.id}`} />
-          )}
+          <S.ImageWrapper>
+            {post.tagimage && (
+              <S.Img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[0]}`} alt={`${post.id}`} />
+            )}
+          </S.ImageWrapper>
+
           <S.PostTitle>{post.title}</S.PostTitle>
           {/* <Rank ></Rank> */}
-          {/*<ImageWrapper>
-            
-          </ImageWrapper>
-          <Title></Title>
-          {post.likesCount} */}
+
+          {/* <Title></Title> */}
+          {post.likesCount}
         </S.ContentWrapper>
       ))}
     </S.ContentsArea>
@@ -64,6 +65,18 @@ const S = {
     align-items: center;
     gap: 8px;
   `,
+
+  ImageWrapper: styled.div`
+    width: 48px;
+    height: 48px;
+  `,
+
+  Img: styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  `,
+
   RankNum: styled.div<{
     $isfirst?: boolean;
   }>`
