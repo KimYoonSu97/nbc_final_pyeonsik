@@ -16,7 +16,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      <input type="file" multiple accept="image/*" onChange={handleImageUpload} />
     </div>
   );
 };

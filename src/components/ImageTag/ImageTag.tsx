@@ -7,20 +7,23 @@ import ImageUploader from './ImageUploader';
 import Search from './Search';
 import PostWriteInput from '../post/PostWriteInput';
 
-const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSelect, onContentsChange }) => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [tags, setTags] = useState<Tag[]>([]);
+const ImageTag: React.FC<ImageTagProps> = ({
+  onTagsAndResultsChange,
+  onImageSelect,
+  onContentsChange,
+  body,
+  imageData,
+  tagData
+}) => {
+  const [selectedImage, setSelectedImage] = useState<File | null>(imageData ?? null);
+  const [tags, setTags] = useState<Tag[]>(tagData ?? []);
   const [addTagMode, setAddingTagMode] = useState(false);
   const [selectedTagIndex, setSelectedTagIndex] = useState<number | null>(null);
   const [searchFormHandler, setSearchFormHandler] = useState(false);
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
-  const [contents, setContents] = useState('');
-
-  console.log('나는 ImageTag', contents);
+  const [contents, setContents] = useState(body ?? '');
 
   const postRef = useRef<HTMLInputElement>(null);
-
-  console.log('selectedImage', selectedImage?.name);
 
   //이미지 클릭 시 태그를 찍는 함수 x,y 값과 text, img, price를 갖고있다
   const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
@@ -42,7 +45,7 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
         updatedTags.splice(tags.length - 1 - lastEmptyTagIndex, 1);
       }
 
-      const newTag = { x, y, prodData: '', img: '', price: '', selectedimg: selectedImage?.name };
+      const newTag = { x, y, prodData: '', img: '', price: '' };
       setTags([...updatedTags, newTag]);
 
       setContents(contents);
@@ -100,10 +103,11 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
     setTags(updatedTags);
     setselectedTagVisible(false);
     setSelectedTagIndex(null);
+    onTagsAndResultsChange(updatedTags, []);
   };
 
   const handleImageSelect = (imageFile: File) => {
-    setSelectedImage(imageFile); // 이미지 선택 시 상태 업데이트
+    setSelectedImage(imageFile);
     onImageSelect(imageFile);
   };
 
@@ -117,12 +121,14 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
           title="body"
           value={contents}
           onChange={(e) => {
+            e.preventDefault();
             setContents(e.target.value);
             onContentsChange(e.target.value);
           }}
         />
 
         <ImageUploader onImageSelect={handleImageSelect} />
+
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -134,7 +140,16 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <div style={{ position: 'relative' }}>
-            <img src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
+            {typeof selectedImage === 'string' ? ( // 이미지 URL인 경우
+              <img
+                src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
+                alt="이미지"
+                onClick={handleImageClick}
+              />
+            ) : (
+              // 파일 객체인 경우
+              <img src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
+            )}
             {tags.map((tag, index) => (
               <div
                 key={index}
@@ -146,7 +161,8 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
                   backgroundColor: 'red',
                   display: 'flex',
                   width: '40px',
-                  height: '40px'
+                  height: '40px',
+                  zIndex: 2
                 }}
               >
                 {selectedTagIndex === index && selectedTagVisible && (
@@ -163,6 +179,7 @@ const ImageTag: React.FC<ImageTagProps> = ({ onTagsAndResultsChange, onImageSele
             ))}
           </div>
         )}
+
         {selectedTagIndex !== null && searchFormHandler && <Search onSearchResultSelect={handleSelectResult} />}
         {searchFormHandler && <button onClick={handleSearchModalClose}>닫기</button>}
       </div>

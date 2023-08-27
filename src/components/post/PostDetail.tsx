@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ImageTag, PostBookmark, PostLike } from 'src/types/types';
+import { PostBookmark, PostLike } from 'src/types/types';
 // custom hoooks
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
@@ -10,7 +10,7 @@ import usePostBookmark from 'src/hooks/usePostBookmark';
 // api
 import { getPost } from 'src/api/posts';
 import { getPostLike } from 'src/api/postLikes';
-import { Tag } from 'src/types/types';
+import { Tag, ImageTag } from 'src/types/types';
 
 const PostDetail = () => {
   // user id
@@ -81,73 +81,68 @@ const PostDetail = () => {
     setSelectedTag(selectedTag === tag ? null : tag);
   };
 
-  console.log('post', post);
-  console.log('post', post.imageUrl);
-
   return (
     <div>
       <div>{post.title}</div>
-      {/* component 분리 예정 */}
       {post.postCategory === 'common' ? (
         <pre dangerouslySetInnerHTML={{ __html: post.body }} />
       ) : (
-        <div>{post.body}</div>
-      )}
-      {/* 우선확인을 위해 추가해두었습니다 나중에 컴포넌트로 분리해놓을게요! */}
-      <div>
-        {post.tagimage && (
-          <div style={{ position: 'relative' }}>
-            {post.tagimage.map((imageUrl: string, imageIndex: number) => {
-              const tagsForImage = post.tags.filter((tag: ImageTag) => tag.selectedimg);
+        <div>
+          {post.tagimage && post.tagimage.length > 0 && (
+            <div style={{ position: 'relative' }}>
+              {post.tagimage.map((imageUrl: string, imageIndex: number) => {
+                const tagsForImage = post.tags[imageIndex] || [];
 
-              return (
-                <div key={imageIndex} style={{ position: 'relative' }}>
-                  <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`} alt={imageUrl} />
-                  {tagsForImage.map((tag: ImageTag, tagIndex: number) => (
-                    <div
-                      key={tagIndex}
-                      style={{
-                        position: 'absolute',
-                        left: tag.x + 'px',
-                        top: tag.y + 'px',
-                        backgroundColor: 'red',
-                        width: '30px',
-                        height: '30px',
-                        display: `tags/${tag.selectedimg}` === imageUrl ? 'block' : 'none'
-                      }}
-                      onClick={() => handleTagClick(tag)}
-                    >
-                      {/* 선택된 태그가 있다면 해당 태그를 열고 안에있는 데이터를 보여줌 */}
-                      {selectedTag === tag && (
-                        <div
-                          className="details"
-                          style={{
-                            backgroundColor: 'skyblue',
-                            width: '300px',
-                            padding: '10px',
-                            position: 'absolute',
-                            zIndex: 1
-                          }}
-                        >
-                          {tag.prodData}
-                          <br />
-                          {tag.price}
-                          <img src={tag.img} alt="상품 이미지" />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-      <button onClick={() => clickDelete(post.id)}>delete</button>
-      <button onClick={clickEdit}>edit</button>
-      <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
-      <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
-      <button>인용하기</button>
+                return (
+                  <div key={imageIndex} style={{ position: 'relative' }}>
+                    <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`} alt={imageUrl} />
+                    {post.body[imageIndex] && <div>{post.body[imageIndex]}</div>}
+
+                    {tagsForImage.map((tag: ImageTag, tagIndex: number) => (
+                      <div
+                        key={tagIndex}
+                        style={{
+                          position: 'absolute',
+                          left: tag.x + 'px',
+                          top: tag.y + 'px',
+                          backgroundColor: 'red',
+                          width: '30px',
+                          height: '30px'
+                        }}
+                        onClick={() => handleTagClick(tag)}
+                      >
+                        {selectedTag === tag && (
+                          <div
+                            className="details"
+                            style={{
+                              backgroundColor: 'skyblue',
+                              width: '300px',
+                              padding: '10px',
+                              position: 'absolute',
+                              zIndex: 1
+                            }}
+                          >
+                            {tag.prodData}
+                            <br />
+                            {tag.price}
+                            <img src={tag.img} alt="상품 이미지" />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <button onClick={() => clickDelete(post.id)}>delete</button>
+          <button onClick={clickEdit}>edit</button>
+          <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
+          <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
+          <button>인용하기</button>
+        </div>
+      )}
     </div>
   );
 };

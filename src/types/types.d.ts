@@ -36,11 +36,9 @@ export interface NewPost {
   body: string;
   userId: string;
 }
-export interface NewPost2 {
-  // orgPostId: string;
+export interface RecipeNewPost {
   postCategory: string;
   title: string;
-  // img: string;
   body: string[];
   userId: string;
 }
@@ -49,6 +47,12 @@ export interface EditPost {
   id: string;
   title: string;
   body: string;
+}
+
+export interface TagEditPost {
+  id: string;
+  title: string;
+  body: string[];
 }
 
 // post like
@@ -110,6 +114,7 @@ export interface Tag {
   img: string;
   price: string;
 }
+
 export interface ImageTag {
   x: number;
   y: number;
@@ -145,6 +150,13 @@ export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
   onContentsChange: (contents: string) => void;
+  imageData?: File;
+  tagData?: Tag[] | null;
+  body?: string | null;
+}
+export interface ImageTagPropsToAddImageComponent {
+  onImageSelect: (selectedImage: File) => void;
+  onRemovedImage: (removedImage: File) => void;
 }
 
 export interface SearchProps {

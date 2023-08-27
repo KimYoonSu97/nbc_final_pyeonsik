@@ -3,8 +3,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { useAtom } from 'jotai';
 
-import { Tag } from 'src/types/types';
-import AddImageTagComponent, { contentsAtom } from '../ImageTag/AddImageTagComponent';
+import AddImageTagComponent, { contentsAtom, tagsDataAtom } from '../ImageTag/AddImageTagComponent';
 import supabase from 'src/lib/supabaseClient';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
@@ -12,35 +11,26 @@ import PostWriteInput from './PostWriteInput';
 const PostWriteRecipe = () => {
   const userId = 'be029d54-dc65-4332-84dc-10213d299c53';
   const navigate = useNavigate();
-  const { addPostMutate2 } = usePost();
+  //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
+  const { addRecipePostMutate } = usePost();
+
+  //제출 후 값을 초기화 해주기 위해 선언
+  const [, setContentsAtom] = useAtom(contentsAtom);
+  const [, setTagsDataAtom] = useAtom(tagsDataAtom);
 
   const [title, setTitle] = useState<string>('');
-  const [, setSelectedImage] = useState<File | null>(null);
   const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
-  const [allSelectedTags, setAllSelectedTags] = useState<Set<Tag>>(new Set());
-  const [allSelectedContents, setAllSelectedContents] = useState<string[]>([]);
+
   const [allContents] = useAtom(contentsAtom);
-
-  console.log('나 PostWrite', allContents);
-
-  const handleTagSelect = (selectedTags: Tag[]) => {
-    setAllSelectedTags((prevSelectedTags) => {
-      const newTags = new Set([...prevSelectedTags, ...selectedTags]);
-      return newTags;
-    });
-  };
+  const [allTags] = useAtom(tagsDataAtom);
 
   const handleImageSelect = (image: File) => {
-    setSelectedImage(image);
     setAllSelectedImages((prevImages) => [...prevImages, image]);
   };
 
-  const handleContentsChange = (index: number, newContents: string) => {
-    setAllSelectedContents((prevContents) => {
-      const updatedContents = [...prevContents];
-      updatedContents[index] = newContents;
-      return updatedContents;
-    });
+  const handleRemovedImage = (removedImage: File) => {
+    const updatedImages = allSelectedImages.filter((image) => image !== removedImage);
+    setAllSelectedImages(updatedImages);
   };
 
   const postRef = useRef<HTMLInputElement>(null);
@@ -67,21 +57,21 @@ const PostWriteRecipe = () => {
       userId,
       title,
       body: allContents,
-      tags: Array.from(allSelectedTags),
+      tags: allTags,
       tagimage: imageUrls
     };
 
-    addPostMutate2.mutate(newPost);
+    addRecipePostMutate.mutate(newPost);
+
+    setContentsAtom([]); // contentsAtom 아톰 상태 초기화
+    setTagsDataAtom([]); // tagsDataAtom 아톰 상태 초기화
+
     navigate(`/`);
   };
 
   return (
     <>
-      <AddImageTagComponent
-        onTagsAndResultsChange={handleTagSelect}
-        onImageSelect={handleImageSelect}
-        onContentsChange={(newContents) => handleContentsChange(allSelectedContents.length, newContents)}
-      />
+      <AddImageTagComponent onImageSelect={handleImageSelect} onRemovedImage={handleRemovedImage} />
 
       <form onSubmit={submitPost}>
         <PostWriteInput
