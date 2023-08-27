@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+
 import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const PostEditCommon = () => {
-  const navigate = useNavigate();
   const { id: prams } = useParams<string>();
+  const navigate = useNavigate();
   const { updatePostMutate } = useMutate();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
+
   const postRef = useRef<HTMLInputElement>(null);
 
   // current user id
@@ -26,24 +28,26 @@ const PostEditCommon = () => {
 
   // useEffect 순서 확인하기!
   useEffect(() => {
-    console.log('3');
     setTitle(post?.title);
     setBody(post?.body);
-  }, [data]);
+  }, [post]);
 
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     console.log('이거', post?.id);
     console.log(orgPost?.id);
     e.preventDefault();
+
     const editPost = {
-      orgPostId: orgPost.id,
-      orgUserId: orgUserId.id,
-      id: post?.id,
+      orgPostId: post.orgPostId.id,
+      orgUserId: post.orgUserId.id,
+      id: post.id,
       title,
       body
     };
+
     updatePostMutate.mutate(editPost);
+
     navigate(`/detail/${prams}`);
   };
 
@@ -72,6 +76,7 @@ const PostEditCommon = () => {
           title="title"
           value={title || ''}
           onChange={(e) => {
+            e.preventDefault();
             setTitle(e.target.value);
           }}
           autoFocus

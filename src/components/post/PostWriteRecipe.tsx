@@ -1,13 +1,13 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { Data, Tag } from 'src/types/types';
+import { useAtom } from 'jotai';
 
+import AddImageTagComponent, { contentsAtom, tagsDataAtom } from '../ImageTag/AddImageTagComponent';
 import supabase from 'src/lib/supabaseClient';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
-import ImageTag from './ImageTag';
 
 interface orgPostIdProbs {
   orgPostId: string;
@@ -17,38 +17,49 @@ interface orgPostIdProbs {
 // recipe, common write component 정리 필요
 const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
   const navigate = useNavigate();
-  const { addPostMutate } = usePost();
+  //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
+  const { addRecipePostMutate } = usePost();
+
+  //제출 후 값을 초기화 해주기 위해 선언
+  const [, setContentsAtom] = useAtom(contentsAtom);
+  const [, setTagsDataAtom] = useAtom(tagsDataAtom);
 
   const [title, setTitle] = useState<string>('');
-  const [body, setBody] = useState<string>('');
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [tagsAndResults, setTagsAndResults] = useState<{ tags: Tag[]; searchResults: Data[] }>({
-    tags: [],
-    searchResults: []
-  });
-  const postRef = useRef<HTMLInputElement>(null);
+  const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
+
+  const [allContents] = useAtom(contentsAtom);
+  const [allTags] = useAtom(tagsDataAtom);
 
   // current user id
   const userId: string | undefined = useLoginUserId();
 
   const handleImageSelect = (image: File) => {
-    setSelectedImage(image);
+    setAllSelectedImages((prevImages) => [...prevImages, image]);
   };
+
+  const handleRemovedImage = (removedImage: File) => {
+    const updatedImages = allSelectedImages.filter((image) => image !== removedImage);
+    setAllSelectedImages(updatedImages);
+  };
+
+  const postRef = useRef<HTMLInputElement>(null);
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let imageUrl = null;
-    if (selectedImage) {
+    const imageUrls = [];
+
+    for (const selectedImage of allSelectedImages) {
       const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
+
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
         alert('이미지 업로드 중 에러가 발생했습니다!');
         return;
       }
-      imageUrl = data.path;
+
+      imageUrls.push(data.path);
     }
-    console.log('imageUrl', imageUrl);
 
     // orgin post
 
@@ -58,19 +69,22 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
       postCategory: 'recipe',
       userId,
       title,
-      body: body,
-      tags: tagsAndResults.tags,
-      tagimage: imageUrl
+      body: allContents,
+      tags: allTags,
+      tagimage: imageUrls
     };
 
-    addPostMutate.mutate(newPost);
+    addRecipePostMutate.mutate(newPost);
+
+    setContentsAtom([]); // contentsAtom 아톰 상태 초기화
+    setTagsDataAtom([]); // tagsDataAtom 아톰 상태 초기화
+
     navigate(`/`);
   };
 
-  console.log('selectedImage', selectedImage);
-
   return (
     <>
+      <AddImageTagComponent onImageSelect={handleImageSelect} onRemovedImage={handleRemovedImage} />
       <form onSubmit={submitPost}>
         <button type="submit">add</button>
         <PostWriteInput
@@ -80,24 +94,11 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
           title="title"
           value={title}
           onChange={(e) => {
-            e.preventDefault();
             setTitle(e.target.value);
           }}
           autoFocus
         />
-        <ImageTag
-          onTagsAndResultsChange={(tags, searchResults) => setTagsAndResults({ tags, searchResults })}
-          onImageSelect={handleImageSelect}
-        />
-        <PostWriteInput
-          type="text"
-          name="body"
-          title="body"
-          value={body}
-          onChange={(e) => {
-            setBody(e.target.value);
-          }}
-        />
+        <button type="submit">add</button>
       </form>
     </>
   );

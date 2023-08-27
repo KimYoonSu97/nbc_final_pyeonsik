@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { PostBookmark, PostLike } from 'src/types/types';
@@ -115,19 +115,19 @@ const PostDetailCommon = () => {
       <div>{post.created_at}</div>
       <div>{post.title}</div>
       {/* component 분리 필요 */}
-      {post.postCategory === 'common' ? (
-        <div>
-          <pre dangerouslySetInnerHTML={{ __html: post.body }} />
-        </div>
-      ) : (
-        <div>{post.body}</div>
-      )}
-      {userId === postUser.id && (
-        <>
-          <button onClick={() => clickDelete(post.id)}>delete</button>
-          <button onClick={clickEdit}>edit</button>
-        </>
-      )}
+
+      <div>
+        <pre dangerouslySetInnerHTML={{ __html: post.body }} />
+      </div>
+
+      <div>
+        {userId === postUser.id && (
+          <>
+            <button onClick={() => clickDelete(post.id)}>delete</button>
+            <button onClick={clickEdit}>edit</button>
+          </>
+        )}
+      </div>
       {/* component 분리 필요 */}
       {/* <div>{orgPost.title}</div>
       <pre dangerouslySetInnerHTML={{ __html: orgPost.body }} />

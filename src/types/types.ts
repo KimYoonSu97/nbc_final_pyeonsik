@@ -21,8 +21,6 @@ export interface Post {
   userId?: PostUserProfile | string;
   likes: string;
   likesCount: number;
-  img: string;
-  // postImge tag (유길님)
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
   tagimage?: string;
 }
@@ -37,6 +35,12 @@ export interface NewPost {
   body: string;
   userId: string;
 }
+export interface RecipeNewPost {
+  postCategory: string;
+  title: string;
+  body: string[];
+  userId: string;
+}
 
 export interface EditPost {
   orgPostId: string | null;
@@ -44,6 +48,12 @@ export interface EditPost {
   id: string;
   title: string;
   body: string;
+}
+
+export interface TagEditPost {
+  id: string;
+  title: string;
+  body: string[];
 }
 
 // post like
@@ -97,14 +107,31 @@ export interface Likes {
   likes: string;
   postId: string;
 }
-
-// 이 아래가 내가 가져온 타입선언
+// 이 아래는 이미지 태그 관련 프롭스입니다! 위에 포스트에도 살짝 있긴합니다
 export interface Tag {
   x: number;
   y: number;
   prodData: string;
   img: string;
   price: string;
+}
+
+export interface ImageTag {
+  x: number;
+  y: number;
+  prodData: string;
+  img: string;
+  price: string;
+  selectedimg: string;
+}
+
+export interface ManyTag {
+  x: number;
+  y: number;
+  prodData: string;
+  img: string;
+  price: string;
+  imageIndex: number;
 }
 
 export interface ImageData {
@@ -120,22 +147,27 @@ export interface Data {
   price: string;
 }
 
-// export interface Post {
-//   id: string;
-//   tags: { x: number; y: number; text: string; img: string; price: string }[];
-//   url: string;
-// }
-
-// export interface Result {
-//   img: string;
-//   title: string;
-//   price: string;
-// }
-
 export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
+  onContentsChange: (contents: string) => void;
+  imageData?: File;
+  tagData?: Tag[] | null;
+  body?: string | null;
 }
+export interface ImageTagPropsToAddImageComponent {
+  onImageSelect: (selectedImage: File) => void;
+  onRemovedImage: (removedImage: File) => void;
+}
+
+export interface SearchProps {
+  onSearchResultSelect: (result: Data) => void;
+}
+
+export interface ImageUploaderProps {
+  onImageSelect: (imageFile: File) => void;
+}
+//여기까지
 
 /// 무한스크롤 관련
 export interface ProdEvent {
