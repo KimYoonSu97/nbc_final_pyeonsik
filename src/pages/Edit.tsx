@@ -6,7 +6,7 @@ const Edit = () => {
   return (
     <div>
       <PostEditCommon />
-      <PostEditRecipe />
+      {/* <PostEditRecipe /> */}
     </div>
   );
 };

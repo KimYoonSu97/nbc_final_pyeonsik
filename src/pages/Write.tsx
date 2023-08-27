@@ -26,7 +26,7 @@ const Write = () => {
         </div>
       )}
       {/* component 분리 필요 */}
-      <PostWriteRecipe orgPostId={orgPost.id} orgUserId={orgPost.userId.id} />
+      {/* <PostWriteRecipe orgPostId={orgPost.id} orgUserId={orgPost.userId.id} /> */}
     </div>
   );
 };
