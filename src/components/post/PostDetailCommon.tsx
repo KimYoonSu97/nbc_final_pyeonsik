@@ -82,7 +82,7 @@ const PostDetailCommon = () => {
 
   // 인용
   const clickQuotation = () => {
-    navigate('/write');
+    navigate('/write', { state: post });
   };
 
   // clip board
