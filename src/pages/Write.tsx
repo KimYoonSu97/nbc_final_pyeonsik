@@ -6,7 +6,7 @@ const Write = () => {
   return (
     <div>
       <PostWriteRecipe />
-      <PostWriteCommon />
+      {/* <PostWriteCommon /> */}
     </div>
   );
 };

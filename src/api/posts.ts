@@ -1,5 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
-import { EditPost, NewPost } from 'src/types/types';
+import { EditPost, NewPost, RecipeNewPost, TagEditPost } from 'src/types/types';
 
 const getPosts = async () => {
   const response = await supabase.from('posts').select('*,userId(nickname,profileImg)');
@@ -14,8 +14,18 @@ const getPost = async (id: string) => {
 const addPost = async (post: NewPost) => {
   await supabase.from('posts').insert(post).select();
 };
+//값 타입이 달라져서 추가했습니다! - 원유길
+const addRecipePost = async (post: RecipeNewPost) => {
+  await supabase.from('posts').insert(post).select();
+};
 
 const updatePost = async (post: EditPost) => {
+  await supabase.from('posts').update(post).eq('id', post.id).select();
+};
+
+//값 타입이 달라져서 추가했습니다! - 원유길
+const tagUpdatePost = async (post: TagEditPost) => {
+  console.log('updatePost2의 뉴포스트=>>', post);
   await supabase.from('posts').update(post).eq('id', post.id).select();
 };
 
@@ -44,4 +54,15 @@ const getMyLikePostById = async (id: string) => {
   return response;
 };
 
-export { getPosts, getPost, addPost, updatePost, deletePost, getMyPostsById, getMyLikePostById, getMyBookMarkById };
+export {
+  getPosts,
+  getPost,
+  addPost,
+  updatePost,
+  deletePost,
+  getMyPostsById,
+  getMyLikePostById,
+  getMyBookMarkById,
+  addRecipePost,
+  tagUpdatePost
+};
