@@ -1,55 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { supabase } from 'src/supabse';
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
+
 const Report = () => {
-  const [step, setStep] = useState(1);
-  const [email, setEmail] = useState('');
-  const [selectedInquiry1, setSelectedInquiry1] = useState('');
-  const [selectedInquiry2, setSelectedInquiry2] = useState('');
-  const [image, setImage] = useState('');
-  const [urlLink, setUrlLink] = useState('');
-  const [message, setMessage] = useState('');
+  const [step, setStep] = useState<number>(1);
+  const [email, setEmail] = useState<string>('');
+  const [selectedInquiry1, setSelectedInquiry1] = useState<string>('');
+  const [selectedInquiry2, setSelectedInquiry2] = useState<string>('');
+  const [image, setImage] = useState<File>();
+  const [imageName,setImageName] = useState<string>()
+  const [urlLink, setUrlLink] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   const userId = useLoginUserId();
-  console.log(userId);
 
   const navigate = useNavigate();
 
-  const { data: reprtData }: any = supabase.from('reports').select('*');
-  console.log(reprtData);
 
-  const reportImage = async (event:any) => {
+  const reportImage = async (event:React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) { //null 방지?
     const uploadimage = event?.target.files[0]
-    console.log(uploadimage,"uploadimage")
-    const {data}:any = await supabase.storage.from('photos').upload(`report/${uploadimage.name}`,uploadimage)
-    console.log(data?.path,"imagesssssssssdataaaaaa")
-    setImage(data?.path)
+    console.log("1",uploadimage)
+    const originalFileName = uploadimage.name;
+    console.log("2",originalFileName)
+    const fileExtension = originalFileName.split('.').pop();
+    const randomFileName = uuidv4() + '.' + fileExtension;
+    setImageName(randomFileName)
+    setImage(uploadimage)
+    }
   }
+  console.log("3",image)
   
 
   const nextStep = () => setStep(step + 1);
 
-  const handleOptionClick = (option: any) => {
+  const handleOptionClick = (option: string) => {
     setSelectedInquiry1(option);
     console.log(option);
   };
 
-  const handleOption2Click = (option: any) => {
+  const handleOption2Click = (option: string) => {
     setSelectedInquiry2(option);
     console.log(option);
   };
 
   const handleSubmitButton = async () => {
+    const url = []
+    if(image){
+      const { data, error } = await supabase.storage.from('photos').upload(`report/${imageName}`, image);
+      if (error) {
+        console.error('Error uploading image to Supabase storage:', error);
+        alert('이미지 업로드 중 에러가 발생했습니다!');
+        return;
+      }
+      url.push(data.path)
+    }
+    
     const reportData = {
       email,
       userId,
       inquiry1: selectedInquiry1,
       inquiry2: selectedInquiry2,
       detailReport: {
-        image,
+        image : `${process.env.REACT_APP_SUPABASE_STORAGE_REPORT}${url}`,
         urlLink,
         message
       }
@@ -162,7 +179,6 @@ const Report = () => {
             placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
           ></input>
           <button onClick={handleSubmitButton}>제출하기</button>
-          {/* 확인 페이지 내용 */}
         </ReportInner>
       )}
       {step === 4 && (
@@ -186,6 +202,11 @@ export default Report;
 const ReportWrap = styled.div``;
 
 const ReportInner = styled.div`
+h1{
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: -2px;
+}
   p {
     border: solid 1px #999;
     background-color: #fff;

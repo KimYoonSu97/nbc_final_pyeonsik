@@ -8,6 +8,18 @@ import { CommentWriteWrap, CommentWrap, CommentInner } from './styledComments';
 import CommentLikes from './CommentLikes';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
+interface CommentDataType {
+  id: string;
+  created_at: string;
+  userId: string;
+  postId: string;
+  comment: string;
+  users: {
+    profileImg: string;
+    nickname: string;
+  };
+}
+
 const Comment = () => {
   const queryClient = useQueryClient();
   const { id } = useParams<string>();
@@ -18,7 +30,6 @@ const Comment = () => {
 
   //포스트 아이디와 같은 댓글 데이터 가져오기
   const { data: commentData } = useQuery(['detailcomments'], () => getCommentData(id!));
-  console.log(commentData);
 
   //댓글 작성시 바로 렌더링
   const writeMutation = useMutation(WriteCommentData, {
@@ -54,14 +65,14 @@ const Comment = () => {
   };
 
   //작성 날짜 월일로 변환
-   const commentWriteDate = (date: string) => {
+  const commentWriteDate = (date: string) => {
     const writeDate = new Date(date);
     const month = writeDate.getMonth() + 1;
     const day = writeDate.getDate();
     return `${month}월 ${day}일`;
   };
 
-  //좋아요 부분 ------------------------------------------------------------------------------------
+  console.log('여기있어! commentData', commentData);
 
   return (
     <>
@@ -79,26 +90,29 @@ const Comment = () => {
         </form>
       </CommentWriteWrap>
       <CommentWrap>
-        {commentData?.map((comment: any) => {
+        {commentData?.map((comment) => {
           return (
             <CommentInner key={comment.id}>
-              <div className='commentInfo'>
-                <div>
+              <div className="commentInfo">
+                {userId && (
+                  <div>
                     <img src={comment.users.profileImg}></img>
                     <h1>{comment.users.nickname}</h1>
                     <span>{commentWriteDate(comment.created_at)}</span>
+                  </div>
+                )}
+                <div>
+                  {userId && comment.userId === userId && (
+                    <div>
+                      <button onClick={() => deleteCommentButton(comment.id)}>삭제하기</button>
+                    </div>
+                  )}
+                  <CommentLikes commentId={comment.id} />
                 </div>
-                <CommentLikes commentId={comment.id} />
               </div>
               <h2>{comment.comment}</h2>
 
-              <button>답글달기</button>
               <ReComment parentCommentId={comment.id} />
-              {userId && comment.userId === userId && (
-                <div>
-                  <button onClick={() => deleteCommentButton(comment.id)}>삭제하기</button>
-                </div>
-              )}
             </CommentInner>
           );
         })}

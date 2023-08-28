@@ -7,9 +7,12 @@ export type CommentType = {
   userId: string | undefined;
 };
 
+
+
 // 포스트에 아이디에 해당하는 댓글 가져오기
 const getCommentData = async (id: string) => {
-  const { data } = await supabase.from('detail_comments').select(`"*",users("*")`).eq('postId', id);
+  const { data } = await supabase.from('detail_comments').select(`*,users("*")`).eq('postId', id);
+  console.log("dasd",data)
   return data;
 };
 

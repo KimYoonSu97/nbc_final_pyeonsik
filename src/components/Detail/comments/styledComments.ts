@@ -50,6 +50,7 @@ export const CommentInner = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 8px;
     div{
       display: flex;
       align-items: center;
@@ -65,6 +66,9 @@ export const CommentInner = styled.div`
       letter-spacing: -.5px;
       color: #777;
     }
+    button{
+      background: none;
+    }
   }
   h1{
     
@@ -78,3 +82,42 @@ export const CommentInner = styled.div`
   }
 
 `;
+export const ReCommentToggle = styled.button`
+  background: none;
+`
+
+export const ReCommentWrap = styled.div`
+  margin-left: 50px;
+  .reCommentInner{
+    margin-bottom: 15px;
+  }
+  .recommentInfo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    div{
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    img{
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+    }
+    h1{
+      font-size: 14px;
+    }
+    span{
+      font-size: 12px;
+      letter-spacing: -.5px;
+      color: #777;
+    }
+    button{
+      background: none;
+    }
+  }
+`
+export const ReCommentWriteWrap = styled.div`
+`

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { addLike, deleteLike, getLike } from 'src/api/ReCommentLike'
+import { AiOutlineLike,AiFillLike } from "react-icons/ai";
 interface CommentIdProps {
     commentId: string;
   }
@@ -61,7 +62,7 @@ const ReCommentLikes: React.FC<CommentIdProps>  = ({commentId}) => {
 
   return (
     <button onClick={() => toggleLike(commentId)}>
-      {checkLike(commentId, user.id, relikeData) ? '♥' : '♡'}
+      {checkLike(commentId, user.id, relikeData) ? <AiFillLike size={"18px"}/> : <AiOutlineLike size={"18px"}/>}
       {getCommentLikesCount(commentId)}
       {/* <좋아요컴포넌트 comment.id user.id> 배열을 불러온 useQuery [likeData]=1초 => fetch => http 100번 0초  </좋아용> */}
     </button>
