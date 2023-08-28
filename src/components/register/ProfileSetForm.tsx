@@ -54,7 +54,10 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     const newUser = {
       email: userEmail,
       nickname,
-      profileImg: profileImgSrc.length < 5 ? '' : ''
+      // 프로필 이미지 정보가 안들어가게 되어있어서 그것을 수정했음
+      //---기존코드--
+      // profileImg: profileImgSrc.length < 5 ? '' : ''
+      profileImg: profileImgSrc
     };
     if (!nickname) {
       alert('닉네임을 입력해주세요');

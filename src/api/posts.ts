@@ -37,7 +37,6 @@ const tagUpdatePost = async (post: TagEditPost) => {
 
 // MyPosts
 const getMyPostsById = async (id: string) => {
-  console.log('이건 에이피아이에서 찍은거셈', id);
   const response = await supabase.from('posts').select('*,userId(nickname,profileImg)').eq('userId', id);
   return response;
 };
