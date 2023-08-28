@@ -9,17 +9,24 @@ import EventSideBar from './event/EventSideBar';
 const SideBar = () => {
   const location = useLocation();
 
+  const findPath = (str: string): string => {
+    console.log(str.split('/')[1]);
+    return str.split('/')[1];
+  };
+
   return (
     <S.Container>
       <S.FixedContainer>
         {(() => {
-          switch (location.pathname) {
-            case '/':
+          switch (findPath(location.pathname)) {
+            case 'detail':
               return <RankSideBar />;
-            case '/event':
+            case 'event':
               return <EventSideBar />;
-            default:
+            case 'mypage':
               return <MypageSideBar />;
+            default:
+              return <RankSideBar />;
           }
         })()}
         <Footer />

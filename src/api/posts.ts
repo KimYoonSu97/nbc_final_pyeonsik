@@ -54,6 +54,17 @@ const getMyLikePostById = async (id: string) => {
   console.log(response.data);
   return response;
 };
+interface Search {
+  keyword: string;
+  type?: string;
+}
+const getPostByKeyword = async ({ keyword, type }: Search) => {
+  if (type === 'all') {
+    return await supabase.from('posts').select('*').textSearch('title_body', keyword);
+  } else {
+    return await supabase.from('posts').select('*').eq('postCategory', type).textSearch('title_body', keyword);
+  }
+};
 
 export {
   getPosts,
@@ -65,5 +76,6 @@ export {
   getMyLikePostById,
   getMyBookMarkById,
   addRecipePost,
-  tagUpdatePost
+  tagUpdatePost,
+  getPostByKeyword
 };
