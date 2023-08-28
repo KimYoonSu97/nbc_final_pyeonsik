@@ -18,7 +18,8 @@ export interface Post {
   title: string;
   body: string;
   product: [];
-  userId?: PostUserProfile | string;
+  // userId: string 삭제 (혜영)
+  userId: PostUserProfile;
   likes: string;
   likesCount: number;
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
@@ -104,6 +105,7 @@ export interface UserType {
 }
 
 export interface PostUserProfile {
+  id: string;
   nickname: string;
   profileImg: string;
 }

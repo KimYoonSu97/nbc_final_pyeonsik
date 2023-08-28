@@ -11,6 +11,7 @@ import usePostBookmark from 'src/hooks/usePostBookmark';
 import { getPost } from 'src/api/posts';
 import { getPostLike } from 'src/api/postLikes';
 import { styled } from 'styled-components';
+import { getPostBookmark } from 'src/api/postBookmark';
 
 const PostDetailCommon = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const PostDetailCommon = () => {
   // });
   // console.log('현재 정보 가져옴', orgPostData?.data?.[0].id);
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
-  const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostLike(id!) });
+  const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!) });
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
   const postUser = post?.userId;
@@ -58,7 +59,7 @@ const PostDetailCommon = () => {
     if (!postLike) {
       const newPostLike = {
         postId: post.id,
-        userId: userId as unknown as string
+        userId
       };
       addPostLikeMutate.mutate(newPostLike);
     } else {
@@ -67,7 +68,7 @@ const PostDetailCommon = () => {
   };
 
   // bookmark
-  const clickPostBookmark = (postBookmark: PostBookmark) => {
+  const clickPostBookmark = () => {
     if (!postBookmark) {
       const newPostBookmark = {
         postId: post.id,
@@ -81,7 +82,7 @@ const PostDetailCommon = () => {
 
   // 인용
   const clickQuotation = () => {
-    navigate('/write');
+    navigate('/write', { state: post });
   };
 
   // clip board
@@ -106,6 +107,8 @@ const PostDetailCommon = () => {
     alert('존재하지 않는 게시물입니다.');
     return <Navigate to="/" />;
   }
+
+  console.log('2', postBookmark);
 
   return (
     <div>
@@ -135,7 +138,7 @@ const PostDetailCommon = () => {
       <div>{orgPost.created_at}</div> */}
       <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
       <button onClick={clickQuotation}>인용</button>
-      <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
+      <button onClick={clickPostBookmark}>{postBookmark ? '북마크 취소' : '북마크'}</button>
       <button onClick={() => clickCopyLink(pathname)}>공유</button>
       {orgPost && (
         <div>
