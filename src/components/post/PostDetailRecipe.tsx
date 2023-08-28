@@ -34,6 +34,8 @@ const PostDetailRecipe = () => {
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
 
+  console.log('post', post);
+
   // delete post
   const clickDelete = (id: string) => {
     deletePostMutate.mutate(id);
@@ -90,68 +92,67 @@ const PostDetailRecipe = () => {
       <div>{postWriter.nickname}</div>
       <div>{post.created_at}</div>
       <div>{post.title}</div>
-      {post.postCategory === 'common' ? (
-        <pre dangerouslySetInnerHTML={{ __html: post.body }} />
-      ) : (
-        <div>
-          {post.tagimage && post.tagimage.length > 0 && (
-            <div style={{ position: 'relative' }}>
-              {post.tagimage.map((imageUrl: string, imageIndex: number) => {
-                const tagsForImage = post.tags[imageIndex] || [];
-                return (
-                  <div key={imageIndex} style={{ position: 'relative' }}>
-                    <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`} alt={imageUrl} />
-                    {post.body[imageIndex] && <div>{post.body[imageIndex]}</div>}
 
-                    {tagsForImage.map((tag: ImageTag, tagIndex: number) => (
-                      <div
-                        key={tagIndex}
-                        style={{
-                          position: 'absolute',
-                          left: tag.x + 'px',
-                          top: tag.y + 'px',
-                          backgroundColor: 'red',
-                          width: '30px',
-                          height: '30px'
-                        }}
-                        onClick={() => handleTagClick(tag)}
-                      >
-                        {selectedTag === tag && (
-                          <div
-                            className="details"
-                            style={{
-                              backgroundColor: 'skyblue',
-                              width: '300px',
-                              padding: '10px',
-                              position: 'absolute',
-                              zIndex: 1
-                            }}
-                          >
-                            {tag.prodData}
-                            <br />
-                            {tag.price}
-                            <img src={tag.img} alt="상품 이미지" />
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          {userId === postWriter.id && (
-            <>
-              <button onClick={() => clickDelete(post.id)}>delete</button>
-              <button onClick={clickEdit}>edit</button>
-            </>
-          )}
-          <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
-          <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
-          <button>인용하기</button>
-          <button>공유하기</button>
-        </div>
-      )}
+      <div>
+        {post.tagimage && post.tagimage.length > 0 && (
+          <div style={{ position: 'relative' }}>
+            {post.tagimage.map((imageUrl: string, imageIndex: number) => {
+              const tagsForImage = post.tags[imageIndex] || [];
+
+              return (
+                <div key={imageIndex} style={{ position: 'relative' }}>
+                  <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`} alt={imageUrl} />
+                  {post.recipeBody[imageIndex] && <div>{post.recipeBody[imageIndex]}</div>}
+
+                  {tagsForImage.map((tag: ImageTag, tagIndex: number) => (
+                    <div
+                      key={tagIndex}
+                      style={{
+                        position: 'absolute',
+                        left: tag.x + 'px',
+                        top: tag.y + 'px',
+                        backgroundColor: 'red',
+                        width: '30px',
+                        height: '30px'
+                      }}
+                      onClick={() => handleTagClick(tag)}
+                    >
+                      {selectedTag === tag && (
+                        <div
+                          className="details"
+                          style={{
+                            backgroundColor: 'skyblue',
+                            width: '300px',
+                            padding: '10px',
+                            position: 'absolute',
+                            zIndex: 1
+                          }}
+                        >
+                          {tag.prodData}
+                          <br />
+                          {tag.price}
+                          <img src={tag.img} alt="상품 이미지" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {userId === postWriter.id && (
+          <>
+            <button onClick={() => clickDelete(post.id)}>delete</button>
+            <button onClick={clickEdit}>edit</button>
+          </>
+        )}
+        <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
+        <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
+        <button>인용하기</button>
+        <button>공유하기</button>
+      </div>
     </div>
   );
 };

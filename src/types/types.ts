@@ -59,6 +59,22 @@ export interface NewPost {
   userId: string;
 }
 
+export interface NewRecipePost {
+  // orgPostId: string | null;
+  // orgUserId: string | null;
+  postCategory: string;
+  title: string;
+  recipeBody: string[];
+  userId: string;
+}
+
+// export interface RecipeNewPost {
+//   postCategory?: string;
+//   title: string;
+//   body?: string[];
+//   userId?: string;
+// }
+
 export interface EditPost {
   orgPostId: string | null;
   orgUserId: string | null;
@@ -78,7 +94,7 @@ export interface RecipeNewPost {
 export interface TagEditPost {
   id: string;
   title: string;
-  body: string[];
+  recipeBody: string[];
 }
 
 // post like
