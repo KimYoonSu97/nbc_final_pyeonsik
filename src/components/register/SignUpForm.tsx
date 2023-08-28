@@ -13,7 +13,6 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
-
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,7 +26,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       return;
     }
     // 이메일 검사
-    if (!emailPattern.test(email)) {  
+    if (!emailPattern.test(email)) {
       setErrorMessage('올바른 이메일 형식으로 입력해주세요!');
       return;
     }

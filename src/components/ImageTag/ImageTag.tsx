@@ -179,7 +179,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
             ))}
           </div>
         )}
-
         {selectedTagIndex !== null && searchFormHandler && <Search onSearchResultSelect={handleSelectResult} />}
         {searchFormHandler && <button onClick={handleSearchModalClose}>닫기</button>}
       </div>

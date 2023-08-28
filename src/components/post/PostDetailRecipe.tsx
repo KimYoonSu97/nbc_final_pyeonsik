@@ -98,7 +98,6 @@ const PostDetailRecipe = () => {
             <div style={{ position: 'relative' }}>
               {post.tagimage.map((imageUrl: string, imageIndex: number) => {
                 const tagsForImage = post.tags[imageIndex] || [];
-
                 return (
                   <div key={imageIndex} style={{ position: 'relative' }}>
                     <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`} alt={imageUrl} />
@@ -141,7 +140,6 @@ const PostDetailRecipe = () => {
               })}
             </div>
           )}
-
           {userId === postWriter.id && (
             <>
               <button onClick={() => clickDelete(post.id)}>delete</button>

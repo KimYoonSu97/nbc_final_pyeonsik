@@ -38,6 +38,7 @@ const S = {
     flex-direction: column;
     height: calc(100vh - 50px - 56px - 31px);
   `,
+
   FixedContainer: styled.div`
     /* position: absolute; */
     margin-left: auto;

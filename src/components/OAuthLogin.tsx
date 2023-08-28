@@ -53,7 +53,6 @@ const OAuthLogin = ({ provider }: OAuthLoginProps) => {
         }}
         onClick={handleLogin}
       ></button>
-
       <div>{/* <img src={userInform.profile} alt="Profile" /> */}</div>
     </div>
   );
