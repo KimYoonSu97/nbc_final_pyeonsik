@@ -5,15 +5,8 @@ import supabase from 'src/lib/supabaseClient';
 
 const useLoginUserId = () => {
   const [loginUserId, setLoginUserId] = useState<string>('');
-  // const [userLogin] = useAtom(userAtom);
-
-  // const getUser = async () => {
-  //   const { data, error } = await supabase.auth.getUser();
-  //   console.log(data);
-  // };
 
   useEffect(() => {
-    // getUser();
     const token = localStorage.getItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
     if (token) {
       const { user } = JSON.parse(token);
@@ -27,7 +20,6 @@ const useLoginUserId = () => {
       return loginUserId;
     }
   }, [loginUserId]);
-  // console.log('유저 훅에서 찍은 유저 아이디', userId);
   return userId as string;
 };
 

@@ -30,6 +30,7 @@ const S = {
   `,
   ContentsBox: styled.div`
     background: white;
+    width: 296px;
     border-radius: 10px;
     margin-bottom: 20px;
   `,

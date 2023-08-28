@@ -4,16 +4,21 @@ import { useAtom } from 'jotai';
 import { myPagePostAtom } from 'src/globalState/jotai';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPostsById } from 'src/api/posts';
+import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const MypageSideBarInfo = () => {
-  const id = useLoginUserId();
+  const userId = useLoginUserId();
 
-  const { isLoading, data } = useQuery({
-    queryKey: ['MyPost'],
-    queryFn: () => getMyPostsById(id),
-    enabled: id ? true : false
+  const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
+    enabled: userId ? true : false
   });
+
+  // const { isLoading, data } = useQuery({
+  //   queryKey: ['MyPost'],
+  //   queryFn: () => getMyPostsById(id),
+  //   enabled: id ? true : false
+  // });
 
   if (isLoading) {
     return <p>Loading…</p>;
