@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAtom } from 'jotai';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -77,11 +76,13 @@ const S = {
     gap: 8px;
     padding: 8px 10px;
   `,
+
   Icon: styled.div`
     width: 20px;
     height: 20px;
     margin-right: 4px;
   `,
+
   TapButton: styled(Link)<Props>`
     display: flex;
     align-items: center;

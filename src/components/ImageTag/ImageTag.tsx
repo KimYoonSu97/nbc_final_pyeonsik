@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
+import styled from 'styled-components';
 
 import { Tag, Data } from 'src/types/types';
-
 import { ImageTagProps } from 'src/types/types';
 import ImageUploader from './ImageUploader';
 import Search from './Search';
-import PostWriteInput from '../post/PostWriteInput';
+// import PostWriteInput from '../post/PostWriteInput';
+import PostWriteBodyInput from '../post/PostWriteBodyInput';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -103,7 +104,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
     setTags(updatedTags);
     setselectedTagVisible(false);
     setSelectedTagIndex(null);
-    onTagsAndResultsChange(updatedTags, []);
   };
 
   const handleImageSelect = (imageFile: File) => {
@@ -111,10 +111,73 @@ const ImageTag: React.FC<ImageTagProps> = ({
     onImageSelect(imageFile);
   };
 
+  const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   return (
     <>
-      <div>
-        <PostWriteInput
+      <ImageUploader onImageSelect={handleImageSelect} />
+      <S.ImageTagContainer>
+        {/* 이미지 선택 후 태그가 찍힐 부분 */}
+        {selectedImage && (
+          <S.ImageContainer>
+            <S.AddTagButton
+              onClick={(e) => {
+                e.preventDefault();
+                setAddingTagMode(!addTagMode);
+              }}
+            >
+              {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
+            </S.AddTagButton>
+            {typeof selectedImage === 'string' ? (
+              <S.Image
+                src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
+                alt="이미지"
+                onClick={handleImageClick}
+              />
+            ) : (
+              <S.Image src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
+            )}
+
+            {tags.map((tag, index) => (
+              <S.TagContainer
+                key={index}
+                onClick={() => handleTagClick(index)}
+                style={{
+                  position: 'absolute',
+                  left: tag.x,
+                  top: tag.y,
+                  backgroundColor: 'red',
+                  display: 'flex',
+                  width: '40px',
+                  height: '40px'
+                }}
+              >
+                {selectedTagIndex === index && selectedTagVisible && (
+                  //검색창이 나오는 부분
+                  <S.TagContainer onClick={handleModalClick}>
+                    {tag.img && <S.TagImage src={`${tag.img}`} alt="이미지" />}
+                    {tag.prodData && <S.ProdContainer> {tag.prodData}</S.ProdContainer>}
+                    {tag.prodData || tag.price || tag.img ? (
+                      <S.DeleteButton onClick={() => handleDeleteTag(index)}>삭제</S.DeleteButton>
+                    ) : null}
+
+                    {selectedTagIndex !== null && searchFormHandler && (
+                      <S.SearchResultsContainer>
+                        <Search onSearchResultSelect={handleSelectResult} />
+                        <S.CloseButton onClick={handleSearchModalClose}>취소</S.CloseButton>
+                      </S.SearchResultsContainer>
+                    )}
+                  </S.TagContainer>
+                )}
+              </S.TagContainer>
+            ))}
+          </S.ImageContainer>
+        )}
+
+        <PostWriteBodyInput
           ref={postRef}
           type="text"
           name="body"
@@ -126,65 +189,84 @@ const ImageTag: React.FC<ImageTagProps> = ({
             onContentsChange(e.target.value);
           }}
         />
-
-        <ImageUploader onImageSelect={handleImageSelect} />
-
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setAddingTagMode(!addTagMode);
-          }}
-        >
-          {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
-        </button>
-        {/* 이미지 선택 후 태그가 찍힐 부분 */}
-        {selectedImage && (
-          <div style={{ position: 'relative' }}>
-            {typeof selectedImage === 'string' ? ( // 이미지 URL인 경우
-              <img
-                src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
-                alt="이미지"
-                onClick={handleImageClick}
-              />
-            ) : (
-              // 파일 객체인 경우
-              <img src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
-            )}
-            {tags.map((tag, index) => (
-              <div
-                key={index}
-                onClick={() => handleTagClick(index)}
-                style={{
-                  position: 'absolute',
-                  left: tag.x,
-                  top: tag.y,
-                  backgroundColor: 'red',
-                  display: 'flex',
-                  width: '40px',
-                  height: '40px',
-                  zIndex: 2
-                }}
-              >
-                {selectedTagIndex === index && selectedTagVisible && (
-                  <div>
-                    {tag.prodData && <div> {tag.prodData}</div>}
-                    {tag.price && <div> {tag.price}</div>}
-                    {tag.img && <img src={`${tag.img}`} alt="이미지" />}
-                    {tag.prodData || tag.price || tag.img ? (
-                      <button onClick={() => handleDeleteTag(index)}>삭제</button>
-                    ) : null}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {selectedTagIndex !== null && searchFormHandler && <Search onSearchResultSelect={handleSelectResult} />}
-        {searchFormHandler && <button onClick={handleSearchModalClose}>닫기</button>}
-      </div>
+      </S.ImageTagContainer>
     </>
   );
 };
 
 export default ImageTag;
+
+const S = {
+  ImageTagContainer: styled.div`
+    display: flex;
+    position: relative;
+  `,
+  AddTagButton: styled.button`
+    background-color: #3498db;
+    width: 200px;
+    height: 40px;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+  `,
+  ImageContainer: styled.div`
+    position: relative;
+  `,
+  Image: styled.img`
+    width: 360px;
+    height: 360px;
+  `,
+  TagImage: styled.img`
+    width: 80px;
+    height: 80px;
+  `,
+  TagContainer: styled.div`
+    width: 356px;
+    height: 100px;
+    background-color: white;
+    display: flex;
+    padding: 8px;
+    box-sizing: border-box;
+  `,
+  ProdContainer: styled.div`
+    width: 246px;
+    height: 50px;
+    margin-top: 50px;
+  `,
+  DeleteButton: styled.button`
+    width: 40px;
+    height: 16px;
+    font-size: 8px;
+    background-color: transparent;
+    cursor: pointer;
+  `,
+  CloseButton: styled.button`
+    width: 40px;
+    height: 30px;
+    position: absolute;
+    margin-left: 300px;
+    cursor: pointer;
+    color: black;
+    background-color: transparent;
+
+    &:hover {
+      color: gray;
+    }
+  `,
+  SearchResultsContainer: styled.div`
+    width: 380px;
+    height: 450px;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    background-color: white;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 1;
+    /* scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    } */
+  `
+};

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
@@ -64,7 +64,6 @@ const Login = () => {
           id="password"
           placeholder="비밀번호를 입력하세요"
         />
-
         <ErrorMessage>{errorMessage}</ErrorMessage>
         <Button onClick={handleLogin}>로그인</Button>
         <RowContainer>
@@ -124,6 +123,7 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
+
 const SocialContainer = styled.div`
   display: flex;
   flex-direction: row;

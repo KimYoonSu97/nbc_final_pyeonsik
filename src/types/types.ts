@@ -27,13 +27,18 @@ export interface Post {
   img: string;
 }
 
-// 게시글 작성할 때 사용하는 임시 type
+export interface PostUserProfile {
+  id: string;
+  nickname: string;
+  profileImg: string;
+}
+
+// 게시글 작성 임시
 export interface NewPost {
   orgPostId: string | null;
   orgUserId: string | null;
   postCategory: string;
   title: string;
-  // img: string;
   body: string;
   userId: string;
 }
@@ -60,6 +65,14 @@ export interface EditPost {
   id: string;
   title: string;
   body: string;
+}
+
+// recipe post
+export interface RecipeNewPost {
+  postCategory: string;
+  title: string;
+  body: string[];
+  userId: string;
 }
 
 export interface TagEditPost {
@@ -92,10 +105,7 @@ export interface NewPostBookmark {
   userId: string;
 }
 
-export interface RankProps {
-  $isfirst?: boolean;
-}
-
+// etc.
 export interface UserType {
   uid: string;
   email: string;
@@ -104,10 +114,14 @@ export interface UserType {
   profileimg: File | null;
 }
 
-export interface PostUserProfile {
+export interface Likes {
   id: string;
-  nickname: string;
-  profileImg: string;
+  likes: string;
+  postId: string;
+}
+
+export interface RankProps {
+  $isfirst?: boolean;
 }
 
 export interface RenderComponents {
@@ -115,11 +129,6 @@ export interface RenderComponents {
   component: JSX.Element;
 }
 
-export interface Likes {
-  id: string;
-  likes: string;
-  postId: string;
-}
 // 이 아래는 이미지 태그 관련 프롭스입니다! 위에 포스트에도 살짝 있긴합니다
 export interface Tag {
   x: number;
@@ -168,6 +177,7 @@ export interface ImageTagProps {
   tagData?: Tag[] | null;
   body?: string | null;
 }
+
 export interface ImageTagPropsToAddImageComponent {
   onImageSelect: (selectedImage: File) => void;
   onRemovedImage: (removedImage: File) => void;
@@ -186,6 +196,7 @@ export interface ImageUploaderProps {
 export interface ProdEvent {
   type: string;
 }
+
 export interface Product {
   created_at: string;
   event: ProdEvent | null;
@@ -197,6 +208,7 @@ export interface Product {
   prodImg: string;
   prodName: string;
 }
+
 export interface InfinityProductList {
   products: Product[];
   page: number;

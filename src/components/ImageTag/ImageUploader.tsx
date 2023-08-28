@@ -1,5 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
 import { ImageUploaderProps } from 'src/types/types';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
@@ -16,9 +17,27 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
 
   return (
     <div>
-      <input type="file" multiple accept="image/*" onChange={handleImageUpload} />
+      <S.FileLabel>
+        <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
+        <S.FileLabelText>파일 선택</S.FileLabelText>
+      </S.FileLabel>
     </div>
   );
 };
 
 export default ImageUploader;
+
+const S = {
+  FileInput: styled.input`
+    display: none; /* 숨김 처리 */
+  `,
+  FileLabel: styled.label`
+    border: 1px solid #ccc;
+    padding: 8px;
+    cursor: pointer;
+    display: inline-block;
+  `,
+  FileLabelText: styled.span`
+    /* 파일 선택 텍스트 스타일을 정의하세요 */
+  `
+};

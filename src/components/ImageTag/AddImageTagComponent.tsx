@@ -1,4 +1,5 @@
 // AddImageTagComponent.tsx
+
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -6,19 +7,18 @@ import ImageTag from './ImageTag';
 import { atom, useAtom } from 'jotai';
 import { ImageTagPropsToAddImageComponent, Tag } from 'src/types/types';
 
-export const contentsAtom = atom<string[]>([]);
-export const tagsDataAtom = atom<Tag[][]>([]);
+//Jotai atom을 이용 데이터 전역관리
+export const contentsAtom = atom<{ [key: string]: string }>({});
+export const tagsDataAtom = atom<{ [key: string]: Tag[] }>({});
 
+// 이미지 태그를 추가하는 컴포넌트 정의
 const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onImageSelect, onRemovedImage }) => {
   const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
   const [inputData, setInputData] = useAtom(contentsAtom);
-  const [tagsData, setTagsData] = useAtom(tagsDataAtom);
+  const [, setTagsData] = useAtom(tagsDataAtom);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  console.log('inputData', inputData);
-  console.log('tagsData', tagsData);
-  console.log('selectedImages', selectedImages);
-
+  // 이미지 태그 컴포넌트 추가 함수
   const addImageTagComponent = () => {
     const componentUuid = uuidv4();
     const newImageTagComponent = (
@@ -34,45 +34,32 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
       </div>
     );
 
+    // 상태 업데이트
     setImageTagComponents((prevComponents) => [...prevComponents, newImageTagComponent]);
-    setInputData((prevInputData) => [...prevInputData, '']);
-    setTagsData((prevTagsData) => [...prevTagsData, []]);
+    setInputData((prevInputData) => ({ ...prevInputData, [componentUuid]: '' }));
+    setTagsData((prevTagsData) => ({ ...prevTagsData, [componentUuid]: [] }));
   };
 
-  //각 컴포넌트의 Tag 값을 배열로 저장하는 함수
+  // 태그 변경 처리 콜백 함수
   const handleTagsChange = (uuid: string, tags: Tag[]) => {
-    const index = imageTagComponents.findIndex((component) => component.key === uuid);
-    if (index !== -1) {
-      const updatedTagsData = [...tagsData];
-      updatedTagsData[index] = tags;
-      setTagsData(updatedTagsData);
-    }
+    setTagsData((prevTagsData) => ({ ...prevTagsData, [uuid]: tags }));
   };
 
-  //각 컴포넌트의 body 값을 배열로 저장하는 함수
+  // 내용 변경 처리 콜백 함수
   const handleContentsChange = (uuid: string, newContents: string) => {
-    const index = imageTagComponents.findIndex((component) => component.key === uuid);
-    if (index !== -1) {
-      setInputData((prevInputData) => {
-        const updatedInputData = [...prevInputData];
-        updatedInputData[index] = newContents;
-        return updatedInputData;
-      });
-    }
+    setInputData((prevInputData) => ({ ...prevInputData, [uuid]: newContents }));
   };
 
+  // 이미지 태그 컴포넌트 제거 함수
   const removeImageTagComponent = (uuid: string) => {
-    // 아이템의 인덱스를 찾기 위해 uuid를 사용하여 검색
-    const index = imageTagComponents.findIndex((component) => {
-      const componentKey = String(component.key); // key 값을 문자열로 변환
-      // 컴포넌트의 key와 uuid가 일치하는 경우 해당 컴포넌트의 인덱스 반환
-      return componentKey === uuid;
-    });
+    const index = Object.keys(inputData).indexOf(uuid);
 
     if (index !== -1) {
       const removedImage = selectedImages[index];
+      // 이미지 삭제 콜백 호출
       onRemovedImage(removedImage);
 
+      // 기존 상태 업데이트
       setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
 
       setImageTagComponents((prevComponents) => {
@@ -80,11 +67,13 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
         return updatedComponents;
       });
       setInputData((prevInputData) => {
-        const updatedInputData = prevInputData.filter((_, i) => i !== index);
+        const updatedInputData = { ...prevInputData };
+        delete updatedInputData[uuid];
         return updatedInputData;
       });
       setTagsData((prevTagsData) => {
-        const updatedTagsData = prevTagsData.filter((_, i) => i !== index);
+        const updatedTagsData = { ...prevTagsData };
+        delete updatedTagsData[uuid];
         return updatedTagsData;
       });
     }
