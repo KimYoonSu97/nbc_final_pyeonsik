@@ -1,13 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import { Post } from 'src/types/types';
-import PostWriteCommon from 'src/components/post/PostWriteCommon';
+import PostWriteCommon from 'src/components/post/write/PostWriteCommon';
 import PostWriteRecipe from 'src/components/post/PostWriteRecipe';
 
 const Write = () => {
   const location = useLocation();
   const orgPost = location.state as Post;
-  console.log(location);
 
   return (
     <div>

@@ -74,13 +74,11 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
     setUpdateToggle(false);
   };
 
-  const updateOpenButton = (id: string, comment:string) => {
+  const updateOpenButton = (id: string, comment: string) => {
     setUpdateComment(comment);
     setUpdateToggle(true);
     setUpdateId(id);
   };
-
-  
 
   //작성 날짜 월일로 변환
   const commentWriteDate = (date: string) => {
@@ -133,8 +131,8 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
                     <div>
                       {userId && item.userId === userId && (
                         <div>
-                        <button onClick={() => updateOpenButton(item.id, item.comment)}>수정하기</button>
-                        <button onClick={() => deleteReCommentButton(item.id)}>삭제</button>
+                          <button onClick={() => updateOpenButton(item.id, item.comment)}>수정하기</button>
+                          <button onClick={() => deleteReCommentButton(item.id)}>삭제</button>
                         </div>
                       )}
 
@@ -142,28 +140,28 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
                     </div>
                   </div>
                   {updateToggle && item.id === updateId ? (
-                <div>
-                  <input
-                    // ref={updateInputRef}
-                    type='text'
-                    value={updateComment}
-                    onChange={(e) => {
-                      setUpdateComment(e.target.value);
-                    }}
-                  ></input>
-                  <button onClick={() => updateCommentButton(item.id)}>수정</button>
-                  <button
-                    onClick={() => {
-                      setUpdateToggle(false);
-                      setUpdateId(null);
-                    }}
-                  >
-                    취소
-                  </button>
-                </div>
-              ) : (
-                <h2>{item.comment}</h2>
-              )}
+                    <div>
+                      <input
+                        // ref={updateInputRef}
+                        type="text"
+                        value={updateComment}
+                        onChange={(e) => {
+                          setUpdateComment(e.target.value);
+                        }}
+                      ></input>
+                      <button onClick={() => updateCommentButton(item.id)}>수정</button>
+                      <button
+                        onClick={() => {
+                          setUpdateToggle(false);
+                          setUpdateId(null);
+                        }}
+                      >
+                        취소
+                      </button>
+                    </div>
+                  ) : (
+                    <h2>{item.comment}</h2>
+                  )}
                 </div>
               );
             })}

@@ -25,7 +25,7 @@ const PasswordReset: React.FC = () => {
   // 발송된 링크 클릭 후 돌아오면 리셋 이벤트 발생
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event == 'PASSWORD_RECOVERY') {
+      if (event === 'PASSWORD_RECOVERY') {
         const newPassword = prompt('What would you like your new password to be?');
         if (newPassword === null) {
           alert('비밀번호가 공백입니다!');

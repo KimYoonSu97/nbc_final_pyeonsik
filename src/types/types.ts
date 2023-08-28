@@ -14,6 +14,7 @@ export interface Post {
   id: string;
   created_at: string;
   orgPostId: string;
+  //  orgUserId: string 임시 (혜영)
   postCategory: string;
   title: string;
   body: string;
@@ -31,6 +32,21 @@ export interface PostUserProfile {
   id: string;
   nickname: string;
   profileImg: string;
+}
+
+export interface OrgPostIdProbs {
+  orgPostId: string;
+  orgUserId: string;
+}
+
+export interface CommonBodyProps {
+  body: string;
+  setBody: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface BottomFunctionProps {
+  userId: string;
+  post: Post;
 }
 
 // 게시글 작성 임시
