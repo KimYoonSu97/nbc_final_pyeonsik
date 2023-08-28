@@ -33,7 +33,7 @@ const NewReview = () => {
         {filteredPosts.map((post) => (
           <PostCard key={post.id}>
             <ImageWrapper>
-              <Image src={post.img} alt={post.title} />
+              <Image src={post.tagimage} alt={post.title} />
             </ImageWrapper>
             <Title>{post.title}</Title>
             {/* <Body>{post.body}</Body> */}

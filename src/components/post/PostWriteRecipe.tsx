@@ -67,24 +67,22 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
       postCategory: 'recipe',
       userId,
       title,
-      body: allContents,
-      tags: allTags,
+      recipeBody: Object.values(allContents),
+      tags: Object.values(allTags),
       tagimage: imageUrls
     };
 
     addRecipePostMutate.mutate(newPost);
 
-    setContentsAtom([]); // contentsAtom 아톰 상태 초기화
-    setTagsDataAtom([]); // tagsDataAtom 아톰 상태 초기화
+    setContentsAtom({});
+    setTagsDataAtom({});
 
     navigate(`/`);
   };
 
   return (
     <>
-      <AddImageTagComponent onImageSelect={handleImageSelect} onRemovedImage={handleRemovedImage} />
       <form onSubmit={submitPost}>
-        <button type="submit">add</button>
         <PostWriteInput
           ref={postRef}
           type="text"
@@ -98,6 +96,8 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
         />
         <button type="submit">add</button>
       </form>
+
+      <AddImageTagComponent onImageSelect={handleImageSelect} onRemovedImage={handleRemovedImage} />
     </>
   );
 };
