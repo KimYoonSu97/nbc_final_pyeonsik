@@ -1,5 +1,5 @@
-import { useAtom } from 'jotai';
 import { useEffect, useMemo, useState } from 'react';
+import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 
@@ -28,6 +28,7 @@ const useLoginUserId = () => {
     }
   }, [loginUserId]);
   // console.log('유저 훅에서 찍은 유저 아이디', userId);
+
   return userId as string;
 };
 

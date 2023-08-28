@@ -6,6 +6,7 @@ export const RealTimeContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const NewReviewContainer = styled.div`
   flex-direction: column;
   justify-content: center;

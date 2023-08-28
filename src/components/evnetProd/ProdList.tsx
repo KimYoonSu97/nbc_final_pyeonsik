@@ -1,7 +1,7 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import ProdCard from './ProdCard';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getEventProd } from 'src/api/product';
 import { useLocation } from 'react-router';
 import { useInView } from 'react-intersection-observer';
@@ -57,7 +57,6 @@ const ProdList = () => {
         })}
         <></>
       </S.Container>
-
       <S.EmptyBox ref={ref}></S.EmptyBox>
     </>
   );

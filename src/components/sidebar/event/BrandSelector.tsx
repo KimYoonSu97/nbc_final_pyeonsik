@@ -59,11 +59,13 @@ const S = {
     gap: 8px;
     padding: 8px 10px;
   `,
+
   Icon: styled.div`
     width: 20px;
     height: 20px;
     margin-right: 4px;
   `,
+
   TapButton: styled(Link)<Props>`
     display: flex;
     align-items: center;

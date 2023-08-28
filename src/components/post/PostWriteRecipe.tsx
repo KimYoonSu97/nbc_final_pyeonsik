@@ -61,8 +61,6 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
       imageUrls.push(data.path);
     }
 
-    // orgin post
-
     const newPost = {
       orgPostId,
       orgUserId,

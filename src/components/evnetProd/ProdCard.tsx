@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ProdEvent, Product } from 'src/types/types';
+import { Product } from 'src/types/types';
 
 interface Props {
   data: Product;
