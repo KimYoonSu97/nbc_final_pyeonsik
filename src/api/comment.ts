@@ -2,11 +2,12 @@ import supabase from 'src/lib/supabaseClient';
 
 export type CommentType = {
   comment: string;
-  // created_at : string;
   id: string;
   postId: string | undefined;
-  userId: string;
+  userId: string | undefined;
 };
+
+
 
 // 포스트에 아이디에 해당하는 댓글 가져오기
 const getCommentData = async (id: string) => {
@@ -29,8 +30,8 @@ const deleteCommentData = async (id: string) => {
 };
 
 //댓글 수정하기
-// const updateCommentData = async (comment:Pick<CommentType,'id' | 'comment'>) => {
-//     await supabase.from("comment").update({comment:comment.comment}).eq('id',comment.id)
-// }
+const updateCommentData = async (comment:any) => {
+    await supabase.from("detail_comments").update([comment]).eq('id',comment.id)
+}
 
-export { getCommentData, WriteCommentData, deleteCommentData };
+export { getCommentData, WriteCommentData, deleteCommentData, updateCommentData };

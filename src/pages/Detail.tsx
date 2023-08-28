@@ -8,6 +8,7 @@ const Detail = () => {
     <div>
       <PostDetailCommon />
       {/* <PostDetailRecipe /> */}
+
       <Comment />
     </div>
   );

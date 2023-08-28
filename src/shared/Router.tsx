@@ -14,6 +14,11 @@ import EventProd from 'src/pages/EventProd';
 import Mypage from 'src/pages/Mypage';
 import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
+import Report from 'src/components/sidebar/Report';
+
+
+
+
 
 const Router = () => {
   return (
@@ -27,12 +32,15 @@ const Router = () => {
           <Route path="/password_reset" element={<PasswordReset />} />
           <Route path="/password_change" element={<PasswordChange />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path='/report' element={<Report/>}/>
+
           <Route path="/event" element={<EventProd />} />
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
             <Route path="/write" element={<Write />} />
             <Route path="/edit/:id" element={<Edit />} />
           </Route>
+
         </Route>
         <Route element={<PrivateRoute />}>
           {/* <Route path="/write" element={<Write />} />
