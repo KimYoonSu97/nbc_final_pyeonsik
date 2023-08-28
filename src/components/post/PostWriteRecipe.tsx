@@ -64,12 +64,12 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
     // orgin post
 
     const newPost = {
-      orgPostId,
-      orgUserId,
+      // orgPostId,
+      // orgUserId,
       postCategory: 'recipe',
       userId,
       title,
-      body: allContents,
+      recipeBody: allContents,
       tags: allTags,
       tagimage: imageUrls
     };

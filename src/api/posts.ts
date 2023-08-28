@@ -1,5 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
-import { EditPost, NewPost, RecipeNewPost, TagEditPost } from 'src/types/types';
+import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
 
 const getPosts = async () => {
   const response = await supabase
@@ -18,8 +18,9 @@ const getPost = async (id: string) => {
 const addPost = async (post: NewPost) => {
   await supabase.from('posts').insert(post).select();
 };
+
 //값 타입이 달라져서 추가했습니다! - 원유길
-const addRecipePost = async (post: RecipeNewPost) => {
+const addRecipePost = async (post: NewRecipePost) => {
   await supabase.from('posts').insert(post).select();
 };
 
