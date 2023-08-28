@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAtom } from 'jotai';
-import { myPagePostAtom } from 'src/globalState/jotai';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPostsById } from 'src/api/posts';
 import { getUserData } from 'src/api/userLogin';
@@ -90,12 +88,14 @@ const S = {
     gap: 12px;
     padding: 24px 16px 32px 16px;
   `,
+
   ProfileImg: styled.div`
     width: 60px;
     height: 60px;
     border-radius: 75px;
     background: #d9d9d9;
   `,
+
   DetailArea: styled.div``,
   Level: styled.div`
     border-radius: 100px;
@@ -110,18 +110,21 @@ const S = {
     line-height: 16px;
     background: #d9d9d9;
   `,
+
   NickName: styled.div`
     margin-top: 4px;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
   `,
+
   ButtonArea: styled.div`
     display: flex;
     margin: 0 16px 24px 16px;
     /* justify-content: center; */
     gap: 9px;
   `,
+
   SummaryButton: styled.div`
     width: 82px;
     height: 94px;
@@ -130,6 +133,7 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
+
   IconArea: styled.div`
     width: 50px;
     height: 50px;
@@ -140,6 +144,7 @@ const S = {
     align-items: center;
     margin-bottom: 4px;
   `,
+
   Caption: styled.p`
     font-size: 12px;
     font-weight: 400;

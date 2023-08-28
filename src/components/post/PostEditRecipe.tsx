@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import supabase from 'src/lib/supabaseClient';
 
 import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
-import PostWriteInput from './PostWriteInput';
 import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
-import supabase from 'src/lib/supabaseClient';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+import PostWriteInput from './PostWriteInput';
 
 const PostEditRecipe = () => {
   const [inputData, setInputData] = useState<string[]>([]);
@@ -125,20 +125,6 @@ const PostEditRecipe = () => {
 
   return (
     <div>
-      {/* <AddImageTagComponent onImageSelect={handleImageSelect} /> */}
-
-      {tagData.map((_, index) => (
-        <ImageTag
-          key={index}
-          onTagsAndResultsChange={(tags) => handleTagsChange(index, tags)}
-          onImageSelect={(image) => handleImageSelect(image, index)}
-          onContentsChange={(newContents) => handleContentsChange(index, newContents)}
-          imageData={allSelectedImages[index]}
-          tagData={tagData ? tagData[index] : null}
-          body={body ? body[index] : null}
-        />
-      ))}
-
       <form onSubmit={submitPost}>
         <PostWriteInput
           ref={postRef}
@@ -152,7 +138,18 @@ const PostEditRecipe = () => {
           }}
           autoFocus
         />
-
+        {/* <AddImageTagComponent onImageSelect={handleImageSelect} /> */}
+        {tagData.map((_, index) => (
+          <ImageTag
+            key={index}
+            onTagsAndResultsChange={(tags) => handleTagsChange(index, tags)}
+            onImageSelect={(image) => handleImageSelect(image, index)}
+            onContentsChange={(newContents) => handleContentsChange(index, newContents)}
+            imageData={allSelectedImages[index]}
+            tagData={tagData ? tagData[index] : null}
+            body={body ? body[index] : null}
+          />
+        ))}
         <button type="submit">save</button>
       </form>
       <button onClick={clickCancle}>cancle</button>

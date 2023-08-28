@@ -39,15 +39,14 @@ const PostEditCommon = () => {
     e.preventDefault();
 
     const editPost = {
-      orgPostId: post.orgPostId.id,
-      orgUserId: post.orgUserId.id,
+      orgPostId: post.orgPostId?.id,
+      orgUserId: post.orgUserId?.id,
       id: post.id,
       title,
       body
     };
 
     updatePostMutate.mutate(editPost);
-
     navigate(`/detail/${prams}`);
   };
 

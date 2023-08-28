@@ -57,6 +57,7 @@ const S = {
     align-items: center;
     flex-direction: column;
   `,
+
   ContentWrapper: styled.div`
     width: 100%;
     padding: 6px 4px;
@@ -64,6 +65,7 @@ const S = {
     align-items: center;
     gap: 8px;
   `,
+
   RankNum: styled.div<{
     $isfirst?: boolean;
   }>`
@@ -84,6 +86,7 @@ const S = {
     line-height: 16px; /* 133.333% */
     color: ${({ $isfirst }) => ($isfirst ? 'white' : '#d9d9d9')};
   `,
+
   ImageBox: styled.div<{ $url: string }>`
     width: 48px;
     height: 48px;
@@ -91,6 +94,7 @@ const S = {
     background-color: #d9d9d9;
     border-radius: 4px;
   `,
+
   PostTitle: styled.div`
     color: #000;
     /* title-small */
