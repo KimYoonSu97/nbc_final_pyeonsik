@@ -1,0 +1,17 @@
+.ql-toolbar {
+  width: 950px;
+  /* height: 52px; */
+  border-radius: 10px 10px 0px 0px;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.ql-container {
+  width: 950px;
+  height: 900px;
+  padding-bottom: 0px;
+  border-radius: 0px 0px 10px 10px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
