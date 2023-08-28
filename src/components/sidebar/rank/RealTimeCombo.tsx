@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import { Post } from 'src/types/types';
 import { postsAtom } from '../FetchPosts';
 import { likesAtom } from '../FetchPosts';
-import { RealTimeContainer, PostContainer, PostCard, Title, ImageWrapper, HeadTitle, Rank } from '../StyledSideBar';
+import { styled } from 'styled-components';
 
 const RealTimeCombo = () => {
   // Jotai의 useAtom을 사용해서 전역선언한 Posts 데이터와 Likes 데이터를 가져오기
@@ -24,24 +24,81 @@ const RealTimeCombo = () => {
   }, [posts, likes]);
 
   return (
-    <RealTimeContainer>
-      <HeadTitle>지금 인기있는 편식 조합</HeadTitle>
-      <PostContainer>
-        {filteredPosts.map((post, index) => (
-          <PostCard key={post.id}>
-            <Rank isfirst={index === 0}>{index + 1}</Rank>
-            <ImageWrapper>
-              {post.tagimage && (
-                <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`} alt={`${post.id}`} />
-              )}
-            </ImageWrapper>
-            <Title>{post.title}</Title>
-            {post.likesCount}
-          </PostCard>
-        ))}
-      </PostContainer>
-    </RealTimeContainer>
+    <S.ContentsArea>
+      {/* <>지금 인기있는 편식 조합</> */}
+      {filteredPosts.map((post, index) => (
+        <S.ContentWrapper key={post.id}>
+          <S.RankNum $isfirst={index === 0}>{index + 1}</S.RankNum>
+
+          {post.tagimage && (
+            <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage}`} alt={`${post.id}`} />
+          )}
+          <S.PostTitle>{post.title}</S.PostTitle>
+          {/* <Rank ></Rank> */}
+          {/*<ImageWrapper>
+            
+          </ImageWrapper>
+          <Title></Title>
+          {post.likesCount} */}
+        </S.ContentWrapper>
+      ))}
+    </S.ContentsArea>
   );
 };
 
 export default RealTimeCombo;
+
+const S = {
+  ContentsArea: styled.div`
+    display: flex;
+    width: 296px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  `,
+  ContentWrapper: styled.div`
+    width: 100%;
+    padding: 6px 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  `,
+  RankNum: styled.div<{
+    $isfirst?: boolean;
+  }>`
+    width: 18px;
+    height: 18px;
+    background-color: ${({ $isfirst }) => ($isfirst ? '#d9d9d9' : 'white')};
+    border-radius: 100px;
+    border: 1px solid #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* body-small */
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 133.333% */
+    color: ${({ $isfirst }) => ($isfirst ? 'white' : '#d9d9d9')};
+  `,
+  ImageBox: styled.div<{ $url: string }>`
+    width: 48px;
+    height: 48px;
+    background-image: ${(props) => `url(${props.$url})`};
+    background-color: #d9d9d9;
+    border-radius: 4px;
+  `,
+  PostTitle: styled.div`
+    color: #000;
+    /* title-small */
+    padding-top: 2px;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+  `
+};

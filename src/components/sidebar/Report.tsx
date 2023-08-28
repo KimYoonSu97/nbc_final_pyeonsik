@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { supabase } from 'src/supabse';
+import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-
 
 const Report = () => {
   const [step, setStep] = useState<number>(1);
@@ -12,7 +11,7 @@ const Report = () => {
   const [selectedInquiry1, setSelectedInquiry1] = useState<string>('');
   const [selectedInquiry2, setSelectedInquiry2] = useState<string>('');
   const [image, setImage] = useState<File>();
-  const [imageName,setImageName] = useState<string>()
+  const [imageName, setImageName] = useState<string>();
   const [urlLink, setUrlLink] = useState<string>('');
   const [message, setMessage] = useState<string>('');
 
@@ -20,21 +19,17 @@ const Report = () => {
 
   const navigate = useNavigate();
 
-
-  const reportImage = async (event:React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) { //null 방지?
-    const uploadimage = event?.target.files[0]
-    console.log("1",uploadimage)
-    const originalFileName = uploadimage.name;
-    console.log("2",originalFileName)
-    const fileExtension = originalFileName.split('.').pop();
-    const randomFileName = uuidv4() + '.' + fileExtension;
-    setImageName(randomFileName)
-    setImage(uploadimage)
+  const reportImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      //null 방지?
+      const uploadimage = event?.target.files[0];
+      const originalFileName = uploadimage.name;
+      const fileExtension = originalFileName.split('.').pop();
+      const randomFileName = uuidv4() + '.' + fileExtension;
+      setImageName(randomFileName);
+      setImage(uploadimage);
     }
-  }
-  console.log("3",image)
-  
+  };
 
   const nextStep = () => setStep(step + 1);
 
@@ -49,24 +44,24 @@ const Report = () => {
   };
 
   const handleSubmitButton = async () => {
-    const url = []
-    if(image){
+    const url = [];
+    if (image) {
       const { data, error } = await supabase.storage.from('photos').upload(`report/${imageName}`, image);
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
         alert('이미지 업로드 중 에러가 발생했습니다!');
         return;
       }
-      url.push(data.path)
+      url.push(data.path);
     }
-    
+
     const reportData = {
       email,
       userId,
       inquiry1: selectedInquiry1,
       inquiry2: selectedInquiry2,
       detailReport: {
-        image : `${process.env.REACT_APP_SUPABASE_STORAGE_REPORT}${url}`,
+        image: `${process.env.REACT_APP_SUPABASE_STORAGE_REPORT}${url}`,
         urlLink,
         message
       }
@@ -76,19 +71,19 @@ const Report = () => {
   };
 
   const handleNext = () => {
-    if(selectedInquiry1){
+    if (selectedInquiry1) {
       nextStep();
-    }else{
-      alert("문의항목을 선택해 주세요.")
+    } else {
+      alert('문의항목을 선택해 주세요.');
     }
   };
   const handleNext2 = () => {
-    if(selectedInquiry2){
+    if (selectedInquiry2) {
       nextStep();
-    }else{
-      alert("항목을 선택해 주세요.")
+    } else {
+      alert('항목을 선택해 주세요.');
     }
-  }
+  };
 
   const options1 = ['유저 신고', '오류 제보', '기타'];
   const options2 = [
@@ -162,12 +157,16 @@ const Report = () => {
       {step === 3 && (
         <ReportInner>
           <h2>해당 내용에 대해 확인 할 수 있는 사진,파일,링크를 업로드 해주세요.</h2>
-          <input
-            type="file"
-            onChange={reportImage}
-            id="fileupload"
-            placeholder="클릭하여 파일을 선택해주세요."
-          ></input>
+          <div>
+            <label htmlFor="fileupload">클릭하여 파일을 선택해주세요.</label>
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              onChange={reportImage}
+              id="fileupload"
+              placeholder="클릭하여 파일을 선택해주세요."
+            ></input>
+          </div>
           <input
             value={urlLink}
             onChange={(e) => setUrlLink(e.target.value)}
@@ -202,11 +201,16 @@ export default Report;
 const ReportWrap = styled.div``;
 
 const ReportInner = styled.div`
-h1{
-  font-size: 40px;
-  font-weight: bold;
-  letter-spacing: -2px;
-}
+  h1 {
+    font-size: 40px;
+    font-weight: bold;
+    letter-spacing: -2px;
+  }
+  h2{
+    font-size: 38px;
+    font-weight: bold;
+    letter-spacing: -2px;
+  }
   p {
     border: solid 1px #999;
     background-color: #fff;
@@ -223,4 +227,25 @@ h1{
     border-radius: 5px;
     background-color: #ced4da;
   }
+  label{
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 3px;
+    border-radius: 7px;
+    margin-bottom: 15px;
+  }
+  input{
+    display: block;
+    width: 100%;
+    padding: 10px 3px;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    margin-bottom: 15px;
+    &:last-child{
+      margin-bottom : 40px
+    }
+  }
+
 `;

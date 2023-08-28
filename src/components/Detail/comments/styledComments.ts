@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const CommentWriteWrap = styled.div`
   margin-bottom: 30px;
@@ -44,6 +44,7 @@ export const CommentWriteWrap = styled.div`
 `;
 
 export const CommentWrap = styled.div``;
+
 export const CommentInner = styled.div`
   margin: 12px 0px;
   .commentInfo{
@@ -121,3 +122,4 @@ export const ReCommentWrap = styled.div`
 `
 export const ReCommentWriteWrap = styled.div`
 `
+

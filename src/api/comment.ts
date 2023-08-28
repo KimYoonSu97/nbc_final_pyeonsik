@@ -1,4 +1,4 @@
-import { supabase } from 'src/supabse';
+import supabase from 'src/lib/supabaseClient';
 
 export type CommentType = {
   comment: string;
@@ -11,8 +11,7 @@ export type CommentType = {
 
 // 포스트에 아이디에 해당하는 댓글 가져오기
 const getCommentData = async (id: string) => {
-  const { data } = await supabase.from('detail_comments').select(`*,users("*")`).eq('postId', id);
-  console.log("dasd",data)
+  const { data } = await supabase.from('detail_comments').select('*,users("*")').eq('postId', id);
   return data;
 };
 
@@ -27,8 +26,8 @@ const deleteCommentData = async (id: string) => {
 };
 
 //댓글 수정하기
-// const updateCommentData = async (comment:Pick<CommentType,'id' | 'comment'>) => {
-//     await supabase.from("comment").update({comment:comment.comment}).eq('id',comment.id)
-// }
+const updateCommentData = async (comment:any) => {
+    await supabase.from("detail_comments").update([comment]).eq('id',comment.id)
+}
 
-export { getCommentData, WriteCommentData, deleteCommentData };
+export { getCommentData, WriteCommentData, deleteCommentData, updateCommentData };

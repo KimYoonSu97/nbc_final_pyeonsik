@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addLike, deleteLike, getLike } from 'src/api/commentLike';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { AiOutlineLike,AiFillLike } from "react-icons/ai";
@@ -12,6 +12,7 @@ interface LikeType {
   userId : string;
   postId : string;
 }
+
 const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   const queryClient = useQueryClient();
   const userId = useLoginUserId();
@@ -48,12 +49,12 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
 
   const checkLike = (commentId: string, userId: string| undefined, likeData: any) => {
     let answer = false;
-    let array: any = [];
+    let array: LikeType[] = [];
     if (likeData) {
       array = [...likeData];
     }
 
-    array.forEach((element: any) => {
+    array.forEach((element) => {
       if (element.commentId === commentId && element.userId === userId) {
         answer = true;
       }
@@ -62,7 +63,7 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   };
 
   const getCommentLikesCount = (commentId: string) => {
-    const commentLikesCount = likeData?.filter((like: any) => like.commentId === commentId).length;
+    const commentLikesCount = likeData?.filter((like) => like.commentId === commentId).length;
     return commentLikesCount || 0;
   };
 

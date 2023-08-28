@@ -17,8 +17,6 @@ export const GlobalStyle = createGlobalStyle`
 button{
     outline:none;
     border:none;
-	
-	// button cursor style 추가
 	cursor: pointer;
 }
 

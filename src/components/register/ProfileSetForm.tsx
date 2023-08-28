@@ -12,41 +12,55 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
-  
+  const [baseImg] = useState(baseImage);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  
+  // Blob 형태를 string으로 변환
   const encodeFileTobase64 = (fileBlob: Blob) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise(() => {
       reader.onload = () => {
         setProfileImgSrc(reader.result as string);
-      
       };
     });
   };
 
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const selectedFile = e.target.files && e.target.files[0];
-  //   if (selectedFile) {
-  //     //미리보기를 위한 /
-  //     // const imgURL = URL.createObjectURL(selectedFile);
-  //     // const img = atob(selectedFile)
-  //     setProfileImgSrc(img);
-  //   }
-  // };
-
   const setProfile = async () => {
+    // Check if nickname already exists
+    const { data: existingUsers, error: existingUsersError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('nickname', nickname)
+      .maybeSingle();
+    console.log(existingUsers);
+    // 유효성 검사
+    // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
+    const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
+    if (!nicknamePattern.test(nickname)) {
+      setErrorMessage('올바른 닉네임 형식이 아닙니다.');
+      return;
+    }
+    if (nickname.length < 2) {
+      setErrorMessage('2글자 이상 이어야 합니다.');
+      return;
+    }
+    if (existingUsers) {
+      // TODO: 중복이어도 return이 안됨..
+      setErrorMessage('이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.');
+      return;
+    }
+
     const newUser = {
       email: userEmail,
       nickname,
-      profileImg: profileImgSrc.length < 5 ? "" : profileImgSrc
+      profileImg: profileImgSrc.length < 5 ? '' : ''
     };
     if (!nickname) {
       alert('닉네임을 입력해주세요');
       return;
     }
-    if (profileImgSrc === baseImage) {
+    if (profileImgSrc === '') {
       alert('사진을 등록해주세요');
       return;
     }
@@ -61,14 +75,19 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       <RegisterFormContainer>
         <ProfileImgnameBox>
           <ProfileImgLabel>프로필 설정</ProfileImgLabel>
-
           <div>
-            <PreviewImage src={profileImgSrc} alt="프로필 이미지" />
-            <ProfileImgInput src={baseImage} type="file" accept="image/*" onChange={(e)=>{
-              encodeFileTobase64(e.target.files![0] as Blob)
-            }} />
+            <PreviewImage src={profileImgSrc || baseImg} alt="프로필 이미지" />
+            <ProfileImgInput
+              src={baseImg}
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                encodeFileTobase64(e.target.files![0] as Blob);
+              }}
+            />
           </div>
         </ProfileImgnameBox>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
         <Label>닉네임</Label>
         <NickNameInput
           maxLength={15}
@@ -80,7 +99,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
           }}
         />
         <InformMessage>편식에서만의 닉네임을 사용해보세요!</InformMessage>
-
         <Button onClick={setProfile}>편식 시작하기</Button>
       </RegisterFormContainer>
     </>
@@ -110,6 +128,7 @@ const ProfileImgnameBox = styled.div`
 
   flex-direction: column;
 `;
+
 const InformMessage = styled.div`
   font-size: 10px;
   color: blue;
@@ -155,4 +174,10 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+const ErrorMessage = styled.div`
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
 `;

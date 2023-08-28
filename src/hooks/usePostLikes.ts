@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addPostLike, deletePostLike } from 'src/api/postLikes';
 
-const usePostLikes = (argument: string) => {
+const usePostLikes = () => {
   const queryClient = useQueryClient();
 
   const success = {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [argument] });
+      queryClient.invalidateQueries({ queryKey: ['post_likes'] });
     }
   };
 

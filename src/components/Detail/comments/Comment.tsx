@@ -1,9 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
-import { WriteCommentData, deleteCommentData, getCommentData } from 'src/api/comment';
+import { WriteCommentData, deleteCommentData, getCommentData, updateCommentData } from 'src/api/comment';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import ReComment from './ReComment';
-
 import { CommentWriteWrap, CommentWrap, CommentInner } from './styledComments';
 import CommentLikes from './CommentLikes';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -27,8 +26,22 @@ const Comment = () => {
 
   const userId = useLoginUserId();
   const [comment, setComment] = useState('');
+  const [updateToggle, setUpdateToggle] = useState(false);
+  const [updateComment, setUpdateComment] = useState('');
+  const [updateId, setUpdateId] = useState<string | null>(null);
+  const updateInputRef = useRef<HTMLInputElement>(null);
+  useEffect(()=>{
+    if (updateInputRef.current && updateToggle){
+      updateInputRef.current.focus();
+      return ;
+    }
+  },[])
+
+    
+    
 
   //포스트 아이디와 같은 댓글 데이터 가져오기
+
   const { data: commentData } = useQuery(['detailcomments'], () => getCommentData(id!));
 
   //댓글 작성시 바로 렌더링
@@ -37,8 +50,15 @@ const Comment = () => {
       queryClient.invalidateQueries(['detailcomments']);
     }
   });
+
   //댓글 삭제시 바로 렌더링
   const deleteMutation = useMutation(deleteCommentData, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['detailcomments']);
+    }
+  });
+
+  const updateMutation = useMutation(updateCommentData, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailcomments']);
     }
@@ -51,7 +71,12 @@ const Comment = () => {
       userId,
       postId: id
     };
-    writeMutation.mutate(newComment);
+    if (userId) {
+      writeMutation.mutate(newComment);
+    } else {
+      alert('로그인 후 이용해 주세요.');
+    }
+
     setComment('');
   };
 
@@ -64,6 +89,21 @@ const Comment = () => {
     }
   };
 
+  const updateCommentButton = (id: string) => {
+    const newComment = {
+      id,
+      comment: updateComment
+    };
+    updateMutation.mutate(newComment);
+    setUpdateToggle(false);
+  };
+
+  const updateOpenButton = (id: string, comment:string) => {
+    setUpdateComment(comment);
+    setUpdateToggle(true);
+    setUpdateId(id);
+  };
+
   //작성 날짜 월일로 변환
   const commentWriteDate = (date: string) => {
     const writeDate = new Date(date);
@@ -71,8 +111,6 @@ const Comment = () => {
     const day = writeDate.getDate();
     return `${month}월 ${day}일`;
   };
-
-  console.log('여기있어! commentData', commentData);
 
   return (
     <>
@@ -94,24 +132,44 @@ const Comment = () => {
           return (
             <CommentInner key={comment.id}>
               <div className="commentInfo">
-                {userId && (
-                  <div>
-                    <img src={comment.users.profileImg}></img>
-                    <h1>{comment.users.nickname}</h1>
-                    <span>{commentWriteDate(comment.created_at)}</span>
-                  </div>
-                )}
+                <div>
+                  <img src={comment.users.profileImg}></img>
+                  <h1>{comment.users.nickname}</h1>
+                  <span>{commentWriteDate(comment.created_at)}</span>
+                </div>
                 <div>
                   {userId && comment.userId === userId && (
                     <div>
+                      <button onClick={() => updateOpenButton(comment.id, comment.comment)}>수정하기</button>
                       <button onClick={() => deleteCommentButton(comment.id)}>삭제하기</button>
                     </div>
                   )}
                   <CommentLikes commentId={comment.id} />
                 </div>
               </div>
-              <h2>{comment.comment}</h2>
-
+              {updateToggle && comment.id === updateId ? (
+                <div>
+                  <input
+                    ref={updateInputRef}
+                    type='text'
+                    value={updateComment}
+                    onChange={(e) => {
+                      setUpdateComment(e.target.value);
+                    }}
+                  ></input>
+                  <button onClick={() => updateCommentButton(comment.id)}>수정</button>
+                  <button
+                    onClick={() => {
+                      setUpdateToggle(false);
+                      setUpdateId(null);
+                    }}
+                  >
+                    취소
+                  </button>
+                </div>
+              ) : (
+                <h2>{comment.comment}</h2>
+              )}
               <ReComment parentCommentId={comment.id} />
             </CommentInner>
           );

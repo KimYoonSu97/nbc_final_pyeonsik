@@ -1,4 +1,4 @@
-import { supabase } from "src/supabse";
+import supabase from "src/lib/supabaseClient";
 
 const getLike = async () => {
   const { data } = await supabase.from('replay_comment_likes').select("commentId,userId")

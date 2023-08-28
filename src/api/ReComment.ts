@@ -1,4 +1,4 @@
-import { supabase } from 'src/supabse';
+import supabase from 'src/lib/supabaseClient';
 
 interface ReCommentType {
   id: string;
@@ -9,7 +9,7 @@ interface ReCommentType {
 }
 
 const getReCommentData = async (parentId : string | null) => {
-  const { data } = await supabase.from('replay_comments').select(`"*",users("*")`).eq("parent_commentId",parentId);
+  const { data } = await supabase.from('replay_comments').select(`*,users("*")`).eq("parent_commentId",parentId);
   return data;
 };
 
@@ -23,4 +23,8 @@ const deleteReCommentData = async (id: string) => {
   await supabase.from('replay_comments').delete().eq('id', id);
 };
 
-export { getReCommentData, writeReCommentData, deleteReCommentData };
+const updateReCommentData = async (comment:any) => {
+  await supabase.from('replay_comments').update([comment]).eq('id', comment.id);
+};
+
+export { getReCommentData, writeReCommentData, deleteReCommentData,updateReCommentData };

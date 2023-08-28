@@ -24,7 +24,7 @@ const CommonPost = ({ item }: Props) => {
   return (
     <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}>
       <S.UserArea>
-        <S.ProfileImg $url={profileImg}></S.ProfileImg>
+        {/* <S.ProfileImg $url={profileImg}></S.ProfileImg> */}
         <S.Level>Lv.점장</S.Level>
         <S.Nickname_Category>{nickname}</S.Nickname_Category>
         <S.Caption>님의</S.Caption>
@@ -39,7 +39,8 @@ const CommonPost = ({ item }: Props) => {
           <BookmarkCount />
         </S.BottomArea>
         <S.TitleArea>{title}</S.TitleArea>
-        <S.BodyArea>{body}</S.BodyArea>
+        {/* editor 내용 변환 */}
+        <S.BodyArea dangerouslySetInnerHTML={{ __html: body }} />
       </S.PostBox>
     </S.Container>
   );
@@ -118,7 +119,7 @@ const S = {
     line-height: 28px;
     margin-bottom: 22px;
   `,
-  BodyArea: styled.div`
+  BodyArea: styled.pre`
     font-size: 16px;
     font-weight: 400;
     line-height: 28px;

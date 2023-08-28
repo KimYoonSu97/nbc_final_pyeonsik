@@ -89,10 +89,12 @@ const S = {
     background: #fff;
     border-radius: 10px;
   `,
+
   SubjectArea: styled.div`
     height: 64px;
     /* background-color: royalblue; */
   `,
+
   Subject: styled.div``,
   InfoArea: styled.div`
     margin: 0 auto;
@@ -101,6 +103,7 @@ const S = {
     gap: 22px;
     /* background-color: royalblue; */
   `,
+
   ProfileBox: styled.div``,
   ProfileImgArea: styled.div<ProfileImgProps>`
     border: solid 1px black;
@@ -115,6 +118,7 @@ const S = {
     background-position: center;
     background-size: contain;
   `,
+
   ProfileImg: styled.img``,
   InfoBox: styled.div``,
   InputWrapper: styled.div``,
@@ -123,6 +127,7 @@ const S = {
     font-weight: 600;
     line-height: 16px;
   `,
+
   InfoInputBox: styled.div`
     width: 330px;
     display: flex;
@@ -131,6 +136,7 @@ const S = {
     padding: 8px 8px 8px 12px;
     background: #efefef;
   `,
+
   InfoInputArea: styled.input``,
   InfoSubmitButton: styled.div`
     margin-left: auto;

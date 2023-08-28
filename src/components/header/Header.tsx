@@ -1,8 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import { styled } from 'styled-components';
 import TopBarMenuContainer from './TopBarMenuContainer';
 import BoardSearchContainer from './BoardSearchContainer';
-import { useNavigate } from 'react-router';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const S = {
     top: 0;
     background-color: white;
   `,
+
   UpperContainer: styled.div`
     width: 1280px;
     height: 56px;
@@ -41,6 +42,7 @@ const S = {
     align-items: center;
     position: relative;
   `,
+
   LowerContainer: styled.div`
     width: 1280px;
     height: 50px;
@@ -51,6 +53,7 @@ const S = {
     align-items: center;
     position: relative;
   `,
+
   LogoContainer: styled.div`
     color: white;
     background-color: black;

@@ -1,78 +1,99 @@
-import { atom, useAtom } from 'jotai';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
-import { userAtom } from 'src/pages/Login';
 import { styled } from 'styled-components';
-import useLoginUserId from 'src/hooks/useLoginUserId';
+import baseImage from '../../images/baseprofile.jpeg';
+import { Link } from 'react-router-dom';
+
+interface User {
+  email: string;
+  id?: string;
+  nickname: string;
+  profileImg: string;
+}
 
 const TopBarMenuContainer = () => {
-  const userId = useLoginUserId();
+  const [userData, setUserData] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [userLogin, setUserLogin] = useAtom(userAtom);
 
-  const [user, setUser] = useState<any>('');
-  const [checkLogin] = useAtom(userAtom);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  useEffect(() => {
+    const social = localStorage.getItem('social');
+    const token = localStorage.getItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
+    if (token) {
+      const { user } = JSON.parse(token);
+      getUserDataForHeader(user.id);
+    } else if (social && !token) {
+      socialLogin(social);
+    } else {
+      setUserData(null);
+    }
+  }, [userLogin]);
+  // 새로고침
 
-  // 로그아웃 핸들러
-  const signOutHandler = async () => {
-    let { error } = await supabase.auth.signOut();
-    alert('로그아웃 완료!');
-    setUser('');
-    navigate('/');
-    console.error(error);
+  const getUserDataForHeader = async (id: string) => {
+    const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
+    if (error) {
+    }
+    setUserData(data as User);
   };
 
-  const setUserData = async () => {
-    if (checkLogin) {
-      const { data, error } = await supabase.from('users').select('*').eq('id', checkLogin!.id).single();
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        console.log(data);
-        setUser(data);
-      }
+  // 소셜로그인
+  const socialLogin = async (social: string) => {
+    const user = await supabase.auth.getUser();
+    const { data, error } = await supabase.from('users').select('*').eq('id', user.data.user?.id).single();
+    if (data) {
+      console.log(data);
+      setUserData(data as User);
     } else {
-      const { data, error } = await supabase.from('users').select('*').eq('id', userId).single();
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        console.log(data);
-        setUser(data);
+      const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
+      console.log(socialData);
+      if (socialData !== undefined && socialData[0].identity_data && user.data.user) {
+        const data = socialData[0].identity_data;
+
+        const newSocialUser: User = {
+          email: data.email,
+          nickname: data.name || data.user_name, // goggle, kakao: name  / github : user_name
+          profileImg: data.avatar_url
+        };
+        const { data: userData, error } = await supabase.from('users').insert(newSocialUser).select('*');
+        setUserData(newSocialUser as User);
       }
     }
   };
 
-  useEffect(() => {
-    setUserData();
-    console.log('이펙트실행됨');
-  }, [checkLogin]);
-
-  // 유저의 프로필 이미지를 가져온다
-
-  // 소셜로그인 시 프로필 적용
-
-  // if (user !== null && user.identities?.[0]?.identity_data) {
-  //   const socialData = user.identities[0].identity_data;
-  //   setImageUrl(socialData.avatar_url);
-  //   setNickName(socialData.name);
-  //   setUser(user);
-  // }
+  // 로그아웃 핸들러
+  const signOutHandler = async () => {
+    let { error } = await supabase.auth.signOut();
+    if (error) {
+      alert(error);
+      return;
+    }
+    localStorage.setItem('social', '');
+    setUserLogin('logout');
+    alert('로그아웃 완료!');
+    // handleRefresh();
+  };
 
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
         <S.QuickPostButton>나만의 편식조합 공유하기</S.QuickPostButton>
         <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
-        <S.QuickPostButton>행사 제품</S.QuickPostButton>
+        <S.QuickPostButton onClick={() => navigate('/event')}>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
-      {user && <S.TopBarMenu>마이페이지</S.TopBarMenu>}
-      <S.TopBarLogContainer $logged={user ? true : false}>
-        {/* 로그인 전 후 분기 */}
-        {user ? (
+      <S.TopBarLogContainer $logged={userData ? true : false}>
+        {userData && <>{/* <S.TopBarMenu onClick={() => navigate('/mypage/profile')}>마이페이지</S.TopBarMenu> */}</>}
+        {/* 공통 */}
+        {/* 로그인 전 */}
+        {!userData ? (
+          <>
+            <S.TopBarLogButton onClick={() => navigate('/login')}>로그인</S.TopBarLogButton>
+            <S.TopBarLogButton onClick={() => navigate('/register')}>회원가입</S.TopBarLogButton>
+          </>
+        ) : (
           <>
             <S.Icon>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -88,19 +109,9 @@ const TopBarMenuContainer = () => {
               </svg>
             </S.Icon>
             <S.Level>Lv. 식신</S.Level>
-            <p>Hello, {user?.nickname}</p>
-            <S.ProfileImg src={user?.profileImg} alt="프로필 사진"></S.ProfileImg>
+            {/* <p>Hello, {userData?.nickname}</p> */}
+            <S.ProfileImg src={userData?.profileImg} alt="프로필 사진"></S.ProfileImg>
             <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton>
-          </>
-        ) : (
-          <>
-            <S.TopBarLogButton onClick={() => navigate('/login')}>로그인</S.TopBarLogButton>
-
-            <S.TopBarLogButton onClick={() => navigate('/register')}>회원가입</S.TopBarLogButton>
-            <br />
-
-            <SuccessMessage>{successMessage}</SuccessMessage>
-            <ErrorMessage>{errorMessage}</ErrorMessage>
           </>
         )}
       </S.TopBarLogContainer>
@@ -119,14 +130,17 @@ const S = {
     position: absolute;
     right: 16px;
   `,
+
   TopBarListContainer: styled.ul`
     display: flex;
   `,
+
   QuickButtonArea: styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
   `,
+
   QuickPostButton: styled.div`
     display: flex;
     align-items: center;
@@ -135,6 +149,7 @@ const S = {
     padding: 3px 18px;
     height: 34px;
   `,
+
   TopBarMenu: styled.li`
     padding: 5px 13px;
     height: 30px;
@@ -145,11 +160,13 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
+
   TopBarLogContainer: styled.ul<{ $logged: boolean }>`
     display: flex;
     gap: ${(props) => (props.$logged ? '0px' : '12px')};
     align-items: center;
   `,
+
   TopBarLogButton: styled.li`
     border: 1px solid #d9d9d9;
     background: #fff;
@@ -164,11 +181,13 @@ const S = {
     font-weight: 400;
     line-height: 20px;
   `,
+
   Icon: styled.div`
     width: 20px;
     height: 20px;
     background-color: black;
   `,
+
   Level: styled.div`
     border-radius: 100px;
     /* width: 58px; */
@@ -183,6 +202,7 @@ const S = {
     background: #d9d9d9;
     margin-left: 8px;
   `,
+
   ProfileImg: styled.img`
     width: 36px;
     height: 36px;
@@ -191,14 +211,3 @@ const S = {
     border-radius: 100px;
   `
 };
-
-const SuccessMessage = styled.div`
-  margin-top: 10px;
-  color: blue;
-  font-size: 14px;
-`;
-const ErrorMessage = styled.div`
-  margin-top: 10px;
-  color: red;
-  font-size: 14px;
-`;

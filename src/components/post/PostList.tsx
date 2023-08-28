@@ -11,15 +11,14 @@ const PostList = () => {
     return <p>Loading…</p>;
   }
   if (data?.error) {
+    // error 검사 필요
+    // console.log(data);
     return <p>Error</p>;
   }
   if (data?.data.length === 0) {
     return <p>none</p>;
   }
   const posts = data?.data as Post[];
-
-  // 게시글 최신순 정렬
-  posts.sort((a: Post, b: Post) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
 
   return <PostCards data={posts}></PostCards>;
 };

@@ -1,11 +1,4 @@
-import { supabase } from 'src/supabse';
-
-interface LikeType {
-  id: string;
-  commentId: string;
-  userId: string | undefined;
-  postId :string ;
-}
+import supabase from 'src/lib/supabaseClient';
 
 const getLike = async () => {
 
