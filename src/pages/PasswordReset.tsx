@@ -71,6 +71,7 @@ const ResetFormContainer = styled.div`
   border: 1px solid #ccc;
   border-radius: 8px;
 `;
+
 const ResetTitle = styled.div`
   font-weight: bold; /* 굵게 설정 */
   font-size: 24px; /* 큰 텍스트 크기 */

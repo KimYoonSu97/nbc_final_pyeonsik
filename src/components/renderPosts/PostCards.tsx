@@ -1,7 +1,6 @@
 import React from 'react';
-import { Post, PostUserProfile } from 'src/types/types';
+import { Post } from 'src/types/types';
 import { styled } from 'styled-components';
-import { LikeCount, CommentCount, BookmarkCount, RepostCount } from 'src/components/renderPosts/reactionSource';
 import CommonPost from './reactionSource/CommonPost';
 import { useNavigate } from 'react-router';
 

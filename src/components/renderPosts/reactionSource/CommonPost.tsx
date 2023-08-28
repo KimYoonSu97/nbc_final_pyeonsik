@@ -21,6 +21,7 @@ const CommonPost = ({ item }: Props) => {
   const navigate = useNavigate();
   const { nickname, profileImg } = item.userId as PostUserProfile;
   const { id, postCategory, body, title } = item;
+
   return (
     <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}>
       <S.UserArea>

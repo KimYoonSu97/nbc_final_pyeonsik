@@ -108,8 +108,6 @@ const PostDetailCommon = () => {
     return <Navigate to="/" />;
   }
 
-  console.log('2', postBookmark);
-
   return (
     <div>
       <img src={postUser.profileImg} />
@@ -118,28 +116,13 @@ const PostDetailCommon = () => {
       <div>{post.created_at}</div>
       <div>{post.title}</div>
       {/* component 분리 필요 */}
-
-      <div>
-        <pre dangerouslySetInnerHTML={{ __html: post.body }} />
-      </div>
-
-      <div>
-        {userId === postUser.id && (
-          <>
-            <button onClick={() => clickDelete(post.id)}>delete</button>
-            <button onClick={clickEdit}>edit</button>
-          </>
-        )}
-      </div>
-      {/* component 분리 필요 */}
-      {/* <div>{orgPost.title}</div>
-      <pre dangerouslySetInnerHTML={{ __html: orgPost.body }} />
-      <div>{orgPost.userId}</div>
-      <div>{orgPost.created_at}</div> */}
-      <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
-      <button onClick={clickQuotation}>인용</button>
-      <button onClick={clickPostBookmark}>{postBookmark ? '북마크 취소' : '북마크'}</button>
-      <button onClick={() => clickCopyLink(pathname)}>공유</button>
+      <pre dangerouslySetInnerHTML={{ __html: post.body }} />
+      {userId === postUser.id && (
+        <>
+          <button onClick={() => clickDelete(post.id)}>delete</button>
+          <button onClick={clickEdit}>edit</button>
+        </>
+      )}
       {orgPost && (
         <div>
           인용 게시글
@@ -149,6 +132,10 @@ const PostDetailCommon = () => {
           <div>{orgPost.created_at}</div>
         </div>
       )}
+      <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
+      <button onClick={clickQuotation}>인용</button>
+      <button onClick={clickPostBookmark}>{postBookmark ? '북마크 취소' : '북마크'}</button>
+      <button onClick={() => clickCopyLink(pathname)}>공유</button>
     </div>
   );
 };

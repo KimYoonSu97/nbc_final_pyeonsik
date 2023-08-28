@@ -10,13 +10,14 @@ import Register from 'src/pages/Register';
 import PasswordReset from 'src/pages/PasswordReset';
 import PasswordChange from 'src/pages/PasswordChange';
 import Detail from 'src/pages/Detail';
+import EventProd from 'src/pages/EventProd';
+import Mypage from 'src/pages/Mypage';
 import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
-import Mypage from 'src/pages/Mypage';
-
 import Report from 'src/components/sidebar/Report';
 
-import EventProd from 'src/pages/EventProd';
+
+
 
 
 const Router = () => {
@@ -34,13 +35,16 @@ const Router = () => {
           <Route path='/report' element={<Report/>}/>
 
           <Route path="/event" element={<EventProd />} />
-
           <Route element={<PrivateRoute />}>
+            <Route path="/mypage/:tab" element={<Mypage />} />
             <Route path="/write" element={<Write />} />
             <Route path="/edit/:id" element={<Edit />} />
-            <Route path="/mypage/:tab" element={<Mypage />} />
           </Route>
 
+        </Route>
+        <Route element={<PrivateRoute />}>
+          {/* <Route path="/write" element={<Write />} />
+          <Route path="/edit/:id" element={<Edit />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

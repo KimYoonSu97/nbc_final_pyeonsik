@@ -6,6 +6,9 @@ import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
 import { Link } from 'react-router-dom';
+import { getUserData } from 'src/api/userLogin';
+import useLoginUserId from 'src/hooks/useLoginUserId';
+import { useQuery } from '@tanstack/react-query';
 
 interface User {
   email: string;
@@ -15,9 +18,14 @@ interface User {
 }
 
 const TopBarMenuContainer = () => {
+  const userId = useLoginUserId();
   const [userData, setUserData] = useState<User | null>(null);
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = useAtom(userAtom);
+
+  // const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
+  //   enabled: userId ? true : false
+  // });
 
   useEffect(() => {
     const social = localStorage.getItem('social');
@@ -31,7 +39,6 @@ const TopBarMenuContainer = () => {
       setUserData(null);
     }
   }, [userLogin]);
-  // 새로고침
 
   const getUserDataForHeader = async (id: string) => {
     const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
@@ -72,7 +79,7 @@ const TopBarMenuContainer = () => {
       return;
     }
     localStorage.setItem('social', '');
-    setUserLogin('logout');
+    // setUserLogin('logout');
     alert('로그아웃 완료!');
     // handleRefresh();
   };

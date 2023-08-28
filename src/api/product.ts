@@ -46,6 +46,7 @@ const getEventProd = async (pageParam: number = 0, brandParam: string): Promise<
   const total_pages = pageCount ? Math.floor(pageCount / 100) + (pageCount % 100 === 0 ? 0 : 1) : 1;
   console.log(brandParam, '이 브랜드의 전체 페이지 수', total_pages);
   // console.log(data);
+
   return { products: data!, page: pageParam, total_pages, total_results: pageCount! };
 };
 

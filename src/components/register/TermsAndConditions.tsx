@@ -113,6 +113,7 @@ const ModalContent = styled.div`
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 `;
+
 const AllAgreeLabel = styled.label`
   /* 모달 내용 스타일링 */
   background-color: white;

@@ -23,6 +23,7 @@ const S = {
     position: fixed;
     right: calc(((100vw - 1280px) / 2) + 16px);
   `,
+
   ContentsBox: styled.div`
     background: white;
     border-radius: 10px;
