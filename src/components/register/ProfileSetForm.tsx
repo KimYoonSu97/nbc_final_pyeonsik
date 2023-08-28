@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import Filter from 'badwords-ko'; // 비속어 필터링(한글)
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
@@ -9,11 +10,21 @@ interface Props {
 }
 
 const ProfileSetForm = ({ userEmail }: Props) => {
+  const filter = new Filter();
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
   const [baseImg] = useState(baseImage);
+  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const correctNickNameMessages = [
+    '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
+    '이런 창의적인 생각은 어떻게 하나요? 👏',
+    '이 세상에 하나뿐인 닉네임일지도 몰라요! 🥳',
+    '누구나 부러워할 최고의 닉네임이에요! 🤘'
+  ];
+
+  const [isError, setIsError] = useState(false);
 
   // Blob 형태를 string으로 변환
   const encodeFileTobase64 = (fileBlob: Blob) => {
@@ -26,37 +37,78 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     });
   };
 
-  const setProfile = async () => {
-    // Check if nickname already exists
+  const observeNickName = async () => {
     const { data: existingUsers, error: existingUsersError } = await supabase
       .from('users')
       .select('*')
       .eq('nickname', nickname)
       .maybeSingle();
-    console.log(existingUsers);
+
+    // console.log(existingUsers);
+
+    const filterdNickName = filter.clean(nickname);
     // 유효성 검사
+
     // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
-    if (!nicknamePattern.test(nickname)) {
+    if (!nicknamePattern.test(nickname) && nickname) {
+      setIsError(true);
       setErrorMessage('올바른 닉네임 형식이 아닙니다.');
       return;
     }
-    if (nickname.length < 2) {
+    if (nickname.length === 1) {
+      setIsError(true);
       setErrorMessage('2글자 이상 이어야 합니다.');
       return;
     }
-    if (existingUsers) {
-      // TODO: 중복이어도 return이 안됨..
-      setErrorMessage('이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.');
+    if (filterdNickName.includes('*')) {
+      setIsError(true);
+      setErrorMessage('비속어는 사용할 수 없어요. 🤬');
+      return;
+    }
+
+    if (nickname) {
+      if (existingUsers) {
+        setIsError(true);
+        setErrorMessage('이런! 누군가 먼저 선점한 닉네임이에요! 😥');
+      } else {
+        setIsError(false);
+        const randomIndex = Math.floor(Math.random() * correctNickNameMessages.length);
+        const randomMessage = correctNickNameMessages[randomIndex];
+        setSuccessMessage(randomMessage);
+      }
+    }
+  };
+
+  const nickNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+  useEffect(() => {
+    observeNickName();
+  }, [nickname]);
+
+  const setProfile = async () => {
+    const filterdNickName = filter.clean(nickname);
+    // 유효성 검사
+
+    // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
+    const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
+    if (!nicknamePattern.test(nickname)) {
+      alert('올바른 닉네임 형식이 아닙니다.');
+      return;
+    }
+    if (nickname.length < 2) {
+      alert('2글자 이상 이어야 합니다.');
+      return;
+    }
+    if (filterdNickName.includes('*')) {
+      alert('비속어는 사용할 수 없어요. 🤬');
       return;
     }
 
     const newUser = {
       email: userEmail,
       nickname,
-      // 프로필 이미지 정보가 안들어가게 되어있어서 그것을 수정했음
-      //---기존코드--
-      // profileImg: profileImgSrc.length < 5 ? '' : ''
       profileImg: profileImgSrc
     };
     if (!nickname) {
@@ -90,17 +142,12 @@ const ProfileSetForm = ({ userEmail }: Props) => {
             />
           </div>
         </ProfileImgnameBox>
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+
+        {!isError && <SuccessMessage>{successMessage}</SuccessMessage>}
+
+        {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <Label>닉네임</Label>
-        <NickNameInput
-          maxLength={15}
-          type="text"
-          value={nickname}
-          placeholder="닉네임"
-          onChange={(e) => {
-            setNickname(e.target.value);
-          }}
-        />
+        <NickNameInput maxLength={15} type="text" value={nickname} placeholder="닉네임" onChange={nickNameHandler} />
         <InformMessage>편식에서만의 닉네임을 사용해보세요!</InformMessage>
         <Button onClick={setProfile}>편식 시작하기</Button>
       </RegisterFormContainer>
@@ -111,7 +158,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
 export default ProfileSetForm;
 
 export const ProfileImgLabel = styled.div`
-  flex: 0 0 120px;
+  flex: 0px;
   font-weight: bold;
 `;
 
@@ -143,7 +190,7 @@ const PreviewImage = styled.img`
   border-radius: 50px;
   border: black solid 2px;
   display: block;
-  margin: 0 auto;
+  margin: 20px auto;
 `;
 
 const RegisterFormContainer = styled.div`
@@ -165,7 +212,6 @@ const Label = styled.label`
 const NickNameInput = styled.input`
   padding: 10px;
   width: 150px;
-
   border: 1px solid #ccc;
   border-radius: 4px;
 `;
@@ -182,5 +228,11 @@ const Button = styled.button`
 const ErrorMessage = styled.div`
   margin-top: 10px;
   color: red;
+  font-size: 14px;
+`;
+
+const SuccessMessage = styled.div`
+  margin-top: 10px;
+  color: blue;
   font-size: 14px;
 `;
