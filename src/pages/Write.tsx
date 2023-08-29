@@ -10,7 +10,7 @@ const Write = () => {
 
   return (
     <div>
-      {/* <PostWriteCommon orgPostId={orgPost?.id} orgUserId={orgPost?.userId?.id} />
+      <PostWriteCommon orgPostId={orgPost?.id} orgUserId={orgPost?.userId?.id} />
       {orgPost && (
         <div>
           인용 게시글
@@ -19,8 +19,8 @@ const Write = () => {
           <div>{orgPost.userId?.nickname}</div>
           <div>{orgPost.created_at}</div>
         </div>
-      )} */}
-      <PostWriteRecipe orgPostId={orgPost?.id} orgUserId={orgPost?.userId?.id} />
+      )}
+      {/* <PostWriteRecipe orgPostId={orgPost?.id} orgUserId={orgPost?.userId?.id} /> */}
     </div>
   );
 };
