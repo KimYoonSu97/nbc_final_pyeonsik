@@ -5,8 +5,15 @@ import { userAtom } from 'src/globalState/jotai';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import OAuthLogin from '../components/OAuthLogin';
-import { loginModalAtom } from 'src/globalState/jotai';
 import { IconGoogle, IconKakao, IconLogoSymbolH32, IconWaterMarkH32 } from 'src/components/icons';
+
+interface User {
+  id: string;
+  created_at?: string;
+  email: string;
+  nickname: string;
+  profileImg: string;
+}
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,9 +29,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  // const [ButttonChanger, setButtonChanger] = useState({email:false, password:false})
 
-  // Atom 생성
+  // 유저의 정보를 헤더로 보내주는 아톰
   const [_, setUserLogin] = useAtom(userAtom);
 
   const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,15 +40,22 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password
     });
-
+    console.log(data);
     if (data.user) {
+      const { data: userLogin, error: userLoginError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', data.user.id)
+        .single();
+
       alert('로그인 완료!');
-      setUserLogin('login');
+      setUserLogin(userLogin);
       navigate('/');
     }
 

@@ -5,7 +5,15 @@ import { Location } from 'react-router';
 
 export const myPagePostAtom = atom<Post[]>([]);
 
-export const userAtom = atom<string>('');
+interface User {
+  id: string;
+  created_at?: string;
+  email: string;
+  nickname: string;
+  profileImg: string;
+}
+
+export const userAtom = atom<User | null>(null);
 
 interface Props {
   state: boolean;

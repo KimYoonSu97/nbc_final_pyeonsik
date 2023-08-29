@@ -39,7 +39,7 @@ const PasswordChange: React.FC = () => {
 
       if (!error) {
         alert('비밀번호 재설정 완료!');
-        setUser('');
+        // setUser('');
         supabase.auth.signOut();
         navigate('/login');
         const successMsg = 'Password changed successfully';
