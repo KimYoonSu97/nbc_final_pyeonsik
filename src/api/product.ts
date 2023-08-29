@@ -40,37 +40,33 @@ const getEventProd = async (pageParam: number = 0, brandParam: string): Promise<
       .not('event', 'is', null);
     pageCount = count;
   }
-  // -=---
 
   //리턴을 위한 총 페이지 수는?
-  const total_pages = pageCount ? Math.floor(pageCount / 100) + (pageCount % 100 === 0 ? 0 : 1) : 1;
-  console.log(brandParam, '이 브랜드의 전체 페이지 수', total_pages);
-  // console.log(data);
+  const total_pages = Math.floor(pageCount! / 100);
 
   return { products: data!, page: pageParam, total_pages, total_results: pageCount! };
 };
 
-export { getEventProd };
+const getSearchProd = async (pageParam: number = 0, keyword: string) => {
+  const response = await supabase
+    .from('products')
+    .select('*')
+    .range(pageParam * 100, (pageParam + 1) * 100 - 1)
+    .filter('prodName', 'ilike', `%${keyword}%`);
 
-// const getPosts = async (pageParam: number = 1): Promise<ToTalDataType> => {
-//   let data: any = [];
-//   let count = null;
+  //하단 리턴문을 위한 데이터 설정
+  const data = response!.data;
+  //페이지가 어디냐에 따라 다른 전체 페이지 수
+  let pageCount;
+  const { count } = await supabase
+    .from('products')
+    .select('id', { count: 'exact', head: true })
+    .filter('prodName', 'ilike', `%${keyword}%`);
+  pageCount = count;
 
-//     const freePosts = await supabase
-//       .from('post')
-//       .select('*')
-//       .order('date', { ascending: false })
-//       .eq('category', '자유')
-//       .range(pageParam * 10 - 10, pageParam * 10 - 1);
+  //리턴을 위한 총 페이지 수는?
+  const total_pages = Math.floor(pageCount! / 100);
+  return { products: data!, page: pageParam, total_pages, total_results: pageCount! };
+};
 
-//     data = freePosts.data;
-
-//     const { count: freeCount } = await supabase.from('post').select('count', { count: 'exact' }).eq('category', '자유');
-
-//     count = freeCount;
-
-//   // 총 페이지 개수 계산
-//   const total_pages = count ? Math.floor(count / 10) + (count % 10 === 0 ? 0 : 1) : 1;
-
-//   return { posts: data , page: pageParam, total_pages, total_results: count };
-// };
+export { getEventProd, getSearchProd };

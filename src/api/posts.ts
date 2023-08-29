@@ -31,7 +31,6 @@ const addRecipePost = async (post: RecipeNewPost) => {
 };
 
 const tagUpdatePost = async (post: TagEditPost) => {
-  console.log('updatePost2의 뉴포스트=>>', post);
   await supabase.from('posts').update(post).eq('id', post.id).select();
 };
 
@@ -43,15 +42,11 @@ const getMyPostsById = async (id: string) => {
 
 const getMyBookMarkById = async (id: string) => {
   const response = await supabase.from('post_bookmark').select('postId(*,userId(*))').eq('userId', id);
-  console.log(response.error);
-  console.log(response.data);
   return response;
 };
 
 const getMyLikePostById = async (id: string) => {
   const response = await supabase.from('post_likes').select('postId(*,userId(*))').eq('userId', id);
-  console.log(response.error);
-  console.log(response.data);
   return response;
 };
 interface Search {

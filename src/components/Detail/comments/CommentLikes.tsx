@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addLike, deleteLike, getLike } from 'src/api/commentLike';
-
+import useLoginUserId from 'src/hooks/useLoginUserId';
+import { AiOutlineLike,AiFillLike } from "react-icons/ai";
 interface CommentIdProps {
   commentId: string;
+}
+interface LikeType {
+  id: string;
+  commentId : string;
+  userId : string;
+  postId : string;
 }
 
 const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   const queryClient = useQueryClient();
-  const [user, setUser] = useState<any>({ id: 'f3f322f0-2439-4580-b817-c9e0b7757cae', nickname: '가나다라' });
+  const userId = useLoginUserId();
 
-  //좋아요기능
+  //좋아요 데이터 받기
   const { data: likeData } = useQuery(['likes'], getLike);
-  // console.log(likeData, '라이크데이터');
 
+
+  //클릭시 좋아요 데이터에 추가
   const addLikeMutation = useMutation(addLike, {
     onSuccess: () => {
       queryClient.invalidateQueries(['likes']);
     }
   });
-
+  //좋아요된 댓글 클릭시 데이터 삭제
   const deleteLikeMutation = useMutation(deleteLike, {
     onSuccess: () => {
       queryClient.invalidateQueries(['likes']);
@@ -27,28 +35,26 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   });
 
   const toggleLike = (commentId: string) => {
-    // console.log(commentId, 'commentIdmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
-    // console.log(typeof user.id, 'userId');
 
     const changeLike = likeData?.find((like) => {
-      return like.commentId === commentId && like.userId === user.id;
+      return like.commentId === commentId && like.userId === userId;
     });
 
     if (changeLike) {
-      deleteLikeMutation.mutate({ commentId, userId: user.id });
+      deleteLikeMutation.mutate({ commentId, userId });
     } else {
-      addLikeMutation.mutate({ commentId, userId: user.id });
+      addLikeMutation.mutate({ commentId, userId });
     }
   };
 
-  const checkLike = (commentId: string, userId: string, likeData: any) => {
+  const checkLike = (commentId: string, userId: string| undefined, likeData: any) => {
     let answer = false;
-    let array: any = [];
+    let array: LikeType[] = [];
     if (likeData) {
       array = [...likeData];
     }
 
-    array.forEach((element: any) => {
+    array.forEach((element) => {
       if (element.commentId === commentId && element.userId === userId) {
         answer = true;
       }
@@ -57,13 +63,13 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   };
 
   const getCommentLikesCount = (commentId: string) => {
-    const commentLikesCount = likeData?.filter((like: any) => like.commentId === commentId).length;
+    const commentLikesCount = likeData?.filter((like) => like.commentId === commentId).length;
     return commentLikesCount || 0;
   };
 
   return (
     <button onClick={() => toggleLike(commentId)}>
-      {checkLike(commentId, user.id, likeData) ? '♥' : '♡'}
+      {checkLike(commentId, userId, likeData) ? <AiFillLike size={"18px"}/> : <AiOutlineLike size={"18px"}/>}
       {getCommentLikesCount(commentId)}
       {/* <좋아요컴포넌트 comment.id user.id> 배열을 불러온 useQuery [likeData]=1초 => fetch => http 100번 0초  </좋아용> */}
     </button>

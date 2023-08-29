@@ -10,7 +10,6 @@ const SideBar = () => {
   const location = useLocation();
 
   const findPath = (str: string): string => {
-    console.log(str.split('/')[1]);
     return str.split('/')[1];
   };
 

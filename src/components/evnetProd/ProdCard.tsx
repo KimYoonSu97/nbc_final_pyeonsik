@@ -9,7 +9,7 @@ interface Props {
 const ProdCard = ({ data }: Props) => {
   return (
     <S.ProdBox>
-      <S.EventBar>
+      <S.EventBar $brandName={data.prodBrand}>
         <S.EventBarBrand>{data.prodBrand}</S.EventBarBrand>
         <S.EventDetail>{data.event?.type}</S.EventDetail>
       </S.EventBar>
@@ -26,6 +26,10 @@ const ProdCard = ({ data }: Props) => {
 
 export default ProdCard;
 
+interface ColorProps {
+  $brandName: string;
+}
+
 const S = {
   ProdBox: styled.div`
     width: 200px;
@@ -35,14 +39,27 @@ const S = {
     position: relative;
     background-color: white;
   `,
-  EventBar: styled.div`
+  EventBar: styled.div<ColorProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-
     height: 28px;
     gap: 4px;
-    background: #d9d9d9;
+    background-color: ${(props) => {
+      switch (props.$brandName) {
+        case 'GS25':
+          return '#2ABADA';
+        case 'CU':
+          return '#652F8D';
+        case '7-ELEVEn':
+          return '#008061';
+        case 'emart24':
+          return '#FFB81C;';
+
+        default:
+          return 'black';
+      }
+    }};
   `,
   EventBarBrand: styled.div`
     border-radius: 100px;
@@ -58,7 +75,7 @@ const S = {
     background-color: white;
   `,
   EventDetail: styled.div`
-    color: #000;
+    color: white;
     text-align: center;
     /* body-medium */
     font-family: Pretendard;

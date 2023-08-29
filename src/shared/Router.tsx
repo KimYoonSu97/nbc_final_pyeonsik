@@ -15,6 +15,7 @@ import Mypage from 'src/pages/Mypage';
 import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
+import Report from 'src/components/sidebar/Report';
 
 const Router = () => {
   return (
@@ -28,6 +29,8 @@ const Router = () => {
           <Route path="/password_reset" element={<PasswordReset />} />
           <Route path="/password_change" element={<PasswordChange />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/report" element={<Report />} />
+
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route element={<PrivateRoute />}>
