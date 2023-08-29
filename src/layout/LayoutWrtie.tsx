@@ -15,3 +15,5 @@ const LayoutWrite = () => {
 };
 
 export default LayoutWrite;
+
+const S = {};

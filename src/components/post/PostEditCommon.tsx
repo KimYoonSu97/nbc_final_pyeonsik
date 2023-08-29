@@ -34,8 +34,6 @@ const PostEditCommon = () => {
 
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('이거', post?.id);
-    console.log(orgPost?.id);
     e.preventDefault();
 
     const editPost = {

@@ -35,12 +35,10 @@ const Report = () => {
 
   const handleOptionClick = (option: string) => {
     setSelectedInquiry1(option);
-    console.log(option);
   };
 
   const handleOption2Click = (option: string) => {
     setSelectedInquiry2(option);
-    console.log(option);
   };
 
   const handleSubmitButton = async () => {
@@ -206,7 +204,7 @@ const ReportInner = styled.div`
     font-weight: bold;
     letter-spacing: -2px;
   }
-  h2{
+  h2 {
     font-size: 38px;
     font-weight: bold;
     letter-spacing: -2px;
@@ -227,7 +225,7 @@ const ReportInner = styled.div`
     border-radius: 5px;
     background-color: #ced4da;
   }
-  label{
+  label {
     display: block;
     width: 100%;
     background-color: #fff;
@@ -235,7 +233,7 @@ const ReportInner = styled.div`
     border-radius: 7px;
     margin-bottom: 15px;
   }
-  input{
+  input {
     display: block;
     width: 100%;
     padding: 10px 3px;
@@ -243,9 +241,8 @@ const ReportInner = styled.div`
     outline: none;
     border: none;
     margin-bottom: 15px;
-    &:last-child{
-      margin-bottom : 40px
+    &:last-child {
+      margin-bottom: 40px;
     }
   }
-
 `;
