@@ -1,10 +1,14 @@
-import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
 // 폰트 스타일
-
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
 
 // 폰트 크기를 변수로 선언
 
@@ -12,6 +16,7 @@ export const GlobalStyle = createGlobalStyle`
 // reset.css
 *{
     box-sizing:border-box;
+	font-family: "Pretendard-Regular";
 }
 
 button{
@@ -49,6 +54,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
+	font-family: "Pretendard-Regular";
 }
 
 ol, ul {

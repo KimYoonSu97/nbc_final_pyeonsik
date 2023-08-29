@@ -3,6 +3,7 @@ import { GlobalStyle } from '../styles/GlobalStyle';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import Layout from '../layout/Layout';
+import LayoutWrite from 'src/layout/LayoutWrtie';
 // pages
 import Main from '../pages/Main';
 import Login from 'src/pages/Login';
@@ -30,18 +31,16 @@ const Router = () => {
           <Route path="/password_change" element={<PasswordChange />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/report" element={<Report />} />
-
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
-            <Route path="/write" element={<Write />} />
-            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/" element={<LayoutWrite />}>
+              <Route path="/write" element={<Write />} />
+              <Route path="/edit/:id" element={<Edit />} />
+            </Route>
           </Route>
-        </Route>
-        <Route element={<PrivateRoute />}>
-          {/* <Route path="/write" element={<Write />} />
-          <Route path="/edit/:id" element={<Edit />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

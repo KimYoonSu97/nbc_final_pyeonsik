@@ -14,6 +14,7 @@ export interface Post {
   id: string;
   created_at: string;
   orgPostId: string;
+  //  orgUserId: string 임시 (혜영)
   postCategory: string;
   title: string;
   body: string;
@@ -33,6 +34,21 @@ export interface PostUserProfile {
   profileImg: string;
 }
 
+export interface OrgPostIdProbs {
+  orgPostId: string;
+  orgUserId: string;
+}
+
+export interface CommonBodyProps {
+  body: string;
+  setBody: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface BottomFunctionProps {
+  userId: string;
+  post: Post;
+}
+
 // 게시글 작성 임시
 export interface NewPost {
   orgPostId: string | null;
@@ -42,6 +58,22 @@ export interface NewPost {
   body: string;
   userId: string;
 }
+
+export interface NewRecipePost {
+  // orgPostId: string | null;
+  // orgUserId: string | null;
+  postCategory: string;
+  title: string;
+  recipeBody: string[];
+  userId: string;
+}
+
+// export interface RecipeNewPost {
+//   postCategory?: string;
+//   title: string;
+//   body?: string[];
+//   userId?: string;
+// }
 
 export interface EditPost {
   orgPostId: string | null;
@@ -62,7 +94,7 @@ export interface RecipeNewPost {
 export interface TagEditPost {
   id: string;
   title: string;
-  body: string[];
+  recipeBody: string[];
 }
 
 // post like

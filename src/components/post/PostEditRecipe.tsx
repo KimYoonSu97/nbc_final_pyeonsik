@@ -8,6 +8,7 @@ import useMutate from 'src/hooks/usePost';
 import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+// import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
 import PostWriteInput from './PostWriteInput';
 
 const PostEditRecipe = () => {
@@ -23,10 +24,6 @@ const PostEditRecipe = () => {
   const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
   const [tagData, setTagData] = useState<Tag[][]>([]);
 
-  console.log('여기입니다!', body);
-  console.log('여기입니다!', allSelectedImages);
-  console.log('여기입니다!', tagData);
-
   const postRef = useRef<HTMLInputElement>(null);
 
   // current user id
@@ -36,14 +33,16 @@ const PostEditRecipe = () => {
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
   const post = data?.data?.[0];
 
+  console.log('tagData', tagData);
+
   // useEffect 순서 확인하기!
   useEffect(() => {
     setTitle(post?.title);
-    setBody(post?.body);
+    setBody(post?.recipeBody);
     setAllSelectedImages(post?.tagimage);
     setTagData(post?.tags);
     setTagsData(post?.tags);
-    setInputData(post?.body);
+    setInputData(post?.recipeBody);
   }, [post]);
 
   // edit
@@ -74,7 +73,7 @@ const PostEditRecipe = () => {
     const editPost = {
       id: post.id,
       title,
-      body: inputData,
+      recipeBody: inputData,
       tags: tagsData,
       tagimage: updatedImageUrls
     };
@@ -139,7 +138,7 @@ const PostEditRecipe = () => {
           autoFocus
         />
         {/* <AddImageTagComponent onImageSelect={handleImageSelect} /> */}
-        {tagData.map((_, index) => (
+        {body.map((_, index) => (
           <ImageTag
             key={index}
             onTagsAndResultsChange={(tags) => handleTagsChange(index, tags)}

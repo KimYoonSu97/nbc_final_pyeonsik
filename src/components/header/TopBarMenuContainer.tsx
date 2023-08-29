@@ -22,6 +22,7 @@ const TopBarMenuContainer = () => {
   const [userData, setUserData] = useState<User | null>(null);
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = useAtom(userAtom);
+ // 욕을 합니다 ***
 
   // const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
   //   enabled: userId ? true : false
@@ -42,6 +43,7 @@ const TopBarMenuContainer = () => {
 
   const getUserDataForHeader = async (id: string) => {
     const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
+    // console.log(data)
     if (error) {
     }
     setUserData(data as User);

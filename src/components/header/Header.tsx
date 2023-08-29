@@ -14,7 +14,7 @@ const Header = () => {
         <TopBarMenuContainer />
       </S.UpperContainer>
       <S.LowerContainer>
-        <BoardSearchContainer></BoardSearchContainer>
+        <BoardSearchContainer />
       </S.LowerContainer>
     </S.Area>
   );
