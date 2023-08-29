@@ -15,8 +15,8 @@ export const GlobalStyle = createGlobalStyle`
 
 // reset.css
 *{
-    box-sizing:border-box;
 	font-family: "Pretendard-Regular";
+    box-sizing:border-box;
 }
 
 button{

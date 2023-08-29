@@ -22,23 +22,22 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
       },
       toolbar: {
         container: [
-          ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-          ['blockquote', 'code-block'],
-
-          [{ header: 1 }, { header: 2 }], // custom button values
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-          [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-          [{ direction: 'rtl' }], // text direction
-
-          [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ size: ['small', false, 'large', 'huge'] }],
           [{ font: [] }],
+          // [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ color: [] }, { background: [] }],
+          // ['blockquote', 'code-block'],
+
+          // [{ header: 1 }, { header: 2 }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
           [{ align: [] }],
 
-          ['clean', 'image', 'video'] // remove formatting button
+          // [{ script: 'sub' }, { script: 'super' }],
+          // [{ indent: '-1' }, { indent: '+1' }],
+          // [{ direction: 'rtl' }],
+
+          ['image', 'video', 'clean']
         ]
       }
       // handlers: {
@@ -57,30 +56,19 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   );
 
   return (
-    <S.EditorBox>
-      <ReactQuill
-        ref={(element) => {
-          if (element !== null) {
-            QuillRef.current = element;
-          }
-        }}
-        modules={modules}
-        value={body}
-        onChange={setBody}
-        theme="snow"
-        placeholder="그르르…갉 편의점 의자에서 나누는 대화처럼 재밌는 이야기를 공유해 주세요."
-      />
-    </S.EditorBox>
+    <ReactQuill
+      ref={(element) => {
+        if (element !== null) {
+          QuillRef.current = element;
+        }
+      }}
+      modules={modules}
+      value={body}
+      onChange={setBody}
+      theme="snow"
+      placeholder="그르르…갉 편의점 의자에서 나누는 대화처럼 재밌는 이야기를 공유해 주세요."
+    />
   );
 };
 
 export default EditorQuill;
-
-export const S = {
-  EditorBox: styled.div`
-    background: #fff;
-    border-radius: 10px;
-    margin-top: 12px;
-    width: 950px;
-  `
-};
