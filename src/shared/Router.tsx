@@ -34,12 +34,11 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
+
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
-            <Route path="/" element={<LayoutWrite />}>
-              <Route path="/write" element={<Write />} />
-              <Route path="/edit/:id" element={<Edit />} />
-            </Route>
+            <Route path="/write" element={<Write />} />
+            <Route path="/edit/:id" element={<Edit />} />
           </Route>
         </Route>
       </Routes>
