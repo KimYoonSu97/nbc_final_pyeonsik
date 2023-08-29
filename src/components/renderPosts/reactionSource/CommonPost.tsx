@@ -2,48 +2,47 @@ import React from 'react';
 import styled from 'styled-components';
 import { LikeCount, CommentCount, BookmarkCount, RepostCount } from 'src/components/renderPosts/reactionSource';
 import { Post, PostUserProfile } from 'src/types/types';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { useAtom } from 'jotai';
+import { modalOpenAtom } from 'src/globalState/jotai';
+import { Link } from 'react-router-dom';
 
 interface Props {
   item: Post;
 }
 
-// interface Props {
-//   id: string;
-//   postCategory: string;
-//   body: string;
-//   title: string;
-//   nickname: string;
-//   profileImg: string;
-// }
-
 const CommonPost = ({ item }: Props) => {
   const navigate = useNavigate();
   const { nickname, profileImg } = item.userId as PostUserProfile;
   const { id, postCategory, body, title } = item;
+  const location = useLocation();
 
   return (
-    <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}>
-      <S.UserArea>
-        <S.ProfileImg $url={profileImg}></S.ProfileImg>
-        <S.Level>Lv.점장</S.Level>
-        <S.Nickname_Category>{nickname}</S.Nickname_Category>
-        <S.Caption>님의</S.Caption>
-        <S.Nickname_Category>{postCategory === 'common' ? '그르르갉' : '편식조합'}</S.Nickname_Category>
-      </S.UserArea>
-      <S.PostBox>
-        <S.GradientArea></S.GradientArea>
-        <S.BottomArea>
-          <CommentCount />
-          <LikeCount />
-          <RepostCount />
-          <BookmarkCount />
-        </S.BottomArea>
-        <S.TitleArea>{title}</S.TitleArea>
-        {/* editor 내용 변환 */}
-        <S.BodyArea dangerouslySetInnerHTML={{ __html: body }} />
-      </S.PostBox>
-    </S.Container>
+    <S.Area>
+      <S.Container key={id} to={`/detail/${item.id}`} state={{ backgroundLocation: location }}>
+        {/* <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}> */}
+        {/* <S.Container key={id} onClick={() => setModalOpen({ state: true, data: item })}> */}
+        <S.UserArea>
+          <S.ProfileImg $url={profileImg}></S.ProfileImg>
+          <S.Level>Lv.점장</S.Level>
+          <S.Nickname_Category>{nickname}</S.Nickname_Category>
+          <S.Caption>님의</S.Caption>
+          <S.Nickname_Category>{postCategory === 'common' ? '그르르갉' : '편식조합'}</S.Nickname_Category>
+        </S.UserArea>
+        <S.PostBox>
+          <S.GradientArea></S.GradientArea>
+          <S.BottomArea>
+            <CommentCount />
+            <LikeCount />
+            <RepostCount />
+            <BookmarkCount />
+          </S.BottomArea>
+          <S.TitleArea>{title}</S.TitleArea>
+          {/* editor 내용 변환 */}
+          <S.BodyArea dangerouslySetInnerHTML={{ __html: body }} />
+        </S.PostBox>
+      </S.Container>
+    </S.Area>
   );
 };
 
@@ -54,10 +53,12 @@ interface ImgProps {
 
 const S = {
   Area: styled.div`
-    margin-top: 30px;
+    margin-top: 55px;
   `,
-  Container: styled.div`
-    margin-bottom: 55px;
+  Container: styled(Link)`
+    /* margin-bottom: 55px; */
+    text-decoration: none;
+    color: black;
   `,
   UserArea: styled.div`
     margin-bottom: 10px;

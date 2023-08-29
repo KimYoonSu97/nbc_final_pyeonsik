@@ -142,7 +142,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
         </ProfileImgnameBox>
 
         {!isError && <SuccessMessage>{successMessage}</SuccessMessage>}
-
         {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <Label>닉네임</Label>
         <NickNameInput maxLength={15} type="text" value={nickname} placeholder="닉네임" onChange={nickNameHandler} />

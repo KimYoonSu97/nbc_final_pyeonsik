@@ -21,6 +21,7 @@
     "badwords-ko": "^1.0.3",
     "force": "^0.0.3",
     "jotai": "^2.3.1",
+    "jotai-location": "^0.5.1",
     "lodash": "^4.17.21",
     "quill-image-resize": "^3.0.9",
     "quill-image-resize-module-ts": "^3.0.3",

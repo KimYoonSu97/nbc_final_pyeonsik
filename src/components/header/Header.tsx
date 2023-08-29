@@ -3,18 +3,20 @@ import { useLocation, useNavigate } from 'react-router';
 import { styled } from 'styled-components';
 import TopBarMenuContainer from './TopBarMenuContainer';
 import BoardSearchContainer from './BoardSearchContainer';
-import WriteHeader from './write_edit/WriteHeader';
-import EditHeader from './write_edit/EditHeader';
+import { IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split('/')[1];
-  console.log(path);
+
   return (
     <S.Area $path={path}>
       <S.UpperContainer>
-        <S.LogoContainer onClick={() => navigate('/')}>LOGO</S.LogoContainer>
+        <S.LogoContainer onClick={() => navigate('/')}>
+          <IconLogoSymbolH22 />
+          <IconWaterMarkH22 />
+        </S.LogoContainer>
         <TopBarMenuContainer />
       </S.UpperContainer>
       {path === 'detail' || path === 'report' ? (
@@ -37,7 +39,6 @@ interface Props {
 const S = {
   Area: styled.div<Props>`
     width: 100vw;
-
     height: ${(props) => {
       switch (props.$path) {
         case 'detail':
@@ -61,7 +62,6 @@ const S = {
     align-items: center;
     position: relative;
   `,
-
   LowerContainer: styled.div`
     width: 1280px;
     height: 50px;
@@ -72,11 +72,8 @@ const S = {
   `,
   LogoContainer: styled.div`
     color: white;
-    background-color: black;
-    padding: 5px 13px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
+    width: 80px;
+    height: 22px;
     position: absolute;
     left: 16px;
   `

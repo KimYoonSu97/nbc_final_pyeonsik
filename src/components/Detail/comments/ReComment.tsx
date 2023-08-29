@@ -19,7 +19,6 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
   const queryClient = useQueryClient();
   const { id } = useParams();
   const userId = useLoginUserId();
-  console.log(id);
 
   const { data: reCommentData } = useQuery(['reComment'], () => getReCommentData(parentCommentId));
 
