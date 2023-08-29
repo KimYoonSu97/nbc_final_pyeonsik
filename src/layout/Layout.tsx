@@ -1,10 +1,11 @@
 import React from 'react';
 import Header from '../components/header/Header';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import SideBar from 'src/components/sidebar/SideBar';
 
 const Layout = () => {
+  const param = useParams();
   const location = useLocation();
 
   return (
@@ -16,7 +17,13 @@ const Layout = () => {
           <S.ContentsArea>
             <Outlet />
           </S.ContentsArea>
-          {location.pathname === '/login' || location.pathname === '/register' ? <></> : <SideBar />}
+          {location.pathname === '/login' ||
+          location.pathname === '/register' ||
+          location.pathname.split('/')[1] === 'detail' ? (
+            <></>
+          ) : (
+            <SideBar />
+          )}
         </S.Container>
       </S.BottomContainer>
     </>

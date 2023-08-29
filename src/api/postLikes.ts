@@ -13,8 +13,6 @@ const getPostLike = async (postId: string) => {
 
 const addPostLike = async (newPostLike: NewPostLike) => {
   const { data, error } = await supabase.from('post_likes').insert(newPostLike).select();
-  console.log(data);
-  console.log(error);
 };
 
 const deletePostLike = async (id: string) => {

@@ -18,8 +18,6 @@ const SideBar = () => {
       <S.FixedContainer>
         {(() => {
           switch (findPath(location.pathname)) {
-            case 'detail':
-              return <RankSideBar />;
             case 'event':
               return <EventSideBar />;
             case 'mypage':
