@@ -68,27 +68,12 @@ export interface NewRecipePost {
   userId: string;
 }
 
-// export interface RecipeNewPost {
-//   postCategory?: string;
-//   title: string;
-//   body?: string[];
-//   userId?: string;
-// }
-
 export interface EditPost {
   orgPostId: string | null;
   orgUserId: string | null;
   id: string;
   title: string;
   body: string;
-}
-
-// recipe post
-export interface RecipeNewPost {
-  postCategory: string;
-  title: string;
-  body: string[];
-  userId: string;
 }
 
 export interface TagEditPost {
@@ -197,7 +182,6 @@ export interface ImageTagProps {
 
 export interface ImageTagPropsToAddImageComponent {
   onImageSelect: (selectedImage: File) => void;
-  onRemovedImage: (removedImage: File) => void;
 }
 
 export interface SearchProps {
@@ -206,6 +190,7 @@ export interface SearchProps {
 
 export interface ImageUploaderProps {
   onImageSelect: (imageFile: File) => void;
+  imageSelected: boolean;
 }
 //여기까지
 

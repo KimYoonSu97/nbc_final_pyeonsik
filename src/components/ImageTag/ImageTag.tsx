@@ -5,7 +5,6 @@ import { Tag, Data } from 'src/types/types';
 import { ImageTagProps } from 'src/types/types';
 import ImageUploader from './ImageUploader';
 import Search from './Search';
-// import PostWriteInput from '../post/PostWriteInput';
 import PostWriteBodyInput from '../post/PostWriteBodyInput';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
 import { ReactComponent as DeleteIcon } from 'src/components/ImageTag/svg/DeleteIcon.svg';
@@ -48,6 +47,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
         updatedTags.splice(tags.length - 1 - lastEmptyTagIndex, 1);
       }
 
+      //태그 안에 담을 데이터를 가진 newTag변수
       const newTag = { x, y, prodData: '', img: '', price: '', prodBrand: '' };
       setTags([...updatedTags, newTag]);
 
@@ -59,18 +59,14 @@ const ImageTag: React.FC<ImageTagProps> = ({
     }
   };
 
-  //태그를 클릭 시 실행되는 함수 보였다 안보였다
+  //태그를 클릭 시 실행되는 함수 모달 내용 보였다 안보였다
   const handleTagClick = (index: number) => {
-    if (addTagMode) {
+    if (addTagMode || selectedTagIndex !== index) {
       setSelectedTagIndex(index);
       setselectedTagVisible(!selectedTagVisible);
       setSearchFormHandler(false);
-    } else if (selectedTagIndex === index) {
-      setselectedTagVisible(!selectedTagVisible);
     } else {
-      setSelectedTagIndex(index);
       setselectedTagVisible(!selectedTagVisible);
-      setSearchFormHandler(false);
     }
   };
 
@@ -98,22 +94,29 @@ const ImageTag: React.FC<ImageTagProps> = ({
       setTags(updatedTags);
       setSearchFormHandler(false);
 
+      //검색 후 검색결과를 담아서 콜백으로 부모 컴포넌트로 값 전달
       onTagsAndResultsChange(updatedTags, []);
     }
   };
 
+  //태그 삭제 함수
   const handleDeleteTag = (index: number) => {
     const updatedTags = tags.filter((_, idx) => idx !== index);
     setTags(updatedTags);
     setselectedTagVisible(false);
     setSelectedTagIndex(null);
+    //삭제 후 콜백으로 수정된 값을 전달
+    onTagsAndResultsChange(updatedTags, []);
   };
 
+  //이미지 선택 함수
   const handleImageSelect = (imageFile: File) => {
     setSelectedImage(imageFile);
+    //선택된 이미지 값을 콜백으로 전달
     onImageSelect(imageFile);
   };
 
+  //모달 클릭 함수
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -122,7 +125,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
   return (
     <>
       <S.ImageTagContainer>
-        <ImageUploader onImageSelect={handleImageSelect} />
+        <ImageUploader onImageSelect={handleImageSelect} imageSelected={!!selectedImage} />
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer>
@@ -216,6 +219,7 @@ const S = {
     background-color: #3498db;
     width: 200px;
     height: 40px;
+    border-radius: 50px;
     color: white;
     border: none;
     padding: 6px 12px;
@@ -223,8 +227,8 @@ const S = {
     position: absolute;
     top: 95%;
     left: 50%;
-    transform: translate(-50%, -50%); /* 중앙 정렬 */
-    z-index: 2; /* 이미지 위에 배치 */
+    transform: translate(-50%, -50%);
+    z-index: 2;
   `,
 
   ImageContainer: styled.div`
@@ -234,7 +238,6 @@ const S = {
   Image: styled.img`
     width: 360px;
     height: 638px;
-    margin-top: 10px;
   `,
   TagImage: styled.img`
     width: 80px;

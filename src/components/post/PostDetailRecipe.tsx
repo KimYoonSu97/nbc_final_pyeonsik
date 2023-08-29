@@ -100,7 +100,7 @@ const PostDetailRecipe = () => {
               return (
                 <div key={imageIndex} style={{ position: 'relative' }}>
                   <img
-                    style={{ width: '360px', height: '638px' }}
+                    style={{ width: '790px', height: '600px' }}
                     src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`}
                     alt={imageUrl}
                   />
@@ -111,8 +111,8 @@ const PostDetailRecipe = () => {
                       key={tagIndex}
                       style={{
                         position: 'absolute',
-                        left: tag.x + 'px',
-                        top: tag.y + 'px',
+                        left: tag.x * 2.194, // 가로 변화 비율 적용
+                        top: tag.y * 0.94, // 세로 변화 비율 적용
                         backgroundColor: 'red',
                         width: '30px',
                         height: '30px'
