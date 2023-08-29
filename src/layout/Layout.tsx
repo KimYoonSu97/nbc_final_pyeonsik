@@ -10,6 +10,7 @@ const Layout = () => {
   return (
     <>
       <Header />
+
       <S.BottomContainer>
         <S.Container id="scroll">
           <S.ContentsArea>

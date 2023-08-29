@@ -1,36 +1,28 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import ProdCard from './ProdCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getEventProd } from 'src/api/product';
+import { getSearchProd } from 'src/api/product';
 import { useLocation } from 'react-router';
 import { useInView } from 'react-intersection-observer';
 import { InfinityProductList } from 'src/types/types';
+import ProdCard from '../evnetProd/ProdCard';
 
-const ProdList = () => {
-  const location = useLocation();
-  let brandParam: string;
-  if (location.search === '') {
-    brandParam = 'all';
-  } else {
-    brandParam = location.search;
-  }
-
+const ProdSearch = () => {
+  const keyword: string = decodeURI(window.location.search).slice(2);
   const {
     data: productList,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery<InfinityProductList>({
-    queryKey: [`event${brandParam}`],
-    queryFn: ({ pageParam }) => getEventProd(pageParam, brandParam),
+    queryKey: [`searchProduct`],
+    queryFn: ({ pageParam }) => getSearchProd(pageParam, keyword),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages) {
         return lastPage.page + 1;
       }
     },
-    refetchOnWindowFocus: false,
-    staleTime: 3 * 60 * 1000
+    refetchOnWindowFocus: false
   });
 
   const products = useMemo(() => {
@@ -62,7 +54,7 @@ const ProdList = () => {
   );
 };
 
-export default ProdList;
+export default ProdSearch;
 
 const S = {
   Container: styled.div`

@@ -15,6 +15,7 @@ import EventProd from 'src/pages/EventProd';
 import Mypage from 'src/pages/Mypage';
 import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
+import SearchResult from 'src/pages/SearchResult';
 import Report from 'src/components/sidebar/Report';
 
 const Router = () => {
@@ -28,17 +29,17 @@ const Router = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/password_reset" element={<PasswordReset />} />
           <Route path="/password_change" element={<PasswordChange />} />
-          <Route path="/event" element={<EventProd />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route path="/report" element={<Report />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/mypage/:tab" element={<Mypage />} />
-          </Route>
-        </Route>
-        <Route path="/" element={<LayoutWrite />}>
+          <Route path="/event" element={<EventProd />} />
+          <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/write" element={<Write />} />
-            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/mypage/:tab" element={<Mypage />} />
+            <Route path="/" element={<LayoutWrite />}>
+              <Route path="/write" element={<Write />} />
+              <Route path="/edit/:id" element={<Edit />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
