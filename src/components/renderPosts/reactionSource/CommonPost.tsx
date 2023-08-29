@@ -11,15 +11,6 @@ interface Props {
   item: Post;
 }
 
-// interface Props {
-//   id: string;
-//   postCategory: string;
-//   body: string;
-//   title: string;
-//   nickname: string;
-//   profileImg: string;
-// }
-
 const CommonPost = ({ item }: Props) => {
   const navigate = useNavigate();
   const { nickname, profileImg } = item.userId as PostUserProfile;
@@ -27,8 +18,8 @@ const CommonPost = ({ item }: Props) => {
   const location = useLocation();
 
   return (
-    <S.Container key={id}>
-      <Link to={`/detail/${item.id}`} state={{ backgroundLocation: location }}>
+    <S.Area>
+      <S.Container key={id} to={`/detail/${item.id}`} state={{ backgroundLocation: location }}>
         {/* <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}> */}
         {/* <S.Container key={id} onClick={() => setModalOpen({ state: true, data: item })}> */}
         <S.UserArea>
@@ -50,8 +41,8 @@ const CommonPost = ({ item }: Props) => {
           {/* editor 내용 변환 */}
           <S.BodyArea dangerouslySetInnerHTML={{ __html: body }} />
         </S.PostBox>
-      </Link>
-    </S.Container>
+      </S.Container>
+    </S.Area>
   );
 };
 
@@ -62,10 +53,10 @@ interface ImgProps {
 
 const S = {
   Area: styled.div`
-    margin-top: 30px;
+    margin-top: 55px;
   `,
-  Container: styled.div`
-    margin-bottom: 55px;
+  Container: styled(Link)`
+    /* margin-bottom: 55px; */
     text-decoration: none;
     color: black;
   `,

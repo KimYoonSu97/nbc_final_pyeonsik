@@ -1,6 +1,6 @@
 import React from 'react';
 import { GlobalStyle } from '../styles/GlobalStyle';
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Location, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import Layout from '../layout/Layout';
 import LayoutWrite from 'src/layout/LayoutWrtie';
@@ -53,6 +53,7 @@ const Router = () => {
       </Routes>
       {state?.backgroundLocation && (
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/detail/:id" element={<PostModal />} />
         </Routes>
       )}

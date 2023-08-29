@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userAtom } from 'src/globalState/jotai';
+import { loginModalAtom, userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
@@ -20,6 +20,13 @@ interface User {
 const TopBarMenuContainer = () => {
   const location = useLocation();
   const path = location.pathname.split('/')[1];
+
+  // 로그인 모달 조작하는 atom
+  const [loginModal, setLoginModal] = useAtom(loginModalAtom);
+  //로그인 모달 띄우는 핸들러 함수
+  const openLoginModal = () => {
+    setLoginModal({ state: true, location: location });
+  };
 
   const userId = useLoginUserId();
   const [userData, setUserData] = useState<User | null>(null);
@@ -97,13 +104,19 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton onClick={() => navigate('/event')}>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
       <S.TopBarLogContainer $logged={userData ? true : false}>
-        {userData && <>{/* <S.TopBarMenu onClick={() => navigate('/mypage/profile')}>마이페이지</S.TopBarMenu> */}</>}
         {/* 공통 */}
         {/* 로그인 전 */}
         {!userData ? (
           <>
-            <S.TopBarLogButton onClick={() => navigate('/login')}>로그인</S.TopBarLogButton>
-            <S.TopBarLogButton onClick={() => navigate('/register')}>회원가입</S.TopBarLogButton>
+            <S.TopBarLogButton
+              onClick={() => navigate('/login', { state: { backgroundLocation: location } })}
+              $signIn={false}
+            >
+              로그인
+            </S.TopBarLogButton>
+            <S.TopBarLogButton onClick={() => navigate('/register')} $signIn={true}>
+              회원가입
+            </S.TopBarLogButton>
           </>
         ) : (
           <>
@@ -133,6 +146,10 @@ const TopBarMenuContainer = () => {
 
 export default TopBarMenuContainer;
 
+interface Props {
+  $signIn?: boolean;
+}
+
 const S = {
   TopBarMenuContainer: styled.div`
     display: flex;
@@ -157,9 +174,13 @@ const S = {
     display: flex;
     align-items: center;
     border-radius: 100px;
-    background-color: #f5f5f5;
+    border: 1px solid var(--neutral-200, #e4e7ec);
     padding: 3px 18px;
     height: 34px;
+    color: var(--font-black, var(--black, #242424));
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px; /* 114.286% */
   `,
 
   TopBarMenu: styled.li`
@@ -179,19 +200,31 @@ const S = {
     align-items: center;
   `,
 
-  TopBarLogButton: styled.li`
-    border: 1px solid #d9d9d9;
-    background: #fff;
+  TopBarLogButton: styled.li<Props>`
     border-radius: 4px;
-
     display: flex;
     justify-content: center;
     align-items: center;
     height: 30px;
     padding: 5px 15px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 700;
     line-height: 20px;
+    color: ${(props) => {
+      if (props.$signIn) {
+        return ' var(--white, #FFF)';
+      } else {
+        return 'var(--font-black, var(--black, #242424))';
+      }
+    }};
+
+    background: ${(props) => {
+      if (props.$signIn) {
+        return 'var(--main, #F02826);';
+      } else {
+        return 'var(--neutral-200, #e4e7ec)';
+      }
+    }};
   `,
 
   Icon: styled.div`
