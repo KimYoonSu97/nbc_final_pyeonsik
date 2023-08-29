@@ -44,8 +44,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       .eq('nickname', nickname)
       .maybeSingle();
 
-    // console.log(existingUsers);
-
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
 

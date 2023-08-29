@@ -45,7 +45,6 @@ const PostDetailCommon = () => {
     return <Navigate to="/" />;
   }
   if (data?.data.length === 0) {
-    console.log('3');
     alert('존재하지 않는 게시물입니다.');
     return <Navigate to="/" />;
   }

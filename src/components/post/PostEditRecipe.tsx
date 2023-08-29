@@ -33,8 +33,6 @@ const PostEditRecipe = () => {
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
   const post = data?.data?.[0];
 
-  console.log('tagData', tagData);
-
   // useEffect 순서 확인하기!
   useEffect(() => {
     setTitle(post?.title);

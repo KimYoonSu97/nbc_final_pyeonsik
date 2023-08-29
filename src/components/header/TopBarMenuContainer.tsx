@@ -22,7 +22,7 @@ const TopBarMenuContainer = () => {
   const [userData, setUserData] = useState<User | null>(null);
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = useAtom(userAtom);
- // 욕을 합니다 ***
+  // 욕을 합니다 ***
 
   // const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
   //   enabled: userId ? true : false
@@ -43,7 +43,6 @@ const TopBarMenuContainer = () => {
 
   const getUserDataForHeader = async (id: string) => {
     const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
-    // console.log(data)
     if (error) {
     }
     setUserData(data as User);
@@ -54,11 +53,9 @@ const TopBarMenuContainer = () => {
     const user = await supabase.auth.getUser();
     const { data, error } = await supabase.from('users').select('*').eq('id', user.data.user?.id).single();
     if (data) {
-      console.log(data);
       setUserData(data as User);
     } else {
       const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
-      console.log(socialData);
       if (socialData !== undefined && socialData[0].identity_data && user.data.user) {
         const data = socialData[0].identity_data;
 

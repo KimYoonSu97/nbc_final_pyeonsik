@@ -34,8 +34,6 @@ const PostDetailRecipe = () => {
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
 
-  console.log('post', post);
-
   // delete post
   const clickDelete = (id: string) => {
     deletePostMutate.mutate(id);
