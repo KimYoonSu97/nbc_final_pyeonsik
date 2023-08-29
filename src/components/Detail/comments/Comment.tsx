@@ -22,7 +22,6 @@ interface CommentDataType {
 const Comment = () => {
   const queryClient = useQueryClient();
   const { id } = useParams<string>();
-  console.log(id);
 
   const userId = useLoginUserId();
   const [comment, setComment] = useState('');
@@ -30,15 +29,12 @@ const Comment = () => {
   const [updateComment, setUpdateComment] = useState('');
   const [updateId, setUpdateId] = useState<string | null>(null);
   const updateInputRef = useRef<HTMLInputElement>(null);
-  useEffect(()=>{
-    if (updateInputRef.current && updateToggle){
+  useEffect(() => {
+    if (updateInputRef.current && updateToggle) {
       updateInputRef.current.focus();
-      return ;
+      return;
     }
-  },[])
-
-    
-    
+  }, []);
 
   //포스트 아이디와 같은 댓글 데이터 가져오기
 
@@ -98,7 +94,7 @@ const Comment = () => {
     setUpdateToggle(false);
   };
 
-  const updateOpenButton = (id: string, comment:string) => {
+  const updateOpenButton = (id: string, comment: string) => {
     setUpdateComment(comment);
     setUpdateToggle(true);
     setUpdateId(id);
@@ -151,7 +147,7 @@ const Comment = () => {
                 <div>
                   <input
                     ref={updateInputRef}
-                    type='text'
+                    type="text"
                     value={updateComment}
                     onChange={(e) => {
                       setUpdateComment(e.target.value);

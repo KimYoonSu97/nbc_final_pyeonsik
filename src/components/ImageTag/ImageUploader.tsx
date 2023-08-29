@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+
+import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/CameraIcon.svg';
+
 import { ImageUploaderProps } from 'src/types/types';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
+  const [imageSelected, setImageSelected] = useState(false);
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -12,15 +17,18 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
       const randomFileName = uuidv4() + '.' + fileExtension;
 
       onImageSelect(new File([file], randomFileName));
+      setImageSelected(true);
     }
   };
 
   return (
     <div>
-      <S.FileLabel>
-        <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
-        <S.FileLabelText>파일 선택</S.FileLabelText>
-      </S.FileLabel>
+      <S.ImageContainer imageselected={imageSelected}>
+        <S.FileLabel imageselected={imageSelected}>
+          <S.IconWrapper imageselected={imageSelected}>{imageSelected ? '🔃' : <CameraIcon />}</S.IconWrapper>
+          <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
+        </S.FileLabel>
+      </S.ImageContainer>
     </div>
   );
 };
@@ -28,16 +36,39 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
 export default ImageUploader;
 
 const S = {
+  ImageContainer: styled.div<{ imageselected: boolean }>`
+    position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
+    top: ${(props) => (props.imageselected ? '94%' : 'initial')};
+  `,
+
   FileInput: styled.input`
-    display: none; /* 숨김 처리 */
-  `,
-  FileLabel: styled.label`
-    border: 1px solid #ccc;
-    padding: 8px;
+    opacity: 0;
     cursor: pointer;
-    display: inline-block;
   `,
+  FileLabel: styled.label<{ imageselected: boolean }>`
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: ${(props) => (props.imageselected ? 'none' : '1px solid #ccc')};
+    width: ${(props) => (props.imageselected ? '40px' : '360px')};
+    height: ${(props) => (props.imageselected ? '40px' : '360px')};
+    position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
+    margin-left: ${(props) => (props.imageselected ? '30px' : '0')};
+    z-index: 1;
+    /* &:hover {
+      background-color: ${(props) => (props.imageselected ? 'skyblue' : 'initial')};
+    } */
+  `,
+
+  IconWrapper: styled.span<{ imageselected: boolean }>`
+    &:hover {
+      transform: ${(props) => (props.imageselected ? 'scale(1.5)' : 'initial')};
+    }
+  `,
+
   FileLabelText: styled.span`
-    /* 파일 선택 텍스트 스타일을 정의하세요 */
+    margin-left: 140px;
   `
 };

@@ -1,11 +1,11 @@
-// AddImageTagComponent.tsx
-
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
 
 import ImageTag from './ImageTag';
 import { atom, useAtom } from 'jotai';
 import { ImageTagPropsToAddImageComponent, Tag } from 'src/types/types';
+import { ReactComponent as TrashCanIcon } from 'src/components/ImageTag/svg/TrashCanIcon.svg';
 
 //Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
@@ -81,13 +81,15 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
 
   return (
     <div>
-      <button onClick={addImageTagComponent}>이미지 추가</button>
+      <S.AddBtn onClick={addImageTagComponent}>이미지 추가</S.AddBtn>
       {imageTagComponents.map((component) => {
         const componentUuid = (component.key as string) || '';
         return (
           <div key={componentUuid}>
+            <S.RemoveButton onClick={() => removeImageTagComponent(componentUuid)}>
+              <TrashCanIcon />
+            </S.RemoveButton>
             {component}
-            <button onClick={() => removeImageTagComponent(componentUuid)}>삭제</button>
           </div>
         );
       })}
@@ -96,3 +98,21 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
 };
 
 export default AddImageTagComponent;
+
+const S = {
+  RemoveButton: styled.button`
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    margin-left: 950px;
+    z-index: 999;
+  `,
+
+  AddBtn: styled.button`
+    width: 48px;
+    height: 48px;
+    position: fixed;
+    left: 280px;
+    z-index: 999;
+  `
+};

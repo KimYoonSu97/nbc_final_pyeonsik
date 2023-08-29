@@ -15,7 +15,7 @@ const PasswordReset: React.FC = () => {
    */
   const handleResetPassword = async () => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
-    console.log(data);
+
     if (!error) {
       alert('성공적으로 해당 이메일로 발신하였습니다.');
     }

@@ -21,6 +21,7 @@ export default RankSideBar;
 const S = {
   Container: styled.div`
     position: fixed;
+
     right: calc(((100vw - 1280px) / 2) + 16px);
   `,
 

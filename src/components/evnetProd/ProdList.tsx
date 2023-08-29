@@ -67,7 +67,6 @@ export default ProdList;
 const S = {
   Container: styled.div`
     width: 100%;
-
     display: flex;
     align-items: center;
     align-content: center;
