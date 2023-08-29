@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
 import { SearchProps } from 'src/types/types';
+import { ReactComponent as SearchIcon } from 'src/components/ImageTag/svg/SearchIcon.svg';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
@@ -43,7 +44,9 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
 
   return (
     <S.SearchContainer>
-      <S.SearchButton onClick={performSearch}>🔎</S.SearchButton>
+      <S.SearchButton onClick={performSearch}>
+        <SearchIcon />
+      </S.SearchButton>
       <S.SearchInput
         type="text"
         value={searchKeyword}
@@ -80,7 +83,8 @@ const S = {
 
   SearchInput: styled.input`
     text-align: center;
-    width: 300px;
+    width: 356px;
+    height: 42px;
     padding: 8px;
     margin-bottom: 8px;
     border: 1px solid #ccc;
@@ -89,9 +93,9 @@ const S = {
 
   SearchButton: styled.button`
     position: absolute;
-    margin-top: 7px;
+    margin-top: 10px;
     margin-left: 5px;
-    z-index: 2; /* 다른 요소 위에 위치 */
+    z-index: 2;
     background-color: transparent;
     cursor: pointer;
   `,
@@ -99,26 +103,27 @@ const S = {
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    margin: 10px;
-    padding: 10px;
-
-    width: 300px;
-    height: 380px;
-    /* overflow-y: auto;
-    -ms-overflow-style: none;
+    width: 380px;
+    height: 400px;
+    overflow-y: auto;
+    /* -ms-overflow-style: none;
     scrollbar-width: none;
     &::-webkit-scrollbar {
       display: none;
     } */
   `,
+
   SearchResultItem: styled.div`
     border-radius: 10px;
     display: flex;
     cursor: pointer;
-    width: 320px;
+    width: 356px;
     height: 100px;
     margin-bottom: 10px;
     background-color: white;
+    &:hover {
+      background-color: gray;
+    }
   `,
 
   ImageContainer: styled.div`
@@ -130,8 +135,10 @@ const S = {
       height: 80px;
       border-radius: 10px;
       border: 1px solid #ccc;
+      margin-left: 10px;
     }
   `,
+
   ImageAndTextContainer: styled.div`
     display: flex;
     align-items: center;

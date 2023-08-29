@@ -7,6 +7,8 @@ import ImageUploader from './ImageUploader';
 import Search from './Search';
 // import PostWriteInput from '../post/PostWriteInput';
 import PostWriteBodyInput from '../post/PostWriteBodyInput';
+import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
+import { ReactComponent as DeleteIcon } from 'src/components/ImageTag/svg/DeleteIcon.svg';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -46,7 +48,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
         updatedTags.splice(tags.length - 1 - lastEmptyTagIndex, 1);
       }
 
-      const newTag = { x, y, prodData: '', img: '', price: '' };
+      const newTag = { x, y, prodData: '', img: '', price: '', prodBrand: '' };
       setTags([...updatedTags, newTag]);
 
       setContents(contents);
@@ -91,6 +93,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
       selectedTag.prodData = result.prodName;
       selectedTag.img = result.prodImg;
       selectedTag.price = result.price;
+      selectedTag.prodBrand = result.prodBrand;
 
       setTags(updatedTags);
       setSearchFormHandler(false);
@@ -118,19 +121,11 @@ const ImageTag: React.FC<ImageTagProps> = ({
 
   return (
     <>
-      <ImageUploader onImageSelect={handleImageSelect} />
       <S.ImageTagContainer>
+        <ImageUploader onImageSelect={handleImageSelect} />
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer>
-            <S.AddTagButton
-              onClick={(e) => {
-                e.preventDefault();
-                setAddingTagMode(!addTagMode);
-              }}
-            >
-              {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
-            </S.AddTagButton>
             {typeof selectedImage === 'string' ? (
               <S.Image
                 src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
@@ -140,29 +135,44 @@ const ImageTag: React.FC<ImageTagProps> = ({
             ) : (
               <S.Image src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
             )}
+            <S.AddTagButton
+              onClick={(e) => {
+                e.preventDefault();
+                setAddingTagMode(!addTagMode);
+              }}
+            >
+              {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
+            </S.AddTagButton>
 
             {tags.map((tag, index) => (
               <S.TagContainer
                 key={index}
                 onClick={() => handleTagClick(index)}
                 style={{
-                  position: 'absolute',
                   left: tag.x,
-                  top: tag.y,
-                  backgroundColor: 'red',
-                  display: 'flex',
-                  width: '40px',
-                  height: '40px'
+                  top: tag.y
                 }}
               >
+                <S.TagIconContainer>
+                  <TagIcon />
+                </S.TagIconContainer>
+
                 {selectedTagIndex === index && selectedTagVisible && (
                   //검색창이 나오는 부분
-                  <S.TagContainer onClick={handleModalClick}>
+                  <S.TagDataContainer searchFormHandler={searchFormHandler} onClick={handleModalClick}>
                     {tag.img && <S.TagImage src={`${tag.img}`} alt="이미지" />}
-                    {tag.prodData && <S.ProdContainer> {tag.prodData}</S.ProdContainer>}
-                    {tag.prodData || tag.price || tag.img ? (
-                      <S.DeleteButton onClick={() => handleDeleteTag(index)}>삭제</S.DeleteButton>
-                    ) : null}
+
+                    <S.DeleteButton onClick={() => handleDeleteTag(index)}>
+                      <S.DeleteIconContainer>
+                        <DeleteIcon />
+                        삭제
+                      </S.DeleteIconContainer>
+                    </S.DeleteButton>
+
+                    <S.DataContainer>
+                      {tag.prodBrand && <S.ProdBrandContainer>{tag.prodBrand}</S.ProdBrandContainer>}
+                      {tag.prodData && <S.ProdContainer>{tag.prodData}</S.ProdContainer>}
+                    </S.DataContainer>
 
                     {selectedTagIndex !== null && searchFormHandler && (
                       <S.SearchResultsContainer>
@@ -170,7 +180,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
                         <S.CloseButton onClick={handleSearchModalClose}>취소</S.CloseButton>
                       </S.SearchResultsContainer>
                     )}
-                  </S.TagContainer>
+                  </S.TagDataContainer>
                 )}
               </S.TagContainer>
             ))}
@@ -201,6 +211,7 @@ const S = {
     display: flex;
     position: relative;
   `,
+
   AddTagButton: styled.button`
     background-color: #3498db;
     width: 200px;
@@ -209,13 +220,21 @@ const S = {
     border: none;
     padding: 6px 12px;
     cursor: pointer;
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    z-index: 2; /* 이미지 위에 배치 */
   `,
+
   ImageContainer: styled.div`
     position: relative;
+    margin-right: 10px;
   `,
   Image: styled.img`
     width: 360px;
-    height: 360px;
+    height: 638px;
+    margin-top: 10px;
   `,
   TagImage: styled.img`
     width: 80px;
@@ -224,28 +243,62 @@ const S = {
   TagContainer: styled.div`
     width: 356px;
     height: 100px;
-    background-color: white;
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    background-size: 30px;
+    position: absolute;
+    display: flex;
+    width: 20px;
+    height: 20px;
+  `,
+
+  TagDataContainer: styled.div<{ searchFormHandler: boolean }>`
+    margin-top: 150px;
+    z-index: 2;
+    position: absolute;
+    left: -178px;
+    width: 356px;
+    height: 100px;
+    background-color: ${(props) => (props.searchFormHandler ? 'transparent' : 'white')};
     display: flex;
     padding: 8px;
     box-sizing: border-box;
   `,
+
+  DataContainer: styled.div`
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+  `,
+
   ProdContainer: styled.div`
     width: 246px;
+    font-size: 16px;
     height: 50px;
-    margin-top: 50px;
   `,
+
+  ProdBrandContainer: styled.div`
+    width: 113px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    height: 20px;
+  `,
+
   DeleteButton: styled.button`
-    width: 40px;
+    width: 24px;
     height: 16px;
     font-size: 8px;
     background-color: transparent;
     cursor: pointer;
   `,
+
   CloseButton: styled.button`
     width: 40px;
     height: 30px;
     position: absolute;
     margin-left: 300px;
+    margin-top: 5px;
     cursor: pointer;
     color: black;
     background-color: transparent;
@@ -255,18 +308,34 @@ const S = {
     }
   `,
   SearchResultsContainer: styled.div`
-    width: 380px;
-    height: 450px;
-    padding: 20px;
+    width: 400px;
+    padding-top: 20px;
+    padding-left: 20px;
+    height: 478px;
     border-radius: 10px;
     display: flex;
     background-color: white;
-    overflow-y: auto;
     position: absolute;
     z-index: 1;
+    /* overflow-y: auto; */
     /* scrollbar-width: none;
     &::-webkit-scrollbar {
       display: none;
     } */
+  `,
+  DeleteIconContainer: styled.div`
+    display: flex;
+    width: 34px;
+    margin-left: 210px;
+    align-items: center;
+  `,
+  TagIconContainer: styled.div`
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `
 };
