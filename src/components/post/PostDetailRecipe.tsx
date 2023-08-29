@@ -34,8 +34,6 @@ const PostDetailRecipe = () => {
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
 
-  console.log('post', post);
-
   // delete post
   const clickDelete = (id: string) => {
     deletePostMutate.mutate(id);
@@ -101,7 +99,11 @@ const PostDetailRecipe = () => {
 
               return (
                 <div key={imageIndex} style={{ position: 'relative' }}>
-                  <img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`} alt={imageUrl} />
+                  <img
+                    style={{ width: '360px', height: '638px' }}
+                    src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`}
+                    alt={imageUrl}
+                  />
                   {post.recipeBody[imageIndex] && <div>{post.recipeBody[imageIndex]}</div>}
 
                   {tagsForImage.map((tag: ImageTag, tagIndex: number) => (
