@@ -10,7 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split('/')[1];
-  console.log(path);
+
   return (
     <S.Area $path={path}>
       <S.UpperContainer>

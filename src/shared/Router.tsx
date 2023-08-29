@@ -1,6 +1,6 @@
 import React from 'react';
 import { GlobalStyle } from '../styles/GlobalStyle';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import Layout from '../layout/Layout';
 import LayoutWrite from 'src/layout/LayoutWrtie';
@@ -17,19 +17,28 @@ import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import Report from 'src/components/sidebar/Report';
+import PostModal from 'src/components/renderPosts/PostModal';
 
 const Router = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  let state = location.state as { backgroundLocation?: Location };
+
+  window.addEventListener('beforeunload', (event) => {
+    navigate(location.pathname);
+  });
+
   return (
-    <BrowserRouter>
+    <>
       <GlobalStyle />
-      <Routes>
+      <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password_reset" element={<PasswordReset />} />
           <Route path="/password_change" element={<PasswordChange />} />
-          <Route path="/detail/:id" element={<Detail />} />
           <Route path="/report" element={<Report />} />
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
@@ -42,7 +51,12 @@ const Router = () => {
           </Route>
         </Route>
       </Routes>
-    </BrowserRouter>
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route path="/detail/:id" element={<PostModal />} />
+        </Routes>
+      )}
+    </>
   );
 };
 
