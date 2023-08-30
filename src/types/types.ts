@@ -8,6 +8,15 @@ export interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   autoFocus?: boolean;
 }
+export interface TextAreaInputProps {
+  type: string;
+  name: string;
+  id?: string;
+  title: string;
+  value: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  autoFocus?: boolean;
+}
 
 // post
 export interface Post {
@@ -25,6 +34,7 @@ export interface Post {
   tags: { x: number; y: number; prodData: string; img: string; price: string }[];
   tagimage?: string;
   img: string;
+  recipeBody?: string[];
 }
 
 export interface PostUserProfile {
@@ -65,26 +75,11 @@ export interface NewRecipePost {
   userId: string;
 }
 
-// export interface RecipeNewPost {
-//   postCategory?: string;
-//   title: string;
-//   body?: string[];
-//   userId?: string;
-// }
-
 export interface EditPost {
   orgPostId: string | null;
   id: string;
   title: string;
   body: string;
-}
-
-// recipe post
-export interface RecipeNewPost {
-  postCategory: string;
-  title: string;
-  body: string[];
-  userId: string;
 }
 
 export interface TagEditPost {
@@ -142,6 +137,7 @@ export interface RenderComponents {
 }
 
 // 이 아래는 이미지 태그 관련 프롭스입니다! 위에 포스트에도 살짝 있긴합니다
+
 export interface Tag {
   x: number;
   y: number;
@@ -149,6 +145,7 @@ export interface Tag {
   img: string;
   price: string;
   prodBrand?: string;
+  id?: string;
 }
 
 export interface ImageTag {
@@ -158,6 +155,7 @@ export interface ImageTag {
   img: string;
   price: string;
   selectedimg: string;
+  prodBrand?: string;
 }
 
 export interface ManyTag {
@@ -180,6 +178,7 @@ export interface Data {
   prodBrand: string;
   prodCategory: string;
   price: string;
+  id: string;
 }
 
 export interface ImageTagProps {
@@ -193,7 +192,6 @@ export interface ImageTagProps {
 
 export interface ImageTagPropsToAddImageComponent {
   onImageSelect: (selectedImage: File) => void;
-  onRemovedImage: (removedImage: File) => void;
 }
 
 export interface SearchProps {
@@ -202,7 +200,14 @@ export interface SearchProps {
 
 export interface ImageUploaderProps {
   onImageSelect: (imageFile: File) => void;
+  imageSelected: boolean;
 }
+export interface TagImageProps {
+  imageUrl: string;
+  recipeBody?: string;
+  tagsForImage: ImageTag[];
+}
+
 //여기까지
 
 /// 무한스크롤 관련

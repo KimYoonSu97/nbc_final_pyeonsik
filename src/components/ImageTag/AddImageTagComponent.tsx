@@ -10,13 +10,14 @@ import { ReactComponent as TrashCanIcon } from 'src/components/ImageTag/svg/Tras
 //Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
 export const tagsDataAtom = atom<{ [key: string]: Tag[] }>({});
+export const imagesAtom = atom<File[]>([]);
 
 // 이미지 태그를 추가하는 컴포넌트 정의
-const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onImageSelect, onRemovedImage }) => {
+const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onImageSelect }) => {
   const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
   const [inputData, setInputData] = useAtom(contentsAtom);
+  const [, setImages] = useAtom(imagesAtom);
   const [, setTagsData] = useAtom(tagsDataAtom);
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   // 이미지 태그 컴포넌트 추가 함수
   const addImageTagComponent = () => {
@@ -26,7 +27,7 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
         <ImageTag
           onTagsAndResultsChange={(tags) => handleTagsChange(componentUuid, tags)}
           onImageSelect={(selectedImage) => {
-            setSelectedImages((prevImages) => [...prevImages, selectedImage]);
+            setImages((prevImages) => [...prevImages, selectedImage]);
             onImageSelect(selectedImage);
           }}
           onContentsChange={(newContents) => handleContentsChange(componentUuid, newContents)}
@@ -55,12 +56,8 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
     const index = Object.keys(inputData).indexOf(uuid);
 
     if (index !== -1) {
-      const removedImage = selectedImages[index];
-      // 이미지 삭제 콜백 호출
-      onRemovedImage(removedImage);
-
-      // 기존 상태 업데이트
-      setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+      //삭제 수행 후 값 업데이트
+      setImages((prevImages) => prevImages.filter((_, i) => i !== index));
 
       setImageTagComponents((prevComponents) => {
         const updatedComponents = prevComponents.filter((_, i) => i !== index);
@@ -85,7 +82,7 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
       {imageTagComponents.map((component) => {
         const componentUuid = (component.key as string) || '';
         return (
-          <div key={componentUuid}>
+          <div key={componentUuid} style={{ marginTop: '10px' }}>
             <S.RemoveButton onClick={() => removeImageTagComponent(componentUuid)}>
               <TrashCanIcon />
             </S.RemoveButton>

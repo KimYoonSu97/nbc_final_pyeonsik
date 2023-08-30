@@ -6,8 +6,8 @@ import PostDetailRecipe from 'src/components/post/PostDetailRecipe';
 const Detail = () => {
   return (
     <div>
-      <PostDetailCommon />
-      {/* <PostDetailRecipe /> */}
+      {/* <PostDetailCommon /> */}
+      <PostDetailRecipe />
       <Comment />
     </div>
   );
