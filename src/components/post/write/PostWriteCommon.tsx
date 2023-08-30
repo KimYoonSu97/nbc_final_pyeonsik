@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { OrgPostIdProbs, Post } from 'src/types/types';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 import EditorQuill from './EditorQuill';
@@ -10,9 +9,10 @@ import { S } from './StyledPostWriteCommon';
 
 interface orgPostIdProps {
   orgPostId: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const PostWriteCommon = ({ orgPostId }: orgPostIdProps) => {
+const PostWriteCommon = ({ orgPostId, setCategory }: orgPostIdProps) => {
   const navigate = useNavigate();
   const userId: string | undefined = useLoginUserId();
   const postRef = useRef<HTMLInputElement>(null);
@@ -34,11 +34,21 @@ const PostWriteCommon = ({ orgPostId }: orgPostIdProps) => {
     navigate(`/`);
   };
 
+  const clickLogo = () => {
+    navigate(`/`);
+  };
+  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+  const clickCategory = () => {
+    setCategory('recipe');
+  };
+
   return (
     <S.WriteArea>
       <S.WriteForm onSubmit={submitPost}>
         <S.WriteHeader>
-          <div onClick={() => navigate(`/`)}>로고 영역</div>
+          <div onClick={clickLogo}>로고 영역</div>
           <S.AddButton type="submit">
             <S.AddText>공유하기</S.AddText>
             <S.AddIcon>
@@ -47,7 +57,7 @@ const PostWriteCommon = ({ orgPostId }: orgPostIdProps) => {
           </S.AddButton>
         </S.WriteHeader>
         <S.TitleBox>
-          <S.CategoryText>그르르갉 </S.CategoryText>
+          <S.CategoryText>그르르갉</S.CategoryText>
           <S.Contour />
           <S.Title
             ref={postRef}
@@ -55,16 +65,16 @@ const PostWriteCommon = ({ orgPostId }: orgPostIdProps) => {
             name="title"
             placeholder="제목 생략 가능"
             value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={changeTitle}
             autoFocus
           />
           <S.SelectCategory>
             <S.SelectIcon>
               <Select />
             </S.SelectIcon>
-            <S.SelectText>편식조합</S.SelectText>
+            <S.SelectText type="button" onClick={clickCategory}>
+              편식조합
+            </S.SelectText>
           </S.SelectCategory>
         </S.TitleBox>
         <S.EditorArea>

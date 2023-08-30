@@ -103,7 +103,8 @@ export const S = {
     gap: 8px;
 
     display: flex;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
   `,
 
   SelectIcon: styled.div`
@@ -111,7 +112,9 @@ export const S = {
     height: 20px;
   `,
 
-  SelectText: styled.div`
+  SelectText: styled.button`
+    background-color: transparent;
+    padding: 0px;
     color: var(--neutral-400, #98a2b3);
     font-style: normal;
     font-size: 14px;
