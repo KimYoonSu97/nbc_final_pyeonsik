@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useAtom } from 'jotai';
 import { Post } from 'src/types/types';
 import { postsAtom } from '../FetchPosts';
 import { likesAtom } from '../FetchPosts';
+
 import { styled } from 'styled-components';
 
 const RealTimeCombo = () => {
@@ -10,6 +13,8 @@ const RealTimeCombo = () => {
   const [posts] = useAtom(postsAtom);
   const [likes] = useAtom(likesAtom);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+
+  const navigate = useNavigate();
 
   // 가져온 포스트 목록에서 likes의 길이 순으로 정렬해서 좋아요 순 5개까지 디스플레이
   useEffect(() => {
@@ -23,11 +28,15 @@ const RealTimeCombo = () => {
     setFilteredPosts(sortedPosts);
   }, [posts, likes]);
 
+  const handleDetailClick = (postId: string) => {
+    navigate(`/detail/${postId}`);
+  };
+
   return (
     <S.ContentsArea>
       {/* <>지금 인기있는 편식 조합</> */}
       {filteredPosts.map((post, index) => (
-        <S.ContentWrapper key={post.id}>
+        <S.ContentWrapper key={post.id} onClick={() => handleDetailClick(post.id)}>
           <S.RankNum $isfirst={index === 0}>{index + 1}</S.RankNum>
 
           <S.ImageWrapper>
@@ -40,7 +49,7 @@ const RealTimeCombo = () => {
           {/* <Rank ></Rank> */}
 
           {/* <Title></Title> */}
-          {post.likesCount}
+          {/* {post.likesCount} */}
         </S.ContentWrapper>
       ))}
     </S.ContentsArea>
@@ -65,6 +74,7 @@ const S = {
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
   `,
 
   ImageWrapper: styled.div`
@@ -83,7 +93,7 @@ const S = {
   }>`
     width: 18px;
     height: 18px;
-    background-color: ${({ $isfirst }) => ($isfirst ? '#d9d9d9' : 'white')};
+    background-color: ${({ $isfirst }) => ($isfirst ? 'gold' : 'white')};
     border-radius: 100px;
     border: 1px solid #d9d9d9;
     display: flex;

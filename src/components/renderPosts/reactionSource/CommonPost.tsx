@@ -14,7 +14,7 @@ interface Props {
 const CommonPost = ({ item }: Props) => {
   const navigate = useNavigate();
   const { nickname, profileImg } = item.userId as PostUserProfile;
-  const { id, postCategory, body, title } = item;
+  const { id, postCategory, body, title, recipeBody } = item;
   const location = useLocation();
 
   return (
@@ -39,7 +39,7 @@ const CommonPost = ({ item }: Props) => {
           </S.BottomArea>
           <S.TitleArea>{title}</S.TitleArea>
           {/* editor 내용 변환 */}
-          <S.BodyArea dangerouslySetInnerHTML={{ __html: body }} />
+          <S.BodyArea dangerouslySetInnerHTML={{ __html: recipeBody ? recipeBody[0] : body }} />
         </S.PostBox>
       </S.Container>
     </S.Area>

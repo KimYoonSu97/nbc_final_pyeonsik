@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { PostBookmark, PostLike } from 'src/types/types';
@@ -10,7 +10,7 @@ import usePostBookmark from 'src/hooks/usePostBookmark';
 // api
 import { getPost } from 'src/api/posts';
 import { getPostLike } from 'src/api/postLikes';
-import { Tag, ImageTag } from 'src/types/types';
+import TagImage from '../ImageTag/TagImage';
 
 const PostDetailRecipe = () => {
   // current user id
@@ -23,7 +23,6 @@ const PostDetailRecipe = () => {
   const { deletePostMutate } = useMutate();
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
-  const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
 
   // read data
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
@@ -33,6 +32,8 @@ const PostDetailRecipe = () => {
   const postWriter = post?.userId;
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
+
+  console.log('data', data);
 
   // delete post
   const clickDelete = (id: string) => {
@@ -79,13 +80,10 @@ const PostDetailRecipe = () => {
   if (data?.data.length === 0) {
     return <Navigate to="/" />;
   }
-  const handleTagClick = (tag: Tag) => {
-    setSelectedTag(selectedTag === tag ? null : tag);
-  };
 
   return (
     <div>
-      <img src={postWriter.profileImg} />
+      <img src={postWriter.profileImg} alt="" />
       <div>작성자 등급</div>
       <div>{postWriter.nickname}</div>
       <div>{post.created_at}</div>
@@ -93,55 +91,11 @@ const PostDetailRecipe = () => {
 
       <div>
         {post.tagimage && post.tagimage.length > 0 && (
-          <div style={{ position: 'relative' }}>
-            {post.tagimage.map((imageUrl: string, imageIndex: number) => {
-              const tagsForImage = post.tags[imageIndex] || [];
-
-              return (
-                <div key={imageIndex} style={{ position: 'relative' }}>
-                  <img
-                    style={{ width: '360px', height: '638px' }}
-                    src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${imageUrl}`}
-                    alt={imageUrl}
-                  />
-                  {post.recipeBody[imageIndex] && <div>{post.recipeBody[imageIndex]}</div>}
-
-                  {tagsForImage.map((tag: ImageTag, tagIndex: number) => (
-                    <div
-                      key={tagIndex}
-                      style={{
-                        position: 'absolute',
-                        left: tag.x + 'px',
-                        top: tag.y + 'px',
-                        backgroundColor: 'red',
-                        width: '30px',
-                        height: '30px'
-                      }}
-                      onClick={() => handleTagClick(tag)}
-                    >
-                      {selectedTag === tag && (
-                        <div
-                          className="details"
-                          style={{
-                            backgroundColor: 'skyblue',
-                            width: '300px',
-                            padding: '10px',
-                            position: 'absolute',
-                            zIndex: 1
-                          }}
-                        >
-                          {tag.prodData}
-                          <br />
-                          {tag.price}
-                          <img src={tag.img} alt="상품 이미지" />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
+          <TagImage
+            imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[0]}`}
+            recipeBody={post.recipeBody[0]}
+            tagsForImage={post.tags[0] || []}
+          />
         )}
 
         {userId === postWriter.id && (
