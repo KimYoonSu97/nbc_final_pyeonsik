@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import PostList from 'src/components/post/PostList';
 import PostModal from 'src/components/renderPosts/PostModal';
 import { useAtom } from 'jotai';

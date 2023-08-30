@@ -5,7 +5,7 @@ import { getPostBookmark } from 'src/api/postBookmark';
 import { getPostLike } from 'src/api/postLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import usePostLikes from 'src/hooks/usePostLikes';
-import { BottomFunctionProps, PostLike } from 'src/types/types';
+import { BottomFunctionProps } from 'src/types/types';
 import { ReactComponent as Like } from 'src/components/post/svg/Like.svg';
 import { ReactComponent as Bookmark } from 'src/components/post/svg/Bookmark.svg';
 import { ReactComponent as Quotation } from 'src/components/post/svg/Quotation.svg';
@@ -14,7 +14,7 @@ import { ReactComponent as UnLike } from 'src/components/post/svg/UnLike.svg';
 import { ReactComponent as UnBookmark } from 'src/components/post/svg/UnBookmark.svg';
 import { ReactComponent as UnQuotation } from 'src/components/post/svg/UnQuotation.svg';
 import { ReactComponent as UnLink } from 'src/components/post/svg/UnLink.svg';
-import styled from 'styled-components';
+import { S } from './StyledBottomFunction';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
 
   // 좋아요
-  const clickPostLike = (postLike: PostLike) => {
+  const clickPostLike = () => {
     if (!postLike) {
       const newPostLike = {
         postId: post.id,
@@ -60,7 +60,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   };
 
   // clip board
-  const clickCopyLink = async (pathname: string) => {
+  const clickCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`${pathname}`);
       alert('링크가 복사되었습니다.');
@@ -72,7 +72,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   return (
     <S.FunctionBox>
       <S.FunctionButtonBox>
-        <S.FunctionButton onClick={() => clickPostLike(postLike)}>{postLike ? <Like /> : <UnLike />}</S.FunctionButton>
+        <S.FunctionButton onClick={clickPostLike}>{postLike ? <Like /> : <UnLike />}</S.FunctionButton>
         <S.FunctionCount>2,936</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
@@ -85,7 +85,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
         <S.FunctionButton onClick={clickPostBookmark}>{postBookmark ? <Bookmark /> : <UnBookmark />}</S.FunctionButton>
         <S.FunctionCount>1,034</S.FunctionCount>
       </S.FunctionButtonBox>
-      <S.FunctionButton onClick={() => clickCopyLink(pathname)}>
+      <S.FunctionButton onClick={clickCopyLink}>
         <UnLink />
       </S.FunctionButton>
     </S.FunctionBox>
@@ -93,34 +93,3 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 };
 
 export default BottomFunction;
-
-export const S = {
-  FunctionBox: styled.div`
-    margin: 36px 0px 140px 0px;
-    gap: 50px;
-    display: inline-flex;
-  `,
-
-  FunctionButtonBox: styled.div`
-    gap: 6px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  `,
-
-  FunctionButton: styled.button`
-    background-color: transparent;
-    height: 24px;
-  `,
-
-  FunctionCount: styled.div`
-    color: var(--neutral-500, #667085);
-    text-align: center;
-    font-style: normal;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 28px; /* 175% */
-  `
-};

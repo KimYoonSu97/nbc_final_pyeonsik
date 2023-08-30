@@ -14,7 +14,6 @@ export interface Post {
   id: string;
   created_at: string;
   orgPostId: string;
-  //  orgUserId: string 임시 (혜영)
   postCategory: string;
   title: string;
   body: string;
@@ -36,7 +35,6 @@ export interface PostUserProfile {
 
 export interface OrgPostIdProbs {
   orgPostId: string;
-  orgUserId: string;
 }
 
 export interface CommonBodyProps {
@@ -52,7 +50,6 @@ export interface BottomFunctionProps {
 // 게시글 작성 임시
 export interface NewPost {
   orgPostId: string | null;
-  orgUserId: string | null;
   postCategory: string;
   title: string;
   body: string;
@@ -61,7 +58,6 @@ export interface NewPost {
 
 export interface NewRecipePost {
   // orgPostId: string | null;
-  // orgUserId: string | null;
   postCategory: string;
   title: string;
   recipeBody: string[];
@@ -77,7 +73,6 @@ export interface NewRecipePost {
 
 export interface EditPost {
   orgPostId: string | null;
-  orgUserId: string | null;
   id: string;
   title: string;
   body: string;

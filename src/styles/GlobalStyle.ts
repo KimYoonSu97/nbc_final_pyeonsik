@@ -16,12 +16,12 @@ export const GlobalStyle = createGlobalStyle`
 // reset.css
 *{
 	font-family: "Pretendard-Regular";
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
 
 button{
-    outline:none;
-    border:none;
+    outline: none;
+    border: none;
 	cursor: pointer;
 }
 

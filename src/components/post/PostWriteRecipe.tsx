@@ -11,11 +11,10 @@ import PostWriteInput from './PostWriteInput';
 
 interface orgPostIdProbs {
   orgPostId: string;
-  orgUserId: string;
 }
 
 // recipe, common write component 정리 필요
-const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
+const PostWriteRecipe = ({ orgPostId }: orgPostIdProbs) => {
   const navigate = useNavigate();
   //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
   const { addRecipePostMutate } = usePost();
@@ -63,7 +62,6 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
 
     const newPost = {
       orgPostId,
-      orgUserId,
       postCategory: 'recipe',
       userId,
       title,
@@ -96,7 +94,6 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: orgPostIdProbs) => {
         />
         <button type="submit">add</button>
       </form>
-
       <AddImageTagComponent onImageSelect={handleImageSelect} onRemovedImage={handleRemovedImage} />
     </>
   );
