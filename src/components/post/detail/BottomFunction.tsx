@@ -22,7 +22,7 @@ const BottomFunction = ({ userId, post, QuotationNum }: BottomFunctionProps) => 
   const { id } = useParams<string>();
   const { pathname } = useLocation();
 
-  // const { data: postQuotationData } = useQuery({ queryKey: ['posts'], queryFn: () => getQuotationPosts(id!) });
+  const { data: postQuotationData } = useQuery({ queryKey: ['post_quotation'], queryFn: () => getQuotationPosts(id!) });
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
@@ -31,6 +31,7 @@ const BottomFunction = ({ userId, post, QuotationNum }: BottomFunctionProps) => 
   const postLike = postLikeList?.find((like) => like.userId === userId);
   const postBookmarkList = postBookmarkData?.data;
   const postBookmark = postBookmarkList?.find((bookmark) => bookmark.userId === userId);
+  console.log('인용', postQuotationData);
 
   // 좋아요
   const clickPostLike = () => {

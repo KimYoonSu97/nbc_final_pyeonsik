@@ -21,7 +21,7 @@ const PostDetailCommon = () => {
   const { deletePostMutate } = useMutate();
 
   // read data
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
+  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPosts() });
   const post = data?.data?.filter((post) => post.id === id)[0];
   const postUser = post?.userId;
   const orgPost = post?.orgPostId;
