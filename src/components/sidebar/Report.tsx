@@ -101,13 +101,13 @@ const Report = () => {
           <div>
             <h1>식신 고객센터</h1>
             <h2>
-              안녕하세요!식신 고객센터입니다.
+              안녕하세요! 식신 고객센터입니다.
               <span>식신을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
             </h2>
           </div>
           {userId ? null : (
             <div>
-              <h2>이메일 입력</h2>
+              <h3>이메일 입력</h3>
               <input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -117,7 +117,7 @@ const Report = () => {
           )}
 
           <div>
-            <h2>문의 항목</h2>
+            <h3>문의 항목</h3>
             <div className="options-box">
               {options1.map((option) => (
                 <p
@@ -129,13 +129,13 @@ const Report = () => {
                 </p>
               ))}
             </div>
-            <button onClick={handleNext}>선택완료</button>
+            <button onClick={handleNext}>선택 완료</button>
           </div>
         </ReportInner>
       )}
       {step === 2 && (
         <ReportInner>
-          <h2>이런! 불쾌함을 조성하는 유저가 있나요?</h2>
+          <h3>이런! 불쾌함을 조성하는 유저가 있나요?</h3>
           <div className="options-box">
             {options2.map((option) => {
               return (
@@ -149,12 +149,12 @@ const Report = () => {
               );
             })}
           </div>
-          <button onClick={handleNext2}>선택완료</button>
+          <button onClick={handleNext2}>선택 완료</button>
         </ReportInner>
       )}
       {step === 3 && (
         <ReportInner>
-          <h2>해당 내용에 대해 확인 할 수 있는 사진,파일,링크를 업로드 해주세요.</h2>
+          <h3 className='last_h3'>해당 내용에 대해 확인 할 수 있는<span>사진, 파일, 링크를 업로드 해주세요.</span></h3>
           <div>
             <label htmlFor="fileupload">클릭하여 파일을 선택해주세요.</label>
             <input
@@ -171,6 +171,7 @@ const Report = () => {
             placeholder="주소 링크를 입력해주세요."
           ></input>
           <input
+          className='message'
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
@@ -200,27 +201,50 @@ const ReportWrap = styled.div``;
 
 const ReportInner = styled.div`
   h1 {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: bold;
     letter-spacing: -2px;
+    margin-bottom: 20px;
   }
   h2 {
-    font-size: 38px;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 50px;
+    span{
+      display: block;
+    }
+  }
+  h3{
+    font-size: 24px;
     font-weight: bold;
-    letter-spacing: -2px;
+    line-height: 32px;
+    margin-bottom: 16px;
+    span{
+      display: block;
+    }
+  }
+  .last_h3{
+    margin-bottom: 34px;
+  }
+  .options-box{
+    margin-bottom: 40px;
   }
   p {
-    border: solid 1px #999;
+    width: 310px;
+    border: 1px solid #CED4DA;
     background-color: #fff;
     border-radius: 5px;
-    padding: 10px;
+    padding: 11px 0px 11px 12px;
+    margin-bottom: 8px;
   }
   .selected {
-    background: red;
+    background: #ffb334;
   }
   button {
     width: 210px;
     padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
     text-align: left;
     border-radius: 5px;
     background-color: #ced4da;
@@ -228,21 +252,27 @@ const ReportInner = styled.div`
   label {
     display: block;
     width: 100%;
+    font-size: 13px;
+    color: #666;
     background-color: #fff;
-    padding: 10px 3px;
+    padding: 13px 12px;
     border-radius: 7px;
     margin-bottom: 15px;
+    cursor: pointer;
+  }
+  div>input{
+    
   }
   input {
     display: block;
     width: 100%;
-    padding: 10px 3px;
+    padding: 10px 12px;
     border-radius: 7px;
     outline: none;
     border: none;
     margin-bottom: 15px;
-    &:last-child {
-      margin-bottom: 40px;
-    }
+  }
+  .message{
+    padding-bottom: 140px;
   }
 `;
