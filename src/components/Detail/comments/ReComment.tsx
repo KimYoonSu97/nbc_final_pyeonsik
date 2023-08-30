@@ -5,6 +5,8 @@ import { ReCommentWrap, CommentWriteWrap, ReCommentToggle } from './styledCommen
 import ReCommentLikes from './ReCommentLikes';
 import { useParams } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+import useMutate from 'src/hooks/useReComment';
+import CreatedAt from './CreatedAt';
 
 interface ReCommentProps {
   parentCommentId: string;
@@ -12,28 +14,16 @@ interface ReCommentProps {
 
 const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
   const [reComment, setReComment] = useState('');
-  const [isToggle, setIsToggle] = useState(false);
+  const [isReCommentToggle, setIsReCommentToggle] = useState(false);
+  const [isReCommentInputToggle, setIsReCommentInputToggle] = useState(false);
   const [updateToggle, setUpdateToggle] = useState(false);
   const [updateComment, setUpdateComment] = useState('');
   const [updateId, setUpdateId] = useState<string | null>(null);
-  const queryClient = useQueryClient();
+  const { writeReCommentMutation, deleteReCommentMutation, updateReCommentMutation } = useMutate();
   const { id } = useParams();
   const userId = useLoginUserId();
-  console.log(id);
 
-  const { data: reCommentData } = useQuery(['reComment'], () => getReCommentData(parentCommentId));
-
-  const WriteReCommentMutation = useMutation(writeReCommentData, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['reComment']);
-    }
-  });
-
-  const deleteReCommentMutation = useMutation(deleteReCommentData, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['reComment']);
-    }
-  });
+  const { data: reCommentData } = useQuery(['reComment', parentCommentId], () => getReCommentData(parentCommentId));
 
   //댓글 삭제 버튼
   const deleteReCommentButton = (id: string) => {
@@ -51,26 +41,24 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
       postId: id,
       userId
     };
-    if (userId) {
-      WriteReCommentMutation.mutate(newReComment);
-      setReComment('');
-    } else {
+    if (!userId) {
       alert('로그인 후 이용해 주세요.');
+      return;
     }
+    if(reComment.trim()===''){
+      alert('댓글을 작성해 주세요.')
+      return;
+    }
+    writeReCommentMutation.mutate(newReComment);
+    setReComment('');
   };
 
-  const updateMutation = useMutation(updateReCommentData, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['reComment']);
-    }
-  });
-
-  const updateCommentButton = (id: string) => {
+  const updateReCommentButton = (id: string) => {
     const newComment = {
       id,
       comment: updateComment
     };
-    updateMutation.mutate(newComment);
+    updateReCommentMutation.mutate(newComment);
     setUpdateToggle(false);
   };
 
@@ -80,22 +68,27 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
     setUpdateId(id);
   };
 
-  //작성 날짜 월일로 변환
-  const commentWriteDate = (date: string) => {
-    const writeDate = new Date(date);
-    const month = writeDate.getMonth() + 1;
-    const day = writeDate.getDate();
-    return `${month}월 ${day}일`;
-  };
   const openReComment = () => {
-    setIsToggle(!isToggle);
+    setIsReCommentToggle(!isReCommentToggle);
   };
+
+  const openReCommentInput = () => {
+    setIsReCommentInputToggle(!isReCommentInputToggle);
+  };
+
+  const noetime = new Date().getTime()
+  console.log(noetime)
 
   return (
     <>
-      <ReCommentToggle onClick={openReComment}>{reCommentData?.length}개의 답글보기</ReCommentToggle>
-      {isToggle && (
-        <>
+      <>
+        <button onClick={openReCommentInput}>답글</button>
+        {reCommentData?.length !== 0 ? (
+          <ReCommentToggle onClick={openReComment}>{reCommentData?.length}개의 답글보기</ReCommentToggle>
+        ) : (
+          ''
+        )}
+        {isReCommentInputToggle && (
           <CommentWriteWrap>
             <form
               onSubmit={(e) => {
@@ -114,28 +107,20 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
               </button>
             </form>
           </CommentWriteWrap>
+        )}
+
+        {isReCommentToggle && (
           <ReCommentWrap>
             {reCommentData?.map((item) => {
               return (
                 <div key={item.id} className="reCommentInner">
                   <div className="recommentInfo">
-                    {userId && item.users && item.users.profileImg && item.users.nickname !== null ? (
                       <div className="userInfo">
-                        <img src={item.users.profileImg}></img>
-                        <h1>{item.users.nickname}</h1>
-                        <span>{commentWriteDate(item.created_at)}</span>{' '}
+                        <img src={item.users?.profileImg}></img>
+                        <h1>{item.users?.nickname}</h1>
+                        <CreatedAt createdAt={item.created_at}/>
                       </div>
-                    ) : (
-                      '아이디 널이라서 오류남 데이터 지워야함'
-                    )}
                     <div>
-                      {userId && item.userId === userId && (
-                        <div>
-                          <button onClick={() => updateOpenButton(item.id, item.comment)}>수정하기</button>
-                          <button onClick={() => deleteReCommentButton(item.id)}>삭제</button>
-                        </div>
-                      )}
-
                       <ReCommentLikes commentId={item.id} />
                     </div>
                   </div>
@@ -149,7 +134,7 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
                           setUpdateComment(e.target.value);
                         }}
                       ></input>
-                      <button onClick={() => updateCommentButton(item.id)}>수정</button>
+                      <button onClick={() => updateReCommentButton(item.id)}>수정</button>
                       <button
                         onClick={() => {
                           setUpdateToggle(false);
@@ -162,12 +147,18 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
                   ) : (
                     <h2>{item.comment}</h2>
                   )}
+                  {userId && item.userId === userId && (
+                    <div>
+                      <button onClick={() => updateOpenButton(item.id, item.comment)}>수정</button>
+                      <button onClick={() => deleteReCommentButton(item.id)}>삭제</button>
+                    </div>
+                  )}
                 </div>
               );
             })}
           </ReCommentWrap>
-        </>
-      )}
+        )}
+      </>
     </>
   );
 };
