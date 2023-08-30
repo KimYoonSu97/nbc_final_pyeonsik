@@ -9,6 +9,7 @@ import { getPost, getPosts } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
 import { S } from './StyledPostDetailCommon';
+import { Post } from 'src/types/types';
 
 const PostDetailCommon = () => {
   const navigate = useNavigate();
@@ -21,14 +22,23 @@ const PostDetailCommon = () => {
   const { deletePostMutate } = useMutate();
 
   // read data
-  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPosts() });
-  const post = data?.data?.filter((post) => post.id === id)[0];
+  const { isLoading, data } = useQuery({
+    queryKey: ['post'],
+    queryFn: () => getPost(id!),
+    enabled: id ? true : false
+  });
+
+  // const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
+  // const post = data?.data?.[0];
+  // const post = data?.data?.filter((post) => post.id === id)[0];
+  const post = data?.data as Post;
   const postUser = post?.userId;
-  const orgPost = post?.orgPostId;
-  const orgUserNickname = orgPost?.userId?.nickname;
+  const orgPost = post?.orgPostId as Post;
+  // const orgUserNickname = orgPost?.userId?.nickname;
   // const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
-  const QuotationNum = data?.data?.filter((post) => post.orgPostId?.id === id).length;
-  console.log(postUser);
+  // const QuotationNum = data?.data?.filter((post) => post.orgPostId?.id === id).length;
+  // console.log(postUser);
+  // console.log(post);
 
   // delete post
   const clickDelete = (id: string) => {
@@ -45,6 +55,7 @@ const PostDetailCommon = () => {
   if (isLoading) {
     return <p>Loading…</p>;
   }
+
   if (data?.error) {
     alert('잘못된 접근입니다.');
     return <Navigate to="/" />;
@@ -79,8 +90,8 @@ const PostDetailCommon = () => {
       </S.WriterContainer>
       <S.PostTitle>{post.title}</S.PostTitle>
       <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />
-      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      <BottomFunction userId={userId} post={post} QuotationNum={QuotationNum} />
+      {orgPost && <OrgPostCard orgPost={orgPost as Post} orgUserNickname={orgPost?.userId?.nickname as string} />}
+      <BottomFunction userId={userId} post={post} />
     </S.DtailArea>
   );
 };

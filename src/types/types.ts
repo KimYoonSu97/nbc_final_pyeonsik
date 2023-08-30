@@ -22,7 +22,7 @@ export interface TextAreaInputProps {
 export interface Post {
   id: string;
   created_at: string;
-  orgPostId: string;
+  orgPostId: string | Post;
   postCategory: string;
   title: string;
   body: string;
@@ -55,7 +55,6 @@ export interface CommonBodyProps {
 export interface BottomFunctionProps {
   userId: string;
   post: Post;
-  QuotationNum: number | undefined;
 }
 
 // 게시글 작성 임시

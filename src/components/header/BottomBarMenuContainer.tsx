@@ -23,15 +23,9 @@ const BottomBarMenuContainer = () => {
       <S.BoardButton to={`/search/common${location.search}`} $type={'/search/common'} $location={location.pathname}>
         그르르갉
       </S.BoardButton>
-      {findPath(location.pathname) === 'search' && (
-        <S.BoardButton
-          to={`/search/products${location.search}`}
-          $type={'/search/products'}
-          $location={location.pathname}
-        >
-          편의점 제품
-        </S.BoardButton>
-      )}
+      <S.BoardButton to={`/search/products${location.search}`} $type={'/search/products'} $location={location.pathname}>
+        편의점 제품
+      </S.BoardButton>
     </S.ButtonArea>
   );
 };
