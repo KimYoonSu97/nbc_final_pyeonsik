@@ -17,23 +17,20 @@ const OAuthLogin = ({ provider }: OAuthLoginProps) => {
 
   const handleLogin = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: provider
+      const response = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: { redirectTo: '/' }
       });
+
       localStorage.setItem('social', provider);
+
+      // const response = await supabase.auth.signInWithOAuth
+      // console.log(response);
+      // console.log(data);
+      // const { data, error: sessionError } = await supabase.auth.getSession();
+      // console.log(data);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const applyImageLogo = (provider: string) => {
-    switch (provider) {
-      case 'google':
-        return 'google.png';
-      case 'kakao':
-        return 'kakao.jpg';
-      case 'github':
-        return 'github.png';
     }
   };
 
@@ -63,3 +60,43 @@ export default OAuthLogin;
 
 // </button>
 // >
+
+// const getUserDataForHeader = async (id: string) => {
+//   const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
+//   if (error) {
+//   }
+//   setUserData(data as User);
+// };
+
+// // 소셜로그인
+// const socialLogin = async (social: string) => {
+//   const user = await supabase.auth.getUser();
+//   const { data, error } = await supabase.from('users').select('*').eq('id', user.data.user?.id).single();
+//   if (data) {
+//     setUserData(data as User);
+//   } else {
+//     const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
+//     if (socialData !== undefined && socialData[0].identity_data && user.data.user) {
+//       const data = socialData[0].identity_data;
+
+//       const newSocialUser: User = {
+//         email: data.email,
+//         nickname: data.name || data.user_name, // goggle, kakao: name  / github : user_name
+//         profileImg: data.avatar_url
+//       };
+//       const { data: userData, error } = await supabase.from('users').insert(newSocialUser).select('*');
+//       setUserData(newSocialUser as User);
+//     }
+//   }
+// };
+
+// const applyImageLogo = (provider: string) => {
+//   switch (provider) {
+//     case 'google':
+//       return 'google.png';
+//     case 'kakao':
+//       return 'kakao.jpg';
+//     case 'github':
+//       return 'github.png';
+//   }
+// };

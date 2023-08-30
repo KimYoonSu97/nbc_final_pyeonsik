@@ -56,7 +56,7 @@ const Login = () => {
 
       alert('로그인 완료!');
       setUserLogin(userLogin);
-      navigate('/');
+      navigate(-1);
     }
 
     if (error) {
