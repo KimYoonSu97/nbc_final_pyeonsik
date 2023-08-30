@@ -1,16 +1,20 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 // custom hoooks
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 // api
-import { getPost, getPosts } from 'src/api/posts';
+import { getPost } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
 import { S } from './StyledPostDetailCommon';
+import CreatedAt from 'src/components/Detail/comments/CreatedAt';
+import { Post } from 'src/types/types';
 
 const PostDetailCommon = () => {
+  const location = useLocation();
+
   const navigate = useNavigate();
   const { id } = useParams<string>();
 
@@ -21,14 +25,15 @@ const PostDetailCommon = () => {
   const { deletePostMutate } = useMutate();
 
   // read data
-  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPosts() });
-  const post = data?.data?.filter((post) => post.id === id)[0];
+  const { isLoading, data } = useQuery({
+    queryKey: ['post'],
+    queryFn: () => getPost(id!),
+    enabled: id ? true : false
+  });
+  const post = data?.data;
   const postUser = post?.userId;
   const orgPost = post?.orgPostId;
   const orgUserNickname = orgPost?.userId?.nickname;
-  // const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
-  const QuotationNum = data?.data?.filter((post) => post.orgPostId?.id === id).length;
-  console.log(postUser);
 
   // delete post
   const clickDelete = (id: string) => {
@@ -39,8 +44,6 @@ const PostDetailCommon = () => {
   const clickEdit = () => {
     navigate(`/edit/${id}`);
   };
-
-  // time
 
   if (isLoading) {
     return <p>Loading…</p>;
@@ -67,7 +70,9 @@ const PostDetailCommon = () => {
             <S.WriterSir>님의</S.WriterSir>
             {post.postCategory}
           </S.WriterInfo>
-          <S.PostDate>{post.created_at}</S.PostDate>
+          <S.PostDate>
+            <CreatedAt createdAt={post.created_at} />
+          </S.PostDate>
         </div>
         {userId === postUser.id && (
           <S.WriterFunction>
@@ -80,7 +85,7 @@ const PostDetailCommon = () => {
       <S.PostTitle>{post.title}</S.PostTitle>
       <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      <BottomFunction userId={userId} post={post} QuotationNum={QuotationNum} />
+      <BottomFunction userId={userId} post={post} />
     </S.DtailArea>
   );
 };

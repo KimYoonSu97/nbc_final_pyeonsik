@@ -14,7 +14,8 @@ const getPost = async (id: string) => {
   const response = await supabase
     .from('posts')
     .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
-    .eq('id', id);
+    .eq('id', id)
+    .single();
   return response;
 };
 
@@ -30,6 +31,7 @@ const addPost = async (post: NewPost) => {
 const updatePost = async (post: EditPost) => {
   await supabase.from('posts').update(post).eq('id', post.id).select();
 };
+
 const deletePost = async (id: string) => {
   await supabase.from('posts').delete().eq('id', id);
 };

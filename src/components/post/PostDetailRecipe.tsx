@@ -25,10 +25,10 @@ const PostDetailRecipe = () => {
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
 
   // read data
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
+  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(id!) });
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
   const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostLike(id!) });
-  const post = data?.data?.[0];
+  const post = data?.data;
   const postWriter = post?.userId;
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);

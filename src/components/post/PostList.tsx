@@ -7,14 +7,11 @@ import PostCards from '../renderPosts/PostCards';
 
 const PostList = () => {
   const { isLoading, data } = useQuery({
-    queryKey: ['Posts'],
-    queryFn: () => getPosts()
-    // refetchOnMount: false,
-    // staleTime: Infinity
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+    refetchOnMount: false,
+    staleTime: Infinity
   });
-
-  console.log('Loading', isLoading);
-  console.log('Data', data?.data);
 
   if (isLoading) {
     return <p>Loading…</p>;
@@ -27,8 +24,9 @@ const PostList = () => {
     return <p>none</p>;
   }
   const posts = data?.data as Post[];
+  console.log(posts);
 
-  return <PostCards data={posts}></PostCards>;
+  return <PostCards posts={posts} />;
 };
 
 export default PostList;

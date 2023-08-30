@@ -55,7 +55,6 @@ export interface CommonBodyProps {
 export interface BottomFunctionProps {
   userId: string;
   post: Post;
-  QuotationNum: number | undefined;
 }
 
 // 게시글 작성 임시

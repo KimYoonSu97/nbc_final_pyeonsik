@@ -1,28 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-
 import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
-import PostWriteInput from './write/PostWriteInput';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+import EditorQuill from './write/EditorQuill';
+import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
+import { S } from './write/StyledPostWriteCommon';
+import OrgPostCard from './detail/OrgPostCard';
 
 const PostEditCommon = () => {
-  const { id: prams } = useParams<string>();
   const navigate = useNavigate();
+  const { id: prams } = useParams<string>();
+
+  const userId: string | undefined = useLoginUserId();
+  const postRef = useRef<HTMLInputElement>(null);
+
   const { updatePostMutate } = useMutate();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
 
-  const postRef = useRef<HTMLInputElement>(null);
-
-  // current user id
-  const userId: string | undefined = useLoginUserId();
-
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
-  const post = data?.data?.[0];
+  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
+  const post = data?.data;
   const orgPost = post?.orgPostId;
   const orgUserNickname = orgPost?.userId.nickname;
 
@@ -47,6 +48,12 @@ const PostEditCommon = () => {
     navigate(`/detail/${prams}`);
   };
 
+  const clickLogo = () => {
+    navigate(`/`);
+  };
+  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
   const clickCancle = () => {
     navigate(`/detail/${prams}`);
   };
@@ -57,48 +64,45 @@ const PostEditCommon = () => {
   if (data?.error) {
     return <p>Error</p>;
   }
-  if (userId && post?.userId.id !== userId) {
+  if (userId && post.userId?.id && userId !== post.userId.id) {
     alert('접근할 수 없습니다.');
     return <Navigate to="/" />;
   }
 
   return (
-    <div>
-      <form onSubmit={submitPost}>
-        <PostWriteInput
-          ref={postRef}
-          type="text"
-          name="title"
-          title="title"
-          value={title || ''}
-          onChange={(e) => {
-            e.preventDefault();
-            setTitle(e.target.value);
-          }}
-          autoFocus
-        />
-        <PostWriteInput
-          type="text"
-          name="body"
-          title="body"
-          value={body || ''}
-          onChange={(e) => {
-            setBody(e.target.value);
-          }}
-        />
-        {orgPost && (
-          <div>
-            인용 게시글
-            <div>{orgPost.title}</div>
-            <pre dangerouslySetInnerHTML={{ __html: orgPost.body }} />
-            <div>{orgUserNickname}</div>
-            <div>{orgPost.created_at}</div>
-          </div>
-        )}
-        <button type="submit">save</button>
-      </form>
+    <>
+      <S.WriteArea>
+        <S.WriteForm onSubmit={submitPost}>
+          <S.WriteHeader>
+            <div onClick={clickLogo}>로고 영역</div>
+            <S.AddButton type="submit">
+              <S.AddText>공유하기</S.AddText>
+              <S.AddIcon>
+                <Add />
+              </S.AddIcon>
+            </S.AddButton>
+          </S.WriteHeader>
+          <S.TitleBox>
+            <S.CategoryText>그르르갉</S.CategoryText>
+            <S.Contour />
+            <S.Title
+              ref={postRef}
+              type="text"
+              name="title"
+              placeholder="제목 생략 가능"
+              value={title}
+              onChange={changeTitle}
+              autoFocus
+            />
+          </S.TitleBox>
+          <S.EditorArea>
+            <EditorQuill body={body} setBody={setBody} />
+          </S.EditorArea>
+        </S.WriteForm>
+      </S.WriteArea>
+      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
       <button onClick={clickCancle}>cancle</button>
-    </div>
+    </>
   );
 };
 

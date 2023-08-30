@@ -53,11 +53,11 @@ const SearchResult = () => {
       {(() => {
         switch (param.type) {
           case 'all':
-            return <PostCards data={all?.data as unknown as Post[]} />;
+            return <PostCards posts={all?.data as unknown as Post[]} />;
           case 'recipe':
-            return <PostCards data={recipe?.data as unknown as Post[]} />;
+            return <PostCards posts={recipe?.data as unknown as Post[]} />;
           case 'common':
-            return <PostCards data={common?.data as unknown as Post[]} />;
+            return <PostCards posts={common?.data as unknown as Post[]} />;
           default:
             return <ProdSearch></ProdSearch>;
         }
