@@ -51,7 +51,6 @@ export const CommentInner = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
     div{
       display: flex;
       align-items: center;
@@ -79,9 +78,26 @@ export const CommentInner = styled.div`
     padding: 10px 14px;
     background-color: #fff;
     border-radius: 6px;
-    
+    margin-left: 40px;
   }
-
+  .fnButton{
+    display: flex;
+    justify-content: end;
+    margin-left: 40px;
+    button{
+      position: relative; right: 0; top: 0;
+      background: none;
+      color: #98A2B3;
+      &:first-child:after{
+        display: block;
+        content: "";
+        width: 1px;
+        height: 11px;
+        position: absolute; right: -1px; top: 4px;
+        background-color: #98A2B3;
+      }
+    }
+  }
 `;
 export const ReCommentToggle = styled.button`
   background: none;
@@ -96,15 +112,14 @@ export const ReCommentWrap = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
     div{
       display: flex;
       align-items: center;
       gap: 5px;
     }
     img{
-      width: 28px;
-      height: 28px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
     }
     h1{
