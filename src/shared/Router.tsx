@@ -16,7 +16,7 @@ import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import Report from 'src/components/sidebar/Report';
-import PostModal from 'src/components/renderPosts/PostModal';
+import PostModal from 'src/pages/PostModal';
 
 const Router = () => {
   const location = useLocation();
@@ -53,6 +53,7 @@ const Router = () => {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="/login" element={<Login />} />
+
           <Route path="/detail/:id" element={<PostModal />} />
         </Routes>
       )}
