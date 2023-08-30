@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
-import PostWriteInput from './PostWriteInput';
+import PostWriteInput from './write/PostWriteInput';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const PostEditCommon = () => {
@@ -24,7 +24,7 @@ const PostEditCommon = () => {
   const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
   const post = data?.data?.[0];
   const orgPost = post?.orgPostId;
-  const orgUserId = post?.orgUserId;
+  const orgUserNickname = orgPost?.userId.nickname;
 
   // useEffect 순서 확인하기!
   useEffect(() => {
@@ -38,7 +38,6 @@ const PostEditCommon = () => {
 
     const editPost = {
       orgPostId: post.orgPostId?.id,
-      orgUserId: post.orgUserId?.id,
       id: post.id,
       title,
       body
@@ -92,7 +91,7 @@ const PostEditCommon = () => {
             인용 게시글
             <div>{orgPost.title}</div>
             <pre dangerouslySetInnerHTML={{ __html: orgPost.body }} />
-            <div>{orgUserId.nickname}</div>
+            <div>{orgUserNickname}</div>
             <div>{orgPost.created_at}</div>
           </div>
         )}

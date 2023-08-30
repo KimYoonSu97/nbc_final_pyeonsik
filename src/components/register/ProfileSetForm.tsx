@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
+import { useAtom } from 'jotai';
+import { userAtom } from 'src/globalState/jotai';
 
 interface Props {
   userEmail: string;
@@ -17,6 +19,8 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [baseImg] = useState(baseImage);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [_, setLoginUser] = useAtom(userAtom);
+
   const correctNickNameMessages = [
     '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
     '이런 창의적인 생각은 어떻게 하나요? 👏',
@@ -38,12 +42,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   };
 
   const observeNickName = async () => {
-    const { data: existingUsers, error: existingUsersError } = await supabase
-      .from('users')
-      .select('*')
-      .eq('nickname', nickname)
-      .maybeSingle();
-
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
 
@@ -64,6 +62,14 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       setErrorMessage('비속어는 사용할 수 없어요. 🤬');
       return;
     }
+
+    // 타자칠때마다 서버 통신을 합니당 ㅠ
+    // 일단 위에 리턴문이 있어서 그거 다 통과해야 검사 할수 있도록 하는...거로 해놓았습니다.
+    const { data: existingUsers, error: existingUsersError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('nickname', nickname)
+      .maybeSingle();
 
     if (nickname) {
       if (existingUsers) {
@@ -118,7 +124,10 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       return;
     }
 
-    const { data, error } = await supabase.from('users').insert(newUser).select();
+    const { data, error } = await supabase.from('users').insert(newUser).select().single();
+
+    setLoginUser(data);
+
     alert('회원가입 완료!');
     navigate('/');
   };
@@ -142,7 +151,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
         </ProfileImgnameBox>
 
         {!isError && <SuccessMessage>{successMessage}</SuccessMessage>}
-
         {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <Label>닉네임</Label>
         <NickNameInput maxLength={15} type="text" value={nickname} placeholder="닉네임" onChange={nickNameHandler} />

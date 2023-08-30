@@ -1,0 +1,15 @@
+export { ReactComponent as IconLogoSymbolH22 } from './IconLogoSymbolH22.svg';
+export { ReactComponent as IconLogoSymbolH32 } from './IconLogoSymbolH32.svg';
+export { ReactComponent as IconWaterMarkH22 } from './IconLogoWaterMarkH22.svg';
+export { ReactComponent as IconWaterMarkH32 } from './IconLogoWaterMarkH32.svg';
+export { ReactComponent as IconKakao } from './IconKaKao.svg';
+export { ReactComponent as IconGoogle } from './IconGoogle.svg';
+export { ReactComponent as IconBell } from './IconBell.svg';
+export { ReactComponent as IconBadge } from './IconBadge.svg';
+export { ReactComponent as IconRecipe } from './IconRecipe.svg';
+export { ReactComponent as IconCommon } from './IconCommon.svg';
+export { ReactComponent as IconBadgeSmall } from './IconBadgeSmall.svg';
+export { ReactComponent as IconProfile } from './IconProfile.svg';
+export { ReactComponent as IconMyPostBox } from './IconMyPostBox.svg';
+export { ReactComponent as IconCamera } from './IconCamera.svg';
+// export { ReactComponent as  } from '.';

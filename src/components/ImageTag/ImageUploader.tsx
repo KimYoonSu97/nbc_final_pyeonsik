@@ -6,8 +6,8 @@ import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/Camera
 
 import { ImageUploaderProps } from 'src/types/types';
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
-  const [imageSelected, setImageSelected] = useState(false);
+const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
+  const [, setImageSelect] = useState(false);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -17,7 +17,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect }) => {
       const randomFileName = uuidv4() + '.' + fileExtension;
 
       onImageSelect(new File([file], randomFileName));
-      setImageSelected(true);
+      setImageSelect(true);
     }
   };
 

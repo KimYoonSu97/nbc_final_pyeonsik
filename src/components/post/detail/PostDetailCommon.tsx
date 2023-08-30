@@ -5,10 +5,10 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 // api
-import { getPost } from 'src/api/posts';
-import OrgPostCard from '../OrgPostCard';
+import { getPost, getPosts } from 'src/api/posts';
+import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
-import WriterInfo from './WriterInfo';
+import { S } from './StyledPostDetailCommon';
 
 const PostDetailCommon = () => {
   const navigate = useNavigate();
@@ -21,11 +21,14 @@ const PostDetailCommon = () => {
   const { deletePostMutate } = useMutate();
 
   // read data
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
-  const post = data?.data?.[0];
+  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
+  const post = data?.data?.filter((post) => post.id === id)[0];
   const postUser = post?.userId;
   const orgPost = post?.orgPostId;
-  const orgUserNickname = post?.orgUserId?.nickname;
+  const orgUserNickname = orgPost?.userId?.nickname;
+  // const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
+  const QuotationNum = data?.data?.filter((post) => post.orgPostId?.id === id).length;
+  console.log(postUser);
 
   // delete post
   const clickDelete = (id: string) => {
@@ -36,6 +39,8 @@ const PostDetailCommon = () => {
   const clickEdit = () => {
     navigate(`/edit/${id}`);
   };
+
+  // time
 
   if (isLoading) {
     return <p>Loading…</p>;
@@ -50,24 +55,33 @@ const PostDetailCommon = () => {
   }
 
   return (
-    <div>
-      <div>
-        <img src={postUser.profileImg} />
-        <div>작성자 등급</div>
-        <div>{postUser.nickname}</div>
-        <div>{post.created_at}</div>
-      </div>
-      {userId === postUser.id && (
-        <>
-          <button onClick={() => clickDelete(post.id)}>delete</button>
-          <button onClick={clickEdit}>edit</button>
-        </>
-      )}
-      <div>{post.title}</div>
-      <pre dangerouslySetInnerHTML={{ __html: post.body }} />
+    <S.DtailArea>
+      <S.WriterContainer>
+        <S.WriterImgBox>
+          <S.WriterImg src={postUser.profileImg} />
+        </S.WriterImgBox>
+        <div>
+          <S.WriterInfo>
+            <S.WirterLevel>Lv. 수습</S.WirterLevel>
+            {postUser.nickname}
+            <S.WriterSir>님의</S.WriterSir>
+            {post.postCategory}
+          </S.WriterInfo>
+          <S.PostDate>{post.created_at}</S.PostDate>
+        </div>
+        {userId === postUser.id && (
+          <S.WriterFunction>
+            <S.WriterButton onClick={clickEdit}>수정</S.WriterButton>
+            <S.Contour />
+            <S.WriterButton onClick={() => clickDelete(post.id)}>삭제</S.WriterButton>
+          </S.WriterFunction>
+        )}
+      </S.WriterContainer>
+      <S.PostTitle>{post.title}</S.PostTitle>
+      <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      <BottomFunction userId={userId} post={post} />
-    </div>
+      <BottomFunction userId={userId} post={post} QuotationNum={QuotationNum} />
+    </S.DtailArea>
   );
 };
 

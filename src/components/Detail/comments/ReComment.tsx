@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { deleteReCommentData, getReCommentData, updateReCommentData, writeReCommentData } from 'src/api/ReComment';
 import { ReCommentWrap, CommentWriteWrap, ReCommentToggle } from './styledComments';
 import ReCommentLikes from './ReCommentLikes';

@@ -4,23 +4,26 @@ import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
 const getPosts = async () => {
   const response = await supabase
     .from('posts')
-    .select('*,userId(nickname,profileImg)')
+    .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
     .order('created_at', { ascending: false });
-  // .range(0, 9);
   return response;
 };
 
 // post
 const getPost = async (id: string) => {
-  const response = await supabase.from('posts').select('*,userId(*),orgPostId(*),orgUserId(*)').eq('id', id);
+  const response = await supabase
+    .from('posts')
+    .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
+    .eq('id', id);
   return response;
 };
-const addPost = async (post: NewPost) => {
-  await supabase.from('posts').insert(post).select();
+
+const getQuotationPosts = async (orgPostId: string) => {
+  const response = await supabase.from('posts').select('*').eq('orgPostId', orgPostId);
+  return response;
 };
 
-//값 타입이 달라져서 추가했습니다! - 원유길
-const addRecipePost = async (post: NewRecipePost) => {
+const addPost = async (post: NewPost) => {
   await supabase.from('posts').insert(post).select();
 };
 
@@ -29,6 +32,11 @@ const updatePost = async (post: EditPost) => {
 };
 const deletePost = async (id: string) => {
   await supabase.from('posts').delete().eq('id', id);
+};
+
+//값 타입이 달라져서 추가했습니다! - 원유길
+const addRecipePost = async (post: NewRecipePost) => {
+  await supabase.from('posts').insert(post).select();
 };
 
 const tagUpdatePost = async (post: TagEditPost) => {
@@ -50,10 +58,12 @@ const getMyLikePostById = async (id: string) => {
   const response = await supabase.from('post_likes').select('postId(*,userId(*))').eq('userId', id);
   return response;
 };
+
 interface Search {
   keyword: string;
   type?: string;
 }
+
 const getPostByKeyword = async ({ keyword, type }: Search) => {
   if (type === 'all') {
     return await supabase.from('posts').select('*').ilike('title_body', `%${keyword}%`);
@@ -65,6 +75,7 @@ const getPostByKeyword = async ({ keyword, type }: Search) => {
 export {
   getPosts,
   getPost,
+  getQuotationPosts,
   addPost,
   updatePost,
   deletePost,

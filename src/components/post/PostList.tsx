@@ -6,13 +6,17 @@ import { styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 
 const PostList = () => {
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
+  const { isLoading, data } = useQuery({
+    queryKey: ['newPosts'],
+    queryFn: () => getPosts(),
+    refetchOnMount: false,
+    staleTime: Infinity
+  });
   if (isLoading) {
     return <p>Loading…</p>;
   }
   if (data?.error) {
     // error 검사 필요
-
     return <p>Error</p>;
   }
   if (data?.data.length === 0) {
