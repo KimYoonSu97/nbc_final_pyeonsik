@@ -8,27 +8,27 @@ import baseImage from '../../images/baseprofile.jpeg';
 import { Link, useLocation } from 'react-router-dom';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 
 interface User {
+  id: string;
+  created_at?: string;
   email: string;
-  id?: string;
   nickname: string;
   profileImg: string;
 }
 
 const TopBarMenuContainer = () => {
   const location = useLocation();
-  const path = location.pathname.split('/')[1];
-
   const [userLogin, setUserLogin] = useAtom(userAtom);
-
   const userId = useLoginUserId();
-  const [userData, setUserData] = useState<User | null>(null);
   const navigate = useNavigate();
 
   // 욕을 합니다 ***
+
+  // 로그인 한 유저의 정보를 가져오는 쿼리
+  // 아이디가 있어야함...
   const queryKey = userLogin?.id;
   const { data, isLoading, isError } = useQuery(
     ['loginUser'],
@@ -45,49 +45,51 @@ const TopBarMenuContainer = () => {
     }
   );
 
-  // const getUserDataForHeader = async (id: string) => {
-  //   const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
-  //   if (error) {
-  //   }
-  //   setUserData(data as User);
-  // };
+  //소셜로그인 검사함수
+  const checkOrSetOAuthUser = async () => {
+    const { data: checkLogin, error: checkLoginError } = await supabase.auth.getSession();
+    if (checkLoginError) {
+      return;
+    }
+    // 아이디값을 기준으로 조회해봄
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', checkLogin.session?.user.id)
+      .maybeSingle();
+    // 값이 있나요?
+    if (data !== null) {
+      setUserLogin(data);
+    } else {
+      // 값이 없나요?
+      const social = localStorage.getItem('social');
+      const socialData = checkLogin.session?.user.identities?.filter((item) => {
+        if (item.provider === social) {
+          return item.identity_data;
+        }
+      })[0].identity_data;
+      console.log(socialData);
+      const newUser = {
+        email: socialData?.email,
+        profileImg: socialData?.avatar_url,
+        nickname: socialData?.full_name
+      };
+      const { data: loginUser, error: loginUserError } = await supabase.from('users').insert(newUser).select().single();
+      if (error) {
+        return;
+      }
+      setUserLogin(loginUser);
+    }
+  };
 
-  // // 소셜로그인
-  // const socialLogin = async (social: string) => {
-  //   const user = await supabase.auth.getUser();
-  //   const { data, error } = await supabase.from('users').select('*').eq('id', user.data.user?.id).single();
-  //   if (data) {
-  //     setUserData(data as User);
-  //   } else {
-  //     const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
-  //     if (socialData !== undefined && socialData[0].identity_data && user.data.user) {
-  //       const data = socialData[0].identity_data;
-
-  //       const newSocialUser: User = {
-  //         email: data.email,
-  //         nickname: data.name || data.user_name, // goggle, kakao: name  / github : user_name
-  //         profileImg: data.avatar_url
-  //       };
-  //       const { data: userData, error } = await supabase.from('users').insert(newSocialUser).select('*');
-  //       setUserData(newSocialUser as User);
-  //     }
-  //   }
-  // };
-
-  // 로그아웃 핸들러
-  // const signOutHandler = async () => {
-  //   let { error } = await supabase.auth.signOut();
-  //   if (error) {
-  //     alert(error);
-  //     return;
-  //   }
-  //   localStorage.setItem('social', '');
-  //   // setUserLogin('logout');
-  //   alert('로그아웃 완료!');
-  //   // handleRefresh();
-  // };
-
-  //공유하기 기능
+  //소셜로그인
+  useEffect(() => {
+    if (localStorage.getItem('social') && !data) {
+      checkOrSetOAuthUser();
+      console.log('헤더 이펙트 실행 했니?');
+    }
+    console.log('헤더 이펙트 실행');
+  }, [localStorage.getItem('social')]);
 
   return (
     <S.TopBarMenuContainer>
@@ -112,14 +114,20 @@ const TopBarMenuContainer = () => {
             </S.TopBarLogButton>
           </>
         ) : (
+          // 로그인 후
           <>
             <S.Icon>
               <IconBell />
             </S.Icon>
             <S.Level>Lv. 식신</S.Level>
             {/* <p>Hello, {userData?.nickname}</p> */}
-            <S.ProfileImg src={data?.data?.profileImg} alt="프로필 사진"></S.ProfileImg>
-            {/* <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton> */}
+
+            <S.ProfileImg
+              $url={data?.data?.profileImg}
+              onClick={() => {
+                navigate('/mypage/profile');
+              }}
+            />
           </>
         )}
       </S.TopBarLogContainer>
@@ -131,6 +139,9 @@ export default TopBarMenuContainer;
 
 interface Props {
   $signIn?: boolean;
+}
+interface ImageProps {
+  $url?: string;
 }
 
 const S = {
@@ -230,12 +241,30 @@ const S = {
     background: #d9d9d9;
     margin-left: 8px;
   `,
-
-  ProfileImg: styled.img`
+  ProfileImgArea: styled.div`
+    position: fixed;
+  `,
+  ProfileTapMenu: styled.div`
+    top: 0;
+    right: calc((100vw - 1280px) / 2 + 16px);
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+  `,
+  ProfileImg: styled.div<ImageProps>`
+    position: relative;
+    z-index: 9999;
+    background-image: ${(props) => {
+      return `url(${props.$url})`;
+    }};
+    background-size: contain;
+    background-position: center;
     width: 36px;
     height: 36px;
     margin-left: 4px;
-    background: #d9d9d9;
+
     border-radius: 100px;
   `
 };
