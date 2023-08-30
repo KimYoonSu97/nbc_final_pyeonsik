@@ -6,9 +6,9 @@ import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
 import { Link, useLocation } from 'react-router-dom';
-import { getUserData } from 'src/api/userLogin';
+import { getUserData, userLogOut } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 
 interface User {
@@ -19,6 +19,8 @@ interface User {
 }
 
 const TopBarMenuContainer = () => {
+  const queryClient = useQueryClient();
+
   const location = useLocation();
   const path = location.pathname.split('/')[1];
 
@@ -45,16 +47,18 @@ const TopBarMenuContainer = () => {
     }
   );
 
+  const loginMutation = useMutation(userLogOut, {
+    onSuccess: () => {
+      queryClient.removeQueries(['loginUser']);
+    }
+  });
+
   // 로그아웃 핸들러
   const signOutHandler = async () => {
-    let { error } = await supabase.auth.signOut();
-    if (error) {
-      alert(error);
-      return;
-    }
+    loginMutation.mutate();
 
     localStorage.removeItem('social');
-    // setUserLogin('logout');
+    setUserLogin(null);
     alert('로그아웃 완료!');
     // handleRefresh();
   };

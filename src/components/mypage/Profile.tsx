@@ -5,6 +5,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
+import { Navigate } from 'react-router';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -22,13 +23,14 @@ const Profile = () => {
     setCurrentNickname(data?.data?.nickname);
   }, [data]);
 
-  //프로필 수정 시 바로 렌더링
+  //닉네임 수정 시 바로 렌더링
   const nicknameMutation = useMutation(updateUserNickname, {
     onSuccess: () => {
       queryClient.invalidateQueries(['loginUser']);
     }
   });
 
+  //프로필 이미지 수정 시 바로 렌더링
   const profileImgMutation = useMutation(updateProfileImg, {
     onSuccess: () => {
       queryClient.invalidateQueries(['loginUser']);
@@ -77,6 +79,7 @@ const Profile = () => {
   if (data?.data.length === 0) {
     return <p>none</p>;
   }
+
   return (
     <>
       <S.Container>
