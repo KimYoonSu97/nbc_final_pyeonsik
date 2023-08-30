@@ -9,7 +9,7 @@ import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 // import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
-import PostWriteInput from './PostWriteInput';
+import PostWriteInput from './write/PostWriteInput';
 
 const PostEditRecipe = () => {
   const [inputData, setInputData] = useState<string[]>([]);

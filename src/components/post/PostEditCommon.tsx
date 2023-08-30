@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
-import PostWriteInput from './PostWriteInput';
+import PostWriteInput from './write/PostWriteInput';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
 const PostEditCommon = () => {
