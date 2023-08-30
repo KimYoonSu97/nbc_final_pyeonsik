@@ -12,7 +12,6 @@ const PostList = () => {
   }
   if (data?.error) {
     // error 검사 필요
-
     return <p>Error</p>;
   }
   if (data?.data.length === 0) {

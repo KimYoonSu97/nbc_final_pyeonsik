@@ -12,7 +12,7 @@ const getPosts = async () => {
 
 // post
 const getPost = async (id: string) => {
-  const response = await supabase.from('posts').select('*,userId(*),orgPostId(*),orgUserId(*)').eq('id', id);
+  const response = await supabase.from('posts').select('*,userId(*),orgPostId(*,userId(nickname))').eq('id', id);
   return response;
 };
 const addPost = async (post: NewPost) => {

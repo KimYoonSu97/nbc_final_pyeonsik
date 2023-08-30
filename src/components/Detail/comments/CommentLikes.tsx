@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addLike, deleteLike, getLike } from 'src/api/commentLike';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { AiOutlineLike,AiFillLike } from "react-icons/ai";
+import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 interface CommentIdProps {
   commentId: string;
 }
 interface LikeType {
   id: string;
-  commentId : string;
-  userId : string;
-  postId : string;
+  commentId: string;
+  userId: string;
+  postId: string;
 }
 
 const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
@@ -19,7 +19,6 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
 
   //좋아요 데이터 받기
   const { data: likeData } = useQuery(['likes'], getLike);
-
 
   //클릭시 좋아요 데이터에 추가
   const addLikeMutation = useMutation(addLike, {
@@ -35,7 +34,6 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
   });
 
   const toggleLike = (commentId: string) => {
-
     const changeLike = likeData?.find((like) => {
       return like.commentId === commentId && like.userId === userId;
     });
@@ -47,7 +45,7 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
     }
   };
 
-  const checkLike = (commentId: string, userId: string| undefined, likeData: any) => {
+  const checkLike = (commentId: string, userId: string | undefined, likeData: any) => {
     let answer = false;
     let array: LikeType[] = [];
     if (likeData) {
@@ -69,7 +67,7 @@ const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
 
   return (
     <button onClick={() => toggleLike(commentId)}>
-      {checkLike(commentId, userId, likeData) ? <AiFillLike size={"18px"}/> : <AiOutlineLike size={"18px"}/>}
+      {checkLike(commentId, userId, likeData) ? <AiFillLike size={'18px'} /> : <AiOutlineLike size={'18px'} />}
       {getCommentLikesCount(commentId)}
       {/* <좋아요컴포넌트 comment.id user.id> 배열을 불러온 useQuery [likeData]=1초 => fetch => http 100번 0초  </좋아용> */}
     </button>
