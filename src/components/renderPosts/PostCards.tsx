@@ -2,16 +2,12 @@ import React from 'react';
 import { Post } from 'src/types/types';
 import { styled } from 'styled-components';
 import CommonPost from './reactionSource/CommonPost';
-import { useNavigate } from 'react-router';
-import { atomWithHash } from 'jotai-location';
 
 interface Props {
   data: Post[];
 }
 
 const PostCards = ({ data }: Props) => {
-  const navigate = useNavigate();
-
   return (
     <S.Area>
       {data?.map((item: Post) => {

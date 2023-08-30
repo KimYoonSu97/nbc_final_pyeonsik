@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSearchProd } from 'src/api/product';
-import { useLocation } from 'react-router';
 import { useInView } from 'react-intersection-observer';
 import { InfinityProductList } from 'src/types/types';
 import ProdCard from '../evnetProd/ProdCard';

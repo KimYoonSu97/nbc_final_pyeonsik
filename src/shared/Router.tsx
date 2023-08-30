@@ -1,9 +1,8 @@
 import React from 'react';
 import { GlobalStyle } from '../styles/GlobalStyle';
-import { BrowserRouter, Location, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Location, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import Layout from '../layout/Layout';
-import LayoutWrite from 'src/layout/LayoutWrtie';
 // pages
 import Main from '../pages/Main';
 import Login from 'src/pages/Login';
