@@ -18,9 +18,4 @@ const updateProfileImg = async ({ profileImg, id }: UpdateUser) => {
   await supabase.from('users').update({ profileImg }).eq('id', id);
 };
 
-//로그아웃 버튼 클릭시 헤더 리렌더링
-const userLogOut = async () => {
-  let { error } = await supabase.auth.signOut();
-};
-
-export { getUserData, updateProfileImg, updateUserNickname, userLogOut };
+export { getUserData, updateProfileImg, updateUserNickname };

@@ -6,6 +6,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { Navigate } from 'react-router';
+import { IconCamera } from '../icons';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -13,9 +14,12 @@ const Profile = () => {
   const [nickname, setNickname] = useState('');
   const [profileImg, setProfileImg] = useState('');
   const [currentNickname, setCurrentNickname] = useState('');
+  const inputRef = useRef<any>(null);
 
   const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
-    enabled: userId ? true : false
+    enabled: userId ? true : false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false
   });
 
   useEffect(() => {
@@ -83,11 +87,17 @@ const Profile = () => {
   return (
     <>
       <S.Container>
-        <S.SubjectArea>
-          <S.Subject>프로필 설정</S.Subject>
-        </S.SubjectArea>
-        <S.InfoArea>
+        <S.ProfileBox>
+          <S.ProfileChangeButton
+            onClick={() => {
+              inputRef.current.click();
+            }}
+          >
+            <IconCamera />
+          </S.ProfileChangeButton>
+          <S.ProfileImgArea $url={data?.data?.profileImg || ''}></S.ProfileImgArea>
           <S.ProfileChange
+            ref={inputRef}
             type="file"
             accept="image/*"
             value={profileImg}
@@ -95,40 +105,35 @@ const Profile = () => {
               encodeFileTobase64(e.target.files![0] as Blob);
             }}
           ></S.ProfileChange>
-          <S.ProfileBox>
-            <S.ProfileImgArea $url={data?.data?.profileImg || ''}></S.ProfileImgArea>
-          </S.ProfileBox>
-          <S.InfoBox>
-            <S.InputWrapper>
-              <S.InfoCaption>닉네임</S.InfoCaption>
-              <S.InfoInputBox>
-                <S.InfoInputArea
-                  type="text"
-                  value={nickname}
-                  onChange={(e) => {
-                    setNickname(e.target.value);
-                  }}
-                ></S.InfoInputArea>
-                <S.InfoSubmitButton onClick={updateNickname}>변경</S.InfoSubmitButton>
-              </S.InfoInputBox>
-            </S.InputWrapper>
-            <S.InputWrapper>
-              <S.InfoCaption>이메일</S.InfoCaption>
-              <S.InfoInputBox>{data?.data?.email}</S.InfoInputBox>
-            </S.InputWrapper>
-            <S.InputWrapper>
-              <S.InfoCaption as="div">로그인 된 소셜 계정</S.InfoCaption>
-              <S.InfoInputBox></S.InfoInputBox>
-            </S.InputWrapper>
-            <S.InputWrapper>
-              <S.InfoCaption>비밀번호 변경</S.InfoCaption>
-              <S.InfoInputBox>
-                <S.InfoInputArea></S.InfoInputArea>
-                <S.InfoSubmitButton>변경</S.InfoSubmitButton>
-              </S.InfoInputBox>
-            </S.InputWrapper>
-          </S.InfoBox>
-        </S.InfoArea>
+        </S.ProfileBox>
+        <S.InputWrapper>
+          <S.InfoCaption>닉네임</S.InfoCaption>
+          <S.NicknameInputBox>
+            <S.InputArea
+              type="text"
+              value={nickname}
+              onChange={(e) => {
+                setNickname(e.target.value);
+              }}
+            ></S.InputArea>
+            <S.InfoSubmitButton onClick={updateNickname}>변경</S.InfoSubmitButton>
+          </S.NicknameInputBox>
+        </S.InputWrapper>
+        <S.InputWrapper>
+          <S.InfoCaption>이메일</S.InfoCaption>
+          <S.InfoInputBox>{data?.data?.email}</S.InfoInputBox>
+        </S.InputWrapper>
+        <S.InputWrapper>
+          <S.InfoCaption as="div">로그인 된 소셜 계정</S.InfoCaption>
+          <S.InfoInputBox></S.InfoInputBox>
+        </S.InputWrapper>
+        <S.InputWrapper>
+          <S.InfoCaption>비밀번호 변경</S.InfoCaption>
+          <S.NicknameInputBox>
+            🤫 아무도 모르게 비밀번호 변경하기
+            <S.InfoSubmitButton>변경</S.InfoSubmitButton>
+          </S.NicknameInputBox>
+        </S.InputWrapper>
       </S.Container>
     </>
   );
@@ -143,34 +148,40 @@ interface ProfileImgProps {
 const S = {
   Container: styled.div`
     width: 100%;
-    height: 424px;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: #fff;
     border-radius: 10px;
-  `,
-
-  SubjectArea: styled.div`
-    height: 64px;
-    /* background-color: royalblue; */
-  `,
-
-  Subject: styled.div``,
-  InfoArea: styled.div`
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 22px;
-    /* background-color: royalblue; */
+    gap: 24px;
   `,
   ProfileChange: styled.input`
-    width: 20px;
-    height: 20px;
-    background-color: royalblue;
+    visibility: hidden;
   `,
-  ProfileBox: styled.div``,
+  ProfileChangeButton: styled.div`
+    width: 42px;
+    height: 42px;
+    background: #fff;
+    border-radius: 80px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  ProfileBox: styled.div`
+    width: 130px;
+    height: 130px;
+    margin-bottom: 30px;
+    position: relative;
+  `,
   ProfileImgArea: styled.div<ProfileImgProps>`
-    border: solid 1px black;
-    width: 80px;
-    height: 80px;
+    width: 130px;
+    height: 130px;
     border-radius: 100px;
     overflow: hidden;
     display: flex;
@@ -180,27 +191,69 @@ const S = {
     background-position: center;
     background-size: contain;
   `,
-
-  ProfileImg: styled.img``,
-  InfoBox: styled.div``,
   InputWrapper: styled.div``,
   InfoCaption: styled.div`
     font-size: 11px;
     font-weight: 600;
     line-height: 16px;
   `,
-
   InfoInputBox: styled.div`
     width: 330px;
     display: flex;
-    /* justify-content: center; */
+    margin-top: 4px;
     align-items: center;
     padding: 8px 8px 8px 12px;
+    height: 36px;
     background: #efefef;
-  `,
+    border-radius: 10px;
+    background: var(--neutral-100, #f2f4f7);
 
-  InfoInputArea: styled.input``,
+    color: var(--font-black, var(--black, #242424));
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  `,
+  InputArea: styled.input`
+    outline: none;
+    width: 250px;
+
+    border: none;
+  `,
   InfoSubmitButton: styled.div`
     margin-left: auto;
+    border-radius: 10px;
+    display: flex;
+    height: 20px;
+    padding: 2px 8px;
+    justify-content: center;
+    align-items: center;
+    background: var(--neutral-100, #f2f4f7);
+    color: var(--font-black, var(--black, #242424));
+    text-align: center;
+
+    /* label-small */
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 145.455% */
+  `,
+  NicknameInputBox: styled.div`
+    width: 330px;
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    padding: 8px 8px 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--neutral-100, #f2f4f7);
+
+    color: var(--font-black, var(--black, #242424));
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
   `
 };
