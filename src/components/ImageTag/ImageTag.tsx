@@ -25,7 +25,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
   const [contents, setContents] = useState(body ?? '');
 
-  const postRef = useRef<HTMLInputElement>(null);
+  // const postRef = useRef<HTMLInputElement>(null);
+  const postRef = useRef<HTMLTextAreaElement>(null);
 
   //이미지 클릭 시 태그를 찍는 함수 x,y 값과 text, img, price를 갖고있다
   const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
@@ -48,7 +49,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
       }
 
       //태그 안에 담을 데이터를 가진 newTag변수
-      const newTag = { x, y, prodData: '', img: '', price: '', prodBrand: '' };
+      const newTag = { x, y, prodData: '', img: '', price: '', prodBrand: '', id: '' };
       setTags([...updatedTags, newTag]);
 
       setContents(contents);
@@ -90,6 +91,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
       selectedTag.img = result.prodImg;
       selectedTag.price = result.price;
       selectedTag.prodBrand = result.prodBrand;
+      selectedTag.id = result.id;
 
       setTags(updatedTags);
       setSearchFormHandler(false);

@@ -18,17 +18,15 @@ const PostWriteRecipe = ({ orgPostId }: OrgPostIdProbs) => {
   const { addRecipePostMutate } = usePost();
 
   //제출 후 값을 초기화 해주기 위해 선언
-  const [, setContentsAtom] = useAtom(contentsAtom);
-  const [, setTagsDataAtom] = useAtom(tagsDataAtom);
+  const [allContents, setContentsAtom] = useAtom(contentsAtom);
+  const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
 
   const [title, setTitle] = useState<string>('');
 
-  const [allContents] = useAtom(contentsAtom);
-  const [allTags] = useAtom(tagsDataAtom);
-  const [allImages] = useAtom(imagesAtom);
-
-  console.log('allContents', allContents);
+  // const [allContents] = useAtom(contentsAtom);
+  // const [allTags] = useAtom(tagsDataAtom);
+  // const [allImages] = useAtom(imagesAtom);
 
   // current user id
   const userId: string | undefined = useLoginUserId();

@@ -56,11 +56,7 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
     const index = Object.keys(inputData).indexOf(uuid);
 
     if (index !== -1) {
-      // const removedImage = images[index];
-      // // 이미지 삭제 콜백 호출
-      // onRemovedImage(removedImage);
-
-      // 기존 상태 업데이트
+      //삭제 수행 후 값 업데이트
       setImages((prevImages) => prevImages.filter((_, i) => i !== index));
 
       setImageTagComponents((prevComponents) => {
