@@ -17,16 +17,17 @@ import { ReactComponent as UnLink } from 'src/components/post/svg/UnLink.svg';
 import { S } from './StyledBottomFunction';
 import { getQuotationPosts } from 'src/api/posts';
 
-const BottomFunction = ({ userId, post, QuotationNum }: BottomFunctionProps) => {
+const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
   const { id } = useParams<string>();
   const { pathname } = useLocation();
-
-  const { data: postQuotationData } = useQuery({ queryKey: ['post_quotation'], queryFn: () => getQuotationPosts(id!) });
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
+
+  const { data: postQuotationData } = useQuery({ queryKey: ['post_quotation'], queryFn: () => getQuotationPosts(id!) });
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
   const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!) });
+
   const postLikeList = postLikeData?.data;
   const postLike = postLikeList?.find((like) => like.userId === userId);
   const postBookmarkList = postBookmarkData?.data;
@@ -84,7 +85,7 @@ const BottomFunction = ({ userId, post, QuotationNum }: BottomFunctionProps) => 
         <S.FunctionButton onClick={clickQuotation}>
           <UnQuotation />
         </S.FunctionButton>
-        <S.FunctionCount>{QuotationNum}</S.FunctionCount>
+        {/* <S.FunctionCount>{QuotationNum}</S.FunctionCount> */}
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
         <S.FunctionButton onClick={clickPostBookmark}>{postBookmark ? <Bookmark /> : <UnBookmark />}</S.FunctionButton>
