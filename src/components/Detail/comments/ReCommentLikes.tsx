@@ -31,6 +31,11 @@ const ReCommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
       return like.commentId === commentId && like.userId === userId;
     });
 
+    if(!userId){
+      alert('로그인 후 이용해 주세요.')
+      return;
+    }
+
     if (changeLike) {
       deleteLikeMutation.mutate({ commentId, userId: userId });
     } else {
