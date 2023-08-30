@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { useAtom } from 'jotai';
 
-import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../ImageTag/AddImageTagComponent';
+import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
 import supabase from 'src/lib/supabaseClient';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';

@@ -10,7 +10,7 @@ const Layout = () => {
   const path = location.pathname.split('/')[1];
   return (
     <>
-      {location.pathname.split('/')[1] === 'write' || location.pathname.split('/')[1] === 'edit' ? (
+      {path === 'write' || path === 'edit' ? (
         <Outlet />
       ) : (
         <>

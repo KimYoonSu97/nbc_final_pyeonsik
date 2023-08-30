@@ -5,7 +5,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 // api
-import { getPost } from 'src/api/posts';
+import { getPost, getPosts } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
 import { S } from './StyledPostDetailCommon';
@@ -21,11 +21,14 @@ const PostDetailCommon = () => {
   const { deletePostMutate } = useMutate();
 
   // read data
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
-  const post = data?.data?.[0];
+  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
+  const post = data?.data?.filter((post) => post.id === id)[0];
   const postUser = post?.userId;
   const orgPost = post?.orgPostId;
   const orgUserNickname = orgPost?.userId?.nickname;
+  // const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
+  const QuotationNum = data?.data?.filter((post) => post.orgPostId?.id === id).length;
+  console.log(postUser);
 
   // delete post
   const clickDelete = (id: string) => {
@@ -36,6 +39,8 @@ const PostDetailCommon = () => {
   const clickEdit = () => {
     navigate(`/edit/${id}`);
   };
+
+  // time
 
   if (isLoading) {
     return <p>Loading…</p>;
@@ -75,7 +80,7 @@ const PostDetailCommon = () => {
       <S.PostTitle>{post.title}</S.PostTitle>
       <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      <BottomFunction userId={userId} post={post} />
+      <BottomFunction userId={userId} post={post} QuotationNum={QuotationNum} />
     </S.DtailArea>
   );
 };

@@ -15,18 +15,22 @@ import { ReactComponent as UnBookmark } from 'src/components/post/svg/UnBookmark
 import { ReactComponent as UnQuotation } from 'src/components/post/svg/UnQuotation.svg';
 import { ReactComponent as UnLink } from 'src/components/post/svg/UnLink.svg';
 import { S } from './StyledBottomFunction';
+import { getQuotationPosts } from 'src/api/posts';
 
-const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
+const BottomFunction = ({ userId, post, QuotationNum }: BottomFunctionProps) => {
   const navigate = useNavigate();
   const { id } = useParams<string>();
   const { pathname } = useLocation();
 
+  // const { data: postQuotationData } = useQuery({ queryKey: ['posts'], queryFn: () => getQuotationPosts(id!) });
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
   const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!) });
-  const postLike = postLikeData?.data?.find((like) => like.userId === userId);
-  const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
+  const postLikeList = postLikeData?.data;
+  const postLike = postLikeList?.find((like) => like.userId === userId);
+  const postBookmarkList = postBookmarkData?.data;
+  const postBookmark = postBookmarkList?.find((bookmark) => bookmark.userId === userId);
 
   // 좋아요
   const clickPostLike = () => {
@@ -73,17 +77,17 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     <S.FunctionBox>
       <S.FunctionButtonBox>
         <S.FunctionButton onClick={clickPostLike}>{postLike ? <Like /> : <UnLike />}</S.FunctionButton>
-        <S.FunctionCount>2,936</S.FunctionCount>
+        <S.FunctionCount>{postLikeList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
         <S.FunctionButton onClick={clickQuotation}>
           <UnQuotation />
         </S.FunctionButton>
-        <S.FunctionCount>516</S.FunctionCount>
+        <S.FunctionCount>{QuotationNum}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
         <S.FunctionButton onClick={clickPostBookmark}>{postBookmark ? <Bookmark /> : <UnBookmark />}</S.FunctionButton>
-        <S.FunctionCount>1,034</S.FunctionCount>
+        <S.FunctionCount>{postBookmarkList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButton onClick={clickCopyLink}>
         <UnLink />

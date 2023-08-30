@@ -42,12 +42,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   };
 
   const observeNickName = async () => {
-    const { data: existingUsers, error: existingUsersError } = await supabase
-      .from('users')
-      .select('*')
-      .eq('nickname', nickname)
-      .maybeSingle();
-
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
 
@@ -68,6 +62,14 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       setErrorMessage('비속어는 사용할 수 없어요. 🤬');
       return;
     }
+
+    // 타자칠때마다 서버 통신을 합니당 ㅠ
+    // 일단 위에 리턴문이 있어서 그거 다 통과해야 검사 할수 있도록 하는...거로 해놓았습니다.
+    const { data: existingUsers, error: existingUsersError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('nickname', nickname)
+      .maybeSingle();
 
     if (nickname) {
       if (existingUsers) {

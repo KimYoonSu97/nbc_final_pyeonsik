@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import PostList from 'src/components/post/PostList';
-import PostModal from 'src/components/renderPosts/PostModal';
 import { useAtom } from 'jotai';
 import { modalOpenAtom } from 'src/globalState/jotai';
 

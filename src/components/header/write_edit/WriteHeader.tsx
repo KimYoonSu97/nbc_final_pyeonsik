@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as IconAdd } from 'src/components/post/svg/IconAdd.svg';
+import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
 
 const WriteHeader = () => {
   //여기에 작성(생성)하는 함수
@@ -10,7 +10,7 @@ const WriteHeader = () => {
       <S.AddButton type="submit">
         <S.AddText>공유하기</S.AddText>
         <S.AddIcon>
-          <IconAdd />
+          <Add />
         </S.AddIcon>
       </S.AddButton>
     </S.TopBarMenuContainer>
