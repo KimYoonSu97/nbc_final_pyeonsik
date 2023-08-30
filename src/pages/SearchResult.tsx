@@ -1,10 +1,9 @@
-import { useQuery, useQueries } from '@tanstack/react-query';
 import React from 'react';
+import { useQuery, useQueries } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router';
 import { getPostByKeyword } from 'src/api/posts';
 import { Post } from 'src/types/types';
 import styled from 'styled-components';
-import CommonPost from 'src/components/renderPosts/reactionSource/CommonPost';
 import PostCards from 'src/components/renderPosts/PostCards';
 import ProdSearch from 'src/components/search/ProdSearch';
 

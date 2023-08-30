@@ -111,8 +111,8 @@ const PostDetailRecipe = () => {
                       key={tagIndex}
                       style={{
                         position: 'absolute',
-                        left: tag.x * 2.194, // 가로 변화 비율 적용
-                        top: tag.y * 0.94, // 세로 변화 비율 적용
+                        left: tag.x * 2.194,
+                        top: tag.y * 0.94,
                         backgroundColor: 'red',
                         width: '30px',
                         height: '30px'

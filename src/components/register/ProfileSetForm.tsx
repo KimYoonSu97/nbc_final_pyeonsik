@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
+import { useAtom } from 'jotai';
+import { userAtom } from 'src/globalState/jotai';
 
 interface Props {
   userEmail: string;
@@ -17,6 +19,8 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [baseImg] = useState(baseImage);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [_, setLoginUser] = useAtom(userAtom);
+
   const correctNickNameMessages = [
     '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
     '이런 창의적인 생각은 어떻게 하나요? 👏',
@@ -118,7 +122,10 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       return;
     }
 
-    const { data, error } = await supabase.from('users').insert(newUser).select();
+    const { data, error } = await supabase.from('users').insert(newUser).select().single();
+
+    setLoginUser(data);
+
     alert('회원가입 완료!');
     navigate('/');
   };
@@ -142,7 +149,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
         </ProfileImgnameBox>
 
         {!isError && <SuccessMessage>{successMessage}</SuccessMessage>}
-
         {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <Label>닉네임</Label>
         <NickNameInput maxLength={15} type="text" value={nickname} placeholder="닉네임" onChange={nickNameHandler} />

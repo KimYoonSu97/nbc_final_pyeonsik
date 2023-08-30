@@ -11,7 +11,7 @@ import PostWriteInput from './PostWriteInput';
 import { OrgPostIdProbs } from 'src/types/types';
 
 // recipe, common write component 정리 필요
-const PostWriteRecipe = ({ orgPostId, orgUserId }: OrgPostIdProbs) => {
+const PostWriteRecipe = ({ orgPostId }: OrgPostIdProbs) => {
   const navigate = useNavigate();
 
   //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
@@ -28,7 +28,7 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: OrgPostIdProbs) => {
   const [allTags] = useAtom(tagsDataAtom);
   const [allImages] = useAtom(imagesAtom);
 
-  console.log('allImages', allImages);
+  console.log('allContents', allContents);
 
   // current user id
   const userId: string | undefined = useLoginUserId();
@@ -54,10 +54,10 @@ const PostWriteRecipe = ({ orgPostId, orgUserId }: OrgPostIdProbs) => {
 
     const newPost = {
       orgPostId,
-      orgUserId,
       postCategory: 'recipe',
       userId,
       title,
+      body: allContents,
       recipeBody: Object.values(allContents),
       tags: Object.values(allTags),
       tagimage: imageUrls

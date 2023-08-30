@@ -247,7 +247,6 @@ const S = {
     width: 356px;
     height: 100px;
     display: flex;
-    padding: 8px;
     align-items: center;
     background-size: 30px;
     position: absolute;
