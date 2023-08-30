@@ -45,47 +45,19 @@ const TopBarMenuContainer = () => {
     }
   );
 
-  // const getUserDataForHeader = async (id: string) => {
-  //   const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
-  //   if (error) {
-  //   }
-  //   setUserData(data as User);
-  // };
-
-  // // 소셜로그인
-  // const socialLogin = async (social: string) => {
-  //   const user = await supabase.auth.getUser();
-  //   const { data, error } = await supabase.from('users').select('*').eq('id', user.data.user?.id).single();
-  //   if (data) {
-  //     setUserData(data as User);
-  //   } else {
-  //     const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
-  //     if (socialData !== undefined && socialData[0].identity_data && user.data.user) {
-  //       const data = socialData[0].identity_data;
-
-  //       const newSocialUser: User = {
-  //         email: data.email,
-  //         nickname: data.name || data.user_name, // goggle, kakao: name  / github : user_name
-  //         profileImg: data.avatar_url
-  //       };
-  //       const { data: userData, error } = await supabase.from('users').insert(newSocialUser).select('*');
-  //       setUserData(newSocialUser as User);
-  //     }
-  //   }
-  // };
-
   // 로그아웃 핸들러
-  // const signOutHandler = async () => {
-  //   let { error } = await supabase.auth.signOut();
-  //   if (error) {
-  //     alert(error);
-  //     return;
-  //   }
-  //   localStorage.setItem('social', '');
-  //   // setUserLogin('logout');
-  //   alert('로그아웃 완료!');
-  //   // handleRefresh();
-  // };
+  const signOutHandler = async () => {
+    let { error } = await supabase.auth.signOut();
+    if (error) {
+      alert(error);
+      return;
+    }
+
+    localStorage.removeItem('social');
+    // setUserLogin('logout');
+    alert('로그아웃 완료!');
+    // handleRefresh();
+  };
 
   //공유하기 기능
 
@@ -119,7 +91,7 @@ const TopBarMenuContainer = () => {
             <S.Level>Lv. 식신</S.Level>
             {/* <p>Hello, {userData?.nickname}</p> */}
             <S.ProfileImg src={data?.data?.profileImg} alt="프로필 사진"></S.ProfileImg>
-            {/* <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton> */}
+            <S.TopBarLogButton onClick={signOutHandler}>로그아웃</S.TopBarLogButton>
           </>
         )}
       </S.TopBarLogContainer>
