@@ -1,25 +1,21 @@
-import { S } from './StyledPostWriteCommon';
 import React from 'react';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { useAtom } from 'jotai';
-
-import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
 import supabase from 'src/lib/supabaseClient';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
-import PostWriteInput from './PostWriteInput';
-import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
-import { ReactComponent as Select } from 'src/components/post/svg/Select.svg';
-
-interface orgPostIdProps {
-  orgPostId: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
-}
+import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
+import { OrgPostIdProps } from './PostWriteCommon';
+import { S } from 'src/components/post/style/StyledPostWriteCommon';
+import { IconAdd, IconSelect } from 'src/components/icons';
 
 // recipe, common write component 정리 필요
-const PostWriteRecipe = ({ orgPostId, setCategory }: orgPostIdProps) => {
+const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
   const navigate = useNavigate();
+
+  const userId: string | undefined = useLoginUserId();
+  const postRef = useRef<HTMLInputElement>(null);
 
   //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
   const { addRecipePostMutate } = usePost();
@@ -30,11 +26,6 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: orgPostIdProps) => {
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
 
   const [title, setTitle] = useState<string>('');
-
-  // current user id
-  const userId: string | undefined = useLoginUserId();
-
-  const postRef = useRef<HTMLInputElement>(null);
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,52 +71,49 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: orgPostIdProps) => {
     setTitle(e.target.value);
   };
   const clickCategory = () => {
-    setCategory('recipe');
+    setCategory('common');
   };
 
   return (
-    <>
-      <S.WriteArea>
-        <S.WriteForm onSubmit={submitPost}>
-          <S.WriteHeader>
-            <div onClick={clickLogo}>로고 영역</div>
-            <S.AddButton type="submit">
-              <S.AddText>공유하기</S.AddText>
-              <S.AddIcon>
-                <Add />
-              </S.AddIcon>
-            </S.AddButton>
-          </S.WriteHeader>
-          <S.TitleBox>
-            <S.CategoryText>그르르갉</S.CategoryText>
-            <S.Contour />
-            <S.Title
-              ref={postRef}
-              type="text"
-              name="title"
-              placeholder="제목 생략 가능"
-              value={title}
-              onChange={changeTitle}
-              autoFocus
-            />
-            <S.SelectCategory>
-              <S.SelectIcon>
-                <Select />
-              </S.SelectIcon>
-              <S.SelectText type="button" onClick={clickCategory}>
-                편식조합
-              </S.SelectText>
-            </S.SelectCategory>
-          </S.TitleBox>
-        </S.WriteForm>
-      </S.WriteArea>
-
+    <S.WriteArea>
+      <S.WriteForm onSubmit={submitPost}>
+        <S.WriteHeader>
+          <div onClick={clickLogo}>로고 영역</div>
+          <S.AddButton type="submit">
+            <S.AddText>공유하기</S.AddText>
+            <S.AddIcon>
+              <IconAdd />
+            </S.AddIcon>
+          </S.AddButton>
+        </S.WriteHeader>
+        <S.TitleBox>
+          <S.CategoryText>편식조합</S.CategoryText>
+          <S.Contour />
+          <S.Title
+            ref={postRef}
+            type="text"
+            name="title"
+            placeholder="제목 생략 가능"
+            value={title}
+            onChange={changeTitle}
+            autoFocus
+          />
+          <S.SelectCategory>
+            <S.SelectIcon>
+              <IconSelect />
+            </S.SelectIcon>
+            <S.SelectText type="button" onClick={clickCategory}>
+              그르륵갉
+            </S.SelectText>
+          </S.SelectCategory>
+        </S.TitleBox>
+      </S.WriteForm>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ width: '950px' }}>
           <AddImageTagComponent onImageSelect={() => {}} />
         </div>
       </div>
-    </>
+    </S.WriteArea>
   );
 };
 

@@ -8,8 +8,6 @@ import styled from 'styled-components';
 
 const Write = () => {
   const [category, setCategory] = useState<string>('common');
-  const [isSelect, setIsSelect] = useState<boolean>();
-  console.log(category);
 
   const location = useLocation();
   const orgPost = location.state as Post;

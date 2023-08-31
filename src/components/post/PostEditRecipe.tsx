@@ -30,8 +30,8 @@ const PostEditRecipe = () => {
   const userId: string | undefined = useLoginUserId();
 
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(prams!) });
-  const post = data?.data?.[0];
+  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
+  const post = data?.data;
 
   // useEffect 순서 확인하기!
   useEffect(() => {

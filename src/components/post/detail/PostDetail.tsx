@@ -5,13 +5,14 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 // api
-import { getPost, getPosts } from 'src/api/posts';
+import { getPost } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
-import { S } from './StyledPostDetailCommon';
-import { Post } from 'src/types/types';
+import { S } from '../style/StyledPostDetailCommon';
+import CreatedAt from 'src/components/Detail/comments/CreatedAt';
+import TagImage from 'src/components/ImageTag/TagImage';
 
-const PostDetailCommon = () => {
+const PostDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams<string>();
 
@@ -27,18 +28,10 @@ const PostDetailCommon = () => {
     queryFn: () => getPost(id!),
     enabled: id ? true : false
   });
-
-  // const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPosts() });
-  // const post = data?.data?.[0];
-  // const post = data?.data?.filter((post) => post.id === id)[0];
-  const post = data?.data as Post;
+  const post = data?.data;
   const postUser = post?.userId;
-  const orgPost = post?.orgPostId as Post;
-  // const orgUserNickname = orgPost?.userId?.nickname;
-  // const { isLoading, data } = useQuery({ queryKey: ['posts'], queryFn: () => getPost(id!) });
-  // const QuotationNum = data?.data?.filter((post) => post.orgPostId?.id === id).length;
-  // console.log(postUser);
-  // console.log(post);
+  const orgPost = post?.orgPostId;
+  const orgUserNickname = orgPost?.userId?.nickname;
 
   // delete post
   const clickDelete = (id: string) => {
@@ -49,8 +42,6 @@ const PostDetailCommon = () => {
   const clickEdit = () => {
     navigate(`/edit/${id}`);
   };
-
-  // time
 
   if (isLoading) {
     return <p>Loading…</p>;
@@ -78,7 +69,9 @@ const PostDetailCommon = () => {
             <S.WriterSir>님의</S.WriterSir>
             {post.postCategory}
           </S.WriterInfo>
-          <S.PostDate>{post.created_at}</S.PostDate>
+          <S.PostDate>
+            <CreatedAt createdAt={post.created_at} />
+          </S.PostDate>
         </div>
         {userId === postUser.id && (
           <S.WriterFunction>
@@ -89,11 +82,23 @@ const PostDetailCommon = () => {
         )}
       </S.WriterContainer>
       <S.PostTitle>{post.title}</S.PostTitle>
-      <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />
-      {orgPost && <OrgPostCard orgPost={orgPost as Post} orgUserNickname={orgPost?.userId?.nickname as string} />}
+      {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
+      <div>
+        {post.tagimage &&
+          post.tagimage.length > 0 &&
+          post.tagimage.map((tagImageUrl: string, index: string) => (
+            <TagImage
+              key={index}
+              imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
+              recipeBody={post.recipeBody[index]}
+              tagsForImage={post.tags[index] || []}
+            />
+          ))}
+      </div>
+      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
       <BottomFunction userId={userId} post={post} />
     </S.DtailArea>
   );
 };
 
-export default PostDetailCommon;
+export default PostDetail;

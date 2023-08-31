@@ -3,21 +3,22 @@ import { Post } from 'src/types/types';
 import { styled } from 'styled-components';
 import CommonPost from './reactionSource/CommonPost';
 
-interface Props {
-  data: Post[];
+interface PostListProps {
+  posts: Post[] | null;
 }
 
-const PostCards = ({ data }: Props) => {
+const PostCards = ({ posts }: PostListProps) => {
   return (
     <S.Area>
-      {data?.map((item: Post) => {
-        if (item.postCategory === 'common') {
-          return <CommonPost key={item.id} item={item}></CommonPost>;
-        } else {
-          //레시피 게시물 보여주는 컴포넌트 따로 짜야댐
-          return <CommonPost key={item.id} item={item}></CommonPost>;
-        }
-      })}
+      {posts &&
+        posts?.map((item: Post | null) => {
+          if (item?.postCategory === 'common') {
+            return <CommonPost key={item.id} item={item} />;
+          } else if (item?.postCategory === 'recipe') {
+            //레시피 게시물 보여주는 컴포넌트 따로 짜야댐
+            return <CommonPost key={item.id} item={item} />;
+          }
+        })}
     </S.Area>
   );
 };

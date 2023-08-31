@@ -1,5 +1,5 @@
 import React from 'react';
-import PostDetailCommon from 'src/components/post/detail/PostDetailCommon';
+import PostDetail from 'src/components/post/detail/PostDetail';
 import styled from 'styled-components';
 import Comment from 'src/components/Detail/comments/Comment';
 

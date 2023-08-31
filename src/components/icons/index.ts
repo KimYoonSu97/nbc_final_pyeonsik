@@ -12,4 +12,18 @@ export { ReactComponent as IconBadgeSmall } from './IconBadgeSmall.svg';
 export { ReactComponent as IconProfile } from './IconProfile.svg';
 export { ReactComponent as IconMyPostBox } from './IconMyPostBox.svg';
 export { ReactComponent as IconCamera } from './IconCamera.svg';
-// export { ReactComponent as  } from '.';
+
+// post
+export { ReactComponent as IconAdd } from './post/IconAdd.svg';
+export { ReactComponent as IconBookmark } from './post/IconBookmark.svg';
+export { ReactComponent as IconLike } from './post/IconLike.svg';
+export { ReactComponent as IconLink } from './post/IconLink.svg';
+export { ReactComponent as IconOrgPost } from './post/IconOrgPost.svg';
+export { ReactComponent as IconQuotation } from './post/IconQuotation.svg';
+export { ReactComponent as IconSelect } from './post/IconSelect.svg';
+export { ReactComponent as IconUnBookmark } from './post/IconUnBookmark.svg';
+export { ReactComponent as IconUnLike } from './post/IconUnLike.svg';
+export { ReactComponent as IconUnLink } from './post/IconUnLink.svg';
+export { ReactComponent as IconUnQuotation } from './post/IconUnQuotation.svg';
+
+// export { ReactComponent as  } from './';

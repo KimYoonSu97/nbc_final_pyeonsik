@@ -6,11 +6,11 @@ import { styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 
 const PostList = () => {
-  const { isLoading, data, isError, isFetching } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ['posts'],
-    queryFn: () => getPosts()
-    // refetchOnMount: true
-    // staleTime: Infinity
+    queryFn: () => getPosts(),
+    refetchOnMount: false,
+    staleTime: Infinity
   });
 
   if (isLoading) {
@@ -24,8 +24,9 @@ const PostList = () => {
     return <p>none</p>;
   }
   const posts = data?.data as Post[];
+  console.log(posts);
 
-  return <PostCards data={posts}></PostCards>;
+  return <PostCards posts={posts} />;
 };
 
 export default PostList;

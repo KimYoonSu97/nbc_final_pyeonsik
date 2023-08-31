@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Comment from 'src/components/Detail/comments/Comment';
-import PostDetailCommon from 'src/components/post/detail/PostDetailCommon';
+import PostDetail from 'src/components/post/detail/PostDetail';
+import PostDetailModal from 'src/components/Detail/modal/PostDetailModal';
 import { useNavigate } from 'react-router';
 
 const PostModal = () => {
@@ -13,7 +14,7 @@ const PostModal = () => {
       <S.PostContainer id="postbox">
         <S.PostArea ref={postBoxRef}>
           <S.PostBox>
-            <PostDetailCommon />
+            <PostDetail />
             <Comment />
           </S.PostBox>
         </S.PostArea>

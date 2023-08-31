@@ -1,8 +1,8 @@
 import React from 'react';
-import { Post } from 'src/types/types';
-import { ReactComponent as OrgPost } from 'src/components/post/svg/OrgPost.svg';
-import { S } from './StyledOrgPostCard';
 import { useNavigate } from 'react-router';
+import { Post } from 'src/types/types';
+import { S } from 'src/components/post/style/StyledOrgPostCard';
+import { IconOrgPost } from 'src/components/icons';
 
 interface OrgPostCardProps {
   orgPost: Post;
@@ -20,7 +20,7 @@ const OrgPostCard = ({ orgPost, orgUserNickname }: OrgPostCardProps) => {
     <S.OrgArea>
       <S.OrgTextBox>
         <S.OrgIcon>
-          <OrgPost />
+          <IconOrgPost />
         </S.OrgIcon>
         <S.OrgText>원글</S.OrgText>
       </S.OrgTextBox>
