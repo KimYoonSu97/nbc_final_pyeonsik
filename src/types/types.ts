@@ -184,6 +184,7 @@ export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
   onContentsChange: (contents: string) => void;
+  onReplace?: (replacementImage: File) => void;
   imageData?: File;
   tagData?: Tag[] | null;
   body?: string | null;
