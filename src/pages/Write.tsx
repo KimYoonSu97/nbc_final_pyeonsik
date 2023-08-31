@@ -11,12 +11,11 @@ const Write = () => {
 
   const location = useLocation();
   const orgPost = location.state as Post;
-  const orgUserNickname = orgPost?.userId?.nickname;
 
   return (
     <S.WrtieArea>
       {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
-      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
+      {orgPost && <OrgPostCard orgPost={orgPost} />}
       {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
     </S.WrtieArea>
   );

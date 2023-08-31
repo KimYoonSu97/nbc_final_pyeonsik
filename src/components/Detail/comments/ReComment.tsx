@@ -6,7 +6,7 @@ import ReCommentLikes from './ReCommentLikes';
 import { useParams } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/useReComment';
-import CreatedAt from './CreatedAt';
+import CreatedAt from '../../../function/CreatedAt';
 
 interface ReCommentProps {
   parentCommentId: string;
@@ -45,8 +45,8 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
       alert('로그인 후 이용해 주세요.');
       return;
     }
-    if(reComment.trim()===''){
-      alert('댓글을 작성해 주세요.')
+    if (reComment.trim() === '') {
+      alert('댓글을 작성해 주세요.');
       return;
     }
     writeReCommentMutation.mutate(newReComment);
@@ -76,8 +76,8 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
     setIsReCommentInputToggle(!isReCommentInputToggle);
   };
 
-  const noetime = new Date().getTime()
-  console.log(noetime)
+  const noetime = new Date().getTime();
+  console.log(noetime);
 
   return (
     <>
@@ -115,11 +115,11 @@ const ReComment: React.FC<ReCommentProps> = ({ parentCommentId }) => {
               return (
                 <div key={item.id} className="reCommentInner">
                   <div className="recommentInfo">
-                      <div className="userInfo">
-                        <img src={item.users?.profileImg}></img>
-                        <h1>{item.users?.nickname}</h1>
-                        <CreatedAt createdAt={item.created_at}/>
-                      </div>
+                    <div className="userInfo">
+                      <img src={item.users?.profileImg}></img>
+                      <h1>{item.users?.nickname}</h1>
+                      <CreatedAt createdAt={item.created_at} />
+                    </div>
                     <div>
                       <ReCommentLikes commentId={item.id} />
                     </div>

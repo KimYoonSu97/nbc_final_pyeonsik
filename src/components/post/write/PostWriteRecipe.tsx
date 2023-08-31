@@ -7,7 +7,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
 import { OrgPostIdProps } from './PostWriteCommon';
-import { S } from 'src/components/post/style/StyledPostWriteCommon';
+import { S } from 'src/components/post/style/StyledPostWrite';
 import { IconAdd, IconSelect } from 'src/components/icons';
 
 // recipe, common write component 정리 필요

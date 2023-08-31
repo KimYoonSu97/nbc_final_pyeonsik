@@ -8,7 +8,7 @@ export const S = {
     flex-direction: column;
   `,
 
-  WriterContainer: styled.div`
+  PostHead: styled.div`
     background-color: transparent;
 
     width: 890px;
@@ -16,6 +16,13 @@ export const S = {
     margin-bottom: 23px;
 
     display: flex;
+    position: relative;
+  `,
+
+  WriterContainer: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 
   WriterImgBox: styled.div`
@@ -89,7 +96,6 @@ export const S = {
     align-items: center;
 
     position: absolute;
-    right: 0;
   `,
 
   Contour: styled.div`

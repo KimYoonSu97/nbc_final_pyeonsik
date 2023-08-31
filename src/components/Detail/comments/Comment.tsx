@@ -7,7 +7,7 @@ import { CommentWriteWrap, CommentWrap, CommentInner } from './styledComments';
 import CommentLikes from './CommentLikes';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/useComment';
-import CreatedAt from './CreatedAt';
+import CreatedAt from '../../../function/CreatedAt';
 
 interface CommentDataType {
   id: string;
@@ -54,8 +54,8 @@ const Comment = () => {
       alert('로그인 후 이용해 주세요.');
       return;
     }
-    if(comment.trim() === ''){
-      alert('댓글을 작성해 주세요.')
+    if (comment.trim() === '') {
+      alert('댓글을 작성해 주세요.');
       return;
     }
 

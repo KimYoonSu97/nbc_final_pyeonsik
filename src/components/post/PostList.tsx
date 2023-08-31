@@ -24,8 +24,6 @@ const PostList = () => {
     return <p>none</p>;
   }
   const posts = data?.data as Post[];
-  console.log(posts);
-
   return <PostCards posts={posts} />;
 };
 
