@@ -187,7 +187,7 @@ export interface ImageTagProps {
 }
 
 export interface ImageTagPropsToAddImageComponent {
-  onImageSelect: (selectedImage: File) => void;
+  onImageSelect?: (selectedImage: File) => void;
 }
 
 export interface SearchProps {

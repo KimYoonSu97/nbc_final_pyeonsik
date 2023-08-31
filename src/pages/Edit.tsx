@@ -5,8 +5,8 @@ import PostEditRecipe from 'src/components/post/PostEditRecipe';
 const Edit = () => {
   return (
     <div>
-      <PostEditCommon />
-      {/* <PostEditRecipe /> */}
+      {/* <PostEditCommon /> */}
+      <PostEditRecipe />
     </div>
   );
 };
