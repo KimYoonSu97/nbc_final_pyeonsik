@@ -109,6 +109,7 @@ const Report = () => {
             <div>
               <h3>이메일 입력</h3>
               <input
+              className='emailInput'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="이메일을 적어주세요."
@@ -225,6 +226,14 @@ const ReportInner = styled.div`
   }
   .last_h3{
     margin-bottom: 34px;
+  }
+  .emailInput{
+    width: 310px;
+    border: 1px solid #CED4DA;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 11px 0px 11px 12px;
+    margin-bottom: 8px;
   }
   .options-box{
     margin-bottom: 40px;

@@ -6,15 +6,12 @@ import { styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 
 const PostList = () => {
-  const { isLoading, data } = useQuery({
-    queryKey: ['Posts'],
+  const { isLoading, data, isError, isFetching } = useQuery({
+    queryKey: ['posts'],
     queryFn: () => getPosts()
-    // refetchOnMount: false,
+    // refetchOnMount: true
     // staleTime: Infinity
   });
-
-  console.log('Loading', isLoading);
-  console.log('Data', data?.data);
 
   if (isLoading) {
     return <p>Loading…</p>;
