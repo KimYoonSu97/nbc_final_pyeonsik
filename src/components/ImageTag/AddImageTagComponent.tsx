@@ -78,12 +78,14 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
 
   return (
     <div>
-      <S.AddBtn onClick={addImageTagComponent}>이미지 추가</S.AddBtn>
+      <S.AddBtn type="button" onClick={addImageTagComponent}>
+        이미지 추가
+      </S.AddBtn>
       {imageTagComponents.map((component) => {
         const componentUuid = (component.key as string) || '';
         return (
           <div key={componentUuid} style={{ marginTop: '10px' }}>
-            <S.RemoveButton onClick={() => removeImageTagComponent(componentUuid)}>
+            <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
               <TrashCanIcon />
             </S.RemoveButton>
             {component}

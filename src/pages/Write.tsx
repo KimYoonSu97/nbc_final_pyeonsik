@@ -8,7 +8,6 @@ import styled from 'styled-components';
 
 const Write = () => {
   const [category, setCategory] = useState<string>('common');
-  const [isSelect, setIsSelect] = useState<boolean>();
 
   const location = useLocation();
   const orgPost = location.state as Post;
@@ -18,7 +17,7 @@ const Write = () => {
     <S.WrtieArea>
       {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      {/* {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />} */}
+      {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
     </S.WrtieArea>
   );
 };

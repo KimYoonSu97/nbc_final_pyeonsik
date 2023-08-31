@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPost } from 'src/api/posts';
-import useMutate from 'src/hooks/usePost';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+import useMutate from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
-import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
-import { S } from './write/StyledPostWriteCommon';
 import OrgPostCard from './detail/OrgPostCard';
+import { S } from 'src/components/post/style/StyledPostWriteCommon';
+import { IconAdd } from '../icons';
 
 const PostEditCommon = () => {
   const navigate = useNavigate();
@@ -27,11 +27,20 @@ const PostEditCommon = () => {
   const orgPost = post?.orgPostId;
   const orgUserNickname = orgPost?.userId.nickname;
 
-  // useEffect 순서 확인하기!
   useEffect(() => {
     setTitle(post?.title);
     setBody(post?.body);
   }, [post]);
+
+  document.addEventListener(
+    'keydown',
+    function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+      }
+    },
+    true
+  );
 
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
@@ -78,7 +87,7 @@ const PostEditCommon = () => {
             <S.AddButton type="submit">
               <S.AddText>공유하기</S.AddText>
               <S.AddIcon>
-                <Add />
+                <IconAdd />
               </S.AddIcon>
             </S.AddButton>
           </S.WriteHeader>

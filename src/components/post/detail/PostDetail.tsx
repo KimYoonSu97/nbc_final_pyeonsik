@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 // custom hoooks
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
@@ -8,13 +8,11 @@ import useMutate from 'src/hooks/usePost';
 import { getPost } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
-import { S } from './StyledPostDetailCommon';
+import { S } from '../style/StyledPostDetailCommon';
 import CreatedAt from 'src/components/Detail/comments/CreatedAt';
-import { Post } from 'src/types/types';
+import TagImage from 'src/components/ImageTag/TagImage';
 
-const PostDetailCommon = () => {
-  const location = useLocation();
-
+const PostDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams<string>();
 
@@ -83,11 +81,18 @@ const PostDetailCommon = () => {
         )}
       </S.WriterContainer>
       <S.PostTitle>{post.title}</S.PostTitle>
-      <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />
+      {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
+      {post.tagimage && post.tagimage.length > 0 && (
+        <TagImage
+          imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[0]}`}
+          recipeBody={post.recipeBody[0]}
+          tagsForImage={post.tags[0] || []}
+        />
+      )}
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
       <BottomFunction userId={userId} post={post} />
     </S.DtailArea>
   );
 };
 
-export default PostDetailCommon;
+export default PostDetail;

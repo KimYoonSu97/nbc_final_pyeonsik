@@ -43,10 +43,6 @@ export interface PostUserProfile {
   profileImg: string;
 }
 
-export interface OrgPostIdProbs {
-  orgPostId: string;
-}
-
 export interface CommonBodyProps {
   body: string;
   setBody: React.Dispatch<React.SetStateAction<string>>;

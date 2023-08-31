@@ -1,21 +1,14 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { getPostBookmark } from 'src/api/postBookmark';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import { getPostLike } from 'src/api/postLikes';
-import usePostBookmark from 'src/hooks/usePostBookmark';
-import usePostLikes from 'src/hooks/usePostLikes';
-import { BottomFunctionProps } from 'src/types/types';
-import { ReactComponent as Like } from 'src/components/post/svg/Like.svg';
-import { ReactComponent as Bookmark } from 'src/components/post/svg/Bookmark.svg';
-import { ReactComponent as Quotation } from 'src/components/post/svg/Quotation.svg';
-import { ReactComponent as Link } from 'src/components/post/svg/Link.svg';
-import { ReactComponent as UnLike } from 'src/components/post/svg/UnLike.svg';
-import { ReactComponent as UnBookmark } from 'src/components/post/svg/UnBookmark.svg';
-import { ReactComponent as UnQuotation } from 'src/components/post/svg/UnQuotation.svg';
-import { ReactComponent as UnLink } from 'src/components/post/svg/UnLink.svg';
-import { S } from './StyledBottomFunction';
+import { getPostBookmark } from 'src/api/postBookmark';
 import { getQuotationPosts } from 'src/api/posts';
+import usePostLikes from 'src/hooks/usePostLikes';
+import usePostBookmark from 'src/hooks/usePostBookmark';
+import { BottomFunctionProps } from 'src/types/types';
+import { S } from 'src/components/post/style/StyledBottomFunction';
+import { IconBookmark, IconLike, IconUnBookmark, IconUnLike, IconUnQuotation } from 'src/components/icons';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
@@ -24,6 +17,15 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
+
+  // const data = useQueries({
+  //   queries: [
+  //     { queryKey: ['post_likes'], queryFn: () => getPostLike(id!), staleTime: Infinity },
+  //     { queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!), staleTime: Infinity },
+  //     { queryKey: ['post_quotation'], queryFn: () => getQuotationPosts(id!), staleTime: Infinity }
+  //   ]
+  // });
+  // const [postLikeData, postBookmarkData, postQuotationData] = data;
 
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
   const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!) });
@@ -48,11 +50,6 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     }
   };
 
-  // 인용
-  const clickQuotation = () => {
-    navigate('/write', { state: post });
-  };
-
   // bookmark
   const clickPostBookmark = () => {
     if (!postBookmark) {
@@ -66,11 +63,16 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     }
   };
 
+  // 인용
+  const clickQuotation = () => {
+    navigate('/write', { state: post });
+  };
+
   // clip board
   const clickCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`${pathname}`);
-      alert('링크가 복사되었습니다.');
+      alert('주소가 복사되었습니다.');
     } catch (err) {
       console.log(err);
     }
@@ -79,21 +81,23 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   return (
     <S.FunctionBox>
       <S.FunctionButtonBox>
-        <S.FunctionButton onClick={clickPostLike}>{postLike ? <Like /> : <UnLike />}</S.FunctionButton>
+        <S.FunctionButton onClick={clickPostLike}>{postLike ? <IconLike /> : <IconUnLike />}</S.FunctionButton>
         <S.FunctionCount>{postLikeList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
         <S.FunctionButton onClick={clickQuotation}>
-          <UnQuotation />
+          <IconUnQuotation />
         </S.FunctionButton>
         <S.FunctionCount>{postQuotation?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
-        <S.FunctionButton onClick={clickPostBookmark}>{postBookmark ? <Bookmark /> : <UnBookmark />}</S.FunctionButton>
+        <S.FunctionButton onClick={clickPostBookmark}>
+          {postBookmark ? <IconBookmark /> : <IconUnBookmark />}
+        </S.FunctionButton>
         <S.FunctionCount>{postBookmarkList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButton onClick={clickCopyLink}>
-        <UnLink />
+        <IconUnLike />
       </S.FunctionButton>
     </S.FunctionBox>
   );
