@@ -8,9 +8,7 @@ import PostCards from '../renderPosts/PostCards';
 const PostList = () => {
   const { isLoading, data } = useQuery({
     queryKey: ['posts'],
-    queryFn: () => getPosts(),
-    refetchOnMount: false,
-    staleTime: Infinity
+    queryFn: () => getPosts()
   });
 
   if (isLoading) {
@@ -24,7 +22,6 @@ const PostList = () => {
     return <p>none</p>;
   }
   const posts = data?.data as Post[];
-  console.log(posts);
 
   return <PostCards posts={posts} />;
 };

@@ -7,14 +7,12 @@ export type CommentType = {
   userId: string | undefined;
 };
 
-
-
 // 포스트에 아이디에 해당하는 댓글 가져오기
-const getCommentData = async (id: string) => {
+const getCommentDataByPostId = async (postId: string) => {
   const { data } = await supabase
     .from('detail_comments')
     .select('*,users("*")')
-    .eq('postId', id)
+    .eq('postId', postId)
     .order('created_at', { ascending: false });
   return data;
 };
@@ -30,8 +28,8 @@ const deleteCommentData = async (id: string) => {
 };
 
 //댓글 수정하기
-const updateCommentData = async (comment:any) => {
-    await supabase.from("detail_comments").update([comment]).eq('id',comment.id)
-}
+const updateCommentData = async (comment: any) => {
+  await supabase.from('detail_comments').update([comment]).eq('id', comment.id);
+};
 
-export { getCommentData, WriteCommentData, deleteCommentData, updateCommentData };
+export { getCommentDataByPostId, WriteCommentData, deleteCommentData, updateCommentData };
