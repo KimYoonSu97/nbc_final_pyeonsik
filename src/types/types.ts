@@ -22,7 +22,7 @@ export interface TextAreaInputProps {
 export interface Post {
   id: string;
   created_at: string;
-  orgPostId: string;
+  orgPostId: string | Post;
   postCategory: string;
   title: string;
   body: string;
@@ -180,6 +180,7 @@ export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
   onContentsChange: (contents: string) => void;
+  onReplace?: (replacementImage: File) => void;
   imageData?: File;
   tagData?: Tag[] | null;
   body?: string | null;

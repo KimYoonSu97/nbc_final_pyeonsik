@@ -119,7 +119,10 @@ const TopBarMenuContainer = () => {
             <S.Icon>
               <IconBell />
             </S.Icon>
-            <S.Level>Lv. 식신</S.Level>
+
+            <S.Level>
+              <S.Leveltext>Lv. 식신</S.Leveltext>
+            </S.Level>
             {/* <p>Hello, {userData?.nickname}</p> */}
 
             <S.ProfileImg
@@ -226,20 +229,29 @@ const S = {
     height: 20px;
     background-color: black;
   `,
-
   Level: styled.div`
     border-radius: 100px;
-    /* width: 58px; */
+    border: 1px solid transparent;
+
+    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+    margin-left: 4px;
     height: 20px;
-    padding: 0px 9px 0px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+  `,
+  Leveltext: styled.div`
+    width: 100%;
+    background: #fff;
+    margin: 0 12px;
+    color: var(--font-black, var(--black, #242424));
     font-size: 12px;
+    font-style: normal;
     font-weight: 700;
-    line-height: 16px;
-    background: #d9d9d9;
-    margin-left: 8px;
+    line-height: 16px; /* 133.333% */
   `,
   ProfileImgArea: styled.div`
     position: fixed;

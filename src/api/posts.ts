@@ -11,11 +11,15 @@ const getPosts = async () => {
 
 // post
 const getPost = async (id: string) => {
+  console.log('getPost API 잘 실행되었다~');
   const response = await supabase
     .from('posts')
     .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
     .eq('id', id)
     .single();
+  if (response.error) {
+    console.log(response.error);
+  }
   return response;
 };
 

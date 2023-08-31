@@ -17,6 +17,8 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
   const [isMouseOverImage, setIsMouseOverImage] = useState(false);
   const [hoveredProductIndex, setHoveredProductIndex] = useState<number | null>(null);
 
+  const showSwiper = tagsForImage.length > 3;
+
   const handleTagClick = (tag: Tag) => {
     setSelectedTag(selectedTag === tag ? null : tag);
   };
@@ -60,21 +62,36 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
         ))}
       </div>
 
-      <S.ProductImageContainer>
-        <Swiper slidesPerView={4} navigation>
+      {showSwiper ? (
+        <S.ProductImageContainer>
+          <Swiper slidesPerView={4} navigation>
+            {tagsForImage.map((tag, tagIndex) => (
+              <SwiperSlide key={tagIndex}>
+                <S.ProductWrapper
+                  onMouseEnter={() => handleProductMouseEnter(tagIndex)}
+                  onMouseLeave={handleProductMouseLeave}
+                >
+                  <S.ProductImage src={tag.img} alt="상품 이미지" />
+                  {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
+                </S.ProductWrapper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </S.ProductImageContainer>
+      ) : (
+        <S.ProductImageContainer>
           {tagsForImage.map((tag, tagIndex) => (
-            <SwiperSlide key={tagIndex}>
-              <S.ProductWrapper
-                onMouseEnter={() => handleProductMouseEnter(tagIndex)}
-                onMouseLeave={handleProductMouseLeave}
-              >
-                <S.ProductImage src={tag.img} alt="상품 이미지" />
-                {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
-              </S.ProductWrapper>
-            </SwiperSlide>
+            <S.ProductWrapper
+              key={tagIndex}
+              onMouseEnter={() => handleProductMouseEnter(tagIndex)}
+              onMouseLeave={handleProductMouseLeave}
+            >
+              <S.ProductImage src={tag.img} alt="상품 이미지" />
+              {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
+            </S.ProductWrapper>
           ))}
-        </Swiper>
-      </S.ProductImageContainer>
+        </S.ProductImageContainer>
+      )}
 
       {recipeBody && (
         <S.recipeBody

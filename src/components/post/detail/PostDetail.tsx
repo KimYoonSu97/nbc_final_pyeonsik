@@ -46,6 +46,7 @@ const PostDetail = () => {
   if (isLoading) {
     return <p>Loading…</p>;
   }
+
   if (data?.error) {
     alert('잘못된 접근입니다.');
     return <Navigate to="/" />;
@@ -82,13 +83,18 @@ const PostDetail = () => {
       </S.WriterContainer>
       <S.PostTitle>{post.title}</S.PostTitle>
       {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
-      {post.tagimage && post.tagimage.length > 0 && (
-        <TagImage
-          imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[0]}`}
-          recipeBody={post.recipeBody[0]}
-          tagsForImage={post.tags[0] || []}
-        />
-      )}
+      <div>
+        {post.tagimage &&
+          post.tagimage.length > 0 &&
+          post.tagimage.map((tagImageUrl: string, index: string) => (
+            <TagImage
+              key={index}
+              imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
+              recipeBody={post.recipeBody[index]}
+              tagsForImage={post.tags[index] || []}
+            />
+          ))}
+      </div>
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
       <BottomFunction userId={userId} post={post} />
     </S.DtailArea>

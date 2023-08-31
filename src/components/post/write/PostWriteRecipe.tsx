@@ -10,6 +10,7 @@ import { OrgPostIdProps } from './PostWriteCommon';
 import { S } from 'src/components/post/style/StyledPostWriteCommon';
 import { IconAdd, IconSelect } from 'src/components/icons';
 
+// recipe, common write component 정리 필요
 const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
   const navigate = useNavigate();
 
@@ -23,10 +24,6 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
   const [allContents, setContentsAtom] = useAtom(contentsAtom);
   const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
-
-  // const [allContents] = useAtom(contentsAtom);
-  // const [allTags] = useAtom(tagsDataAtom);
-  // const [allImages] = useAtom(imagesAtom);
 
   const [title, setTitle] = useState<string>('');
 
@@ -110,8 +107,12 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
             </S.SelectText>
           </S.SelectCategory>
         </S.TitleBox>
-        <AddImageTagComponent onImageSelect={() => {}} />
       </S.WriteForm>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '950px' }}>
+          <AddImageTagComponent onImageSelect={() => {}} />
+        </div>
+      </div>
     </S.WriteArea>
   );
 };
