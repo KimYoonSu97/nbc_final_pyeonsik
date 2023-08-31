@@ -1,13 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
-import { WriteCommentData, deleteCommentData, getCommentData, updateCommentData } from 'src/api/comment';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import ReComment from './ReComment';
-import { CommentWriteWrap, CommentWrap, CommentInner } from './styledComments';
-import CommentLikes from './CommentLikes';
-import useLoginUserId from 'src/hooks/useLoginUserId';
-import useMutate from 'src/hooks/useComment';
-import CreatedAt from './CreatedAt';
+import { getCommentDataByPostId } from 'src/api/comment';
+import { useQuery } from '@tanstack/react-query';
+import styled from 'styled-components';
+import CommentForMap from './CommentForMap';
+import CommentInput from './CommentInput';
 
 interface CommentDataType {
   id: string;
@@ -22,139 +19,86 @@ interface CommentDataType {
 }
 
 const Comment = () => {
-  const [comment, setComment] = useState('');
-  const [updateToggle, setUpdateToggle] = useState(false);
-  const [updateComment, setUpdateComment] = useState('');
-  const [updateId, setUpdateId] = useState<string | null>(null);
-  const { writeCommentMutation, deleteCommentMutation, updateCommentMutation } = useMutate();
-  const updateInputRef = useRef<HTMLInputElement>(null);
+  const { id: postId } = useParams<string>();
 
-  const { id } = useParams<string>();
-  const userId = useLoginUserId();
+  //포스트 아이디와 같은 댓글만을 위한 쿼리 데이터
+  const { data: commentData, isLoading: commentIsLoading } = useQuery({
+    queryKey: ['comment'],
+    queryFn: () => getCommentDataByPostId(postId!),
+    enabled: postId ? true : false,
+    refetchOnWindowFocus: false
+  });
 
-  useEffect(() => {
-    if (updateInputRef.current && updateToggle) {
-      updateInputRef.current.focus();
-      return;
-    }
-  }, []);
-
-  //포스트 아이디와 같은 댓글 데이터 가져오기
-
-  const { data: commentData } = useQuery(['detailcomments'], () => getCommentData(id!));
-
-  //댓글 작성 버튼
-  const WriteCommentButton = () => {
-    const newComment = {
-      comment,
-      userId,
-      postId: id
-    };
-    if (!userId) {
-      alert('로그인 후 이용해 주세요.');
-      return;
-    }
-    if(comment.trim() === ''){
-      alert('댓글을 작성해 주세요.')
-      return;
-    }
-
-    writeCommentMutation.mutate(newComment);
-    setComment('');
-  };
-
-  //댓글 삭제 버튼
-  const deleteCommentButton = (id: string) => {
-    if (window.confirm('댓글을 삭제하시겠습니까?')) {
-      deleteCommentMutation.mutate(id);
-    } else {
-      alert('삭제가 취소되었습니다.');
-    }
-  };
-
-  const updateCommentButton = (id: string) => {
-    const newComment = {
-      id,
-      comment: updateComment
-    };
-    updateCommentMutation.mutate(newComment);
-    setUpdateToggle(false);
-  };
-
-  const updateOpenButton = (id: string, comment: string) => {
-    setUpdateComment(comment);
-    setUpdateToggle(true);
-    setUpdateId(id);
-  };
+  if (commentIsLoading) {
+    return <div>Loading</div>;
+  }
 
   return (
-    <>
-      <CommentWriteWrap>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            WriteCommentButton();
-          }}
-        >
-          <input value={comment} onChange={(e) => setComment(e.target.value)} placeholder="댓글을 남겨보세요!"></input>
-          <button>
-            <img src="/images/commentWriteImg2.png" alt="댓글작성버튼"></img>
-          </button>
-        </form>
-      </CommentWriteWrap>
-      <CommentWrap>
-        {commentData?.map((comment) => {
-          return (
-            <CommentInner key={comment.id}>
-              <div className="commentInfo">
-                <div>
-                  <div>
-                    <img src={comment.users?.profileImg}></img>
-                    <h1>{comment.users?.nickname}</h1>
-                  </div>
-                  <CreatedAt createdAt={comment.created_at} />
-                </div>
-                <div>
-                  <CommentLikes commentId={comment.id} />
-                </div>
-              </div>
-              {updateToggle && comment.id === updateId ? (
-                <div>
-                  <input
-                    ref={updateInputRef}
-                    type="text"
-                    value={updateComment}
-                    onChange={(e) => {
-                      setUpdateComment(e.target.value);
-                    }}
-                  ></input>
-                  <button onClick={() => updateCommentButton(comment.id)}>수정</button>
-                  <button
-                    onClick={() => {
-                      setUpdateToggle(false);
-                      setUpdateId(null);
-                    }}
-                  >
-                    취소
-                  </button>
-                </div>
-              ) : (
-                <h2>{comment.comment}</h2>
-              )}
-              {userId && comment.userId === userId && (
-                <div className="fnButton">
-                  <button onClick={() => updateOpenButton(comment.id, comment.comment)}>수정</button>
-                  <button onClick={() => deleteCommentButton(comment.id)}>삭제</button>
-                </div>
-              )}
+    <S.CommentArea>
+      <S.CommentInputArea>
+        <S.CommentInPutProfile></S.CommentInPutProfile>
+        <CommentInput type={'post'}></CommentInput>
+      </S.CommentInputArea>
 
-              <ReComment parentCommentId={comment.id} />
-            </CommentInner>
-          );
+      <S.CommentRenderArea>
+        {commentData?.map((comment) => {
+          return <CommentForMap key={comment.id} comment={comment as CommentDataType} />;
         })}
-      </CommentWrap>
-    </>
+      </S.CommentRenderArea>
+    </S.CommentArea>
   );
 };
 
 export default Comment;
+
+const S = {
+  CommentArea: styled.div`
+    margin: 12px 50px;
+    /* height: 80px; */
+    /* background-color: orange; */
+  `,
+  CommentInputArea: styled.div`
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+  `,
+  CommentInPutProfile: styled.div`
+    width: 36px;
+    height: 36px;
+    border-radius: 100px;
+    background: lightgray;
+  `,
+  CommentInputForm: styled.form`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: var(--neutral-100, #f2f4f7);
+    border-radius: 10px;
+    padding-right: 10px;
+  `,
+  CommentInput: styled.input`
+    width: 100%;
+    padding: 8px 0 8px 14px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    color: var(--neutral-500, #667085);
+
+    /* body-medium */
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  `,
+  CommentInputAddButton: styled.button``,
+  CommentRenderArea: styled.div`
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  `
+};

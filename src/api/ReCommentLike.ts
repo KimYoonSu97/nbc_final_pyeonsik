@@ -1,16 +1,19 @@
 import supabase from 'src/lib/supabaseClient';
 
-const getLike = async () => {
-  const { data } = await supabase.from('replay_comment_likes').select('commentId,userId');
+const getLikeByReCommentId = async (commentId: string, userId: string) => {
+  const { count: likeNum } = await supabase
+    .from('replay_comment_likes')
+    .select('userId', { count: 'exact', head: true })
+    .eq('commentId', commentId);
+
+  const { count: myLike } = await supabase
+    .from('replay_comment_likes')
+    .select('userId', { count: 'exact', head: true })
+    .eq('commentId', commentId)
+    .eq('userId', userId);
+
+  const data = { likeNum, myLike };
   return data;
 };
 
-const addLike = async ({ commentId, userId }: { commentId: string; userId: string }) => {
-  await supabase.from('replay_comment_likes').insert({ commentId, userId });
-};
-
-const deleteLike = async ({ commentId, userId }: { commentId: string; userId: string }) => {
-  await supabase.from('replay_comment_likes').delete().eq('commentId', commentId).eq('userId', userId);
-};
-
-export { getLike, addLike, deleteLike };
+export { getLikeByReCommentId };

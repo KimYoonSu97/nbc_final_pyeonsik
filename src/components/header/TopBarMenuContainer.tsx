@@ -68,7 +68,7 @@ const TopBarMenuContainer = () => {
           return item.identity_data;
         }
       })[0].identity_data;
-      console.log(socialData);
+
       const newUser = {
         email: socialData?.email,
         profileImg: socialData?.avatar_url,
@@ -86,9 +86,7 @@ const TopBarMenuContainer = () => {
   useEffect(() => {
     if (localStorage.getItem('social') && !data) {
       checkOrSetOAuthUser();
-      console.log('헤더 이펙트 실행 했니?');
     }
-    console.log('헤더 이펙트 실행');
   }, [localStorage.getItem('social')]);
 
   return (

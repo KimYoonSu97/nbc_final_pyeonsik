@@ -44,7 +44,6 @@ const PasswordChange: React.FC = () => {
         navigate('/login');
         const successMsg = 'Password changed successfully';
         setSuccessMessage(successMsg);
-        console.log(successMsg);
       } else {
         alert(error);
         setErrorMessage(error.message);
