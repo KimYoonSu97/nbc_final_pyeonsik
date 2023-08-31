@@ -1,3 +1,4 @@
+import { S } from './StyledPostWriteCommon';
 import React from 'react';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
@@ -8,10 +9,16 @@ import supabase from 'src/lib/supabaseClient';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import PostWriteInput from './PostWriteInput';
-import { OrgPostIdProbs } from 'src/types/types';
+import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
+import { ReactComponent as Select } from 'src/components/post/svg/Select.svg';
+
+interface orgPostIdProps {
+  orgPostId: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
+}
 
 // recipe, common write component 정리 필요
-const PostWriteRecipe = ({ orgPostId }: OrgPostIdProbs) => {
+const PostWriteRecipe = ({ orgPostId, setCategory }: orgPostIdProps) => {
   const navigate = useNavigate();
 
   //입력값이 배열로 바뀌었기에 query 선언을 하나 더 했습니다!
@@ -23,10 +30,6 @@ const PostWriteRecipe = ({ orgPostId }: OrgPostIdProbs) => {
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
 
   const [title, setTitle] = useState<string>('');
-
-  // const [allContents] = useAtom(contentsAtom);
-  // const [allTags] = useAtom(tagsDataAtom);
-  // const [allImages] = useAtom(imagesAtom);
 
   // current user id
   const userId: string | undefined = useLoginUserId();
@@ -70,24 +73,58 @@ const PostWriteRecipe = ({ orgPostId }: OrgPostIdProbs) => {
     navigate(`/`);
   };
 
+  const clickLogo = () => {
+    navigate(`/`);
+  };
+  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+  const clickCategory = () => {
+    setCategory('recipe');
+  };
+
   return (
     <>
-      <form onSubmit={submitPost}>
-        <PostWriteInput
-          ref={postRef}
-          type="text"
-          name="title"
-          title="title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-          autoFocus
-        />
-        <button type="submit">add</button>
-      </form>
+      <S.WriteArea>
+        <S.WriteForm onSubmit={submitPost}>
+          <S.WriteHeader>
+            <div onClick={clickLogo}>로고 영역</div>
+            <S.AddButton type="submit">
+              <S.AddText>공유하기</S.AddText>
+              <S.AddIcon>
+                <Add />
+              </S.AddIcon>
+            </S.AddButton>
+          </S.WriteHeader>
+          <S.TitleBox>
+            <S.CategoryText>그르르갉</S.CategoryText>
+            <S.Contour />
+            <S.Title
+              ref={postRef}
+              type="text"
+              name="title"
+              placeholder="제목 생략 가능"
+              value={title}
+              onChange={changeTitle}
+              autoFocus
+            />
+            <S.SelectCategory>
+              <S.SelectIcon>
+                <Select />
+              </S.SelectIcon>
+              <S.SelectText type="button" onClick={clickCategory}>
+                편식조합
+              </S.SelectText>
+            </S.SelectCategory>
+          </S.TitleBox>
+        </S.WriteForm>
+      </S.WriteArea>
 
-      <AddImageTagComponent onImageSelect={() => {}} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '950px' }}>
+          <AddImageTagComponent onImageSelect={() => {}} />
+        </div>
+      </div>
     </>
   );
 };

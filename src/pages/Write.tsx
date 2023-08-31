@@ -19,7 +19,7 @@ const Write = () => {
     <S.WrtieArea>
       {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      {/* {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />} */}
+      {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
     </S.WrtieArea>
   );
 };

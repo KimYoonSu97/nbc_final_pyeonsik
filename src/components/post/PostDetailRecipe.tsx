@@ -33,7 +33,7 @@ const PostDetailRecipe = () => {
   const postLike = postLikeData?.data?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkData?.data?.find((bookmark) => bookmark.userId === userId);
 
-  console.log('data', data);
+  console.log('post', post);
 
   // delete post
   const clickDelete = (id: string) => {
@@ -90,25 +90,28 @@ const PostDetailRecipe = () => {
       <div>{post.title}</div>
 
       <div>
-        {post.tagimage && post.tagimage.length > 0 && (
-          <TagImage
-            imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[0]}`}
-            recipeBody={post.recipeBody[0]}
-            tagsForImage={post.tags[0] || []}
-          />
-        )}
-
-        {userId === postWriter.id && (
-          <>
-            <button onClick={() => clickDelete(post.id)}>delete</button>
-            <button onClick={clickEdit}>edit</button>
-          </>
-        )}
-        <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
-        <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
-        <button>인용하기</button>
-        <button>공유하기</button>
+        {post.tagimage &&
+          post.tagimage.length > 0 &&
+          post.tagimage.map((tagImageUrl: string, index: string) => (
+            <TagImage
+              key={index}
+              imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
+              recipeBody={post.recipeBody[index]}
+              tagsForImage={post.tags[index] || []}
+            />
+          ))}
       </div>
+
+      {userId === postWriter.id && (
+        <>
+          <button onClick={() => clickDelete(post.id)}>delete</button>
+          <button onClick={clickEdit}>edit</button>
+        </>
+      )}
+      <button onClick={() => clickPostLike(postLike)}>{postLike ? '좋아요 취소' : '좋아요'}</button>
+      <button onClick={() => clickPostBookmark(postBookmark)}>{postBookmark ? '북마크 취소' : '북마크'}</button>
+      <button>인용하기</button>
+      <button>공유하기</button>
     </div>
   );
 };
