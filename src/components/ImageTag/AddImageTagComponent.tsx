@@ -10,14 +10,16 @@ import { ReactComponent as TrashCanIcon } from 'src/components/ImageTag/svg/Tras
 //Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
 export const tagsDataAtom = atom<{ [key: string]: Tag[] }>({});
-export const imagesAtom = atom<File[]>([]);
+export const imagesAtom = atom<{ [key: string]: File }>({});
 
 // 이미지 태그를 추가하는 컴포넌트 정의
 const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onImageSelect }) => {
   const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
-  const [inputData, setInputData] = useAtom(contentsAtom);
-  const [, setImages] = useAtom(imagesAtom);
+  const [, setInputData] = useAtom(contentsAtom);
+  const [images, setImages] = useAtom(imagesAtom);
   const [, setTagsData] = useAtom(tagsDataAtom);
+
+  console.log('images', images);
 
   // 이미지 태그 컴포넌트 추가 함수
   const addImageTagComponent = () => {
@@ -27,8 +29,11 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
         <ImageTag
           onTagsAndResultsChange={(tags) => handleTagsChange(componentUuid, tags)}
           onImageSelect={(selectedImage) => {
-            setImages((prevImages) => [...prevImages, selectedImage]);
-            onImageSelect(selectedImage);
+            setImages((prevImages) => {
+              const updatedImages = { ...prevImages };
+              updatedImages[componentUuid] = selectedImage;
+              return updatedImages;
+            });
           }}
           onContentsChange={(newContents) => handleContentsChange(componentUuid, newContents)}
         />
@@ -46,28 +51,34 @@ const AddImageTagComponent: React.FC<ImageTagPropsToAddImageComponent> = ({ onIm
     setTagsData((prevTagsData) => ({ ...prevTagsData, [uuid]: tags }));
   };
 
-  // 내용 변경 처리 콜백 함수
   const handleContentsChange = (uuid: string, newContents: string) => {
     setInputData((prevInputData) => ({ ...prevInputData, [uuid]: newContents }));
   };
 
-  // 이미지 태그 컴포넌트 제거 함수
   const removeImageTagComponent = (uuid: string) => {
-    const index = Object.keys(inputData).indexOf(uuid);
+    const index = imageTagComponents.findIndex((component) => {
+      const componentUuid = (component.key as string) || '';
+      return componentUuid === uuid;
+    });
 
     if (index !== -1) {
-      //삭제 수행 후 값 업데이트
-      setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+      setImages((prevImages) => {
+        const updatedImages = { ...prevImages };
+        delete updatedImages[uuid];
+        return updatedImages;
+      });
 
       setImageTagComponents((prevComponents) => {
         const updatedComponents = prevComponents.filter((_, i) => i !== index);
         return updatedComponents;
       });
+
       setInputData((prevInputData) => {
         const updatedInputData = { ...prevInputData };
         delete updatedInputData[uuid];
         return updatedInputData;
       });
+
       setTagsData((prevTagsData) => {
         const updatedTagsData = { ...prevTagsData };
         delete updatedTagsData[uuid];
@@ -111,7 +122,7 @@ const S = {
     width: 48px;
     height: 48px;
     position: fixed;
-    left: 280px;
+    left: 400px;
     z-index: 999;
   `
 };
