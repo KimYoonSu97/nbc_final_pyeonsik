@@ -4,6 +4,12 @@ import { addPost, deletePost, updatePost, addRecipePost, tagUpdatePost } from 's
 const useMutate = () => {
   const queryClient = useQueryClient();
 
+  const updatePostMutate = useMutation(updatePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post'] });
+    }
+  });
+
   const success = {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
@@ -11,7 +17,6 @@ const useMutate = () => {
   };
 
   const addPostMutate = useMutation(addPost, success);
-  const updatePostMutate = useMutation(updatePost, success);
   const deletePostMutate = useMutation(deletePost, success);
 
   //입력받는 데이터 형식이 달라졌기에 하나 더 선언했습니다!

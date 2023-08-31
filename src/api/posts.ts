@@ -18,7 +18,7 @@ const getPost = async (id: string) => {
     .eq('id', id)
     .single();
   if (response.error) {
-    console.log('getPost API 잘 실행되었다~');
+    console.log(response.error);
   }
   return response;
 };
@@ -35,6 +35,7 @@ const addPost = async (post: NewPost) => {
 const updatePost = async (post: EditPost) => {
   await supabase.from('posts').update(post).eq('id', post.id).select();
 };
+
 const deletePost = async (id: string) => {
   await supabase.from('posts').delete().eq('id', id);
 };

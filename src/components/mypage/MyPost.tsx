@@ -100,11 +100,11 @@ const MyPost = () => {
         {(() => {
           switch (filterHandler) {
             case '?=bookmark':
-              return <PostCards data={bookmarkData as unknown as Post[]} />;
+              return <PostCards posts={bookmarkData as unknown as Post[]} />;
             case '?=like':
-              return <PostCards data={likeData as unknown as Post[]} />;
+              return <PostCards posts={likeData as unknown as Post[]} />;
             case '?=mypost':
-              return <PostCards data={myPost?.data as unknown as Post[]} />;
+              return <PostCards posts={myPost?.data as unknown as Post[]} />;
             default:
               return <></>;
           }

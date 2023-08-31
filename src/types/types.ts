@@ -43,10 +43,6 @@ export interface PostUserProfile {
   profileImg: string;
 }
 
-export interface OrgPostIdProbs {
-  orgPostId: string;
-}
-
 export interface CommonBodyProps {
   body: string;
   setBody: React.Dispatch<React.SetStateAction<string>>;
@@ -184,6 +180,7 @@ export interface ImageTagProps {
   onTagsAndResultsChange: (tags: Tag[], searchResults: Data[]) => void;
   onImageSelect: (selectedImage: File) => void;
   onContentsChange: (contents: string) => void;
+  onReplace?: (replacementImage: File) => void;
   imageData?: File;
   tagData?: Tag[] | null;
   body?: string | null;

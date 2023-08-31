@@ -3,16 +3,15 @@ import { useNavigate } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 import EditorQuill from './EditorQuill';
-import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
-import { ReactComponent as Select } from 'src/components/post/svg/Select.svg';
-import { S } from './StyledPostWriteCommon';
+import { S } from 'src/components/post/style/StyledPostWriteCommon';
+import { IconAdd, IconSelect } from 'src/components/icons';
 
-interface orgPostIdProps {
+export interface OrgPostIdProps {
   orgPostId: string;
   setCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const PostWriteCommon = ({ orgPostId, setCategory }: orgPostIdProps) => {
+const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
   const navigate = useNavigate();
   const userId: string | undefined = useLoginUserId();
   const postRef = useRef<HTMLInputElement>(null);
@@ -52,7 +51,7 @@ const PostWriteCommon = ({ orgPostId, setCategory }: orgPostIdProps) => {
           <S.AddButton type="submit">
             <S.AddText>공유하기</S.AddText>
             <S.AddIcon>
-              <Add />
+              <IconAdd />
             </S.AddIcon>
           </S.AddButton>
         </S.WriteHeader>
@@ -70,7 +69,7 @@ const PostWriteCommon = ({ orgPostId, setCategory }: orgPostIdProps) => {
           />
           <S.SelectCategory>
             <S.SelectIcon>
-              <Select />
+              <IconSelect />
             </S.SelectIcon>
             <S.SelectText type="button" onClick={clickCategory}>
               편식조합
