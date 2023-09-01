@@ -15,13 +15,12 @@ const PostModal = () => {
         <S.PostArea ref={postBoxRef}>
           <S.PostBox>
             <PostDetail />
-            <Comment />
+            {/* <Comment /> */}
           </S.PostBox>
         </S.PostArea>
       </S.PostContainer>
 
       {/* 검정배경 */}
-
       <S.ModalBackground
         id="background"
         onWheel={(e) => {
@@ -57,8 +56,7 @@ const S = {
     }
   `,
   PostBox: styled.div`
-    margin-top: 84px;
-    background-color: orange;
+    margin: 84px 0;
   `,
   ModalBackground: styled.div`
     width: 100%;

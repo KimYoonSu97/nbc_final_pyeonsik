@@ -70,7 +70,15 @@ const S = {
     }};
 
     background: var(--background, #f6f7f9);
-    height: calc(100vh - 50px - 56px);
+    height: ${(props) => {
+      switch (props.$path) {
+        case 'detail':
+          return 'calc(100vh - 56px)';
+        default:
+          return 'calc(100vh - 50px - 56px)';
+      }
+    }};
+
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;

@@ -97,6 +97,7 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
     border-radius: 10px;
     padding-right: 10px;
+    margin: 16px 0 0 50px;
   `,
   CommentInput: styled.input`
     width: 100%;
