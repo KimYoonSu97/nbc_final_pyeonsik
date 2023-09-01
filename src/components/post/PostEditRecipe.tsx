@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import supabase from 'src/lib/supabaseClient';
 
 import { getPost } from 'src/api/posts';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -17,7 +17,7 @@ const PostEditRecipe = () => {
 
   const { id: prams } = useParams<string>();
   const navigate = useNavigate();
-  const { tagUpdatePostMutate } = useMutate();
+  const { tagUpdatePostMutate } = usePost();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string[]>([]);
