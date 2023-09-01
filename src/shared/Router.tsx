@@ -17,6 +17,7 @@ import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import Report from 'src/components/sidebar/Report';
 import PostModal from 'src/pages/PostModal';
+import KakaoMap from 'src/pages/KakaoMap';
 
 const Router = () => {
   const location = useLocation();
@@ -38,6 +39,7 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/map" element={<KakaoMap />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
