@@ -25,10 +25,9 @@ const ImageTag: React.FC<ImageTagProps> = ({
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
   const [contents, setContents] = useState(body ?? '');
 
-  // const postRef = useRef<HTMLInputElement>(null);
   const postRef = useRef<HTMLTextAreaElement>(null);
 
-  //이미지 클릭 시 태그를 찍는 함수 x,y 값과 text, img, price를 갖고있다
+  //이미지 클릭 시 태그를 찍는 함수 x,y 값과 text, img, price, prodBrand, id를 갖고있다
   const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
     if (addTagMode) {
       const image = event.currentTarget;
