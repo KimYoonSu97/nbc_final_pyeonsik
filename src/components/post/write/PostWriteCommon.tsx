@@ -60,7 +60,6 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
             </S.AddButton>
           </S.WriteHeaderBox>
         </S.WriteHeader>
-
         <S.WritePostArea>
           <S.TitleBox>
             <S.CategoryText>그르르갉</S.CategoryText>

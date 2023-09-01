@@ -72,7 +72,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   // clip board
   const clickCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(`${pathname}`);
+      await navigator.clipboard.writeText(`https://nbc-final-pyeonsik-897l29vm7-kimyoonsu97.vercel.app/${pathname}`);
       alert('주소가 복사되었습니다.');
     } catch (err) {
       console.log(err);
