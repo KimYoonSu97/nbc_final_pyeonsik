@@ -1,42 +1,80 @@
-import React from "react";
-import { styled } from "styled-components";
-import TopBarMenuContainer from "./TopBarMenuContainer";
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router';
+import { styled } from 'styled-components';
+import TopBarMenuContainer from './TopBarMenuContainer';
+import BoardSearchContainer from './BoardSearchContainer';
+import { IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
 
 const Header = () => {
-  return (
-    <S.Area>
-      <S.Container>
-        <S.LogoContainer>LOGO</S.LogoContainer>
+  const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname.split('/')[1];
 
+  return (
+    <S.Area $path={path}>
+      <S.UpperContainer>
+        <S.LogoContainer onClick={() => navigate('/')}>
+          <IconLogoSymbolH22 />
+          <IconWaterMarkH22 />
+        </S.LogoContainer>
         <TopBarMenuContainer />
-      </S.Container>
+      </S.UpperContainer>
+      {path === 'detail' || path === 'report' ? (
+        <></>
+      ) : (
+        <S.LowerContainer>
+          <BoardSearchContainer />
+        </S.LowerContainer>
+      )}
     </S.Area>
   );
 };
 
 export default Header;
 
+interface Props {
+  $path?: string;
+}
+
 const S = {
-  Area: styled.div`
-    background-color: royalblue;
+  Area: styled.div<Props>`
+    width: 100vw;
+    height: ${(props) => {
+      switch (props.$path) {
+        case 'detail':
+          return '56px';
+        case 'report':
+          return '56px';
+        default:
+          return '106px';
+      }
+    }};
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: white;
   `,
-  Container: styled.div`
+  UpperContainer: styled.div`
     width: 1280px;
     height: 56px;
     margin: 0 auto;
-    background-color: orange;
     display: flex;
-    /* justify-content: center; */
+    align-items: center;
+    position: relative;
+  `,
+  LowerContainer: styled.div`
+    width: 1280px;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
     align-items: center;
     position: relative;
   `,
   LogoContainer: styled.div`
-    background-color: black;
-    padding: 5px 13px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
+    color: white;
+    width: 80px;
+    height: 22px;
     position: absolute;
     left: 16px;
-  `,
+  `
 };

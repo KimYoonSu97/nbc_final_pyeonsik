@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { RankProps } from 'src/types/types';
 
 export const RealTimeContainer = styled.div`
-  margin-left: 1500px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
+
 export const NewReviewContainer = styled.div`
-  margin-left: 1500px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -65,8 +64,7 @@ export const ImageWrapper = styled.div`
 export const HeadTitle = styled.h1`
   width: 296px;
   height: 26px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 `;
 
 export const Rank = styled.div<RankProps>`
@@ -74,7 +72,7 @@ export const Rank = styled.div<RankProps>`
   height: 18px;
   margin-top: 14px;
   margin-right: 10px;
-  background-color: ${({ isFirst }) => (isFirst ? 'gray' : 'white')};
+  background-color: ${({ $isfirst }) => ($isfirst ? 'gray' : 'white')};
   border: 1px solid black;
   border-radius: 50%;
   display: flex;
@@ -82,7 +80,7 @@ export const Rank = styled.div<RankProps>`
   align-items: center;
   font-weight: bold;
   font-size: 16px;
-  color: ${({ isFirst }) => (isFirst ? '#gray' : 'black')};
+  color: ${({ $isfirst }) => ($isfirst ? '#gray' : 'black')};
 `;
 
 export const SideFotter = styled.div`
@@ -94,8 +92,10 @@ export const SideFotter = styled.div`
 `;
 
 export const FotterContainer = styled.div`
-  margin-top: 30px;
+  position: fixed;
+  right: calc(((100vw - 1280px) / 2) + 16px);
   width: 296px;
+  bottom: 5px;
   border-top: 1px solid black;
-  margin-left: 1500px;
+  margin-top: auto;
 `;
