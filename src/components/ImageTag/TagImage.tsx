@@ -113,7 +113,7 @@ const S = {
   `,
 
   ProductImageContainer: styled.div`
-    width: 800px;
+    width: 790px;
     height: 210px;
     display: flex;
     align-items: center;
@@ -124,6 +124,7 @@ const S = {
   ProductImage: styled.img`
     width: 200px;
     height: 200px;
+    margin-right: 20px;
   `,
 
   Image: styled.img`
