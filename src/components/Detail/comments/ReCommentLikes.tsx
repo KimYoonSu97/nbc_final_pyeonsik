@@ -2,26 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { getLikeByReCommentId } from 'src/api/ReCommentLike';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
+import { Navigate, useLocation } from 'react-router';
 
 interface Props {
   commentId: string;
 }
 
 const ReCommentLikes = ({ commentId }: Props) => {
+  const [isLike, setIsLike] = useState<boolean>();
+  const location = useLocation();
+  const navigate = useNavigate();
   const userId: string = useLoginUserId();
   const { id: postId } = useParams();
-  const [isLike, setIsLike] = useState<boolean>();
   const [likeNum, setLikeNum] = useState<number>(0);
 
   // //좋아요 데이터 받기
-  const { data: likeData, isLoading } = useQuery(['likes', commentId], () => getLikeByReCommentId(commentId, userId), {
-    enabled: userId ? true : false,
-    refetchOnWindowFocus: false
-  });
+  const { data: likeData, isLoading } = useQuery(
+    ['reLikes', commentId],
+    () => getLikeByReCommentId(commentId, userId),
+    {
+      // enabled: userId ? true : false,
+      refetchOnWindowFocus: false
+    }
+  );
 
   // 가져온 데이터에서 내아이디가 있으면 빨강아이콘 나오도록 설정
   useEffect(() => {
@@ -36,6 +43,8 @@ const ReCommentLikes = ({ commentId }: Props) => {
   // // 내 좋아요 상태에 따라 다른....작동...
   const clickButton = async () => {
     if (!userId) {
+      alert('로그인 후 가능합니다.');
+      navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
     if (isLike) {

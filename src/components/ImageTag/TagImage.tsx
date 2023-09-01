@@ -61,38 +61,18 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
           </S.TagContainer>
         ))}
       </div>
-
-      {showSwiper ? (
-        <S.ProductImageContainer>
-          <Swiper slidesPerView={4} navigation>
-            {tagsForImage.map((tag, tagIndex) => (
-              <SwiperSlide key={tagIndex}>
-                <S.ProductWrapper
-                  onMouseEnter={() => handleProductMouseEnter(tagIndex)}
-                  onMouseLeave={handleProductMouseLeave}
-                >
-                  <S.ProductImage src={tag.img} alt="상품 이미지" />
-                  {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
-                </S.ProductWrapper>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </S.ProductImageContainer>
-      ) : (
-        <S.ProductImageContainer>
-          {tagsForImage.map((tag, tagIndex) => (
-            <S.ProductWrapper
-              key={tagIndex}
-              onMouseEnter={() => handleProductMouseEnter(tagIndex)}
-              onMouseLeave={handleProductMouseLeave}
-            >
-              <S.ProductImage src={tag.img} alt="상품 이미지" />
-              {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
-            </S.ProductWrapper>
-          ))}
-        </S.ProductImageContainer>
-      )}
-
+      <S.ProductImageContainer>
+        {tagsForImage.map((tag, tagIndex) => (
+          <S.ProductWrapper
+            key={tagIndex}
+            onMouseEnter={() => handleProductMouseEnter(tagIndex)}
+            onMouseLeave={handleProductMouseLeave}
+          >
+            <S.ProductImage src={tag.img} alt="상품 이미지" />
+            {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
+          </S.ProductWrapper>
+        ))}
+      </S.ProductImageContainer>
       {recipeBody && (
         <S.recipeBody
           dangerouslySetInnerHTML={{
