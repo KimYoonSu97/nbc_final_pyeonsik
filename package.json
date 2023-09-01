@@ -17,7 +17,6 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/shortid": "^0.0.29",
     "@types/styled-components": "^5.1.26",
-    "@types/swiper": "^6.0.0",
     "@types/uuid": "^9.0.2",
     "bad-words": "^3.0.4",
     "badwords-ko": "^1.0.3",
@@ -33,6 +32,7 @@
     "react-icons": "^4.10.1",
     "react-intersection-observer": "^9.5.2",
     "react-quill": "^2.0.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
@@ -69,6 +69,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-slick": "^0.23.10",
     "source-map-loader": "^4.0.1"
   }
 }
