@@ -39,7 +39,7 @@ const PostDetail = () => {
   };
 
   const clickEdit = () => {
-    navigate(`/edit/${id}`);
+    navigate(`/edit/${id}`, { state: post });
   };
 
   if (isLoading) {
