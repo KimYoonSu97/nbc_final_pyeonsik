@@ -125,6 +125,7 @@ export const S = {
     font-size: 12px;
     font-weight: 400;
   `,
+
   // 김윤수가 추가한 컨텐츠 박스
   ContentsBox: styled.div`
     width: 890px;

@@ -46,7 +46,7 @@ const PostDetail = ({ isModal }: Props) => {
   };
 
   const clickEdit = () => {
-    navigate(`/edit/${id}`);
+    navigate(`/edit/${id}`, { state: post });
   };
 
   if (isLoading) {
@@ -308,6 +308,16 @@ export const S = {
     width: 790px;
     min-height: 40vh;
     margin: 10px 0px 10px 0px;
+    white-space: normal;
+    word-wrap: break-word;
+    color: var(--Black, #242424);
+
+    /* body-게시글 */
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 175% */
     /* 디자이너님에게 공유  */
     /* padding: 20px; */
     /* border: 1px solid black; */
