@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPost } from 'src/api/posts';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
 import OrgPostCard from './detail/OrgPostCard';
 import { S } from 'src/components/post/style/StyledPostWrite';
@@ -16,7 +16,7 @@ const PostEditCommon = () => {
   const userId: string | undefined = useLoginUserId();
   const postRef = useRef<HTMLInputElement>(null);
 
-  const { updatePostMutate } = useMutate();
+  const { updatePostMutate } = usePost();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 // custom hoooks
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 // api
 import { getPost } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
@@ -20,7 +20,7 @@ const PostDetail = () => {
   const userId: string | undefined = useLoginUserId();
 
   // 게시글 삭제, 좋아요, 좋아요 취소, 저장, 저장 취소
-  const { deletePostMutate } = useMutate();
+  const { deletePostMutate } = usePost();
 
   // read data
   const { isLoading, data } = useQuery({
