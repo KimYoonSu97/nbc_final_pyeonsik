@@ -24,10 +24,6 @@ const Router = () => {
 
   let state = location.state as { backgroundLocation?: Location };
 
-  window.addEventListener('beforeunload', (event) => {
-    navigate(location.pathname);
-  });
-
   return (
     <>
       <GlobalStyle />
