@@ -8,9 +8,7 @@ import PostCards from '../renderPosts/PostCards';
 const PostList = () => {
   const { isLoading, data } = useQuery({
     queryKey: ['posts'],
-    queryFn: () => getPosts(),
-    refetchOnMount: false,
-    staleTime: Infinity
+    queryFn: () => getPosts()
   });
 
   if (isLoading) {

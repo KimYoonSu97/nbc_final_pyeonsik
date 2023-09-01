@@ -32,7 +32,7 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
 
     const imageUrls = [];
 
-    for (const selectedImage of selectedImages) {
+    for (const selectedImage of Object.values(selectedImages)) {
       const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
 
       if (error) {
@@ -59,7 +59,7 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
 
     setContentsAtom({});
     setTagsDataAtom({});
-    setImagesDataAtom([]);
+    setImagesDataAtom({});
 
     navigate(`/`);
   };
@@ -110,7 +110,7 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
       </S.WriteForm>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ width: '950px' }}>
-          <AddImageTagComponent onImageSelect={() => {}} />
+          <AddImageTagComponent />
         </div>
       </div>
     </S.WriteArea>

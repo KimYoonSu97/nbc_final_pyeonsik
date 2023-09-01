@@ -23,12 +23,6 @@ const OAuthLogin = ({ provider }: OAuthLoginProps) => {
       });
 
       localStorage.setItem('social', provider);
-
-      // const response = await supabase.auth.signInWithOAuth
-      // console.log(response);
-      // console.log(data);
-      // const { data, error: sessionError } = await supabase.auth.getSession();
-      // console.log(data);
     } catch (error) {
       console.log(error);
     }

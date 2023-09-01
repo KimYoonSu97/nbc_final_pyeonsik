@@ -238,6 +238,9 @@ const ErrorMessage = styled.div`
 `;
 
 const SuccessMessage = styled.div`
+  width: 300px;
+  height: 44px;
+
   margin-top: 10px;
   color: blue;
   font-size: 14px;

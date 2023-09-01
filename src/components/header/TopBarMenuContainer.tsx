@@ -68,7 +68,7 @@ const TopBarMenuContainer = () => {
           return item.identity_data;
         }
       })[0].identity_data;
-      console.log(socialData);
+
       const newUser = {
         email: socialData?.email,
         profileImg: socialData?.avatar_url,

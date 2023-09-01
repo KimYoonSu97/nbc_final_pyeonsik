@@ -6,6 +6,8 @@ export const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    /* 김윤수가 추가함 삭제해야됨 */
+    background-color: palegreen;
   `,
 
   PostHead: styled.div`

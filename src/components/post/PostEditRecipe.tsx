@@ -8,8 +8,8 @@ import useMutate from 'src/hooks/usePost';
 import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-// import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
-import PostWriteInput from './write/PostWriteInput';
+import { IconAdd, IconSelect } from 'src/components/icons';
+import { S } from './style/StyledPostWrite';
 
 const PostEditRecipe = () => {
   const [inputData, setInputData] = useState<string[]>([]);
@@ -120,37 +120,55 @@ const PostEditRecipe = () => {
     });
   };
 
+  const clickLogo = () => {
+    navigate(`/`);
+  };
+
   return (
-    <div>
-      <form onSubmit={submitPost}>
-        <PostWriteInput
-          ref={postRef}
-          type="text"
-          name="title"
-          title="title"
-          value={title || ''}
-          onChange={(e) => {
-            e.preventDefault();
-            setTitle(e.target.value);
-          }}
-          autoFocus
-        />
-        {/* <AddImageTagComponent onImageSelect={handleImageSelect} /> */}
-        {body.map((_, index) => (
-          <ImageTag
-            key={index}
-            onTagsAndResultsChange={(tags) => handleTagsChange(index, tags)}
-            onImageSelect={(image) => handleImageSelect(image, index)}
-            onContentsChange={(newContents) => handleContentsChange(index, newContents)}
-            imageData={allSelectedImages[index]}
-            tagData={tagData ? tagData[index] : null}
-            body={body ? body[index] : null}
+    <S.WriteArea>
+      <S.WriteForm onSubmit={submitPost}>
+        <S.WriteHeader>
+          <div onClick={clickLogo}>로고 영역</div>
+          <S.AddButton type="submit">
+            <S.AddText>공유하기</S.AddText>
+            <S.AddIcon>
+              <IconAdd />
+            </S.AddIcon>
+          </S.AddButton>
+        </S.WriteHeader>
+        <S.TitleBox>
+          <S.CategoryText>편식조합</S.CategoryText>
+          <S.Contour />
+          <S.Title
+            ref={postRef}
+            type="text"
+            name="title"
+            placeholder="제목 생략 가능"
+            value={title}
+            onChange={(e) => {
+              e.preventDefault();
+              setTitle(e.target.value);
+            }}
+            autoFocus
           />
-        ))}
-        <button type="submit">save</button>
-      </form>
-      <button onClick={clickCancle}>cancle</button>
-    </div>
+        </S.TitleBox>
+      </S.WriteForm>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '950px' }}>
+          {body.map((_, index) => (
+            <ImageTag
+              key={index}
+              onTagsAndResultsChange={(tags) => handleTagsChange(index, tags)}
+              onImageSelect={(image) => handleImageSelect(image, index)}
+              onContentsChange={(newContents) => handleContentsChange(index, newContents)}
+              imageData={allSelectedImages[index]}
+              tagData={tagData ? tagData[index] : null}
+              body={body ? body[index] : null}
+            />
+          ))}
+        </div>
+      </div>
+    </S.WriteArea>
   );
 };
 

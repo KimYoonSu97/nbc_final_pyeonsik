@@ -1,82 +1,84 @@
-import React from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addLike, deleteLike, getLike } from 'src/api/commentLike';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getLikeByCommentId } from 'src/api/commentLike';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
-interface CommentIdProps {
+import styled from 'styled-components';
+import { IconLiked, IconUnLiked } from 'src/components/icons';
+import supabase from 'src/lib/supabaseClient';
+import { useParams } from 'react-router';
+
+interface Props {
   commentId: string;
 }
-interface LikeType {
-  id: string;
-  commentId: string;
-  userId: string;
-  postId: string;
-}
 
-const CommentLikes: React.FC<CommentIdProps> = ({ commentId }) => {
-  const queryClient = useQueryClient();
-  const userId = useLoginUserId();
+const CommentLikes = ({ commentId }: Props) => {
+  const userId: string = useLoginUserId();
+  const { id: postId } = useParams();
+  const [isLike, setIsLike] = useState<boolean>();
+  const [likeNum, setLikeNum] = useState<number>(0);
 
-  //좋아요 데이터 받기
-  const { data: likeData } = useQuery(['likes'], getLike);
-
-  //클릭시 좋아요 데이터에 추가
-  const addLikeMutation = useMutation(addLike, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['likes']);
-    }
-  });
-  //좋아요된 댓글 클릭시 데이터 삭제
-  const deleteLikeMutation = useMutation(deleteLike, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['likes']);
-    }
+  // //좋아요 데이터 받기
+  const { data: likeData, isLoading } = useQuery(['likes', commentId], () => getLikeByCommentId(commentId, userId), {
+    enabled: userId ? true : false,
+    refetchOnWindowFocus: false
   });
 
-  const toggleLike = (commentId: string) => {
-    const changeLike = likeData?.find((like) => {
-      return like.commentId === commentId && like.userId === userId;
-    });
+  // 가져온 데이터에서 내아이디가 있으면 빨강아이콘 나오도록 설정
+  useEffect(() => {
+    setLikeNum(likeData?.likeNum as number);
+    if (likeData?.myLike === 1) {
+      setIsLike(true);
+    } else {
+      setIsLike(false);
+    }
+  }, [likeData]);
 
-    if(!userId){
-      alert('로그인 후 이용해 주세요.')
+  // 내 좋아요 상태에 따라 다른....작동...
+  const clickButton = async () => {
+    if (!userId) {
       return;
     }
+    if (isLike) {
+      await supabase.from('comment_likes').delete().eq('commentId', commentId).eq('userId', userId);
 
-    if (changeLike) {
-      deleteLikeMutation.mutate({ commentId, userId });
+      setLikeNum(likeNum! - 1);
+      setIsLike(!isLike);
     } else {
-      addLikeMutation.mutate({ commentId, userId });
+      await supabase.from('comment_likes').insert({ commentId, userId, postId });
+      setLikeNum(likeNum! + 1);
+      setIsLike(!isLike);
     }
   };
 
-  const checkLike = (commentId: string, userId: string | undefined, likeData: any) => {
-    let answer = false;
-    let array: LikeType[] = [];
-    if (likeData) {
-      array = [...likeData];
-    }
+  if (isLoading) {
+    return <S.LikeNum>로딩중</S.LikeNum>;
+  }
 
-    array.forEach((element) => {
-      if (element.commentId === commentId && element.userId === userId) {
-        answer = true;
-      }
-    });
-    return answer;
-  };
-
-  const getCommentLikesCount = (commentId: string) => {
-    const commentLikesCount = likeData?.filter((like) => like.commentId === commentId).length;
-    return commentLikesCount || 0;
-  };
+  if (isLike === undefined) {
+    return <S.LikeNum>로딩중</S.LikeNum>;
+  }
 
   return (
-    <button onClick={() => toggleLike(commentId)}>
-      {checkLike(commentId, userId, likeData) ? <AiFillLike size={'18px'} /> : <AiOutlineLike size={'18px'} />}
-      {getCommentLikesCount(commentId)}
-      {/* <좋아요컴포넌트 comment.id user.id> 배열을 불러온 useQuery [likeData]=1초 => fetch => http 100번 0초  </좋아용> */}
-    </button>
+    <>
+      <S.LikeButton onClick={clickButton}>{isLike ? <IconLiked /> : <IconUnLiked />}</S.LikeButton>
+      <S.LikeNum>{likeNum}개</S.LikeNum>
+    </>
   );
 };
 
 export default CommentLikes;
+
+const S = {
+  LikeButton: styled.div``,
+  LikeNum: styled.div`
+    color: var(--neutral-500, #667085);
+    text-align: right;
+
+    /* body-medium */
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  `
+};
