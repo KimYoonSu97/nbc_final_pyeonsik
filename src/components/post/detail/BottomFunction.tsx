@@ -8,7 +8,15 @@ import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
 import { S } from 'src/components/post/style/StyledBottomFunction';
-import { IconBookmark, IconLike, IconUnBookmark, IconUnLike, IconUnQuotation } from 'src/components/icons';
+import {
+  IconBookmark,
+  IconLike,
+  IconQuotation,
+  IconUnBookmark,
+  IconUnLike,
+  IconUnLink,
+  IconUnQuotation
+} from 'src/components/icons';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
@@ -18,24 +26,17 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
 
-  // const data = useQueries({
-  //   queries: [
-  //     { queryKey: ['post_likes'], queryFn: () => getPostLike(id!), staleTime: Infinity },
-  //     { queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!), staleTime: Infinity },
-  //     { queryKey: ['post_quotation'], queryFn: () => getQuotationPosts(id!), staleTime: Infinity }
-  //   ]
-  // });
-  // const [postLikeData, postBookmarkData, postQuotationData] = data;
-
   const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
   const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!) });
   const { data: postQuotationData } = useQuery({ queryKey: ['post_quotation'], queryFn: () => getQuotationPosts(id!) });
 
   const postLikeList = postLikeData?.data;
-  const postLike = postLikeList?.find((like) => like.userId === userId);
   const postBookmarkList = postBookmarkData?.data;
+  const postQuotationList = postQuotationData?.data;
+
+  const postLike = postLikeList?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkList?.find((bookmark) => bookmark.userId === userId);
-  const postQuotation = postQuotationData?.data;
+  const postQuotation = postQuotationList?.find((Quotation) => Quotation.userId === userId);
 
   // 좋아요
   const clickPostLike = () => {
@@ -86,9 +87,9 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
         <S.FunctionButton onClick={clickQuotation}>
-          <IconUnQuotation />
+          {postQuotation ? <IconQuotation /> : <IconUnQuotation />}
         </S.FunctionButton>
-        <S.FunctionCount>{postQuotation?.length}</S.FunctionCount>
+        <S.FunctionCount>{postQuotationList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox>
         <S.FunctionButton onClick={clickPostBookmark}>
@@ -97,7 +98,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
         <S.FunctionCount>{postBookmarkList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButton onClick={clickCopyLink}>
-        <IconUnLike />
+        <IconUnLink />
       </S.FunctionButton>
     </S.FunctionBox>
   );

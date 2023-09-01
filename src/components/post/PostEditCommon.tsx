@@ -3,10 +3,10 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPost } from 'src/api/posts';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
 import OrgPostCard from './detail/OrgPostCard';
-import { S } from 'src/components/post/style/StyledPostWriteCommon';
+import { S } from 'src/components/post/style/StyledPostWrite';
 import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
 
 const PostEditCommon = () => {
@@ -16,7 +16,7 @@ const PostEditCommon = () => {
   const userId: string | undefined = useLoginUserId();
   const postRef = useRef<HTMLInputElement>(null);
 
-  const { updatePostMutate } = useMutate();
+  const { updatePostMutate } = usePost();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
@@ -25,7 +25,6 @@ const PostEditCommon = () => {
   const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
   const post = data?.data;
   const orgPost = post?.orgPostId;
-  const orgUserNickname = orgPost?.userId.nickname;
 
   useEffect(() => {
     setTitle(post?.title);
@@ -114,7 +113,7 @@ const PostEditCommon = () => {
           <EditorQuill body={body} setBody={setBody} />
         </S.WriteForm>
       </S.WriteArea>
-      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
+      {orgPost && <OrgPostCard orgPost={orgPost} />}
       <button onClick={clickCancle}>cancle</button>
     </>
   );

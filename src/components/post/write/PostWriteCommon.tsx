@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 import EditorQuill from './EditorQuill';
-import { S } from 'src/components/post/style/StyledPostWriteCommon';
+import { S } from 'src/components/post/style/StyledPostWrite';
 import { IconAdd, IconLogoSymbolH22, IconSelect, IconWaterMarkH22 } from 'src/components/icons';
 
 export interface OrgPostIdProps {
@@ -18,7 +18,7 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const { addPostMutate } = useMutate();
+  const { addPostMutate } = usePost();
 
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

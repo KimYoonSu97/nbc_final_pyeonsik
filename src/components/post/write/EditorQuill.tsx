@@ -76,9 +76,4 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
 
 export default EditorQuill;
 
-const Container = styled.div`
-  .ql-container.ql-snow {
-    min-height: 50vh;
-    margin-bottom: 20px;
-  }
-`;
+const Container = styled.div``;

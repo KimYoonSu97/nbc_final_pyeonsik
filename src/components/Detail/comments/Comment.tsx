@@ -39,7 +39,6 @@ const Comment = () => {
         <S.CommentInPutProfile></S.CommentInPutProfile>
         <CommentInput type={'post'}></CommentInput>
       </S.CommentInputArea>
-
       <S.CommentRenderArea>
         {commentData?.map((comment) => {
           return <CommentForMap key={comment.id} comment={comment as CommentDataType} />;

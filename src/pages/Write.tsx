@@ -11,15 +11,14 @@ const Write = () => {
 
   const location = useLocation();
   const orgPost = location.state as Post;
-  const orgUserNickname = orgPost?.userId?.nickname;
 
   return (
     <S.ViewPort>
-      <S.WrtieArea>
+      <S.WriteArea>
         {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
-        {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
+        {orgPost && <OrgPostCard orgPost={orgPost} />}
         {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
-      </S.WrtieArea>
+      </S.WriteArea>
     </S.ViewPort>
   );
 };
@@ -37,7 +36,7 @@ export const S = {
     }
     overflow-x: hidden;
   `,
-  WrtieArea: styled.div`
+  WriteArea: styled.div`
     background-color: #f6f7f9;
     width: 100%;
     min-height: 100%;

@@ -3,14 +3,13 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import supabase from 'src/lib/supabaseClient';
 
-import { S } from 'src/components/post/style/StyledPostWriteCommon';
 import { getPost } from 'src/api/posts';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import PostWriteInput from './write/PostWriteInput';
 import { IconAdd, IconLogoSymbolH22, IconSelect, IconWaterMarkH22 } from 'src/components/icons';
+import { S } from './style/StyledPostWrite';
 
 const PostEditRecipe = () => {
   const [inputData, setInputData] = useState<string[]>([]);
@@ -18,7 +17,7 @@ const PostEditRecipe = () => {
 
   const { id: prams } = useParams<string>();
   const navigate = useNavigate();
-  const { tagUpdatePostMutate } = useMutate();
+  const { tagUpdatePostMutate } = usePost();
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string[]>([]);
