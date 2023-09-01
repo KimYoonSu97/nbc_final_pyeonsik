@@ -4,13 +4,6 @@ import styled from 'styled-components';
 import { Tag } from 'src/types/types';
 import { TagImageProps } from 'src/types/types';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
-import SwiperCore, { Navigation, Scrollbar } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.min.css';
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/components/scrollbar/scrollbar.min.css';
-
-SwiperCore.use([Navigation, Scrollbar]);
 
 const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage }) => {
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
@@ -64,7 +57,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
 
       {showSwiper ? (
         <S.ProductImageContainer>
-          <Swiper slidesPerView={4} navigation>
+          {/* <Swiper>
             {tagsForImage.map((tag, tagIndex) => (
               <SwiperSlide key={tagIndex}>
                 <S.ProductWrapper
@@ -76,7 +69,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
                 </S.ProductWrapper>
               </SwiperSlide>
             ))}
-          </Swiper>
+          </Swiper> */}
         </S.ProductImageContainer>
       ) : (
         <S.ProductImageContainer>

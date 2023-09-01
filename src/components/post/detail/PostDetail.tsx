@@ -55,27 +55,25 @@ const PostDetail = () => {
         <S.WriterImgBox>
           <S.WriterImg src={writer.profileImg} />
         </S.WriterImgBox>
-        <S.WriterContainer>
-          <div>
-            <S.WriterInfo>
-              <S.WirterLevel>Lv. 수습</S.WirterLevel>
-              {writer.nickname}
-              <S.WriterSir>님의</S.WriterSir>
-              {post.postCategory === 'common' && '그르륵갉'}
-              {post.postCategory === 'recipe' && '편식조합'}
-            </S.WriterInfo>
-            <S.PostDate>
-              <CreatedAt createdAt={post.created_at} />
-            </S.PostDate>
-          </div>
-          {userId === writer.id && (
-            <S.WriterFunction>
-              <S.WriterButton onClick={clickEdit}>수정</S.WriterButton>
-              <S.Contour />
-              <S.WriterButton onClick={() => clickDelete(post.id)}>삭제</S.WriterButton>
-            </S.WriterFunction>
-          )}
-        </S.WriterContainer>
+        <div>
+          <S.WriterInfo>
+            <S.WirterLevel>Lv. 수습</S.WirterLevel>
+            {writer.nickname}
+            <S.WriterSir>님의</S.WriterSir>
+            {post.postCategory === 'common' && '그르륵갉'}
+            {post.postCategory === 'recipe' && '편식조합'}
+          </S.WriterInfo>
+          <S.PostDate>
+            <CreatedAt createdAt={post.created_at} />
+          </S.PostDate>
+        </div>
+        {userId === writer.id && (
+          <S.WriterFunction>
+            <S.WriterButton onClick={clickEdit}>수정</S.WriterButton>
+            <S.Contour />
+            <S.WriterButton onClick={() => clickDelete(post.id)}>삭제</S.WriterButton>
+          </S.WriterFunction>
+        )}
       </S.PostHead>
       <S.ContentsBox>
         <S.PostTitle>{post.title}</S.PostTitle>
