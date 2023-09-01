@@ -1,7 +1,8 @@
-// TagImage.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Tag } from 'src/types/types';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { TagImageProps } from 'src/types/types';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
 
@@ -9,8 +10,6 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
   const [isMouseOverImage, setIsMouseOverImage] = useState(false);
   const [hoveredProductIndex, setHoveredProductIndex] = useState<number | null>(null);
-
-  const showSwiper = tagsForImage.length > 3;
 
   const handleTagClick = (tag: Tag) => {
     setSelectedTag(selectedTag === tag ? null : tag);
@@ -54,38 +53,18 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
           </S.TagContainer>
         ))}
       </div>
-
-      {showSwiper ? (
-        <S.ProductImageContainer>
-          {/* <Swiper>
-            {tagsForImage.map((tag, tagIndex) => (
-              <SwiperSlide key={tagIndex}>
-                <S.ProductWrapper
-                  onMouseEnter={() => handleProductMouseEnter(tagIndex)}
-                  onMouseLeave={handleProductMouseLeave}
-                >
-                  <S.ProductImage src={tag.img} alt="상품 이미지" />
-                  {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
-                </S.ProductWrapper>
-              </SwiperSlide>
-            ))}
-          </Swiper> */}
-        </S.ProductImageContainer>
-      ) : (
-        <S.ProductImageContainer>
-          {tagsForImage.map((tag, tagIndex) => (
-            <S.ProductWrapper
-              key={tagIndex}
-              onMouseEnter={() => handleProductMouseEnter(tagIndex)}
-              onMouseLeave={handleProductMouseLeave}
-            >
-              <S.ProductImage src={tag.img} alt="상품 이미지" />
-              {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
-            </S.ProductWrapper>
-          ))}
-        </S.ProductImageContainer>
-      )}
-
+      <S.ProductImageContainer>
+        {tagsForImage.map((tag, tagIndex) => (
+          <S.ProductWrapper
+            key={tagIndex}
+            onMouseEnter={() => handleProductMouseEnter(tagIndex)}
+            onMouseLeave={handleProductMouseLeave}
+          >
+            <S.ProductImage src={tag.img} alt="상품 이미지" />
+            {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
+          </S.ProductWrapper>
+        ))}
+      </S.ProductImageContainer>
       {recipeBody && (
         <S.recipeBody
           dangerouslySetInnerHTML={{

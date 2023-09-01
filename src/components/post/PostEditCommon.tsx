@@ -109,7 +109,6 @@ const PostEditCommon = () => {
               autoFocus
             />
           </S.TitleBox>
-
           <EditorQuill body={body} setBody={setBody} />
         </S.WriteForm>
       </S.WriteArea>

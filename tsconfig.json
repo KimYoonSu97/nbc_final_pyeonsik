@@ -2,8 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"],
-      "swiper/core": ["node_modules/swiper/core"]
+      "src/*": ["src/*"]
     },
     "target": "ES2016",
     "lib": ["dom", "dom.iterable", "esnext"],
