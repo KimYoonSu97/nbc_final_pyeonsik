@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 // custom hoooks
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 // api
 import { getPost } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
@@ -11,6 +11,7 @@ import BottomFunction from './BottomFunction';
 import { S } from '../style/StyledPostDetail';
 import CreatedAt from 'src/function/CreatedAt';
 import TagImage from 'src/components/ImageTag/TagImage';
+import Comment from 'src/components/Detail/comments/Comment';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const PostDetail = () => {
   const userId: string | undefined = useLoginUserId();
 
   // 게시글 삭제, 좋아요, 좋아요 취소, 저장, 저장 취소
-  const { deletePostMutate } = useMutate();
+  const { deletePostMutate } = usePost();
 
   // read data
   const { isLoading, data } = useQuery({
@@ -76,19 +77,25 @@ const PostDetail = () => {
           )}
         </S.WriterContainer>
       </S.PostHead>
-      <S.PostTitle>{post.title}</S.PostTitle>
-      {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
-      {post.postCategory === 'recipe' &&
-        post.tagimage.map((tagImageUrl: string, index: string) => (
-          <TagImage
-            key={index}
-            imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
-            recipeBody={post.recipeBody[index]}
-            tagsForImage={post.tags[index] || []}
-          />
-        ))}
-      {post.orgPostId && <OrgPostCard orgPost={post.orgPostId} />}
-      <BottomFunction userId={userId} post={post} />
+      <S.ContentsBox>
+        <S.PostTitle>{post.title}</S.PostTitle>
+        {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
+        <div>
+          {post.postCategory === 'recipe' &&
+            post.tagimage.length > 0 &&
+            post.tagimage.map((tagImageUrl: string, index: string) => (
+              <TagImage
+                key={index}
+                imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
+                recipeBody={post.recipeBody[index]}
+                tagsForImage={post.tags[index] || []}
+              />
+            ))}
+        </div>
+        {post.orgPostId && <OrgPostCard orgPost={post.orgPostId} />}
+        <BottomFunction userId={userId} post={post} />
+        <Comment />
+      </S.ContentsBox>
     </S.DtailArea>
   );
 };
