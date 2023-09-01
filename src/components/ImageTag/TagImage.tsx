@@ -1,7 +1,8 @@
-// TagImage.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Tag } from 'src/types/types';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { TagImageProps } from 'src/types/types';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
 
@@ -9,8 +10,6 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
   const [isMouseOverImage, setIsMouseOverImage] = useState(false);
   const [hoveredProductIndex, setHoveredProductIndex] = useState<number | null>(null);
-
-  const showSwiper = tagsForImage.length > 3;
 
   const handleTagClick = (tag: Tag) => {
     setSelectedTag(selectedTag === tag ? null : tag);
