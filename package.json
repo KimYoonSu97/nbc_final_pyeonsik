@@ -17,6 +17,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/shortid": "^0.0.29",
     "@types/styled-components": "^5.1.26",
+    "@types/swiper": "^6.0.0",
     "@types/uuid": "^9.0.2",
     "bad-words": "^3.0.4",
     "badwords-ko": "^1.0.3",

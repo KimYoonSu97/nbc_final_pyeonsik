@@ -113,17 +113,17 @@ const S = {
   `,
 
   ProductImageContainer: styled.div`
-    width: 800px;
+    width: 790px;
     height: 210px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    /* background-color: red; */
   `,
 
   ProductImage: styled.img`
     width: 200px;
     height: 200px;
+    margin-right: 20px;
   `,
 
   Image: styled.img`
