@@ -4,7 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 import EditorQuill from './EditorQuill';
 import { S } from 'src/components/post/style/StyledPostWriteCommon';
-import { IconAdd, IconSelect } from 'src/components/icons';
+import { IconAdd, IconLogoSymbolH22, IconSelect, IconWaterMarkH22 } from 'src/components/icons';
 
 export interface OrgPostIdProps {
   orgPostId: string;
@@ -47,38 +47,44 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
     <S.WriteArea>
       <S.WriteForm onSubmit={submitPost}>
         <S.WriteHeader>
-          <div onClick={clickLogo}>로고 영역</div>
-          <S.AddButton type="submit">
-            <S.AddText>공유하기</S.AddText>
-            <S.AddIcon>
-              <IconAdd />
-            </S.AddIcon>
-          </S.AddButton>
+          <S.WriteHeaderBox>
+            <S.LogoContainer onClick={() => navigate('/')}>
+              <IconLogoSymbolH22 />
+              <IconWaterMarkH22 />
+            </S.LogoContainer>
+            <S.AddButton type="submit">
+              공유하기
+              <S.AddIcon>
+                <IconAdd />
+              </S.AddIcon>
+            </S.AddButton>
+          </S.WriteHeaderBox>
         </S.WriteHeader>
-        <S.TitleBox>
-          <S.CategoryText>그르르갉</S.CategoryText>
-          <S.Contour />
-          <S.Title
-            ref={postRef}
-            type="text"
-            name="title"
-            placeholder="제목 생략 가능"
-            value={title}
-            onChange={changeTitle}
-            autoFocus
-          />
-          <S.SelectCategory>
-            <S.SelectIcon>
-              <IconSelect />
-            </S.SelectIcon>
-            <S.SelectText type="button" onClick={clickCategory}>
-              편식조합
-            </S.SelectText>
-          </S.SelectCategory>
-        </S.TitleBox>
-        <S.EditorArea>
+
+        <S.WritePostArea>
+          <S.TitleBox>
+            <S.CategoryText>그르르갉</S.CategoryText>
+            <S.Contour />
+            <S.Title
+              ref={postRef}
+              type="text"
+              name="title"
+              placeholder="제목 생략 가능"
+              value={title}
+              onChange={changeTitle}
+              autoFocus
+            />
+            <S.SelectCategory>
+              <S.SelectIcon>
+                <IconSelect />
+              </S.SelectIcon>
+              <S.SelectText type="button" onClick={clickCategory}>
+                편식조합
+              </S.SelectText>
+            </S.SelectCategory>
+          </S.TitleBox>
           <EditorQuill body={body} setBody={setBody} />
-        </S.EditorArea>
+        </S.WritePostArea>
       </S.WriteForm>
     </S.WriteArea>
   );

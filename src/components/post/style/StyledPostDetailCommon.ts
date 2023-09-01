@@ -6,8 +6,7 @@ export const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* 김윤수가 추가함 삭제해야됨 */
-    background-color: palegreen;
+    margin: 84px 0;
   `,
 
   WriterContainer: styled.div`
@@ -120,10 +119,20 @@ export const S = {
     font-size: 12px;
     font-weight: 400;
   `,
+  // 김윤수가 추가한 컨텐츠 박스
+  ContentsBox: styled.div`
+    width: 890px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding-bottom: 100px;
+  `,
 
   PostTitle: styled.div`
     width: 790px;
-    margin: 24px 0px 12px 0px;
+    margin: 20px 0px 20px 0px;
 
     display: flex;
     align-items: center;
@@ -137,8 +146,14 @@ export const S = {
 
   PostBodyCommon: styled.pre`
     width: 790px;
+    min-height: 40vh;
     margin: 10px 0px 10px 0px;
+    /* 디자이너님에게 공유  */
+    /* padding: 20px; */
+    /* border: 1px solid black; */
+    /* border-radius: 10px; */
 
     font-family: 'inherit';
+    /* background-color: royalblue; */
   `
 };

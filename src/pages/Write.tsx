@@ -14,23 +14,32 @@ const Write = () => {
   const orgUserNickname = orgPost?.userId?.nickname;
 
   return (
-    <S.WrtieArea>
-      {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
-      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
-    </S.WrtieArea>
+    <S.ViewPort>
+      <S.WrtieArea>
+        {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
+        {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
+        {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
+      </S.WrtieArea>
+    </S.ViewPort>
   );
 };
 
 export default Write;
 
 export const S = {
-  WrtieArea: styled.div`
-    /* background-color: #f6f7f9;
+  ViewPort: styled.div`
+    width: 100vw;
+    height: 100vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; */
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    overflow-x: hidden;
+  `,
+  WrtieArea: styled.div`
+    background-color: #f6f7f9;
+    width: 100%;
+    min-height: 100%;
   `
 };

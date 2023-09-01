@@ -11,6 +11,7 @@ import BottomFunction from './BottomFunction';
 import { S } from '../style/StyledPostDetailCommon';
 import CreatedAt from 'src/components/Detail/comments/CreatedAt';
 import TagImage from 'src/components/ImageTag/TagImage';
+import Comment from 'src/components/Detail/comments/Comment';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -81,22 +82,25 @@ const PostDetail = () => {
           </S.WriterFunction>
         )}
       </S.WriterContainer>
-      <S.PostTitle>{post.title}</S.PostTitle>
-      {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
-      <div>
-        {post.tagimage &&
-          post.tagimage.length > 0 &&
-          post.tagimage.map((tagImageUrl: string, index: string) => (
-            <TagImage
-              key={index}
-              imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
-              recipeBody={post.recipeBody[index]}
-              tagsForImage={post.tags[index] || []}
-            />
-          ))}
-      </div>
-      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
-      <BottomFunction userId={userId} post={post} />
+      <S.ContentsBox>
+        <S.PostTitle>{post.title}</S.PostTitle>
+        {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
+        <div>
+          {post.tagimage &&
+            post.tagimage.length > 0 &&
+            post.tagimage.map((tagImageUrl: string, index: string) => (
+              <TagImage
+                key={index}
+                imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
+                recipeBody={post.recipeBody[index]}
+                tagsForImage={post.tags[index] || []}
+              />
+            ))}
+        </div>
+        {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
+        <BottomFunction userId={userId} post={post} />
+        <Comment />
+      </S.ContentsBox>
     </S.DtailArea>
   );
 };

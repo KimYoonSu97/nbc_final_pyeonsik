@@ -10,7 +10,7 @@ import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import PostWriteInput from './write/PostWriteInput';
-import { IconAdd, IconSelect } from 'src/components/icons';
+import { IconAdd, IconLogoSymbolH22, IconSelect, IconWaterMarkH22 } from 'src/components/icons';
 
 const PostEditRecipe = () => {
   const [inputData, setInputData] = useState<string[]>([]);
@@ -129,13 +129,18 @@ const PostEditRecipe = () => {
     <S.WriteArea>
       <S.WriteForm onSubmit={submitPost}>
         <S.WriteHeader>
-          <div onClick={clickLogo}>로고 영역</div>
-          <S.AddButton type="submit">
-            <S.AddText>공유하기</S.AddText>
-            <S.AddIcon>
-              <IconAdd />
-            </S.AddIcon>
-          </S.AddButton>
+          <S.WriteHeaderBox>
+            <S.LogoContainer onClick={() => navigate('/')}>
+              <IconLogoSymbolH22 />
+              <IconWaterMarkH22 />
+            </S.LogoContainer>
+            <S.AddButton type="submit">
+              공유하기
+              <S.AddIcon>
+                <IconAdd />
+              </S.AddIcon>
+            </S.AddButton>
+          </S.WriteHeaderBox>
         </S.WriteHeader>
         <S.TitleBox>
           <S.CategoryText>편식조합</S.CategoryText>

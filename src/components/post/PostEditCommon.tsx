@@ -7,7 +7,7 @@ import useMutate from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
 import OrgPostCard from './detail/OrgPostCard';
 import { S } from 'src/components/post/style/StyledPostWriteCommon';
-import { IconAdd } from '../icons';
+import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
 
 const PostEditCommon = () => {
   const navigate = useNavigate();
@@ -83,14 +83,20 @@ const PostEditCommon = () => {
       <S.WriteArea>
         <S.WriteForm onSubmit={submitPost}>
           <S.WriteHeader>
-            <div onClick={clickLogo}>로고 영역</div>
-            <S.AddButton type="submit">
-              <S.AddText>공유하기</S.AddText>
-              <S.AddIcon>
-                <IconAdd />
-              </S.AddIcon>
-            </S.AddButton>
+            <S.WriteHeaderBox>
+              <S.LogoContainer onClick={() => navigate('/')}>
+                <IconLogoSymbolH22 />
+                <IconWaterMarkH22 />
+              </S.LogoContainer>
+              <S.AddButton type="submit">
+                공유하기
+                <S.AddIcon>
+                  <IconAdd />
+                </S.AddIcon>
+              </S.AddButton>
+            </S.WriteHeaderBox>
           </S.WriteHeader>
+
           <S.TitleBox>
             <S.CategoryText>그르르갉</S.CategoryText>
             <S.Contour />
@@ -104,9 +110,8 @@ const PostEditCommon = () => {
               autoFocus
             />
           </S.TitleBox>
-          <S.EditorArea>
-            <EditorQuill body={body} setBody={setBody} />
-          </S.EditorArea>
+
+          <EditorQuill body={body} setBody={setBody} />
         </S.WriteForm>
       </S.WriteArea>
       {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
