@@ -82,7 +82,6 @@ const PostDetail = () => {
         {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
         <div>
           {post.postCategory === 'recipe' &&
-            post.tagimage.length > 0 &&
             post.tagimage.map((tagImageUrl: string, index: string) => (
               <TagImage
                 key={index}
