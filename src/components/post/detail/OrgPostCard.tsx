@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router';
 import { Post } from 'src/types/types';
 import { S } from 'src/components/post/style/StyledOrgPostCard';
 import { IconOrgPost } from 'src/components/icons';
+import CreatedAt from 'src/function/CreatedAt';
 
 interface OrgPostCardProps {
   orgPost: Post;
-  orgUserNickname: string;
 }
 
-const OrgPostCard = ({ orgPost, orgUserNickname }: OrgPostCardProps) => {
+const OrgPostCard = ({ orgPost }: OrgPostCardProps) => {
   const navigate = useNavigate();
 
   const clickOrgPost = () => {
@@ -27,9 +27,9 @@ const OrgPostCard = ({ orgPost, orgUserNickname }: OrgPostCardProps) => {
       <S.OrgContentsBox onClick={clickOrgPost}>
         <S.OrgTitle>{orgPost.title}</S.OrgTitle>
         <S.OrgInfoBox>
-          {orgUserNickname}
+          {orgPost.userId.nickname}
           <div>·</div>
-          {orgPost.created_at}
+          <CreatedAt createdAt={orgPost.created_at} />
         </S.OrgInfoBox>
       </S.OrgContentsBox>
     </S.OrgArea>

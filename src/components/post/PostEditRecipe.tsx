@@ -3,16 +3,22 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import supabase from 'src/lib/supabaseClient';
 
-import { S } from 'src/components/post/style/StyledPostWriteCommon';
 import { getPost } from 'src/api/posts';
 import useMutate from 'src/hooks/usePost';
 import { Tag } from 'src/types/types';
 import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import PostWriteInput from './write/PostWriteInput';
-import { IconAdd, IconSelect } from 'src/components/icons';
+import { IconAdd } from 'src/components/icons';
+import { S } from './style/StyledPostWrite';
+import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
+import { useAtom } from 'jotai';
+import { contentsAtom, tagsDataAtom, imagesAtom } from '../ImageTag/AddImageTagComponent';
 
 const PostEditRecipe = () => {
+  const [allContents, setContentsAtom] = useAtom(contentsAtom);
+  const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
+  const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
+
   const [inputData, setInputData] = useState<string[]>([]);
   const [tagsData, setTagsData] = useState<Tag[][]>([]);
 
@@ -21,9 +27,15 @@ const PostEditRecipe = () => {
   const { tagUpdatePostMutate } = useMutate();
 
   const [title, setTitle] = useState<string>('');
+
   const [body, setBody] = useState<string[]>([]);
   const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
   const [tagData, setTagData] = useState<Tag[][]>([]);
+  const [isEditMode, setIsEditMode] = useState<boolean>(true);
+
+  console.log('allSelectedImages', allSelectedImages);
+  console.log('tagData', tagData);
+  console.log('body', body);
 
   const postRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +63,7 @@ const PostEditRecipe = () => {
     const updatedImageUrls = [];
 
     // 파일 업로드 및 URL 가져오기
-    for (const selectedImage of allSelectedImages) {
+    for (const selectedImage of Object.values(selectedImages)) {
       if (selectedImage instanceof File) {
         const { data, error } = await supabase.storage
           .from('photos')
@@ -72,12 +84,16 @@ const PostEditRecipe = () => {
     const editPost = {
       id: post.id,
       title,
-      recipeBody: inputData,
-      tags: tagsData,
+      recipeBody: Object.values(allContents),
+      tags: Object.values(allTags),
       tagimage: updatedImageUrls
     };
 
     tagUpdatePostMutate.mutate(editPost);
+
+    setContentsAtom({});
+    setTagsDataAtom({});
+    setImagesDataAtom({});
 
     navigate(`/detail/${prams}`);
   };
@@ -96,30 +112,6 @@ const PostEditRecipe = () => {
     alert('접근할 수 없습니다.');
     return <Navigate to="/" />;
   }
-
-  //각 컴포넌트의 Tag 값을 배열로 저장하는 함수
-  const handleTagsChange = (index: number, tags: Tag[]) => {
-    const updatedTagsData = [...tagsData];
-    updatedTagsData[index] = tags;
-    setTagsData(updatedTagsData);
-  };
-
-  //각 컴포넌트의 body 값을 배열로 저장하는 함수
-  const handleContentsChange = (index: number, newContents: string) => {
-    setInputData((prevInputData) => {
-      const updatedInputData = [...prevInputData];
-      updatedInputData[index] = newContents;
-      return updatedInputData;
-    });
-  };
-
-  const handleImageSelect = (image: File, index: number) => {
-    setAllSelectedImages((prevImages) => {
-      const updatedImages = [...prevImages];
-      updatedImages[index] = image;
-      return updatedImages;
-    });
-  };
 
   const clickLogo = () => {
     navigate(`/`);
@@ -156,17 +148,7 @@ const PostEditRecipe = () => {
       </S.WriteForm>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ width: '950px' }}>
-          {body.map((_, index) => (
-            <ImageTag
-              key={index}
-              onTagsAndResultsChange={(tags) => handleTagsChange(index, tags)}
-              onImageSelect={(image) => handleImageSelect(image, index)}
-              onContentsChange={(newContents) => handleContentsChange(index, newContents)}
-              imageData={allSelectedImages[index]}
-              tagData={tagData ? tagData[index] : null}
-              body={body ? body[index] : null}
-            />
-          ))}
+          <AddImageTagComponent imageData={allSelectedImages} tagData={tagData} body={body} isEditMode={true} />
         </div>
       </div>
     </S.WriteArea>

@@ -7,6 +7,8 @@ const useMutate = () => {
   const updatePostMutate = useMutation(updatePost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post'] });
+
+      // 여기에 새로고침 ?
     }
   });
 

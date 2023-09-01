@@ -9,8 +9,8 @@ import CommentInput from './CommentInput';
 import ReCommentForMap from './ReCommentForMap';
 import { getReCommentDataByCommentId } from 'src/api/ReComment';
 import { useQuery } from '@tanstack/react-query';
-import CreatedAt from './CreatedAt';
 import CommentUserInfo from './CommentUserInfo';
+import CreatedAt from 'src/function/CreatedAt';
 
 interface CommentDataType {
   comment: string;

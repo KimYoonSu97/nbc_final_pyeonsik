@@ -3,7 +3,6 @@ import { Navigate, useLocation, useParams } from 'react-router';
 
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';
-import CreatedAt from './CreatedAt';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
 

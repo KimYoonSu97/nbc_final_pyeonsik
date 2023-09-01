@@ -118,7 +118,6 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    /* background-color: red; */
   `,
 
   ProductImage: styled.img`

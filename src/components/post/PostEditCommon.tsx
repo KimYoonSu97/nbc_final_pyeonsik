@@ -6,7 +6,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useMutate from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
 import OrgPostCard from './detail/OrgPostCard';
-import { S } from 'src/components/post/style/StyledPostWriteCommon';
+import { S } from 'src/components/post/style/StyledPostWrite';
 import { IconAdd } from '../icons';
 
 const PostEditCommon = () => {
@@ -25,7 +25,6 @@ const PostEditCommon = () => {
   const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
   const post = data?.data;
   const orgPost = post?.orgPostId;
-  const orgUserNickname = orgPost?.userId.nickname;
 
   useEffect(() => {
     setTitle(post?.title);
@@ -109,7 +108,7 @@ const PostEditCommon = () => {
           </S.EditorArea>
         </S.WriteForm>
       </S.WriteArea>
-      {orgPost && <OrgPostCard orgPost={orgPost} orgUserNickname={orgUserNickname} />}
+      {orgPost && <OrgPostCard orgPost={orgPost} />}
       <button onClick={clickCancle}>cancle</button>
     </>
   );
