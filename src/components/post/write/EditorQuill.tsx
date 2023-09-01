@@ -5,6 +5,7 @@ import { ImageResize } from 'quill-image-resize-module-ts';
 import 'react-quill/dist/quill.snow.css';
 import { CommonBodyProps } from 'src/types/types';
 import 'src/components/post/style/StyledEditorQuill.css';
+import styled from 'styled-components';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -39,6 +40,7 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
           ['image', 'video', 'clean']
         ]
       }
+
       // handlers: {
       //   // handlers object will be merged with default handlers object
       //   link: function (body) {
@@ -55,19 +57,23 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   );
 
   return (
-    <ReactQuill
-      ref={(element) => {
-        if (element !== null) {
-          QuillRef.current = element;
-        }
-      }}
-      modules={modules}
-      value={body}
-      onChange={setBody}
-      theme="snow"
-      placeholder="그르르…갉 편의점 의자에서 나누는 대화처럼 재밌는 이야기를 공유해 주세요."
-    />
+    <Container>
+      <ReactQuill
+        ref={(element) => {
+          if (element !== null) {
+            QuillRef.current = element;
+          }
+        }}
+        modules={modules}
+        value={body}
+        onChange={setBody}
+        theme="snow"
+        placeholder="그르르…갉 편의점 의자에서 나누는 대화처럼 재밌는 이야기를 공유해 주세요."
+      />
+    </Container>
   );
 };
 
 export default EditorQuill;
+
+const Container = styled.div``;

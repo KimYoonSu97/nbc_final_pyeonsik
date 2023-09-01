@@ -2,16 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import supabase from 'src/lib/supabaseClient';
+import { useAtom } from 'jotai';
 
 import { getPost } from 'src/api/posts';
-import useMutate from 'src/hooks/usePost';
+import usePost from 'src/hooks/usePost';
 import { Tag } from 'src/types/types';
-import ImageTag from '../ImageTag/ImageTag';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { IconAdd } from 'src/components/icons';
+import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from 'src/components/icons';
 import { S } from './style/StyledPostWrite';
 import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
-import { useAtom } from 'jotai';
 import { contentsAtom, tagsDataAtom, imagesAtom } from '../ImageTag/AddImageTagComponent';
 
 const PostEditRecipe = () => {
@@ -19,23 +18,19 @@ const PostEditRecipe = () => {
   const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
 
-  const [inputData, setInputData] = useState<string[]>([]);
-  const [tagsData, setTagsData] = useState<Tag[][]>([]);
+  const [, setInputData] = useState<string[]>([]);
+  const [, setTagsData] = useState<Tag[][]>([]);
 
   const { id: prams } = useParams<string>();
   const navigate = useNavigate();
-  const { tagUpdatePostMutate } = useMutate();
+  const { tagUpdatePostMutate } = usePost();
 
   const [title, setTitle] = useState<string>('');
 
   const [body, setBody] = useState<string[]>([]);
   const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
   const [tagData, setTagData] = useState<Tag[][]>([]);
-  const [isEditMode, setIsEditMode] = useState<boolean>(true);
-
-  console.log('allSelectedImages', allSelectedImages);
-  console.log('tagData', tagData);
-  console.log('body', body);
+  // const [isEditMode, setIsEditMode] = useState<boolean>(true);
 
   const postRef = useRef<HTMLInputElement>(null);
 
@@ -121,13 +116,18 @@ const PostEditRecipe = () => {
     <S.WriteArea>
       <S.WriteForm onSubmit={submitPost}>
         <S.WriteHeader>
-          <div onClick={clickLogo}>로고 영역</div>
-          <S.AddButton type="submit">
-            <S.AddText>공유하기</S.AddText>
-            <S.AddIcon>
-              <IconAdd />
-            </S.AddIcon>
-          </S.AddButton>
+          <S.WriteHeaderBox>
+            <S.LogoContainer onClick={() => navigate('/')}>
+              <IconLogoSymbolH22 />
+              <IconWaterMarkH22 />
+            </S.LogoContainer>
+            <S.AddButton type="submit">
+              공유하기
+              <S.AddIcon>
+                <IconAdd />
+              </S.AddIcon>
+            </S.AddButton>
+          </S.WriteHeaderBox>
         </S.WriteHeader>
         <S.TitleBox>
           <S.CategoryText>편식조합</S.CategoryText>

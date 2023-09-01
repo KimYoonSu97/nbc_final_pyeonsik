@@ -13,23 +13,32 @@ const Write = () => {
   const orgPost = location.state as Post;
 
   return (
-    <S.WrtieArea>
-      {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
-      {orgPost && <OrgPostCard orgPost={orgPost} />}
-      {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
-    </S.WrtieArea>
+    <S.ViewPort>
+      <S.WriteArea>
+        {category === 'common' && <PostWriteCommon orgPostId={orgPost?.id} setCategory={setCategory} />}
+        {orgPost && <OrgPostCard orgPost={orgPost} />}
+        {category === 'recipe' && <PostWriteRecipe orgPostId={orgPost?.id} setCategory={setCategory} />}
+      </S.WriteArea>
+    </S.ViewPort>
   );
 };
 
 export default Write;
 
 export const S = {
-  WrtieArea: styled.div`
-    /* background-color: #f6f7f9;
+  ViewPort: styled.div`
+    width: 100vw;
+    height: 100vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; */
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    overflow-x: hidden;
+  `,
+  WriteArea: styled.div`
+    background-color: #f6f7f9;
+    width: 100%;
+    min-height: 100%;
   `
 };

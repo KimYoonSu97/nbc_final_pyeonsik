@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 
 export const S = {
-  WriteArea: styled.div`
-    background: var(--background, #f6f7f9);
-    /* width: 1280px;
-      height: 1080px; */
+  WritePostArea: styled.div`
+    margin-top: 84px;
   `,
-
-  EditorArea: styled.div`
-    /* height: 100vh; */
+  WriteArea: styled.div`
+    width: 950px;
+    margin: 0 auto;
+  `,
+  LogoContainer: styled.div`
+    color: white;
+    width: 80px;
+    height: 22px;
+    /* position: absolute; */
+    left: 16px;
   `,
 
   WriteForm: styled.form`
@@ -16,22 +21,37 @@ export const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `,
 
   WriteHeader: styled.header`
-    background: var(--white, #fff);
+    width: 100%;
     height: 56px;
     margin-bottom: 28px;
-    padding: 11px 16px;
-    gap: 1082px;
+    background-color: white;
 
-    display: inline-flex;
-    justify-content: center;
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    right: 0;
+    /* padding: 11px 16px; */
+    /* gap: 1082px; */
+  `,
+  WriteHeaderBox: styled.div`
+    margin: 0 auto;
+    max-width: 1280px;
+    padding: 11px 16px;
+    display: flex;
     align-items: center;
   `,
 
   AddButton: styled.button`
-    background: #d9d9d9;
+    margin-left: auto;
+    background: var(--main, #f02826);
+
     width: 110px;
     height: 34px;
     padding: 5px 15px;
@@ -41,6 +61,15 @@ export const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    color: var(--white, #fff);
+
+    /* button-medium */
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 150% */
   `,
 
   AddText: styled.div`
