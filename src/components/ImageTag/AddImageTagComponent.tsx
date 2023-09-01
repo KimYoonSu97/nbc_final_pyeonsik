@@ -32,9 +32,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   const [, setContents] = useState<string[]>(body ?? []);
   const [editMode] = useState<boolean>(isEditMode ?? false);
 
-  console.log('image', image);
-  console.log('inputData', inputData);
-
   useEffect(() => {
     setSelectedImage(imageData ?? null);
     setTags(tagData ?? []);
