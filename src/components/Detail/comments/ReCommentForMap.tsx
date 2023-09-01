@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import CreatedAt from './CreatedAt';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import CommentUserInfo from './CommentUserInfo';
 import ReCommentLikes from './ReCommentLikes';
 import ReCommentInput from './ReCommentInput';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
+import CreatedAt from 'src/function/CreatedAt';
 
 interface CommentDataType {
   comment: string;
