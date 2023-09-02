@@ -8,7 +8,7 @@ import ContentBox from 'src/components/renderPosts/reactionSource/ContentBox';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
 import Comment from 'src/components/Detail/comments/Comment';
-import { S } from '../style/StyledPostDetail';
+import { S } from './StyledPostDetail';
 
 interface Props {
   isModal?: boolean;
@@ -20,7 +20,7 @@ const PostDetail = ({ isModal }: Props) => {
   const userId: string | undefined = useLoginUserId();
 
   // 트러블 슈팅 1
-  // 1_게시글 데이터 패치 시 쿼리키 문제 => 게시글 아이디로 쿼리키 고유화
+  // 게시글 데이터 패치 시 쿼리키 문제 => 게시글 아이디로 쿼리키 고유화
   const { isLoading, data } = useQuery({
     queryKey: ['post', id],
     queryFn: () => getPost(id!)
@@ -38,7 +38,7 @@ const PostDetail = ({ isModal }: Props) => {
   return (
     <S.DtailArea>
       <S.PostHead>
-        {/* 유저정보*/}
+        {/* 유저 정보*/}
         <WriterContainer isModal={isModal} post={post} writer={writer} />
       </S.PostHead>
       <S.ContentsBox>

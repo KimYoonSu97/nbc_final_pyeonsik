@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { S } from '../style/StyledPostWrite';
 import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from 'src/components/icons';
+import { S } from './StyledHeaderArea';
 
 const HeaderArea = () => {
   const navigate = useNavigate();

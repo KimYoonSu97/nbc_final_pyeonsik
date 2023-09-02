@@ -8,7 +8,7 @@ import { getCommentCountDataByPostId } from 'src/api/comment';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
-import { S } from 'src/components/post/style/StyledBottomFunction';
+import { S } from 'src/components/post/detail/StyledBottomFunction';
 import {
   IconBookmark,
   IconComment,

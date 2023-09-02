@@ -54,7 +54,7 @@ export interface BottomFunctionProps {
 
 // 게시글 작성 임시
 export interface NewPost {
-  orgPostId: string | null;
+  orgPostId: any;
   postCategory: string;
   title: string;
   body: string;

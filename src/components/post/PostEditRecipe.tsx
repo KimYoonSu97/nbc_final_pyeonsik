@@ -11,7 +11,7 @@ import { Tag } from 'src/types/types';
 
 import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
 import { contentsAtom, tagsDataAtom, imagesAtom } from '../ImageTag/AddImageTagComponent';
-import { S } from './style/StyledPostWrite';
+import { S } from './write/StyledPostWrite';
 import HeaderArea from './write/HeaderArea';
 
 const PostEditRecipe = () => {

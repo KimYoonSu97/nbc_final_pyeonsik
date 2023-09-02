@@ -6,7 +6,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
 import OrgPostCard from './detail/OrgPostCard';
-import { S } from 'src/components/post/style/StyledPostWrite';
+import { S } from 'src/components/post/write/StyledPostWrite';
 import HeaderArea from './write/HeaderArea';
 
 const PostEditCommon = () => {
