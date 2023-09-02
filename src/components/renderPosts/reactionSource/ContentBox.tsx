@@ -17,7 +17,7 @@ const ContentBox = ({ post }: ContentBoxProps) => {
       {post.postCategory === 'common' && (
         <S.PostBodyCommon $location={pathname} dangerouslySetInnerHTML={{ __html: post.body }} />
       )}
-      <div>
+      <S.PostBodyRecipe $location={pathname}>
         {post.postCategory === 'recipe' &&
           post.tagimage.map((tagImageUrl: string, index: string) => (
             <TagImage
@@ -27,7 +27,7 @@ const ContentBox = ({ post }: ContentBoxProps) => {
               tagsForImage={post.tags[index] || []}
             />
           ))}
-      </div>
+      </S.PostBodyRecipe>
     </>
   );
 };
@@ -163,5 +163,15 @@ export const S = {
 
     font-family: 'inherit';
     /* background-color: royalblue; */
+  `,
+  PostBodyRecipe: styled.div<BodyHeightProps>`
+    padding-top: 30px;
+    min-height: ${(props) => {
+      if (props.$location !== '/') {
+        return '40vh';
+      } else {
+        return '10vh';
+      }
+    }};
   `
 };

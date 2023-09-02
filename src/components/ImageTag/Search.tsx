@@ -52,6 +52,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
         onChange={(event) => handleSearchTextChange(event.target.value)}
         onKeyPress={handleKeyPress}
         placeholder="제품명을 검색해주세요."
+        autoFocus
       />
 
       <S.SearchResults>

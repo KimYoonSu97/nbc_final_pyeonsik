@@ -25,6 +25,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
   const [contents, setContents] = useState(body ?? '');
 
   const postRef = useRef<HTMLTextAreaElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
 
   //이미지 클릭 시 태그를 찍는 함수 x,y 값과 text, img, price, prodBrand, id를 갖고있다
   const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
@@ -122,13 +123,56 @@ const ImageTag: React.FC<ImageTagProps> = ({
     event.stopPropagation();
   };
 
+  // 태그 드래그 함수
+  const handleTagDrag = (index: number, event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const selectedTag = tags[index];
+
+    if (selectedTag.prodData && addTagMode) {
+      setSelectedTagIndex(index);
+      setselectedTagVisible(true);
+      setSearchFormHandler(false);
+
+      const imageContainer = imageContainerRef.current;
+      const imageContainerRect = imageContainer?.getBoundingClientRect();
+
+      if (imageContainerRect) {
+        const offsetX = event.clientX - imageContainerRect.left - selectedTag.x;
+        const offsetY = event.clientY - imageContainerRect.top - selectedTag.y;
+
+        const handleMouseMove = (event: MouseEvent) => {
+          const x = event.clientX - imageContainerRect.left - offsetX;
+          const y = event.clientY - imageContainerRect.top - offsetY;
+
+          if (x >= 0 && x <= imageContainerRect.width && y >= 0 && y <= imageContainerRect.height) {
+            // 이미지 컨테이너 내부에서만 좌표 업데이트
+            const updatedTags = [...tags];
+            updatedTags[index] = { ...selectedTag, x, y };
+            setTags(updatedTags);
+            onTagsAndResultsChange(updatedTags, []);
+          }
+        };
+
+        const handleMouseUp = () => {
+          window.removeEventListener('mousemove', handleMouseMove);
+          window.removeEventListener('mouseup', handleMouseUp);
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+      }
+    }
+  };
+
   return (
     <>
       <S.ImageTagContainer>
         <ImageUploader onImageSelect={handleImageSelect} imageSelected={!!selectedImage} />
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
-          <S.ImageContainer>
+          <S.ImageContainer ref={imageContainerRef}>
             {typeof selectedImage === 'string' ? (
               <S.Image
                 src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
@@ -151,6 +195,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
               <S.TagContainer
                 key={index}
                 onClick={() => handleTagClick(index)}
+                // 요 onMouseDown은 JS내장 함수라할까요 내장된 친구입니다
+                onMouseDown={(event) => handleTagDrag(index, event)}
                 style={{
                   left: tag.x,
                   top: tag.y

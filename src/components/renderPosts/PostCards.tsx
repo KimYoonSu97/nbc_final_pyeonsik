@@ -20,10 +20,6 @@ const PostCards = ({ posts }: PostListProps) => {
 
 export default PostCards;
 
-interface ImgProps {
-  $url: string;
-}
-
 const S = {
   Area: styled.div`
     margin-top: 30px;
