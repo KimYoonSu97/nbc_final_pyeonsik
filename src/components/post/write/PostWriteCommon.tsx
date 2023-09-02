@@ -35,6 +35,7 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
       body,
       userId
     };
+
     addPostMutate.mutate(newPost);
     navigate(`/`);
   };
