@@ -53,7 +53,7 @@ export default PostForMain;
 const S = {
   FunctionBox: styled.div`
     border-left: 1px solid #d9d9d9;
-    pointer-events: none;
+    /* pointer-events: none; */
     /* width: 200px; */
 
     gap: 20px;

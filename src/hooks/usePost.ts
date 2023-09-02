@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addPost, deletePost, updatePost, addRecipePost, tagUpdatePost } from 'src/api/posts';
 
-const usePost = () => {
+const usePost = (prams?: string) => {
   const queryClient = useQueryClient();
 
-  // 삭정, 삭제
+  // 게시, 삭제
   const success = {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
+      queryClient.invalidateQueries({ queryKey: ['postList', '/'] });
     }
   };
   const addPostMutate = useMutation(addPost, success);
@@ -17,7 +17,7 @@ const usePost = () => {
   // 수정
   const successUpdate = {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post'] });
+      queryClient.invalidateQueries({ queryKey: ['post', prams] });
       // 새로고침 시도
     }
   };
