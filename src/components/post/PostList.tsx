@@ -13,7 +13,7 @@ const PostList = () => {
 
   let pageKey: string;
   if (location.search === '') {
-    pageKey = '';
+    pageKey = '/';
   } else {
     pageKey = location.search;
   }

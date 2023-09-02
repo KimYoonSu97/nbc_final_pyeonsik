@@ -19,8 +19,13 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
 
   // delete post
   const clickDelete = (id: string) => {
+    if (!window.confirm('정말 삭제하겠어용?')) {
+      alert('취소되었습니다.');
+      return;
+    }
+
     deletePostMutate.mutate(post.id);
-    navigate('/');
+    navigate(-1);
   };
 
   const clickEdit = () => {

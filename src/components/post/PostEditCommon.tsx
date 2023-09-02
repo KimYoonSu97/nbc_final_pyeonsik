@@ -16,13 +16,13 @@ const PostEditCommon = () => {
   const userId: string | undefined = useLoginUserId();
   const postRef = useRef<HTMLInputElement>(null);
 
-  const { updatePostMutate } = usePost();
+  const { updatePostMutate } = usePost(prams!);
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
 
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
+  const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
   const orgPost = post?.orgPostId;
 

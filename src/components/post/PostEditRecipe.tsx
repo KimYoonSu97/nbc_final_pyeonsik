@@ -23,7 +23,7 @@ const PostEditRecipe = () => {
 
   const { id: prams } = useParams<string>();
   const navigate = useNavigate();
-  const { tagUpdatePostMutate } = usePost();
+  const { tagUpdatePostMutate } = usePost(prams!);
 
   const [title, setTitle] = useState<string>('');
 
@@ -38,7 +38,7 @@ const PostEditRecipe = () => {
   const userId: string | undefined = useLoginUserId();
 
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
+  const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
 
   // useEffect 순서 확인하기!
