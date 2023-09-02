@@ -27,6 +27,7 @@ interface CommentDataType {
 interface Props {
   comment: CommentDataType;
 }
+
 const CommentForMap = ({ comment }: Props) => {
   const userId = useLoginUserId();
 

@@ -70,7 +70,6 @@ export interface NewRecipePost {
 }
 
 export interface EditPost {
-  orgPostId: string | null;
   id: string;
   title: string;
   body: string;

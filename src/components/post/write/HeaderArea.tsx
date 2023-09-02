@@ -7,7 +7,9 @@ const HeaderArea = () => {
   const navigate = useNavigate();
 
   const clickCancle = () => {
-    navigate(-1);
+    if (window.confirm('작성 중이던 내용이 저장되지 않습니다. 뒤로 가기를 하시겠습니까?')) {
+      navigate(-1);
+    }
   };
 
   const clickLogo = () => {
