@@ -4,6 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
+import { NON_MEMBER } from 'src/function/alertMessage';
 
 interface Props {
   type: string;
@@ -47,7 +48,7 @@ const ReCommentInput = ({
   const addReComment = () => {
     // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
-      alert('로그인 후 이용해 주세요.');
+      alert(NON_MEMBER);
       return <Navigate to="/login" state={{ backgroundLocation: location }} />;
     }
     const parent_commentId = commentId;

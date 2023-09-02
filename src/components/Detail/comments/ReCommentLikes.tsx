@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
 import { useLocation } from 'react-router';
+import { NON_MEMBER } from 'src/function/alertMessage';
 
 interface Props {
   commentId: string;
@@ -43,7 +44,7 @@ const ReCommentLikes = ({ commentId }: Props) => {
   // // 내 좋아요 상태에 따라 다른....작동...
   const clickButton = async () => {
     if (!userId) {
-      alert('로그인 후 가능합니다.');
+      alert(NON_MEMBER);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }

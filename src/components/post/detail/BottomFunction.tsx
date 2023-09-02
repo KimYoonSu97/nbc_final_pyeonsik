@@ -8,6 +8,7 @@ import { getCommentCountDataByPostId } from 'src/api/comment';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
+import { NON_MEMBER } from '../../../function/alertMessage';
 import { S } from 'src/components/post/detail/StyledBottomFunction';
 import {
   IconBookmark,
@@ -56,7 +57,9 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   // 좋아요
   const clickPostLike = () => {
-    if (!postLike) {
+    if (!userId) {
+      alert(NON_MEMBER);
+    } else if (!postLike) {
       const newPostLike = {
         postId: post.id,
         userId
@@ -69,7 +72,9 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   // bookmark
   const clickPostBookmark = () => {
-    if (!postBookmark) {
+    if (!userId) {
+      alert(NON_MEMBER);
+    } else if (!postBookmark) {
       const newPostBookmark = {
         postId: post.id,
         userId
@@ -82,7 +87,11 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   // 인용
   const clickQuotation = () => {
-    navigate('/write', { state: post });
+    if (!userId) {
+      alert(NON_MEMBER);
+    } else {
+      navigate('/write', { state: post });
+    }
   };
 
   // clip board
