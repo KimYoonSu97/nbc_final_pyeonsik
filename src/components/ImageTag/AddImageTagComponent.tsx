@@ -194,7 +194,7 @@ const S = {
     width: 48px;
     height: 48px;
     position: fixed;
-    left: 400px;
+    left: calc(100vw - 1280px / 2 + 93);
     z-index: 999;
   `
 };

@@ -258,16 +258,18 @@ export default ImageTag;
 
 const S = {
   ImageTagContainer: styled.div`
+    margin-left: 72px;
     display: flex;
     position: relative;
+    background-color: royalblue;
   `,
 
   AddTagButton: styled.button`
-    background-color: #3498db;
-    width: 200px;
+    background: var(--white, #fff);
+
     height: 40px;
     border-radius: 50px;
-    color: white;
+    /* color: white; */
     border: none;
     padding: 6px 12px;
     cursor: pointer;

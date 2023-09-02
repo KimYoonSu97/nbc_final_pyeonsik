@@ -22,6 +22,12 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
 
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
+      alert('내용을 입력해 주세요.');
+      return false;
+    }
+
     const newPost = {
       postCategory: 'common',
       orgPostId,
@@ -48,7 +54,7 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
       <S.WriteForm onSubmit={submitPost}>
         <S.WriteHeader>
           <S.WriteHeaderBox>
-            <S.LogoContainer onClick={() => navigate('/')}>
+            <S.LogoContainer onClick={clickLogo}>
               <IconLogoSymbolH22 />
               <IconWaterMarkH22 />
             </S.LogoContainer>
@@ -60,7 +66,6 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
             </S.AddButton>
           </S.WriteHeaderBox>
         </S.WriteHeader>
-
         <S.WritePostArea>
           <S.TitleBox>
             <S.CategoryText>그르르갉</S.CategoryText>

@@ -23,7 +23,7 @@ const PostEditRecipe = () => {
 
   const { id: prams } = useParams<string>();
   const navigate = useNavigate();
-  const { tagUpdatePostMutate } = usePost();
+  const { tagUpdatePostMutate } = usePost(prams!);
 
   const [title, setTitle] = useState<string>('');
 
@@ -38,7 +38,7 @@ const PostEditRecipe = () => {
   const userId: string | undefined = useLoginUserId();
 
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
+  const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
 
   // useEffect 순서 확인하기!
@@ -93,6 +93,12 @@ const PostEditRecipe = () => {
     navigate(`/detail/${prams}`);
   };
 
+  const clickLogo = () => {
+    navigate(`/`);
+  };
+  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
   const clickCancle = () => {
     navigate(`/detail/${prams}`);
   };
@@ -108,16 +114,12 @@ const PostEditRecipe = () => {
     return <Navigate to="/" />;
   }
 
-  const clickLogo = () => {
-    navigate(`/`);
-  };
-
   return (
     <S.WriteArea>
       <S.WriteForm onSubmit={submitPost}>
         <S.WriteHeader>
           <S.WriteHeaderBox>
-            <S.LogoContainer onClick={() => navigate('/')}>
+            <S.LogoContainer onClick={clickLogo}>
               <IconLogoSymbolH22 />
               <IconWaterMarkH22 />
             </S.LogoContainer>
@@ -138,10 +140,7 @@ const PostEditRecipe = () => {
             name="title"
             placeholder="제목 생략 가능"
             value={title}
-            onChange={(e) => {
-              e.preventDefault();
-              setTitle(e.target.value);
-            }}
+            onChange={changeTitle}
             autoFocus
           />
         </S.TitleBox>

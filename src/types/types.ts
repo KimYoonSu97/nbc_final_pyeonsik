@@ -231,3 +231,10 @@ export interface InfinityProductList {
   total_pages: number;
   total_results: number | null;
 }
+
+export interface InfinityPostList {
+  posts: Post[];
+  page: number;
+  total_pages: number;
+  total_results: number | null;
+}

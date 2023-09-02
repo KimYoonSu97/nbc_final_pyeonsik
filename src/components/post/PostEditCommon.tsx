@@ -16,13 +16,13 @@ const PostEditCommon = () => {
   const userId: string | undefined = useLoginUserId();
   const postRef = useRef<HTMLInputElement>(null);
 
-  const { updatePostMutate } = usePost();
+  const { updatePostMutate } = usePost(prams!);
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
 
   // read
-  const { isLoading, data } = useQuery({ queryKey: ['post'], queryFn: () => getPost(prams!) });
+  const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
   const orgPost = post?.orgPostId;
 
@@ -44,6 +44,11 @@ const PostEditCommon = () => {
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
+      alert('내용을 입력해 주세요.');
+      return false;
+    }
 
     const editPost = {
       orgPostId: post.orgPostId?.id,
@@ -83,7 +88,7 @@ const PostEditCommon = () => {
         <S.WriteForm onSubmit={submitPost}>
           <S.WriteHeader>
             <S.WriteHeaderBox>
-              <S.LogoContainer onClick={() => navigate('/')}>
+              <S.LogoContainer onClick={clickLogo}>
                 <IconLogoSymbolH22 />
                 <IconWaterMarkH22 />
               </S.LogoContainer>
@@ -95,7 +100,6 @@ const PostEditCommon = () => {
               </S.AddButton>
             </S.WriteHeaderBox>
           </S.WriteHeader>
-
           <S.TitleBox>
             <S.CategoryText>그르르갉</S.CategoryText>
             <S.Contour />
@@ -109,7 +113,6 @@ const PostEditCommon = () => {
               autoFocus
             />
           </S.TitleBox>
-
           <EditorQuill body={body} setBody={setBody} />
         </S.WriteForm>
       </S.WriteArea>
