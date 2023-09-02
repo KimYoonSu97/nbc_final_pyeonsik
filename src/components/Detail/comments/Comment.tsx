@@ -23,7 +23,7 @@ const Comment = () => {
 
   //포스트 아이디와 같은 댓글만을 위한 쿼리 데이터
   const { data: commentData, isLoading: commentIsLoading } = useQuery({
-    queryKey: ['comment'],
+    queryKey: ['comment', postId],
     queryFn: () => getCommentDataByPostId(postId!),
     enabled: postId ? true : false,
     refetchOnWindowFocus: false
