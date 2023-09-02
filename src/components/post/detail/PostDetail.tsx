@@ -12,7 +12,6 @@ import BottomFunction from './BottomFunction';
 import CreatedAt from 'src/function/CreatedAt';
 import TagImage from 'src/components/ImageTag/TagImage';
 import Comment from 'src/components/Detail/comments/Comment';
-import { Location } from 'react-router-dom';
 
 import styled, { css } from 'styled-components';
 
@@ -31,8 +30,10 @@ const PostDetail = ({ isModal }: Props) => {
   const { deletePostMutate } = usePost();
 
   // read data
+  //트러블 슈팅 1
+  // 1_게시글 데이터 패치 시 쿼리키 문제 => 게시글 아이디로 쿼리키 고유화
   const { isLoading, data } = useQuery({
-    queryKey: ['post'],
+    queryKey: ['post', id],
     queryFn: () => getPost(id!)
     // enabled: id ? true : false
   });

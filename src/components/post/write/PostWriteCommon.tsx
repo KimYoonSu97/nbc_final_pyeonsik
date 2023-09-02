@@ -22,6 +22,8 @@ const PostWriteCommon = ({ orgPostId, setCategory }: OrgPostIdProps) => {
 
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(body);
+
     const newPost = {
       postCategory: 'common',
       orgPostId,

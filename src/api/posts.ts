@@ -1,14 +1,6 @@
 import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
 
-const getPosts = async () => {
-  const response = await supabase
-    .from('posts')
-    .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
-    .order('created_at', { ascending: false });
-  return response;
-};
-
 // post
 const getPost = async (id: string) => {
   const response = await supabase
@@ -75,7 +67,6 @@ const getPostByKeyword = async ({ keyword, type }: Search) => {
 };
 
 export {
-  getPosts,
   getPost,
   getQuotationPosts,
   addPost,
