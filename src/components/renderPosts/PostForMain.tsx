@@ -70,8 +70,6 @@ const S = {
     bottom: 100px;
   `,
   BottomContainer: styled.div`
-    background-color: white;
-
     padding: 0 50px;
     bottom: 0;
     width: 100%;
@@ -82,6 +80,7 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    background: #fff;
   `,
   Container: styled.div`
     min-height: 250px;
