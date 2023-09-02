@@ -166,11 +166,17 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
             </S.RemoveButton>
             {component}
             {image[componentUuid] && (
-              <img
-                src={URL.createObjectURL(image[componentUuid])}
-                alt={'이미지'}
-                style={{ maxWidth: '100px', maxHeight: '100px' }}
-              />
+              <div>
+                {typeof image[componentUuid] === 'string' ? (
+                  <img
+                    style={{ maxWidth: '100px', maxHeight: ' 100px' }}
+                    src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${image[componentUuid]}`}
+                    alt="이미지"
+                  />
+                ) : (
+                  <img src={URL.createObjectURL(image[componentUuid])} alt="이미지" />
+                )}
+              </div>
             )}
           </div>
         );
@@ -178,7 +184,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     </div>
   );
 };
-
 export default AddImageTagComponent;
 
 const S = {
