@@ -23,6 +23,16 @@ export const S = {
     align-items: center;
   `,
 
+  BackButton: styled.button`
+    background-color: transparent;
+    color: var(--neutral-400, var(--neutral-400, #98a2b3));
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+  `,
+
   LogoContainer: styled.div`
     color: white;
     width: 80px;

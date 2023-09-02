@@ -19,9 +19,9 @@ const HeaderArea = () => {
   return (
     <S.WriteHeader>
       <S.WriteHeaderBox>
-        <button type="button" onClick={clickCancle}>
-          cancle
-        </button>
+        <S.BackButton type="button" onClick={clickCancle}>
+          뒤로 가기
+        </S.BackButton>
         <S.LogoContainer onClick={clickLogo}>
           <IconLogoSymbolH22 />
           <IconWaterMarkH22 />
