@@ -35,7 +35,7 @@ const PostWrite = () => {
     e.preventDefault();
 
     // common
-    if (body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
+    if (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
       alert('내용을 입력해 주세요.');
       return false;
     }
@@ -56,7 +56,7 @@ const PostWrite = () => {
     if (category === 'common') {
       const newPost = {
         postCategory: category,
-        orgPostId: orgPost.id,
+        orgPostId: orgPost?.id,
         title,
         body,
         userId
@@ -65,7 +65,7 @@ const PostWrite = () => {
     } else if (category === 'recipe') {
       const newPost = {
         postCategory: category,
-        orgPostId: orgPost.id,
+        orgPostId: orgPost?.id,
         userId,
         title,
         body: allContents,

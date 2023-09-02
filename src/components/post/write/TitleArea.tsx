@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { IconSelect } from 'src/components/icons';
 import { S } from './StyledTitleArea';
+import { useParams } from 'react-router';
 
 export interface TitleAreaProps {
   category: string;
@@ -9,8 +10,10 @@ export interface TitleAreaProps {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const TitleArea = ({ category, setCategory, title, setTitle }: TitleAreaProps) => {
+const TitleArea = ({ category, setCategory, title, setTitle }: TitleAreaProps | any) => {
+  const parms = useParams();
   const postRef = useRef<HTMLInputElement>(null);
+  console.log(parms);
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -33,14 +36,16 @@ const TitleArea = ({ category, setCategory, title, setTitle }: TitleAreaProps) =
         onChange={changeTitle}
         autoFocus
       />
-      <S.SelectCategory>
-        <S.SelectIcon>
-          <IconSelect />
-        </S.SelectIcon>
-        <S.SelectText type="button" onClick={clickCategory}>
-          {category !== 'common' ? '그르르갉' : '편식조합'}
-        </S.SelectText>
-      </S.SelectCategory>
+      {!parms.id && (
+        <S.SelectCategory>
+          <S.SelectIcon>
+            <IconSelect />
+          </S.SelectIcon>
+          <S.SelectText type="button" onClick={clickCategory}>
+            {category !== 'common' ? '그르르갉' : '편식조합'}
+          </S.SelectText>
+        </S.SelectCategory>
+      )}
     </S.TitleBox>
   );
 };
