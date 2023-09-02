@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router';
 
 // import { S } from '../style/StyledPostDetail';
 import TagImage from 'src/components/ImageTag/TagImage';
@@ -10,10 +11,14 @@ interface ContentBoxProps {
 }
 
 const ContentBox = ({ post }: ContentBoxProps) => {
+  const { pathname } = useLocation();
+
   return (
     <>
       {post.title && <S.PostTitle>{post.title}</S.PostTitle>}
-      {post.postCategory === 'common' && <S.PostBodyCommon dangerouslySetInnerHTML={{ __html: post.body }} />}
+      {post.postCategory === 'common' && (
+        <S.PostBodyCommon $location={pathname} dangerouslySetInnerHTML={{ __html: post.body }} />
+      )}
       <div>
         {post.postCategory === 'recipe' &&
           post.tagimage.map((tagImageUrl: string, index: string) => (
@@ -30,6 +35,11 @@ const ContentBox = ({ post }: ContentBoxProps) => {
 };
 
 export default ContentBox;
+
+interface BodyHeightProps {
+  $location: string;
+  dangerouslySetInnerHTML?: any;
+}
 
 export const S = {
   DtailArea: styled.div`
@@ -127,9 +137,16 @@ export const S = {
     line-height: 28px; /* 127.273% */
   `,
 
-  PostBodyCommon: styled.pre`
+  PostBodyCommon: styled.pre<BodyHeightProps>`
     width: 790px;
-    /* min-height: 40vh; */
+    ${(props) => {
+      if (props.$location !== '/') {
+        return css`
+          min-height: 40vh;
+        `;
+      }
+    }}
+
     margin: 30px 0px 10px 0px;
     white-space: normal;
     word-wrap: break-word;

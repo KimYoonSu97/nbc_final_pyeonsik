@@ -103,6 +103,7 @@ const S = {
     text-decoration: none;
   `,
   ContentArea: styled.div`
+    pointer-events: none;
     background-color: white;
     border-radius: 10px;
   `,
