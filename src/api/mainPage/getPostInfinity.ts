@@ -2,7 +2,7 @@ import supabase from 'src/lib/supabaseClient';
 
 const getPosts = async (pageParam: number = 0, pageKey: string, mypage?: string) => {
   let response;
-  if (pageKey === '') {
+  if (pageKey === '/') {
     response = await supabase
       .from('posts')
       .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
@@ -22,7 +22,7 @@ const getPosts = async (pageParam: number = 0, pageKey: string, mypage?: string)
 
   //페이지가 어디냐에 따라 다른 전체 페이지 수
   let pageCount;
-  if (pageKey === '') {
+  if (pageKey === '/') {
     const { count } = await supabase.from('posts').select('id', { count: 'exact', head: true });
     pageCount = count;
   } else {

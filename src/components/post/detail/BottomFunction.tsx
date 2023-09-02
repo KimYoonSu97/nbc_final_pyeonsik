@@ -27,8 +27,8 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const { id } = useParams<string>();
   const { pathname } = useLocation();
 
-  const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
-  const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
+  const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes(post.id);
+  const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark(post.id);
 
   // 쿼리키에 아이디값 추가
   // 상위 컴포넌트에서 받아오는 post 객체의 Id값 사용

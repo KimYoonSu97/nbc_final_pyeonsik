@@ -26,6 +26,7 @@ export { ReactComponent as IconUnLike } from './post/IconUnLike.svg';
 export { ReactComponent as IconUnLink } from './post/IconUnLink.svg';
 export { ReactComponent as IconUnQuotation } from './post/IconUnQuotation.svg';
 export { ReactComponent as IconComment } from './post/IconComment.svg';
+export { ReactComponent as IconBestComment } from './IconBestComment.svg';
 
 // comment
 export { ReactComponent as IconCommentInput } from './IconCommentInput.svg';

@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addPostBookmark, deletePostBookmark } from 'src/api/postBookmark';
 
-const usePostBookmark = () => {
+const usePostBookmark = (postId: string) => {
   const queryClient = useQueryClient();
 
   const success = {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post_bookmark'] });
+      queryClient.invalidateQueries({ queryKey: ['post_bookmark', postId] });
     }
   };
 

@@ -53,7 +53,7 @@ export default PostForMain;
 const S = {
   FunctionBox: styled.div`
     border-left: 1px solid #d9d9d9;
-    pointer-events: none;
+    /* pointer-events: none; */
     /* width: 200px; */
 
     gap: 20px;
@@ -70,8 +70,6 @@ const S = {
     bottom: 100px;
   `,
   BottomContainer: styled.div`
-    background-color: white;
-
     padding: 0 50px;
     bottom: 0;
     width: 100%;
@@ -82,6 +80,7 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    background: #fff;
   `,
   Container: styled.div`
     min-height: 250px;
