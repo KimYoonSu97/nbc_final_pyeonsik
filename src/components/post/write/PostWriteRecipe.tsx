@@ -91,27 +91,30 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
             </S.AddButton>
           </S.WriteHeaderBox>
         </S.WriteHeader>
-        <S.TitleBox>
-          <S.CategoryText>편식조합</S.CategoryText>
-          <S.Contour />
-          <S.Title
-            ref={postRef}
-            type="text"
-            name="title"
-            placeholder="제목 생략 가능"
-            value={title}
-            onChange={changeTitle}
-            autoFocus
-          />
-          <S.SelectCategory>
-            <S.SelectIcon>
-              <IconSelect />
-            </S.SelectIcon>
-            <S.SelectText type="button" onClick={clickCategory}>
-              그르륵갉
-            </S.SelectText>
-          </S.SelectCategory>
-        </S.TitleBox>
+
+        <S.WritePostArea>
+          <S.TitleBox>
+            <S.CategoryText>편식조합</S.CategoryText>
+            <S.Contour />
+            <S.Title
+              ref={postRef}
+              type="text"
+              name="title"
+              placeholder="제목 생략 가능"
+              value={title}
+              onChange={changeTitle}
+              autoFocus
+            />
+            <S.SelectCategory>
+              <S.SelectIcon>
+                <IconSelect />
+              </S.SelectIcon>
+              <S.SelectText type="button" onClick={clickCategory}>
+                그르륵갉
+              </S.SelectText>
+            </S.SelectCategory>
+          </S.TitleBox>
+        </S.WritePostArea>
       </S.WriteForm>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ width: '950px' }}>

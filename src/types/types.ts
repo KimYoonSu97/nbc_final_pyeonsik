@@ -141,6 +141,8 @@ export interface Tag {
   price: string;
   prodBrand?: string;
   id?: string;
+  originalX?: number;
+  originalY?: number;
 }
 
 export interface ImageTag {

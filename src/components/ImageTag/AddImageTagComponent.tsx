@@ -46,8 +46,10 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
 
   //수정 페이지에서 접근 시 필요합니다
   useEffect(() => {
-    // 이미지 데이터 배열을 매핑하여 컴포넌트를 생성하고 추가
     if (imageData && imageData.length > 0) {
+      if (imageTagComponents.length >= 10) {
+        return;
+      }
       const newComponents = imageData.map((image, index) => {
         const componentUuid = uuidv4();
 
@@ -163,6 +165,13 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
               <TrashCanIcon />
             </S.RemoveButton>
             {component}
+            {image[componentUuid] && (
+              <img
+                src={URL.createObjectURL(image[componentUuid])}
+                alt={'이미지'}
+                style={{ maxWidth: '100px', maxHeight: '100px' }}
+              />
+            )}
           </div>
         );
       })}
