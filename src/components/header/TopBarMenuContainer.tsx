@@ -145,6 +145,16 @@ interface ImageProps {
   $url?: string;
 }
 
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Afont = styled.div`
+  color: black;
+`;
+
 const S = {
   TopBarMenuContainer: styled.div`
     display: flex;
@@ -254,9 +264,11 @@ const S = {
   ProfileImgArea: styled.div`
     position: fixed;
   `,
-  ProfileTapMenu: styled.div`
+
+  ProfileTapMenu: styled(FlexBox)`
     top: 0;
     right: calc((100vw - 1280px) / 2 + 16px);
+
     position: fixed;
     width: 200px;
     height: 200px;
