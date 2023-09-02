@@ -1,27 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { LikeCount, CommentCount, BookmarkCount, RepostCount } from 'src/components/renderPosts/reactionSource';
 import { Post, PostUserProfile } from 'src/types/types';
 import { useLocation, useNavigate } from 'react-router';
-import { useAtom } from 'jotai';
-import { modalOpenAtom } from 'src/globalState/jotai';
 import { Link } from 'react-router-dom';
 
 interface Props {
   item: Post;
 }
 
-const CommonPost = ({ item }: Props) => {
+const CommonPost = ({ item: postItem }: Props) => {
   const navigate = useNavigate();
-  const { nickname, profileImg } = item.userId as PostUserProfile;
-  const { id, postCategory, body, title, recipeBody } = item;
+  const { nickname, profileImg } = postItem.userId as PostUserProfile;
+  const { id, postCategory, body, title, recipeBody } = postItem;
   const location = useLocation();
+
+  const item = useMemo(() => postItem, [postItem]);
 
   return (
     <S.Area>
       <S.Container key={id} to={`/detail/${item.id}`} state={{ backgroundLocation: location }}>
-        {/* <S.Container key={id} onClick={() => navigate(`/detail/${item.id}`)}> */}
-        {/* <S.Container key={id} onClick={() => setModalOpen({ state: true, data: item })}> */}
         <S.UserArea>
           <S.ProfileImg $url={profileImg}></S.ProfileImg>
           <S.Level>Lv.점장</S.Level>
@@ -31,12 +28,7 @@ const CommonPost = ({ item }: Props) => {
         </S.UserArea>
         <S.PostBox>
           <S.GradientArea></S.GradientArea>
-          <S.BottomArea>
-            <CommentCount />
-            <LikeCount />
-            <RepostCount />
-            <BookmarkCount />
-          </S.BottomArea>
+          <S.BottomArea></S.BottomArea>
           <S.TitleArea>{title}</S.TitleArea>
           {/* editor 내용 변환 */}
           <S.BodyArea dangerouslySetInnerHTML={{ __html: recipeBody ? recipeBody[0] : body }} />
