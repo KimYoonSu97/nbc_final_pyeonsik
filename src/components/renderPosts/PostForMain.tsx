@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Post } from 'src/types/types';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import WriterContainer from './reactionSource/WriterContainer';
 import ContentBox from './reactionSource/ContentBox';
@@ -25,7 +25,6 @@ const PostForMain = ({ item: postData }: Props) => {
       <S.Head>
         <WriterContainer post={post} writer={writer} />
       </S.Head>
-
       {/* 여기를 클릭하면 링크로 넘어감 */}
       <S.ContentAreaForClickEvent to={`/detail/${postData.id}`} state={{ backgroundLocation: location }}>
         {/* 게시글 데이터 */}

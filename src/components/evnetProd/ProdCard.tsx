@@ -84,7 +84,6 @@ const S = {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
   `,
-
   ProdInfoBox: styled.div`
     position: absolute;
     width: 100%;

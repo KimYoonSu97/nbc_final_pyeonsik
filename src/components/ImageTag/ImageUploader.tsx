@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-
 import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/CameraIcon.svg';
-
 import { ImageUploaderProps } from 'src/types/types';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {

@@ -5,7 +5,6 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import { Navigate } from 'react-router';
 import { IconCamera } from '../icons';
 
 const Profile = () => {

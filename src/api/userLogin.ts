@@ -14,6 +14,7 @@ const getUserData = async (id: string) => {
 const updateUserNickname = async ({ nickname, id }: UpdateUser) => {
   await supabase.from('users').update({ nickname }).eq('id', id);
 };
+
 const updateProfileImg = async ({ profileImg, id }: UpdateUser) => {
   await supabase.from('users').update({ profileImg }).eq('id', id);
 };

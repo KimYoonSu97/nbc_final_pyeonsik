@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router';
 import PostEditCommon from 'src/components/post/PostEditCommon';
 import PostEditRecipe from 'src/components/post/PostEditRecipe';

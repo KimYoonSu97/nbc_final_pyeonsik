@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import useInput from 'src/hooks/useInput';
 import styled from 'styled-components';
 
 const HeaderSearchBar = () => {

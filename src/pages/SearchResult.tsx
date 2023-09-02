@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useQueries } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { useLocation, useParams } from 'react-router';
 import { getPostByKeyword } from 'src/api/posts';
 import { Post } from 'src/types/types';

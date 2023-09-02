@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Comment from 'src/components/Detail/comments/Comment';
 import PostDetail from 'src/components/post/detail/PostDetail';
-import PostDetailModal from 'src/components/Detail/modal/PostDetailModal';
 import { Location, useLocation, useNavigate } from 'react-router';
 
 const PostModal = () => {

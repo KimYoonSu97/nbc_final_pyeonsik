@@ -5,6 +5,7 @@ const getLikeByCommentId = async (commentId: string, userId: string) => {
     .from('comment_likes')
     .select('userId', { count: 'exact', head: true })
     .eq('commentId', commentId);
+
   const { count: myLike } = await supabase
     .from('comment_likes')
     .select('userId', { count: 'exact', head: true })

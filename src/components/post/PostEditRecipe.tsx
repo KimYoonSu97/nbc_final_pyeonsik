@@ -6,12 +6,13 @@ import { useAtom } from 'jotai';
 
 import { getPost } from 'src/api/posts';
 import usePost from 'src/hooks/usePost';
-import { Tag } from 'src/types/types';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from 'src/components/icons';
-import { S } from './style/StyledPostWrite';
+import { Tag } from 'src/types/types';
+
 import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
 import { contentsAtom, tagsDataAtom, imagesAtom } from '../ImageTag/AddImageTagComponent';
+import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from 'src/components/icons';
+import { S } from './style/StyledPostWrite';
 
 const PostEditRecipe = () => {
   const [allContents, setContentsAtom] = useAtom(contentsAtom);

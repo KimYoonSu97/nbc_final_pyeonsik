@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { IconAddReComment, IconLiked } from 'src/components/icons';
+import React, { useState } from 'react';
+import { IconAddReComment } from 'src/components/icons';
 import { styled } from 'styled-components';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';

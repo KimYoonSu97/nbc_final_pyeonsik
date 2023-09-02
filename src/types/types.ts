@@ -27,7 +27,6 @@ export interface Post {
   title: string;
   body: string;
   product: [];
-  // userId: string 삭제 (혜영)
   userId: PostUserProfile;
   likes: string;
   likesCount: number;
@@ -132,7 +131,6 @@ export interface RenderComponents {
 }
 
 // 이 아래는 이미지 태그 관련 프롭스입니다! 위에 포스트에도 살짝 있긴합니다
-
 export interface Tag {
   x: number;
   y: number;
@@ -203,7 +201,6 @@ export interface TagImageProps {
   recipeBody?: string;
   tagsForImage: ImageTag[];
 }
-
 //여기까지
 
 /// 무한스크롤 관련

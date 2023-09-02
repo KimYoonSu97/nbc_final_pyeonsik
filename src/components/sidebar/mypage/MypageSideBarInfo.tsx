@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { getMyPostsById } from 'src/api/posts';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { queries } from '@testing-library/react';
 import { IconBadge, IconCommon, IconRecipe } from 'src/components/icons';
 
 const MypageSideBarInfo = () => {

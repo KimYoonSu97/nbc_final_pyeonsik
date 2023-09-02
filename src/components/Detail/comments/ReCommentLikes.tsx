@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
-import { Navigate, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 interface Props {
   commentId: string;

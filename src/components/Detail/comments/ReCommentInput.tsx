@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
@@ -13,6 +13,7 @@ interface Props {
   setIsEditComment?: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpenReCommentInput?: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 const ReCommentInput = ({
   type,
   commentId,

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Post } from 'src/types/types';
 import { styled } from 'styled-components';
-import CommonPost from './CommonPost';
 import PostForMain from './PostForMain';
 
 interface PostListProps {

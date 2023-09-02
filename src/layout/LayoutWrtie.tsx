@@ -1,12 +1,7 @@
 import React from 'react';
-import Header from '../components/header/Header';
-import { Outlet, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import SideBar from 'src/components/sidebar/SideBar';
+import { Outlet } from 'react-router-dom';
 
 const LayoutWrite = () => {
-  const location = useLocation();
-
   return (
     <>
       <Outlet />

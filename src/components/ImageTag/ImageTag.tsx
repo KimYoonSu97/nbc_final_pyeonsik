@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-
 import { Tag, Data } from 'src/types/types';
 import { ImageTagProps } from 'src/types/types';
 import ImageUploader from './ImageUploader';
@@ -238,14 +237,17 @@ const S = {
     position: relative;
     margin-right: 10px;
   `,
+
   Image: styled.img`
     width: 360px;
     height: 638px;
   `,
+
   TagImage: styled.img`
     width: 80px;
     height: 80px;
   `,
+
   TagContainer: styled.div`
     width: 356px;
     height: 100px;
@@ -312,6 +314,7 @@ const S = {
       color: gray;
     }
   `,
+
   SearchResultsContainer: styled.div`
     width: 400px;
     padding-top: 20px;
@@ -328,12 +331,14 @@ const S = {
       display: none;
     } */
   `,
+
   DeleteIconContainer: styled.div`
     display: flex;
     width: 34px;
     margin-left: 210px;
     align-items: center;
   `,
+
   TagIconContainer: styled.div`
     width: 40px;
     height: 40px;
