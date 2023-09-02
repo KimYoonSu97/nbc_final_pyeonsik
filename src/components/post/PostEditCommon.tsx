@@ -7,7 +7,7 @@ import usePost from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
 import OrgPostCard from './detail/OrgPostCard';
 import { S } from 'src/components/post/style/StyledPostWrite';
-import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
+import HeaderArea from './write/HeaderArea';
 
 const PostEditCommon = () => {
   const navigate = useNavigate();
@@ -31,16 +31,6 @@ const PostEditCommon = () => {
     setBody(post?.body);
   }, [post]);
 
-  document.addEventListener(
-    'keydown',
-    function (event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-      }
-    },
-    true
-  );
-
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,14 +51,11 @@ const PostEditCommon = () => {
     navigate(`/detail/${prams}`);
   };
 
-  const clickLogo = () => {
-    navigate(`/`);
-  };
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
   const clickCancle = () => {
-    navigate(`/detail/${prams}`);
+    navigate(-1);
   };
 
   if (isLoading) {
@@ -86,34 +73,23 @@ const PostEditCommon = () => {
     <>
       <S.WriteArea>
         <S.WriteForm onSubmit={submitPost}>
-          <S.WriteHeader>
-            <S.WriteHeaderBox>
-              <S.LogoContainer onClick={clickLogo}>
-                <IconLogoSymbolH22 />
-                <IconWaterMarkH22 />
-              </S.LogoContainer>
-              <S.AddButton type="submit">
-                공유하기
-                <S.AddIcon>
-                  <IconAdd />
-                </S.AddIcon>
-              </S.AddButton>
-            </S.WriteHeaderBox>
-          </S.WriteHeader>
-          <S.TitleBox>
-            <S.CategoryText>그르르갉</S.CategoryText>
-            <S.Contour />
-            <S.Title
-              ref={postRef}
-              type="text"
-              name="title"
-              placeholder="제목 생략 가능"
-              value={title}
-              onChange={changeTitle}
-              autoFocus
-            />
-          </S.TitleBox>
-          <EditorQuill body={body} setBody={setBody} />
+          <HeaderArea />
+          <S.WritePostArea>
+            <S.TitleBox>
+              <S.CategoryText>그르르갉</S.CategoryText>
+              <S.Contour />
+              <S.Title
+                ref={postRef}
+                type="text"
+                name="title"
+                placeholder="제목 생략 가능"
+                value={title}
+                onChange={changeTitle}
+                autoFocus
+              />
+            </S.TitleBox>
+            <EditorQuill body={body} setBody={setBody} />
+          </S.WritePostArea>
         </S.WriteForm>
       </S.WriteArea>
       {orgPost && <OrgPostCard orgPost={orgPost} />}

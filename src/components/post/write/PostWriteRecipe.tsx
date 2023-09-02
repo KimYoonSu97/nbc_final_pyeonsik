@@ -8,7 +8,8 @@ import usePost from 'src/hooks/usePost';
 import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
 import { OrgPostIdProps } from './PostWriteCommon';
 import { S } from 'src/components/post/style/StyledPostWrite';
-import { IconAdd, IconLogoSymbolH22, IconSelect, IconWaterMarkH22 } from 'src/components/icons';
+import { IconSelect } from 'src/components/icons';
+import HeaderArea from './HeaderArea';
 
 // recipe, common write component 정리 필요
 const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
@@ -64,9 +65,6 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
     navigate(`/`);
   };
 
-  const clickLogo = () => {
-    navigate(`/`);
-  };
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -77,41 +75,30 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
   return (
     <S.WriteArea>
       <S.WriteForm onSubmit={submitPost}>
-        <S.WriteHeader>
-          <S.WriteHeaderBox>
-            <S.LogoContainer onClick={clickLogo}>
-              <IconLogoSymbolH22 />
-              <IconWaterMarkH22 />
-            </S.LogoContainer>
-            <S.AddButton type="submit">
-              공유하기
-              <S.AddIcon>
-                <IconAdd />
-              </S.AddIcon>
-            </S.AddButton>
-          </S.WriteHeaderBox>
-        </S.WriteHeader>
-        <S.TitleBox>
-          <S.CategoryText>편식조합</S.CategoryText>
-          <S.Contour />
-          <S.Title
-            ref={postRef}
-            type="text"
-            name="title"
-            placeholder="제목 생략 가능"
-            value={title}
-            onChange={changeTitle}
-            autoFocus
-          />
-          <S.SelectCategory>
-            <S.SelectIcon>
-              <IconSelect />
-            </S.SelectIcon>
-            <S.SelectText type="button" onClick={clickCategory}>
-              그르륵갉
-            </S.SelectText>
-          </S.SelectCategory>
-        </S.TitleBox>
+        <HeaderArea />
+        <S.WritePostArea>
+          <S.TitleBox>
+            <S.CategoryText>편식조합</S.CategoryText>
+            <S.Contour />
+            <S.Title
+              ref={postRef}
+              type="text"
+              name="title"
+              placeholder="제목 생략 가능"
+              value={title}
+              onChange={changeTitle}
+              autoFocus
+            />
+            <S.SelectCategory>
+              <S.SelectIcon>
+                <IconSelect />
+              </S.SelectIcon>
+              <S.SelectText type="button" onClick={clickCategory}>
+                그르륵갉
+              </S.SelectText>
+            </S.SelectCategory>
+          </S.TitleBox>
+        </S.WritePostArea>
       </S.WriteForm>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ width: '950px' }}>
