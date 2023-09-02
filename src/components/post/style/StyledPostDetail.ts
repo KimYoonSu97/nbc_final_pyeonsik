@@ -1,6 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface ColorProps {
+  $isModal?: boolean;
+}
 
 export const S = {
+  FunctionBox: styled.div`
+    margin: 36px 0px 140px 0px;
+    gap: 50px;
+    display: flex;
+  `,
   DtailArea: styled.div`
     display: flex;
     justify-content: center;
@@ -45,7 +54,16 @@ export const S = {
     image-rendering: -webkit-optimize-contrast;
   `,
 
-  WriterInfo: styled.div`
+  WriterInfo: styled.div<ColorProps>`
+    ${(props) =>
+      props.$isModal
+        ? css`
+            color: white;
+          `
+        : css`
+            color: var(--neutral-500, #667085);
+          `}
+
     font-style: normal;
     font-size: 14px;
     font-weight: 400;
@@ -74,19 +92,40 @@ export const S = {
     align-items: center;
   `,
 
-  WriterSir: styled.div`
-    color: var(--neutral-500, #667085);
+  WriterSir: styled.div<ColorProps>`
+    ${(props) =>
+      props.$isModal
+        ? css`
+            color: white;
+          `
+        : css`
+            color: var(--neutral-500, #667085);
+          `}
   `,
 
-  PostDate: styled.div`
-    color: var(--neutral-500, #667085);
+  PostDate: styled.div<ColorProps>`
+    ${(props) =>
+      props.$isModal
+        ? css`
+            color: white;
+          `
+        : css`
+            color: var(--neutral-500, #667085);
+          `}
+
     font-style: normal;
     font-size: 12px;
     font-weight: 400;
     line-height: 16px; /* 133.333% */
   `,
 
-  WriterFunction: styled.div`
+  WriterFunction: styled.div<ColorProps>`
+    ${(props) =>
+      props.$isModal &&
+      css`
+        color: white !important;
+      `}
+
     width: 90px;
     height: 26px;
     margin: 8px 0px;
@@ -108,7 +147,7 @@ export const S = {
     margin: 0px 4.5px;
   `,
 
-  WriterButton: styled.button`
+  WriterButton: styled.button<ColorProps>`
     background-color: transparent;
 
     width: 40px;
@@ -119,13 +158,19 @@ export const S = {
     justify-content: center;
     align-items: center;
 
-    color: var(--neutral-500, #667085);
+    ${(props) =>
+      props.$isModal
+        ? css`
+            color: white !important;
+          `
+        : css`
+            color: var(--neutral-500, #667085);
+          `}
     text-align: center;
     font-style: normal;
     font-size: 12px;
     font-weight: 400;
   `,
-
   // 김윤수가 추가한 컨텐츠 박스
   ContentsBox: styled.div`
     width: 890px;
@@ -155,6 +200,16 @@ export const S = {
     width: 790px;
     min-height: 40vh;
     margin: 10px 0px 10px 0px;
+    white-space: normal;
+    word-wrap: break-word;
+    color: var(--Black, #242424);
+
+    /* body-게시글 */
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 175% */
     /* 디자이너님에게 공유  */
     /* padding: 20px; */
     /* border: 1px solid black; */

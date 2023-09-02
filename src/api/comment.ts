@@ -17,6 +17,24 @@ const getCommentDataByPostId = async (postId: string) => {
   return data;
 };
 
+// 포스트 아이디에 해당하는 댓글 개수
+const getCommentCountDataByPostId = async (postId: string) => {
+  const { count } = await supabase
+    .from('detail_comments')
+    .select('id', { count: 'exact', head: true })
+    .eq('postId', postId);
+  return count;
+};
+
+// // 포스트 아이디에 해당하는 글의 베스트댓글
+// const getBestCommentDataByPostID =async (postId:string) => {
+//   const { count } = await supabase
+//     .from('detail_comments')
+//     .select('id', { count: 'exact', head: true })
+//     .eq('postId', postId);
+//   return count;
+// }
+
 //댓글 작성하기
 const WriteCommentData = async (newcomment: Omit<CommentType, 'id'>) => {
   await supabase.from('detail_comments').insert([newcomment]);
@@ -32,4 +50,4 @@ const updateCommentData = async (comment: any) => {
   await supabase.from('detail_comments').update([comment]).eq('id', comment.id);
 };
 
-export { getCommentDataByPostId, WriteCommentData, deleteCommentData, updateCommentData };
+export { getCommentCountDataByPostId, getCommentDataByPostId, WriteCommentData, deleteCommentData, updateCommentData };
