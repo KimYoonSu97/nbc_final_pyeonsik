@@ -1,10 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { LikeCount, CommentCount, BookmarkCount, RepostCount } from 'src/components/renderPosts/reactionSource';
 import { Post, PostUserProfile } from 'src/types/types';
 import { useLocation, useNavigate } from 'react-router';
-import { useAtom } from 'jotai';
-import { modalOpenAtom } from 'src/globalState/jotai';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -31,12 +28,7 @@ const CommonPost = ({ item: postItem }: Props) => {
         </S.UserArea>
         <S.PostBox>
           <S.GradientArea></S.GradientArea>
-          <S.BottomArea>
-            <CommentCount />
-            <LikeCount />
-            <RepostCount />
-            <BookmarkCount />
-          </S.BottomArea>
+          <S.BottomArea></S.BottomArea>
           <S.TitleArea>{title}</S.TitleArea>
           {/* editor 내용 변환 */}
           <S.BodyArea dangerouslySetInnerHTML={{ __html: recipeBody ? recipeBody[0] : body }} />
