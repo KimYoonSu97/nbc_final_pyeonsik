@@ -13,6 +13,7 @@ const Main = () => {
     <>
       <button onClick={() => navigate('/write')}>write</button>
       <PostList />
+      <div></div>
     </>
   );
 };
