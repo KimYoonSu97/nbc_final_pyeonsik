@@ -49,13 +49,10 @@ const PostEditCommon = () => {
         body
       };
       updatePostMutate.mutate(editPost);
-      navigate(`/detail/${prams}`);
     } else if (category === 'recipe') {
     }
-  };
 
-  const clickCancle = () => {
-    navigate(-1);
+    navigate(`/detail/${prams}`);
   };
 
   if (isLoading) {
@@ -79,7 +76,6 @@ const PostEditCommon = () => {
         </S.WritePostArea>
       </S.WriteForm>
       {category === 'common' && orgPost && <OrgPostCard orgPost={orgPost} />}
-      <button onClick={clickCancle}>cancle</button>
     </>
   );
 };

@@ -6,6 +6,10 @@ import { S } from './StyledHeaderArea';
 const HeaderArea = () => {
   const navigate = useNavigate();
 
+  const clickCancle = () => {
+    navigate(-1);
+  };
+
   const clickLogo = () => {
     navigate(`/`);
   };
@@ -13,6 +17,9 @@ const HeaderArea = () => {
   return (
     <S.WriteHeader>
       <S.WriteHeaderBox>
+        <button type="button" onClick={clickCancle}>
+          cancle
+        </button>
         <S.LogoContainer onClick={clickLogo}>
           <IconLogoSymbolH22 />
           <IconWaterMarkH22 />

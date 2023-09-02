@@ -139,6 +139,7 @@
 //           {category === 'recipe' && orgPost && <OrgPostCard orgPost={orgPost} />}
 //           {category === 'common' && <EditorQuill body={body} setBody={setBody} />}
 //         </S.WritePostArea>
+//       </S.WriteForm>
 //         {category === 'recipe' && (
 //           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 //             <div style={{ width: '950px' }}>
@@ -146,9 +147,7 @@
 //             </div>
 //           </div>
 //         )}
-//       </S.WriteForm>
 //       {category === 'common' && orgPost && <OrgPostCard orgPost={orgPost} />}
-//       <button onClick={clickCancle}>cancle</button>
 //     </>
 //   );
 // };

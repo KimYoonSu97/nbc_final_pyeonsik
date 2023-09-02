@@ -91,10 +91,6 @@ const PostEditRecipe = () => {
     navigate(`/detail/${prams}`);
   };
 
-  const clickCancle = () => {
-    navigate(`/detail/${prams}`);
-  };
-
   if (isLoading) {
     return <p>Loading…</p>;
   }
@@ -108,23 +104,20 @@ const PostEditRecipe = () => {
 
   return (
     <>
-      <S.WriteArea>
-        <S.WriteForm onSubmit={submitPost}>
-          <HeaderArea />
-          <S.WritePostArea>
-            <TitleArea category={category} title={title} setTitle={setTitle} />
-            {category === 'recipe' && orgPost && <OrgPostCard orgPost={orgPost} />}
-          </S.WritePostArea>
-        </S.WriteForm>
-        {category === 'recipe' && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ width: '950px' }}>
-              <AddImageTagComponent imageData={allSelectedImages} tagData={tagData} body={body} isEditMode={true} />
-            </div>
+      <S.WriteForm onSubmit={submitPost}>
+        <HeaderArea />
+        <S.WritePostArea>
+          <TitleArea category={category} title={title} setTitle={setTitle} />
+          {category === 'recipe' && orgPost && <OrgPostCard orgPost={orgPost} />}
+        </S.WritePostArea>
+      </S.WriteForm>
+      {category === 'recipe' && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '950px' }}>
+            <AddImageTagComponent imageData={allSelectedImages} tagData={tagData} body={body} isEditMode={true} />
           </div>
-        )}
-      </S.WriteArea>
-      <button onClick={clickCancle}>cancle</button>
+        </div>
+      )}
     </>
   );
 };
