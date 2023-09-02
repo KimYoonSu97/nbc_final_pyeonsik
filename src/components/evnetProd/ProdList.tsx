@@ -22,7 +22,7 @@ const ProdList = () => {
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery<InfinityProductList>({
-    queryKey: [`event${brandParam}`],
+    queryKey: [`event`, brandParam],
     queryFn: ({ pageParam }) => getEventProd(pageParam, brandParam),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages) {
@@ -43,8 +43,8 @@ const ProdList = () => {
 
   const { ref } = useInView({
     threshold: 1,
-    onChange: (inview) => {
-      if (!inview || !hasNextPage || isFetchingNextPage) return;
+    onChange: (inView) => {
+      if (!inView || !hasNextPage || isFetchingNextPage) return;
       fetchNextPage();
     }
   });

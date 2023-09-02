@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 const BottomBarMenuContainer = () => {
-  const param = useParams();
   const location = useLocation();
-  console.log(location);
   const findPath = (str: string): string => {
     return str.split('/')[1];
   };
@@ -15,7 +13,7 @@ const BottomBarMenuContainer = () => {
     <S.ButtonArea>
       {findPath(location.pathname) === 'search' ? (
         <>
-          <S.SearchCategory>검색 카테고리</S.SearchCategory>{' '}
+          <S.SearchCategory>검색 카테고리</S.SearchCategory>
           <S.BoardButton to={`/search/all${location.search}`} $type={'/search/all'} $location={location.pathname}>
             전체보기
           </S.BoardButton>
@@ -35,13 +33,13 @@ const BottomBarMenuContainer = () => {
         </>
       ) : (
         <>
-          <S.BoardButton to={`/`} $type={'/'} $location={location.pathname}>
+          <S.BoardButton to={`/`} $type={''} $location={location.search}>
             전체보기
           </S.BoardButton>
-          <S.BoardButton to={`/recipe`} $type={'/recipe'} $location={location.pathname}>
+          <S.BoardButton to={`/?=recipe`} $type={'?=recipe'} $location={location.search}>
             편식조합
           </S.BoardButton>
-          <S.BoardButton to={`/common`} $type={'/common'} $location={location.pathname}>
+          <S.BoardButton to={`/?=common`} $type={'?=common'} $location={location.search}>
             그르르갉
           </S.BoardButton>
         </>

@@ -79,7 +79,7 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
       <S.WriteForm onSubmit={submitPost}>
         <S.WriteHeader>
           <S.WriteHeaderBox>
-            <S.LogoContainer onClick={() => navigate('/')}>
+            <S.LogoContainer onClick={clickLogo}>
               <IconLogoSymbolH22 />
               <IconWaterMarkH22 />
             </S.LogoContainer>
