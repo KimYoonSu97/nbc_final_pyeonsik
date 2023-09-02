@@ -29,7 +29,6 @@ const getBestCommentLikeByPostId = async (postId: string) => {
     return { commentId: false };
   }
   const response = findMostCommonId(data as unknown as BestComment[]);
-  console.log(response);
   return response;
 };
 
