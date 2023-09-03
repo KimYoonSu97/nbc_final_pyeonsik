@@ -284,7 +284,7 @@ const S = {
   ImageContainer: styled.div`
     position: relative;
     border-radius: 10px;
-    overflow: hidden;
+    /* overflow: hidden; */
 
     /* margin-right: 10px; */
   `,
