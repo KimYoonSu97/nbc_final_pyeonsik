@@ -390,7 +390,7 @@ const S = {
     width: 40px;
     height: 40px;
     background-color: white;
-    border-radius: 50%;
+    border-radius: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
