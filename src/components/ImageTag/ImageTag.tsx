@@ -259,6 +259,8 @@ export default ImageTag;
 const S = {
   ImageTagContainer: styled.div`
     margin-left: 72px;
+    width: 474px;
+    height: 360px;
     display: flex;
     position: relative;
     background-color: royalblue;
@@ -285,8 +287,8 @@ const S = {
     margin-right: 10px;
   `,
   Image: styled.img`
-    width: 360px;
-    height: 638px;
+    width: 474px;
+    height: 360px;
   `,
   TagImage: styled.img`
     width: 80px;
