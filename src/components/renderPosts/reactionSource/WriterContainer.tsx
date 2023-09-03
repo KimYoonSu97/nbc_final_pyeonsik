@@ -25,7 +25,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
     }
 
     deletePostMutate.mutate(post.id);
-    navigate(-1);
+    navigate('/');
   };
 
   const clickEdit = () => {

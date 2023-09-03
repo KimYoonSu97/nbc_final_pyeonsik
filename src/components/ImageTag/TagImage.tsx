@@ -90,9 +90,12 @@ const S = {
     height: 200px;
     margin-right: 20px;
   `,
+  // 렌더링되는 이미지 사이즈도줄임.
   Image: styled.img`
     width: 790px;
     height: 600px;
+    border-radius: 10px;
+    object-fit: cover;
   `,
   recipeBody: styled.div`
     width: 790px;

@@ -170,7 +170,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
   return (
     <>
       <S.ImageTagContainer>
-        <ImageUploader onImageSelect={handleImageSelect} imageSelected={!!selectedImage} />
+        {!selectedImage && <ImageUploader onImageSelect={handleImageSelect} imageSelected={!!selectedImage} />}
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
@@ -258,12 +258,13 @@ export default ImageTag;
 
 const S = {
   ImageTagContainer: styled.div`
-    margin-left: 72px;
+    /* margin-left: 72px; */
     display: flex;
     position: relative;
-    background-color: royalblue;
+    /* background-color: royalblue; */
+    gap: 12px;
+    margin-bottom: 20px;
   `,
-
   AddTagButton: styled.button`
     background: var(--white, #fff);
 
@@ -282,11 +283,16 @@ const S = {
 
   ImageContainer: styled.div`
     position: relative;
-    margin-right: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    /* margin-right: 10px; */
   `,
+  // 이미지 태그 사이즈 고정....
   Image: styled.img`
-    width: 360px;
-    height: 638px;
+    width: 474px;
+    height: 360px;
+    object-fit: cover;
   `,
   TagImage: styled.img`
     width: 80px;

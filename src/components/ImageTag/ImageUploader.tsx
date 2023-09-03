@@ -51,9 +51,14 @@ const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-radius: 10px;
+
     border: ${(props) => (props.imageselected ? 'none' : '1px solid #ccc')};
-    width: ${(props) => (props.imageselected ? '40px' : '360px')};
-    height: ${(props) => (props.imageselected ? '40px' : '360px')};
+    width: 474px;
+    height: 360px;
+
+    /* width: ${(props) => (props.imageselected ? '40px' : '360px')}; */
+    /* height: ${(props) => (props.imageselected ? '40px' : '360px')}; */
     position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
     margin-left: ${(props) => (props.imageselected ? '30px' : '0')};
     z-index: 1;
