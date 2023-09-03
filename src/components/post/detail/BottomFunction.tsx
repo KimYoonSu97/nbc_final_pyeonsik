@@ -1,13 +1,15 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getPostLike } from 'src/api/postLikes';
 import { getPostBookmark } from 'src/api/postBookmark';
 import { getQuotationPosts } from 'src/api/posts';
+import { getCommentCountDataByPostId } from 'src/api/comment';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
-import { S } from 'src/components/post/style/StyledBottomFunction';
+import { NON_MEMBER } from '../../../function/alertMessage';
+import { S } from 'src/components/post/detail/StyledBottomFunction';
 import {
   IconBookmark,
   IconComment,
@@ -18,20 +20,18 @@ import {
   IconUnLink,
   IconUnQuotation
 } from 'src/components/icons';
-import { getCommentCountDataByPostId } from 'src/api/comment';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
 
-  // 이 아이디는 디테일 페이지인지 아닌지를 구분하는용으로 사용하면 될듯. (메인게시글 리스트의 댓글 숫자 / 디테일페이지의 링크 복사 노출관련)
+  // id로 main과 detail 구분 (main => 댓글 수, detail => link 복사)
   const { id } = useParams<string>();
   const { pathname } = useLocation();
 
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes(post.id);
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark(post.id);
 
-  // 쿼리키에 아이디값 추가
-  // 상위 컴포넌트에서 받아오는 post 객체의 Id값 사용
+  // query key id 값 추가 (props의 post.id)
   const { data: commentCountData } = useQuery({
     queryKey: ['commentCount', post.id],
     queryFn: () => getCommentCountDataByPostId(post.id!),
@@ -57,7 +57,9 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   // 좋아요
   const clickPostLike = () => {
-    if (!postLike) {
+    if (!userId) {
+      alert(NON_MEMBER);
+    } else if (!postLike) {
       const newPostLike = {
         postId: post.id,
         userId
@@ -70,7 +72,9 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   // bookmark
   const clickPostBookmark = () => {
-    if (!postBookmark) {
+    if (!userId) {
+      alert(NON_MEMBER);
+    } else if (!postBookmark) {
       const newPostBookmark = {
         postId: post.id,
         userId
@@ -83,7 +87,11 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   // 인용
   const clickQuotation = () => {
-    navigate('/write', { state: post });
+    if (!userId) {
+      alert(NON_MEMBER);
+    } else {
+      navigate('/write', { state: post });
+    }
   };
 
   // clip board
@@ -91,8 +99,8 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     try {
       await navigator.clipboard.writeText(`https://nbc-final-pyeonsik-897l29vm7-kimyoonsu97.vercel.app/${pathname}`);
       alert('주소가 복사되었습니다.');
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 

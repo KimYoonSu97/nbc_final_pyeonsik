@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
@@ -16,7 +16,6 @@ const Report = () => {
   const [message, setMessage] = useState<string>('');
 
   const userId = useLoginUserId();
-
   const navigate = useNavigate();
 
   const reportImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,36 +35,8 @@ const Report = () => {
   const handleOptionClick = (option: string) => {
     setSelectedInquiry1(option);
   };
-
   const handleOption2Click = (option: string) => {
     setSelectedInquiry2(option);
-  };
-
-  const handleSubmitButton = async () => {
-    const url = [];
-    if (image) {
-      const { data, error } = await supabase.storage.from('photos').upload(`report/${imageName}`, image);
-      if (error) {
-        console.error('Error uploading image to Supabase storage:', error);
-        alert('이미지 업로드 중 에러가 발생했습니다!');
-        return;
-      }
-      url.push(data.path);
-    }
-
-    const reportData = {
-      email,
-      userId,
-      inquiry1: selectedInquiry1,
-      inquiry2: selectedInquiry2,
-      detailReport: {
-        image: `${process.env.REACT_APP_SUPABASE_STORAGE_REPORT}${url}`,
-        urlLink,
-        message
-      }
-    };
-    await supabase.from('reports').insert([reportData]);
-    nextStep();
   };
 
   const handleNext = () => {
@@ -94,6 +65,34 @@ const Report = () => {
     '불법 상품 판매 게시물 또는 댓글'
   ];
 
+  const handleSubmitButton = async () => {
+    const url = [];
+    if (image) {
+      const { data, error } = await supabase.storage.from('photos').upload(`report/${imageName}`, image);
+      if (error) {
+        console.error('Error uploading image to Supabase storage:', error);
+        alert('이미지 업로드 중 에러가 발생했습니다!');
+        return;
+      }
+      url.push(data.path);
+    }
+
+    const reportData = {
+      email,
+      userId,
+      inquiry1: selectedInquiry1,
+      inquiry2: selectedInquiry2,
+      detailReport: {
+        image: `${process.env.REACT_APP_SUPABASE_STORAGE_REPORT}${url}`,
+        urlLink,
+        message
+      }
+    };
+
+    await supabase.from('reports').insert([reportData]);
+    nextStep();
+  };
+
   return (
     <ReportWrap>
       {step === 1 && (
@@ -109,14 +108,13 @@ const Report = () => {
             <div>
               <h3>이메일 입력</h3>
               <input
-              className='emailInput'
+                className="emailInput"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="이메일을 적어주세요."
               ></input>
             </div>
           )}
-
           <div>
             <h3>문의 항목</h3>
             <div className="options-box">
@@ -155,7 +153,9 @@ const Report = () => {
       )}
       {step === 3 && (
         <ReportInner>
-          <h3 className='last_h3'>해당 내용에 대해 확인 할 수 있는<span>사진, 파일, 링크를 업로드 해주세요.</span></h3>
+          <h3 className="last_h3">
+            해당 내용에 대해 확인 할 수 있는<span>사진, 파일, 링크를 업로드 해주세요.</span>
+          </h3>
           <div>
             <label htmlFor="fileupload">클릭하여 파일을 선택해주세요.</label>
             <input
@@ -172,7 +172,7 @@ const Report = () => {
             placeholder="주소 링크를 입력해주세요."
           ></input>
           <input
-          className='message'
+            className="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
@@ -207,48 +207,56 @@ const ReportInner = styled.div`
     letter-spacing: -2px;
     margin-bottom: 20px;
   }
+
   h2 {
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 50px;
-    span{
+    span {
       display: block;
     }
   }
-  h3{
+
+  h3 {
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
     margin-bottom: 16px;
-    span{
+    span {
       display: block;
     }
   }
-  .last_h3{
+
+  .last_h3 {
     margin-bottom: 34px;
   }
-  .emailInput{
+
+  .emailInput {
     width: 310px;
-    border: 1px solid #CED4DA;
+    border: 1px solid #ced4da;
     background-color: #fff;
     border-radius: 5px;
     padding: 11px 0px 11px 12px;
     margin-bottom: 8px;
   }
-  .options-box{
+
+  .options-box {
     margin-bottom: 40px;
   }
+
   p {
     width: 310px;
-    border: 1px solid #CED4DA;
+    border: 1px solid #ced4da;
     background-color: #fff;
     border-radius: 5px;
     padding: 11px 0px 11px 12px;
     margin-bottom: 8px;
   }
+
   .selected {
     background: #ffb334;
   }
+
   button {
     width: 210px;
     padding: 10px;
@@ -258,6 +266,7 @@ const ReportInner = styled.div`
     border-radius: 5px;
     background-color: #ced4da;
   }
+
   label {
     display: block;
     width: 100%;
@@ -269,9 +278,10 @@ const ReportInner = styled.div`
     margin-bottom: 15px;
     cursor: pointer;
   }
-  div>input{
-    
+
+  div > input {
   }
+
   input {
     display: block;
     width: 100%;
@@ -281,7 +291,8 @@ const ReportInner = styled.div`
     border: none;
     margin-bottom: 15px;
   }
-  .message{
+
+  .message {
     padding-bottom: 140px;
   }
 `;
