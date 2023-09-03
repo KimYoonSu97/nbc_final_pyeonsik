@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Post, PostUserProfile } from 'src/types/types';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -9,7 +9,6 @@ interface Props {
 }
 
 const CommonPost = ({ item: postItem }: Props) => {
-  const navigate = useNavigate();
   const { nickname, profileImg } = postItem.userId as PostUserProfile;
   const { id, postCategory, body, title, recipeBody } = postItem;
   const location = useLocation();

@@ -9,6 +9,7 @@ import { InfinityProductList } from 'src/types/types';
 
 const ProdList = () => {
   const location = useLocation();
+
   let brandParam: string;
   if (location.search === '') {
     brandParam = 'all';

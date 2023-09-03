@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router';
 
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
+import { NON_MEMBER } from 'src/function/alertMessage';
 
 interface Props {
   type: string;
@@ -39,7 +40,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
   const addComment = () => {
     // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
-      alert('로그인 후 이용해 주세요.');
+      alert(NON_MEMBER);
       return <Navigate to="/login" state={{ backgroundLocation: location }} />;
     }
     WriteCommentButton(userId, postId!, comment);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPost } from 'src/api/posts';
@@ -6,40 +6,30 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import EditorQuill from './write/EditorQuill';
 import OrgPostCard from './detail/OrgPostCard';
-import { S } from 'src/components/post/style/StyledPostWrite';
-import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
+import { S } from 'src/components/post/write/StyledPostWrite';
+import HeaderArea from './write/HeaderArea';
+import TitleArea from './write/TitleArea';
 
 const PostEditCommon = () => {
   const navigate = useNavigate();
   const { id: prams } = useParams<string>();
-
   const userId: string | undefined = useLoginUserId();
-  const postRef = useRef<HTMLInputElement>(null);
-
-  const { updatePostMutate } = usePost(prams!);
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
 
+  const { updatePostMutate } = usePost(prams!);
+
   // read
   const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
+  const category = post?.postCategory as string;
   const orgPost = post?.orgPostId;
 
   useEffect(() => {
     setTitle(post?.title);
     setBody(post?.body);
   }, [post]);
-
-  document.addEventListener(
-    'keydown',
-    function (event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-      }
-    },
-    true
-  );
 
   // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,24 +40,18 @@ const PostEditCommon = () => {
       return false;
     }
 
-    const editPost = {
-      orgPostId: post.orgPostId?.id,
-      id: post.id,
-      title,
-      body
-    };
+    // type 문제 해결 필요
+    if (category === 'common') {
+      const editPost = {
+        orgPostId: post.orgPostId?.id,
+        id: post.id,
+        title,
+        body
+      };
+      updatePostMutate.mutate(editPost);
+    } else if (category === 'recipe') {
+    }
 
-    updatePostMutate.mutate(editPost);
-    navigate(`/detail/${prams}`);
-  };
-
-  const clickLogo = () => {
-    navigate(`/`);
-  };
-  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-  const clickCancle = () => {
     navigate(`/detail/${prams}`);
   };
 
@@ -84,40 +68,14 @@ const PostEditCommon = () => {
 
   return (
     <>
-      <S.WriteArea>
-        <S.WriteForm onSubmit={submitPost}>
-          <S.WriteHeader>
-            <S.WriteHeaderBox>
-              <S.LogoContainer onClick={clickLogo}>
-                <IconLogoSymbolH22 />
-                <IconWaterMarkH22 />
-              </S.LogoContainer>
-              <S.AddButton type="submit">
-                공유하기
-                <S.AddIcon>
-                  <IconAdd />
-                </S.AddIcon>
-              </S.AddButton>
-            </S.WriteHeaderBox>
-          </S.WriteHeader>
-          <S.TitleBox>
-            <S.CategoryText>그르르갉</S.CategoryText>
-            <S.Contour />
-            <S.Title
-              ref={postRef}
-              type="text"
-              name="title"
-              placeholder="제목 생략 가능"
-              value={title}
-              onChange={changeTitle}
-              autoFocus
-            />
-          </S.TitleBox>
-          <EditorQuill body={body} setBody={setBody} />
-        </S.WriteForm>
-      </S.WriteArea>
-      {orgPost && <OrgPostCard orgPost={orgPost} />}
-      <button onClick={clickCancle}>cancle</button>
+      <S.WriteForm onSubmit={submitPost}>
+        <HeaderArea />
+        <S.WritePostArea>
+          <TitleArea category={category} title={title} setTitle={setTitle} />
+          {category === 'common' && <EditorQuill body={body} setBody={setBody} />}
+        </S.WritePostArea>
+      </S.WriteForm>
+      {category === 'common' && orgPost && <OrgPostCard orgPost={orgPost} />}
     </>
   );
 };

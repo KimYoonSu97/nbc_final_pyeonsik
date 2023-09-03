@@ -19,7 +19,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
 
   // delete post
   const clickDelete = (id: string) => {
-    if (!window.confirm('정말 삭제하겠어용?')) {
+    if (!window.confirm('삭제하시겠습니까?')) {
       alert('취소되었습니다.');
       return;
     }
@@ -234,6 +234,7 @@ export const S = {
     font-size: 12px;
     font-weight: 400;
   `,
+
   // 김윤수가 추가한 컨텐츠 박스
   ContentsBox: styled.div`
     width: 890px;

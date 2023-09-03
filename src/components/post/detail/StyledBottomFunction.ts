@@ -1,4 +1,3 @@
-import { Location } from 'react-router';
 import styled, { css } from 'styled-components';
 
 interface LocationProps {
