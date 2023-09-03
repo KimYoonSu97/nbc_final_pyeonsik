@@ -23,7 +23,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
 
   return (
     <div>
-      <S.ImageContainer imageselected={imageSelected}>
+      <S.ImageContainer id="stylebox" imageselected={imageSelected}>
         <S.FileLabel imageselected={imageSelected}>
           <S.IconWrapper imageselected={imageSelected}>{imageSelected ? '🔃' : <CameraIcon />}</S.IconWrapper>
           <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
