@@ -60,9 +60,13 @@ const S = {
     padding: 7px 8px;
     right: 16px;
     position: absolute;
+    border: 1px solid var(--neutral-300, #d0d5dd);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    background: var(--neutral-100, #f2f4f7);
   `,
   SearchArea: styled.input`
     background-color: transparent;
+
     outline: none;
     border: none;
     font-size: 14px;
@@ -70,7 +74,10 @@ const S = {
     line-height: 20px;
     margin-left: 8px;
     transition: 0.5s;
+
     width: 300px;
+
+    border-radius: 8px;
 
     &:focus {
       transition: 0.5s;

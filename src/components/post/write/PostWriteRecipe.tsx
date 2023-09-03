@@ -29,49 +29,47 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const Message = window.confirm('글을 작성하시겠습니까?');
+    // const Message = window.confirm('글을 작성하시겠습니까?');
 
-    if (Message) {
-      if (Object.values(allContents).length === 0) {
-        alert('내용을 입력해 주세요!');
+    // if (Message) {
+    if (Object.values(allContents).length === 0) {
+      alert('내용을 입력해 주세요!');
+      return;
+    }
+
+    const imageUrls = [];
+
+    for (const selectedImage of Object.values(selectedImages)) {
+      const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
+
+      if (error) {
+        console.error('Error uploading image to Supabase storage:', error);
+        alert('이미지 업로드 중 에러가 발생했습니다!');
         return;
       }
 
-      const imageUrls = [];
-
-      for (const selectedImage of Object.values(selectedImages)) {
-        const { data, error } = await supabase.storage
-          .from('photos')
-          .upload(`tags/${selectedImage.name}`, selectedImage);
-
-        if (error) {
-          console.error('Error uploading image to Supabase storage:', error);
-          alert('이미지 업로드 중 에러가 발생했습니다!');
-          return;
-        }
-
-        imageUrls.push(data.path);
-      }
-
-      const newPost = {
-        orgPostId,
-        postCategory: 'recipe',
-        userId,
-        title,
-        body: allContents,
-        recipeBody: Object.values(allContents),
-        tags: Object.values(allTags),
-        tagimage: imageUrls
-      };
-
-      addRecipePostMutate.mutate(newPost);
-
-      setContentsAtom({});
-      setTagsDataAtom({});
-      setImagesDataAtom({});
-
-      navigate(`/`);
+      imageUrls.push(data.path);
     }
+
+    const newPost = {
+      orgPostId,
+      postCategory: 'recipe',
+      userId,
+      title,
+      body: allContents,
+      recipeBody: Object.values(allContents),
+      tags: Object.values(allTags),
+      tagimage: imageUrls
+    };
+
+    addRecipePostMutate.mutate(newPost);
+
+    setContentsAtom({});
+    setTagsDataAtom({});
+    setImagesDataAtom({});
+
+    navigate(`/`);
+    // }
   };
 
   const clickLogo = () => {

@@ -187,69 +187,110 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   };
 
   return (
-    <div>
-      <S.AddBtn type="button" onClick={addImageTagComponent}>
-        이미지 추가
-      </S.AddBtn>
-      {imageTagComponents.map((component, index) => {
-        const componentUuid = (component.key as string) || '';
-        return (
-          <div key={componentUuid} style={{ marginTop: '10px' }}>
-            <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
-              <TrashCanIcon />
-            </S.RemoveButton>
+    <>
+      {/* 이미지 추가 버튼은 따로 빼서 고정 위드값과 관계없음. */}
+      <S.ButtonThumbnailArea>
+        <S.SmallButton>
+          <S.AddBtn type="button" onClick={addImageTagComponent}>
+            이미지 추가
+          </S.AddBtn>
+        </S.SmallButton>
 
-            {component}
-
-            {image[componentUuid] && (
+        {imageTagComponents.map((component) => {
+          const componentUuid = (component.key as string) || '';
+          return (
+            // 김윤수 추가 S.Contests
+            <>
+              {image[componentUuid] && (
+                <S.SmallButton>
+                  {typeof image[componentUuid] === 'string' ? (
+                    <S.ThumbnailImg
+                      src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${image[componentUuid]}`}
+                      alt="이미지"
+                    />
+                  ) : (
+                    <S.ThumbnailImg src={URL.createObjectURL(image[componentUuid])} alt="이미지" />
+                  )}
+                </S.SmallButton>
+              )}
+            </>
+          );
+        })}
+      </S.ButtonThumbnailArea>
+      {/* 여기는 전체 에디터가 담길 부분임. */}
+      <S.ContentArea>
+        {imageTagComponents.map((component, index) => {
+          const componentUuid = (component.key as string) || '';
+          return (
+            // 김윤수 추가 S.Contests
+            <S.Contents key={componentUuid} style={{ marginTop: '10px' }}>
+              {component}
+              <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
+                <TrashCanIcon />
+              </S.RemoveButton>
+              {/* 아래가 위아래로 움직이는 버튼입니다 CSS는 적용이 안되어있습니다...ㅜ.ㅜ */}
               <div>
-                {typeof image[componentUuid] === 'string' ? (
-                  <img
-                    style={{ maxWidth: '20px', maxHeight: ' 20px' }}
-                    src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${image[componentUuid]}`}
-                    alt="이미지"
-                  />
-                ) : (
-                  <img
-                    style={{ maxWidth: '20px', maxHeight: ' 20px' }}
-                    src={URL.createObjectURL(image[componentUuid])}
-                    alt="이미지"
-                  />
-                )}
+                <button type="button" onClick={() => changeComponentOrder(index, index - 1)} disabled={index === 0}>
+                  위로 이동
+                </button>
+                <button
+                  type="button"
+                  onClick={() => changeComponentOrder(index, index + 1)}
+                  disabled={index === imageTagComponents.length - 1}
+                >
+                  아래로 이동
+                </button>
               </div>
-            )}
-            <button type="button" onClick={() => changeComponentOrder(index, index - 1)} disabled={index === 0}>
-              위로 이동
-            </button>
-            <button
-              type="button"
-              onClick={() => changeComponentOrder(index, index + 1)}
-              disabled={index === imageTagComponents.length - 1}
-            >
-              아래로 이동
-            </button>
-          </div>
-        );
-      })}
-    </div>
+            </S.Contents>
+          );
+        })}
+      </S.ContentArea>
+    </>
   );
 };
 export default AddImageTagComponent;
 
 const S = {
+  // 김윤수 추가
+  ButtonThumbnailArea: styled.div`
+    width: 48px;
+    position: fixed;
+    left: calc((100vw - 1280px) / 2 + 93px);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* background-color: royalblue; */
+  `,
+  SmallButton: styled.div`
+    /* width: 48px; */
+    /* height: 48px; */
+    /* border-radius: 10px; */
+  `,
+  ThumbnailImg: styled.img`
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  `,
+  Contents: styled.div`
+    display: flex;
+    position: relative;
+  `,
+  ContentArea: styled.div`
+    /* background-color: royalblue; */
+  `,
+
   RemoveButton: styled.button`
     width: 48px;
     height: 48px;
     position: absolute;
-    margin-left: 950px;
-    z-index: 999;
+    left: 962px;
+    /* margin-left: 950px; */
+    /* z-index: 999; */
   `,
 
   AddBtn: styled.button`
     width: 48px;
     height: 48px;
-    position: fixed;
-    left: calc(100vw - 1280px / 2 + 93);
-    z-index: 999;
   `
 };

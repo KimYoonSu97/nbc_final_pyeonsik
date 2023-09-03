@@ -63,7 +63,7 @@ export const S = {
   LoadingBox: styled.div`
     width: 200px;
     height: 200px;
-    background-color: royalblue;
+    /* background-color: royalblue; */
     cursor: pointer;
     border: 1px solid black;
   `
