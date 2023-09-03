@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
 import { SearchProps } from 'src/types/types';

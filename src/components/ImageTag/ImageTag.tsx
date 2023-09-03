@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-
 import { Tag, Data } from 'src/types/types';
 import { ImageTagProps } from 'src/types/types';
 import ImageUploader from './ImageUploader';
 import Search from './Search';
-import PostWriteBodyInput from '../post/PostWriteBodyInput';
+import PostWriteBodyInput from '../post/write/PostWriteBodyInput';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
 import { ReactComponent as DeleteIcon } from 'src/components/ImageTag/svg/DeleteIcon.svg';
 
@@ -289,15 +288,18 @@ const S = {
     /* margin-right: 10px; */
   `,
   // 이미지 태그 사이즈 고정....
+
   Image: styled.img`
     width: 474px;
     height: 360px;
     object-fit: cover;
   `,
+
   TagImage: styled.img`
     width: 80px;
     height: 80px;
   `,
+
   TagContainer: styled.div`
     width: 356px;
     height: 100px;
@@ -364,6 +366,7 @@ const S = {
       color: gray;
     }
   `,
+
   SearchResultsContainer: styled.div`
     width: 400px;
     padding-top: 20px;
@@ -380,12 +383,14 @@ const S = {
       display: none;
     } */
   `,
+
   DeleteIconContainer: styled.div`
     display: flex;
     width: 34px;
     margin-left: 210px;
     align-items: center;
   `,
+
   TagIconContainer: styled.div`
     width: 40px;
     height: 40px;

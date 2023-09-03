@@ -1,11 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { Post } from 'src/types/types';
-import styled from 'styled-components';
-
+import CreatedAt from 'src/function/CreatedAt';
 // import { S } from 'src/components/post/style/StyledOrgPostCard';
 import { IconOrgPost } from 'src/components/icons';
-import CreatedAt from 'src/function/CreatedAt';
+import styled from 'styled-components';
 
 interface OrgPostCardProps {
   orgPost: Post;
@@ -22,10 +21,13 @@ const OrgPostCard = ({ orgPost }: OrgPostCardProps) => {
     <S.OrgArea>
       <S.OrgContainer>
         <S.OrgTextBox>
+          <S.OrgIcon>
+            <IconOrgPost />
+          </S.OrgIcon>
           <S.OrgText>인용 게시글</S.OrgText>
         </S.OrgTextBox>
         <S.OrgContentsBox onClick={clickOrgPost}>
-          <S.OrgTitle>{orgPost.title ? orgPost.title : '제목없는 게시물'}</S.OrgTitle>
+          <S.OrgTitle>{orgPost.title ? orgPost.title : '제목 없는 게시물'}</S.OrgTitle>
           <S.OrgInfoBox>
             {orgPost.userId.nickname}
             <div>·</div>

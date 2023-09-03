@@ -4,7 +4,7 @@ import ReactQuill, { Quill } from 'react-quill';
 import { ImageResize } from 'quill-image-resize-module-ts';
 import 'react-quill/dist/quill.snow.css';
 import { CommonBodyProps } from 'src/types/types';
-import 'src/components/post/style/StyledEditorQuill.css';
+import 'src/components/post/write/StyledEditorQuill.css';
 import styled from 'styled-components';
 
 Quill.register('modules/ImageResize', ImageResize);

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { loginModalAtom, userAtom } from 'src/globalState/jotai';
+import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import baseImage from '../../images/baseprofile.jpeg';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 
 interface User {
@@ -237,6 +236,7 @@ const S = {
     height: 20px;
     background-color: black;
   `,
+
   Level: styled.div`
     border-radius: 100px;
     border: 1px solid transparent;
@@ -251,6 +251,7 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
+
   Leveltext: styled.div`
     width: 100%;
     background: #fff;
@@ -261,6 +262,7 @@ const S = {
     font-weight: 700;
     line-height: 16px; /* 133.333% */
   `,
+
   ProfileImgArea: styled.div`
     position: fixed;
   `,
@@ -275,6 +277,7 @@ const S = {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 0;
   `,
+
   ProfileImg: styled.div<ImageProps>`
     position: relative;
     z-index: 9999;

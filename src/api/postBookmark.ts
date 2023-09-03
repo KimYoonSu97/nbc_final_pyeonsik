@@ -1,11 +1,6 @@
 import supabase from 'src/lib/supabaseClient';
 import { NewPostLike } from 'src/types/types';
 
-const getPostBookmarks = async () => {
-  const response = await supabase.from('post_bookmark').select('*');
-  return response;
-};
-
 const getPostBookmark = async (postId: string) => {
   const response = await supabase.from('post_bookmark').select('*').eq('postId', postId);
   return response;

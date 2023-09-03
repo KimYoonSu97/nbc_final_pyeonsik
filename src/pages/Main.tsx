@@ -1,13 +1,8 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router';
-// import PostList from 'src/components/post/PostList';
+import { useNavigate } from 'react-router';
 import PostList from 'src/components/post/PostList';
-import { modalOpenAtom } from 'src/globalState/jotai';
-import { useSearchParams } from 'react-router-dom';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useInView } from 'react-intersection-observer';
-import styled from 'styled-components';
 import { IconWriteButton } from 'src/components/icons';
+import styled from 'styled-components';
 
 const Main = () => {
   const navigate = useNavigate();
