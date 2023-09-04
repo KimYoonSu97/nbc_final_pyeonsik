@@ -66,6 +66,7 @@ const getSearchProd = async (pageParam: number = 0, keyword: string) => {
   pageCount = count;
 
   //리턴을 위한 총 페이지 수는?
+
   const total_pages = Math.floor(pageCount! / 100);
   return { products: data!, page: pageParam, total_pages, total_results: pageCount! };
 };
