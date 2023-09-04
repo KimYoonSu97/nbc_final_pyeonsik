@@ -234,3 +234,10 @@ export interface InfinityPostList {
   total_pages: number;
   total_results: number | null;
 }
+
+export interface AddImageTagProps {
+  imageData?: File[];
+  tagData?: Tag[][] | null;
+  body?: string[] | null;
+  isEditMode?: boolean;
+}

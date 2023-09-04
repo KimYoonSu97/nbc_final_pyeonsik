@@ -45,11 +45,7 @@ const RealTimeCombo = () => {
             )}
           </S.ImageWrapper>
 
-          <S.PostTitle>{post.title}</S.PostTitle>
-          {/* <Rank ></Rank> */}
-
-          {/* <Title></Title> */}
-          {/* {post.likesCount} */}
+          <S.PostTitle>{post.title.length > 8 ? `${post.title.slice(0, 8)}...` : post.title}</S.PostTitle>
         </S.ContentWrapper>
       ))}
     </S.ContentsArea>

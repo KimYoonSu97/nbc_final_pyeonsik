@@ -7,6 +7,7 @@ import Search from './Search';
 import PostWriteBodyInput from '../post/write/PostWriteBodyInput';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
 import { ReactComponent as DeleteIcon } from 'src/components/ImageTag/svg/DeleteIcon.svg';
+import { IconPlusTag } from '../icons';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -169,7 +170,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
   return (
     <>
       <S.ImageTagContainer>
-        <ImageUploader onImageSelect={handleImageSelect} imageSelected={!!selectedImage} />
+        {!selectedImage && <ImageUploader onImageSelect={handleImageSelect} imageSelected={!!selectedImage} />}
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
@@ -188,6 +189,9 @@ const ImageTag: React.FC<ImageTagProps> = ({
                 setAddingTagMode(!addTagMode);
               }}
             >
+              <S.IconBox>
+                <IconPlusTag />
+              </S.IconBox>
               {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
             </S.AddTagButton>
 
@@ -257,36 +261,69 @@ export default ImageTag;
 
 const S = {
   ImageTagContainer: styled.div`
-    margin-left: 72px;
+    /* margin-left: 72px; */
     display: flex;
-    position: relative;
-    background-color: royalblue;
-  `,
 
-  AddTagButton: styled.button`
+    position: relative;
+    /* background-color: royalblue; */
+    gap: 12px;
+    margin-bottom: 20px;
+  `,
+  AddTagButton: styled.div`
+    width: 180px;
+    height: 48px;
+
+    /* height: 48px; */
+    /* wi */
+    /* padding: 12px 32px 12px 33px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    /* flex-shrink: 0; */
+    border-radius: 100px;
     background: var(--white, #fff);
 
-    height: 40px;
+    color: var(--font-black, var(--Black, #242424));
+    text-align: center;
+    position: relative;
+
+    /* label-large */
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 150% */
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+    &:hover {
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      /* translate:  */
+    }
+  `,
+  IconBox: styled.div`
+    width: 20px;
+    height: 20px;
+    background: var(--neutral-200, #e4e7ec);
     border-radius: 50px;
-    /* color: white; */
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    position: absolute;
-    top: 95%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
+    justify-content: center;
+    display: flex;
+    align-items: center;
   `,
 
   ImageContainer: styled.div`
     position: relative;
-    margin-right: 10px;
+    border-radius: 10px;
+    /* overflow: hidden; */
+    background-color: royalblue;
+    /* margin-right: 10px; */
   `,
+  // 이미지 태그 사이즈 고정....
 
   Image: styled.img`
-    width: 360px;
-    height: 638px;
+    width: 474px;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 10px;
   `,
 
   TagImage: styled.img`
@@ -389,7 +426,7 @@ const S = {
     width: 40px;
     height: 40px;
     background-color: white;
-    border-radius: 50%;
+    border-radius: 100px;
     display: flex;
     align-items: center;
     justify-content: center;

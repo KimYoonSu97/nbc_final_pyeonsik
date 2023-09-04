@@ -21,7 +21,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
 
   return (
     <div>
-      <S.ImageContainer imageselected={imageSelected}>
+      <S.ImageContainer id="stylebox" imageselected={imageSelected}>
         <S.FileLabel imageselected={imageSelected}>
           <S.IconWrapper imageselected={imageSelected}>{imageSelected ? '🔃' : <CameraIcon />}</S.IconWrapper>
           <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
@@ -49,9 +49,14 @@ const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-radius: 10px;
+
     border: ${(props) => (props.imageselected ? 'none' : '1px solid #ccc')};
-    width: ${(props) => (props.imageselected ? '40px' : '360px')};
-    height: ${(props) => (props.imageselected ? '40px' : '360px')};
+    width: 474px;
+    height: 360px;
+
+    /* width: ${(props) => (props.imageselected ? '40px' : '360px')}; */
+    /* height: ${(props) => (props.imageselected ? '40px' : '360px')}; */
     position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
     margin-left: ${(props) => (props.imageselected ? '30px' : '0')};
     z-index: 1;
