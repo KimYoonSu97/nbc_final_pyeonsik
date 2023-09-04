@@ -292,7 +292,7 @@ const S = {
   Image: styled.img`
     width: 474px;
     height: 360px;
-    object-fit: cover;
+    /* object-fit: cover; */
   `,
   TagImage: styled.img`
     width: 80px;

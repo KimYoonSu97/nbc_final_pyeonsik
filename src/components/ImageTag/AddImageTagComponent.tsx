@@ -80,7 +80,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     const componentUuid = uuidv4();
 
     if (imageTagComponents.length >= 10) {
-      alert('이미지는 10개까지 첨부 가능합니다!');
+      alert('이미지는 10개까지 첨부 가능합니다.');
       return;
     }
 
@@ -231,14 +231,14 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
               {/* 아래가 위아래로 움직이는 버튼입니다 CSS는 적용이 안되어있습니다...ㅜ.ㅜ */}
               <div>
                 <button type="button" onClick={() => changeComponentOrder(index, index - 1)} disabled={index === 0}>
-                  위로 이동
+                  ⬆️
                 </button>
                 <button
                   type="button"
                   onClick={() => changeComponentOrder(index, index + 1)}
                   disabled={index === imageTagComponents.length - 1}
                 >
-                  아래로 이동
+                  ⬇️
                 </button>
               </div>
             </S.Contents>

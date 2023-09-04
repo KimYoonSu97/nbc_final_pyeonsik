@@ -8,7 +8,7 @@ import { getPost } from 'src/api/posts';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
 import { S } from '../style/StyledPostDetail';
-import TagImage from 'src/components/ImageTag/TagImage';
+import TagImage from 'src/components/ImageTag/ShowTag';
 import Comment from 'src/components/Detail/comments/Comment';
 
 // import styled, { css } from 'styled-components';

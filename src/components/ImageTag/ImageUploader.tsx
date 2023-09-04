@@ -62,9 +62,6 @@ const S = {
     position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
     margin-left: ${(props) => (props.imageselected ? '30px' : '0')};
     z-index: 1;
-    /* &:hover {
-      background-color: ${(props) => (props.imageselected ? 'skyblue' : 'initial')};
-    } */
   `,
 
   IconWrapper: styled.span<{ imageselected: boolean }>`
