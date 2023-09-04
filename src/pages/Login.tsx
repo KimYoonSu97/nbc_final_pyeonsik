@@ -46,7 +46,7 @@ const Login = () => {
       email: email,
       password: password
     });
-    console.log(data);
+
     if (data.user) {
       const { data: userLogin, error: userLoginError } = await supabase
         .from('users')
@@ -58,10 +58,8 @@ const Login = () => {
       setUserLogin(userLogin);
       navigate(-1);
     }
-
     if (error) {
       setErrorMessage('Error logging in: ' + error.message);
-    } else {
     }
   };
 
