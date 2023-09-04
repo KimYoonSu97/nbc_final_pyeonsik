@@ -20,7 +20,6 @@ const PostEditCommon = () => {
 
   const { updatePostMutate } = usePost(prams!);
 
-  // read
   const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
   const category = post?.postCategory as string;
@@ -31,7 +30,6 @@ const PostEditCommon = () => {
     setBody(post?.body);
   }, [post]);
 
-  // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -75,7 +73,7 @@ const PostEditCommon = () => {
           {category === 'common' && <EditorQuill body={body} setBody={setBody} />}
         </S.WritePostArea>
       </S.WriteForm>
-      {category === 'common' && orgPost && <OrgPostCard orgPost={orgPost} />}
+      {category === 'common' && post.hasOrgPost && <OrgPostCard orgPost={orgPost} />}
     </>
   );
 };
