@@ -59,8 +59,6 @@ const PostEditCommon = () => {
   if (data?.error) {
     return <p>Error</p>;
   }
-  console.log(userId);
-  console.log(post.userId?.id);
   if (userId && post.userId?.id && userId !== post.userId.id) {
     alert('접근할 수 없습니다.');
     return <Navigate to="/" />;
