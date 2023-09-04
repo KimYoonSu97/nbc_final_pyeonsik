@@ -27,7 +27,6 @@ export interface Post {
   title: string;
   body: string;
   product: [];
-  // userId: string 삭제 (혜영)
   userId: PostUserProfile;
   likes: string;
   likesCount: number;
@@ -55,7 +54,7 @@ export interface BottomFunctionProps {
 
 // 게시글 작성 임시
 export interface NewPost {
-  orgPostId: string | null;
+  orgPostId: any;
   postCategory: string;
   title: string;
   body: string;
@@ -71,7 +70,6 @@ export interface NewRecipePost {
 }
 
 export interface EditPost {
-  orgPostId: string | null;
   id: string;
   title: string;
   body: string;
@@ -132,7 +130,6 @@ export interface RenderComponents {
 }
 
 // 이 아래는 이미지 태그 관련 프롭스입니다! 위에 포스트에도 살짝 있긴합니다
-
 export interface Tag {
   x: number;
   y: number;
@@ -205,7 +202,6 @@ export interface TagImageProps {
   recipeBody?: string;
   tagsForImage: ImageTag[];
 }
-
 //여기까지
 
 /// 무한스크롤 관련
@@ -237,4 +233,11 @@ export interface InfinityPostList {
   page: number;
   total_pages: number;
   total_results: number | null;
+}
+
+export interface AddImageTagProps {
+  imageData?: File[];
+  tagData?: Tag[][] | null;
+  body?: string[] | null;
+  isEditMode?: boolean;
 }

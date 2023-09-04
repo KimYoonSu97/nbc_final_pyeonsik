@@ -35,3 +35,5 @@ export { ReactComponent as IconLiked } from './IconLiked.svg';
 export { ReactComponent as IconUnLiked } from './IconUnLiked.svg';
 
 // export { ReactComponent as  } from './';
+
+export { ReactComponent as IconWriteButton } from './IconWriteButton.svg';

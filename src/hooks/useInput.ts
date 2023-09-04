@@ -8,6 +8,7 @@ const useInput = () => {
   const handler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
+
   return [value, handler];
 };
 

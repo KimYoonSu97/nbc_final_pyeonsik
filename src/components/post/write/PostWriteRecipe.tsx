@@ -29,6 +29,13 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // const Message = window.confirm('글을 작성하시겠습니까?');
+
+    // if (Message) {
+    if (Object.values(allContents).length === 0) {
+      alert('내용을 입력해 주세요!');
+      return;
+    }
 
     const imageUrls = [];
 
@@ -62,9 +69,13 @@ const PostWriteRecipe = ({ orgPostId, setCategory }: OrgPostIdProps) => {
     setImagesDataAtom({});
 
     navigate(`/`);
+    // }
   };
 
   const clickLogo = () => {
+    setContentsAtom({});
+    setTagsDataAtom({});
+    setImagesDataAtom({});
     navigate(`/`);
   };
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {

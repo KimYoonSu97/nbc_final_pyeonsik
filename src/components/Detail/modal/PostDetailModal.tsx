@@ -1,7 +1,7 @@
 import React from 'react';
 import PostDetail from 'src/components/post/detail/PostDetail';
-import styled from 'styled-components';
 import Comment from 'src/components/Detail/comments/Comment';
+import styled from 'styled-components';
 
 const PostDetailModal = () => {
   return <S.Container></S.Container>;

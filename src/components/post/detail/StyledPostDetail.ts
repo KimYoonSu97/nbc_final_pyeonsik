@@ -10,6 +10,7 @@ export const S = {
     gap: 50px;
     display: flex;
   `,
+
   DtailArea: styled.div`
     display: flex;
     justify-content: center;
@@ -171,6 +172,7 @@ export const S = {
     font-size: 12px;
     font-weight: 400;
   `,
+
   // 김윤수가 추가한 컨텐츠 박스
   ContentsBox: styled.div`
     width: 890px;
@@ -210,6 +212,7 @@ export const S = {
     font-style: normal;
     font-weight: 400;
     line-height: 28px; /* 175% */
+
     /* 디자이너님에게 공유  */
     /* padding: 20px; */
     /* border: 1px solid black; */

@@ -6,6 +6,7 @@ const getLikeByCommentId = async (commentId: string, userId: string) => {
     .from('comment_likes')
     .select('userId', { count: 'exact', head: true })
     .eq('commentId', commentId);
+
   const { count: myLike } = await supabase
     .from('comment_likes')
     .select('userId', { count: 'exact', head: true })
@@ -29,7 +30,6 @@ const getBestCommentLikeByPostId = async (postId: string) => {
     return { commentId: false };
   }
   const response = findMostCommonId(data as unknown as BestComment[]);
-  console.log(response);
   return response;
 };
 

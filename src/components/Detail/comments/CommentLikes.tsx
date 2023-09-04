@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
 import { useLocation, useNavigate, useParams } from 'react-router';
+import { NON_MEMBER } from 'src/function/alertMessage';
 
 interface Props {
   commentId: string;
@@ -39,7 +40,7 @@ const CommentLikes = ({ commentId }: Props) => {
   const clickButton = async () => {
     if (!userId) {
       // navigate('/login', { state: { backgroundLocation: location } }
-      alert('로그인 후 가능합니다.');
+      alert(NON_MEMBER);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
