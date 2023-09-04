@@ -40,7 +40,7 @@ const S = {
     position: fixed;
     top: 137px;
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
-    z-index: 9;
+    z-index: 1;
   `,
   WriteButton: styled.div`
     gap: 2px;

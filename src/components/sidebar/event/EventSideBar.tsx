@@ -9,6 +9,9 @@ const EventSideBar = () => {
       <S.ContentsBox>
         <BrandSelector />
       </S.ContentsBox>
+      <S.ContentsBox>
+        <BrandSelector />
+      </S.ContentsBox>
     </S.Container>
   );
 };
@@ -19,12 +22,15 @@ const S = {
   Container: styled.div`
     position: fixed;
     right: calc(((100vw - 1280px) / 2) + 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   `,
 
   ContentsBox: styled.div`
     background: white;
     width: 296px;
     border-radius: 10px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   `
 };

@@ -35,8 +35,8 @@ const PostWrite = () => {
     e.preventDefault();
 
     // common
-    if (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
-      alert('내용을 입력해 주세요.');
+    if (title.trim() === '' || (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '')) {
+      alert('제목과 내용을 입력해 주세요.');
       return false;
     }
 

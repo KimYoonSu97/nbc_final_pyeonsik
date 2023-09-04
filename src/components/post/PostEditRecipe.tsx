@@ -55,6 +55,11 @@ const PostEditRecipe = () => {
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (title.trim() === '') {
+      alert('제목과 내용을 입력해 주세요.');
+      return false;
+    }
+
     const updatedImageUrls = [];
 
     // 파일 업로드 및 URL 가져오기
