@@ -91,8 +91,14 @@ const TopBarMenuContainer = () => {
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
-        <S.QuickPostButton>나만의 편식조합 공유하기</S.QuickPostButton>
-        <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
+        <S.QuickPostButton onClick={() => navigate('/write')}>나만의 편식조합 공유하기</S.QuickPostButton>
+        <S.QuickPostButton
+          onClick={() => {
+            alert('서비스 준비중입니다.');
+          }}
+        >
+          신제품 리뷰하기
+        </S.QuickPostButton>
         <S.QuickPostButton onClick={() => navigate('/event')}>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
       <S.TopBarLogContainer $logged={data ? true : false}>

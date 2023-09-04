@@ -147,12 +147,13 @@ const S = {
     position: fixed;
     top: calc((100vh - 516px) / 2);
     right: calc((100vw - 490px) / 2);
-    z-index: 9;
+    z-index: 99999;
   `,
   Background: styled.div`
     width: 100%;
     height: 100%;
     position: fixed;
+    z-index: 9;
     background-color: rgba(0, 0, 0, 0.6);
     top: 0;
     right: 0;

@@ -92,7 +92,8 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
         />
       </div>
     );
-
+setInputData((prevInputData) => ({ ...prevInputData, [componentUuid]: '' }));
+setTagsData((prevTagsData) => ({ ...prevTagsData, [componentUuid]: [] }));
     setImageTagComponents((prevComponents) => [...prevComponents, newImageTagComponent]);
   };
 
