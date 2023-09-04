@@ -147,7 +147,7 @@ const S = {
     position: fixed;
     top: calc((100vh - 516px) / 2);
     right: calc((100vw - 490px) / 2);
-    z-index: 9;
+    z-index: 99999;
   `,
   Background: styled.div`
     width: 100%;
