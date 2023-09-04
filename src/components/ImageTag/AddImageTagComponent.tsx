@@ -227,29 +227,61 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
               <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
                 <TrashCanIcon />
               </S.RemoveButton>
+
               {/* 아래가 위아래로 움직이는 버튼입니다 CSS는 적용이 안되어있습니다...ㅜ.ㅜ */}
-              <div>
-                <button type="button" onClick={() => changeComponentOrder(index, index - 1)} disabled={index === 0}>
-                  위로 이동
-                </button>
-                <button
+              <S.UpDownButtonArea>
+                <S.UpDownButton
+                  type="button"
+                  onClick={() => changeComponentOrder(index, index - 1)}
+                  disabled={index === 0}
+                >
+                  위
+                </S.UpDownButton>
+                <S.UpDownButton
                   type="button"
                   onClick={() => changeComponentOrder(index, index + 1)}
                   disabled={index === imageTagComponents.length - 1}
                 >
-                  아래로 이동
-                </button>
-              </div>
+                  아래
+                </S.UpDownButton>
+              </S.UpDownButtonArea>
             </S.Contents>
           );
         })}
       </S.ContentArea>
+      <S.BackGroundColor />
     </>
   );
 };
 export default AddImageTagComponent;
 
 const S = {
+  //김윤수 추가 2
+  UpDownButtonArea: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    position: absolute;
+    left: 962px;
+    bottom: 20px;
+  `,
+  UpDownButton: styled.button`
+    border-radius: 10px;
+
+    width: 48px;
+    height: 48px;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:disabled {
+      background-color: transparent;
+      cursor: not-allowed;
+    }
+  `,
   // 김윤수 추가
   ButtonThumbnailArea: styled.div`
     width: 48px;
@@ -291,5 +323,14 @@ const S = {
   AddBtn: styled.button`
     width: 48px;
     height: 48px;
+  `,
+  BackGroundColor: styled.div`
+    width: 100vw;
+    height: 100vh;
+    background: var(--Background, #f6f7f9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
   `
 };

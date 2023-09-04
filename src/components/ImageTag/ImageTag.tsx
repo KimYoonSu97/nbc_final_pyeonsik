@@ -33,6 +33,9 @@ const ImageTag: React.FC<ImageTagProps> = ({
     if (addTagMode) {
       const image = event.currentTarget;
       const imageRect = image.getBoundingClientRect();
+
+      //  이미지 밖으로 태그를 빠져나가지 못하게 하는 함수필요
+
       const x = event.clientX - imageRect.left;
       const y = event.clientY - imageRect.top;
 
@@ -192,7 +195,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
               <S.IconBox>
                 <IconPlusTag />
               </S.IconBox>
-              {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
+              {addTagMode ? '태그 추가 완료' : '제품 태그 추가'}
             </S.AddTagButton>
 
             {tags.map((tag, index) => (
@@ -207,7 +210,9 @@ const ImageTag: React.FC<ImageTagProps> = ({
                 }}
               >
                 <S.TagIconContainer>
-                  <TagIcon />
+                  <S.TagIconBox>
+                    <TagIcon />
+                  </S.TagIconBox>
                 </S.TagIconContainer>
 
                 {selectedTagIndex === index && selectedTagVisible && (
@@ -228,7 +233,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
                     </S.DataContainer>
 
                     {selectedTagIndex !== null && searchFormHandler && (
-                      <S.SearchResultsContainer>
+                      <S.SearchResultsContainer id="search">
                         <Search onSearchResultSelect={handleSelectResult} />
                         <S.CloseButton onClick={handleSearchModalClose}>취소</S.CloseButton>
                       </S.SearchResultsContainer>
@@ -261,13 +266,11 @@ export default ImageTag;
 
 const S = {
   ImageTagContainer: styled.div`
-    /* margin-left: 72px; */
     display: flex;
 
     position: relative;
-    /* background-color: royalblue; */
     gap: 12px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
   `,
   AddTagButton: styled.div`
     width: 180px;
@@ -286,7 +289,10 @@ const S = {
 
     color: var(--font-black, var(--Black, #242424));
     text-align: center;
-    position: relative;
+    position: absolute;
+
+    bottom: 32px;
+    left: calc((474px - 180px) / 2);
 
     /* label-large */
     font-family: Pretendard;
@@ -314,7 +320,7 @@ const S = {
     position: relative;
     border-radius: 10px;
     /* overflow: hidden; */
-    background-color: royalblue;
+    /* background-color: royalblue; */
     /* margin-right: 10px; */
   `,
   // 이미지 태그 사이즈 고정....
@@ -354,6 +360,7 @@ const S = {
     display: flex;
     padding: 8px;
     box-sizing: border-box;
+    border-radius: 10px;
   `,
 
   DataContainer: styled.div`
@@ -387,8 +394,10 @@ const S = {
     width: 40px;
     height: 30px;
     position: absolute;
-    margin-left: 300px;
-    margin-top: 5px;
+    right: 30px;
+    top: 25px;
+    /* margin-left: 300px; */
+    /* margin-top: 5px; */
     cursor: pointer;
     color: black;
     background-color: transparent;
@@ -400,19 +409,14 @@ const S = {
 
   SearchResultsContainer: styled.div`
     width: 400px;
-    padding-top: 20px;
-    padding-left: 20px;
     height: 478px;
     border-radius: 10px;
-    display: flex;
     background-color: white;
-    position: absolute;
-    z-index: 1;
-    /* overflow-y: auto; */
-    /* scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    } */
+    position: relative;
+
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
   `,
 
   DeleteIconContainer: styled.div`
@@ -423,12 +427,28 @@ const S = {
   `,
 
   TagIconContainer: styled.div`
+    /* width: 40px; */
+    /* height: 40px; */
+    /* background-color: white; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+  `,
+  TagIconBox: styled.div`
     width: 40px;
     height: 40px;
-    background-color: white;
+
     border-radius: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    background-color: white;
+
+    position: absolute;
+    top: -30px;
+    left: -20px;
   `
 };
