@@ -4,7 +4,7 @@ import Comment from 'src/components/Detail/comments/Comment';
 import styled from 'styled-components';
 
 const PostDetailModal = () => {
-  return <S.Container></S.Container>;
+  return <S.Container />;
 };
 
 export default PostDetailModal;
