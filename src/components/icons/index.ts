@@ -38,3 +38,8 @@ export { ReactComponent as IconUnLiked } from './IconUnLiked.svg';
 
 export { ReactComponent as IconWriteButton } from './IconWriteButton.svg';
 export { ReactComponent as IconPlusTag } from './IconPlusTag.svg';
+
+export { ReactComponent as SevenEleven } from './brand/SevenEleven.svg';
+export { ReactComponent as GS25 } from './brand/GS25.svg';
+export { ReactComponent as Emart24 } from './brand/Emart24.svg';
+export { ReactComponent as CU } from './brand/CU.svg';
