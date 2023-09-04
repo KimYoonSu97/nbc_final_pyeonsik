@@ -115,7 +115,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   };
 
   //컴포넌트 삭제 처리 함수
-
   const removeImageTagComponent = (uuid: string) => {
     const Message = window.confirm('작성하신 내용을 삭제하시겠습니까?');
 
