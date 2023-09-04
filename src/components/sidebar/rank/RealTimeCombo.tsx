@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAtom } from 'jotai';
 import { Post } from 'src/types/types';
 import { postsAtom } from '../FetchPosts';
 import { likesAtom } from '../FetchPosts';
 
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 const RealTimeCombo = () => {
+  const location = useLocation();
   // Jotai의 useAtom을 사용해서 전역선언한 Posts 데이터와 Likes 데이터를 가져오기
   const [posts] = useAtom(postsAtom);
   const [likes] = useAtom(likesAtom);
@@ -29,23 +30,21 @@ const RealTimeCombo = () => {
   }, [posts, likes]);
 
   const handleDetailClick = (postId: string) => {
-    navigate(`/detail/${postId}`);
+    navigate(`/detail/${postId}`, { state: { backgroundLocation: location } });
   };
 
   return (
     <S.ContentsArea>
-      {/* <>지금 인기있는 편식 조합</> */}
       {filteredPosts.map((post, index) => (
         <S.ContentWrapper key={post.id} onClick={() => handleDetailClick(post.id)}>
           <S.RankNum $isfirst={index === 0}>{index + 1}</S.RankNum>
 
-          <S.ImageWrapper>
-            {post.tagimage && (
-              <S.Img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[0]}`} alt={`${post.id}`} />
-            )}
-          </S.ImageWrapper>
+          {post.tagimage && (
+            <S.Img src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[0]}`} alt={`${post.id}`} />
+          )}
 
-          <S.PostTitle>{post.title.length > 8 ? `${post.title.slice(0, 8)}...` : post.title}</S.PostTitle>
+          {/* <S.PostTitle>{post.title.length > 8 ? `${post.title.slice(0, 8)}...` : post.title}</S.PostTitle> */}
+          <S.PostTitle>{post.title}</S.PostTitle>
         </S.ContentWrapper>
       ))}
     </S.ContentsArea>
@@ -59,8 +58,6 @@ const S = {
     display: flex;
     width: 296px;
     padding: 8px;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
   `,
 
@@ -70,18 +67,18 @@ const S = {
     display: flex;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
-  `,
+    border-radius: 10px;
 
-  ImageWrapper: styled.div`
+    cursor: pointer;
+    &:hover {
+      background: var(--neutral-100, #f2f4f7);
+    }
+  `,
+  Img: styled.img`
     width: 48px;
     height: 48px;
-  `,
-
-  Img: styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 4px;
   `,
 
   RankNum: styled.div<{
@@ -89,9 +86,13 @@ const S = {
   }>`
     width: 18px;
     height: 18px;
-    background-color: ${({ $isfirst }) => ($isfirst ? 'gold' : 'white')};
+    background-color: ${({ $isfirst }) => ($isfirst ? '#F02826' : 'transparent')};
     border-radius: 100px;
-    border: 1px solid #d9d9d9;
+    ${({ $isfirst }) =>
+      !$isfirst &&
+      css`
+        border: 1px solid #d9d9d9;
+      `};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,22 +106,19 @@ const S = {
     color: ${({ $isfirst }) => ($isfirst ? 'white' : '#d9d9d9')};
   `,
 
-  ImageBox: styled.div<{ $url: string }>`
-    width: 48px;
-    height: 48px;
-    background-image: ${(props) => `url(${props.$url})`};
-    background-color: #d9d9d9;
-    border-radius: 4px;
-  `,
-
   PostTitle: styled.div`
-    color: #000;
-    /* title-small */
-    padding-top: 2px;
+    width: 65%;
+
+    overflow: hidden;
+    color: var(--font-black, var(--Black, #242424));
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     line-height: 20px; /* 142.857% */
   `
 };

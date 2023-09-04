@@ -52,11 +52,8 @@ export default Comment;
 
 const S = {
   CommentArea: styled.div`
-    padding-top: 12px;
-    /* margin: 0 50px; */
-    padding: 0 50px;
+    padding: 12px 50px 0 50px;
     width: 100%;
-    /* height: 80px; */
     background-color: white;
   `,
   CommentInputArea: styled.div`
