@@ -30,7 +30,7 @@ const TitleArea = ({ category, setCategory, title, setTitle }: TitleAreaProps) =
         ref={postRef}
         type="text"
         name="title"
-        placeholder="제목 생략 가능"
+        placeholder="제목을 입력해 주세요."
         value={title}
         onChange={changeTitle}
         autoFocus

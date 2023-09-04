@@ -35,8 +35,8 @@ const PostEditCommon = () => {
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
-      alert('내용을 입력해 주세요.');
+    if (title.trim() === '' || body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
+      alert('제목과 내용을 입력해 주세요.');
       return false;
     }
 
