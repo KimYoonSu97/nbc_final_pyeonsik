@@ -91,8 +91,6 @@ const PostEditRecipe = () => {
     setContentsAtom({});
     setTagsDataAtom({});
     setImagesDataAtom({});
-
-    navigate(`/detail/${prams}`);
   };
 
   if (isLoading) {

@@ -5,13 +5,13 @@ const getPosts = async (pageParam: number = 0, pageKey: string, mypage?: string)
   if (pageKey === '/') {
     response = await supabase
       .from('posts')
-      .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
+      .select('*,userId(id,nickname,profileImg,level),orgPostId(*,userId(nickname))')
       .order('created_at', { ascending: false })
       .range(pageParam * 10, (pageParam + 1) * 10 - 1);
   } else {
     response = await supabase
       .from('posts')
-      .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
+      .select('*,userId(id,nickname,profileImg,level),orgPostId(*,userId(nickname))')
       .order('created_at', { ascending: false })
       .eq('postCategory', pageKey.slice(2))
       .range(pageParam * 10, (pageParam + 1) * 10 - 1);
@@ -34,7 +34,7 @@ const getPosts = async (pageParam: number = 0, pageKey: string, mypage?: string)
   }
 
   //리턴을 위한 총 페이지 수는?
-  const total_pages = Math.floor(pageCount! / 20);
+  const total_pages = Math.floor(pageCount! / 10);
 
   return { posts: data!, page: pageParam, total_pages, total_results: pageCount! };
 };

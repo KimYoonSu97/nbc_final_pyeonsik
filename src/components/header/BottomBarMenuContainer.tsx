@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
 const BottomBarMenuContainer = () => {
@@ -67,6 +68,7 @@ const S = {
     padding: 3px 18px;
     border-bottom: 2px solid white;
     text-decoration: none;
+    ${styleFont.labelLarge}
     color: var(--font-black, var(--black, #242424));
     ${(props) =>
       props.$type === props.$location &&
@@ -97,12 +99,6 @@ const S = {
     border-radius: 100px;
     background: var(--neutral-200, #e4e7ec);
     color: var(--font-black, var(--black, #242424));
-
-    /* label-large */
-
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    /* line-height: 24px; 150% */
+    ${styleFont.labelLarge}
   `
 };

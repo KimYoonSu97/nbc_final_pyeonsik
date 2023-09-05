@@ -47,10 +47,7 @@ const PostEditCommon = () => {
         body
       };
       updatePostMutate.mutate(editPost);
-    } else if (category === 'recipe') {
     }
-
-    navigate(`/detail/${prams}`);
   };
 
   if (isLoading) {

@@ -7,6 +7,8 @@ import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { IconCamera } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
+import useUserMutate from 'src/hooks/useUserMutate';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -22,24 +24,26 @@ const Profile = () => {
     refetchOnMount: false
   });
 
+  const { nicknameMutation, profileImgMutation } = useUserMutate();
+
   useEffect(() => {
     setNickname(data?.data?.nickname);
     setCurrentNickname(data?.data?.nickname);
   }, [data]);
 
   //닉네임 수정 시 바로 렌더링
-  const nicknameMutation = useMutation(updateUserNickname, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
-    }
-  });
+  // const nicknameMutation = useMutation(updateUserNickname, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['loginUser']);
+  //   }
+  // });
 
-  //프로필 이미지 수정 시 바로 렌더링
-  const profileImgMutation = useMutation(updateProfileImg, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
-    }
-  });
+  // //프로필 이미지 수정 시 바로 렌더링
+  // const profileImgMutation = useMutation(updateProfileImg, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['loginUser']);
+  //   }
+  // });
 
   const encodeFileTobase64 = (fileBlob: Blob) => {
     const reader = new FileReader();
@@ -184,9 +188,7 @@ const S = {
   `,
   InputWrapper: styled.div``,
   InfoCaption: styled.div`
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 16px;
+    ${styleFont.labelSmall}
   `,
   InfoInputBox: styled(FlexBoxAlignCenter)`
     width: 330px;
@@ -198,6 +200,7 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
 
     color: var(--font-black, var(--black, #242424));
+
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;

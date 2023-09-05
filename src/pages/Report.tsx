@@ -11,7 +11,7 @@ const Report = () => {
   const [selectedInquiry1, setSelectedInquiry1] = useState<string>('');
   const [selectedInquiry2, setSelectedInquiry2] = useState<string>('');
   const [image, setImage] = useState<File>();
-  const [imageName, setImageName] = useState<string>();
+  const [imageName, setImageName] = useState<string>('');
   const [urlLink, setUrlLink] = useState<string>('');
   const [message, setMessage] = useState<string>('');
 
@@ -157,14 +157,14 @@ const Report = () => {
             해당 내용에 대해 확인 할 수 있는<span>사진, 파일, 링크를 업로드 해주세요.</span>
           </h3>
           <div>
-            <label htmlFor="fileupload">클릭하여 파일을 선택해주세요.</label>
+            <label htmlFor="fileupload">{imageName ? imageName : '클릭하여 파일을 선택해주세요.'}</label>
             <input
               type="file"
               style={{ display: 'none' }}
               onChange={reportImage}
               id="fileupload"
               placeholder="클릭하여 파일을 선택해주세요."
-            ></input>
+            />
           </div>
           <input
             value={urlLink}

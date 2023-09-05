@@ -1,4 +1,5 @@
 import React from 'react';
+import UserLevel from 'src/components/header/UserLevel';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import styled from 'styled-components';
 
@@ -6,6 +7,7 @@ interface Props {
   users: {
     profileImg: string;
     nickname: string;
+    level: string;
   };
 }
 
@@ -13,9 +15,7 @@ const CommentUserInfo = ({ users }: Props) => {
   return (
     <>
       <S.ProfileImg src={users.profileImg} />
-      <S.Level>
-        <S.Leveltext>Lv. 레밸</S.Leveltext>
-      </S.Level>
+      <UserLevel level={users.level} />
       <S.Nickname>{users.nickname}</S.Nickname>
     </>
   );
@@ -38,28 +38,9 @@ const S = {
     width: 36px;
     height: 36px;
     border-radius: 100px;
+    margin-right: 13px;
   `,
-  Level: styled(FlexBoxCenter)`
-    border-radius: 100px;
-    border: 1px solid transparent;
 
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
-    margin-left: 13px;
-    height: 20px;
-  `,
-  Leveltext: styled.div`
-    width: 100%;
-    background: #fff;
-    margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px; /* 133.333% */
-  `,
   Nickname: styled.div`
     margin-left: 4px;
     color: var(--font-black, var(--Black, #242424));

@@ -8,6 +8,7 @@ import { Post } from 'src/types/types';
 import { css, styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 import { FlexBox } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 
 const MyPost = () => {
   const id = useLoginUserId();
@@ -124,7 +125,7 @@ const S = {
     position: fixed;
     top: 137px;
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
-    z-index: 999;
+    z-index: 1;
   `,
 
   ContentsArea: styled.div``,
@@ -134,12 +135,12 @@ const S = {
     justify-content: center;
     align-items: center;
     color: #000;
-    font-size: 12px;
 
-    line-height: 16px; /* 133.333% */
     text-decoration: none;
     color: black;
     border-radius: 100px;
+
+    ${styleFont.bodySmall}
 
     ${(props) => {
       if (props.$type === props.$location) {

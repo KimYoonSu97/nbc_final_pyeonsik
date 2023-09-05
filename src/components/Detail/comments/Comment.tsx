@@ -16,6 +16,7 @@ interface CommentDataType {
   users: {
     profileImg: string;
     nickname: string;
+    level: string;
   };
 }
 
