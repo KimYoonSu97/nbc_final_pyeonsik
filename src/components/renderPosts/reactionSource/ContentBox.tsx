@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router';
 // import { S } from '../style/StyledPostDetail';
 import TagImage from 'src/components/ImageTag/TagImage';
+import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
 interface ContentBoxProps {
@@ -129,10 +130,7 @@ export const S = {
     align-items: center;
 
     color: var(--black, #242424);
-    font-style: normal;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    ${styleFont.titleLarge}
   `,
 
   PostBodyCommon: styled.pre<BodyHeightProps>`
@@ -151,7 +149,7 @@ export const S = {
     color: var(--Black, #242424);
 
     /* body-게시글 */
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -161,7 +159,7 @@ export const S = {
     /* border: 1px solid black; */
     /* border-radius: 10px; */
 
-    font-family: 'inherit';
+    /* font-family: 'inherit'; */
     /* background-color: royalblue; */
   `,
   PostBodyRecipe: styled.div<BodyHeightProps>`

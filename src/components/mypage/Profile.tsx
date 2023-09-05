@@ -6,6 +6,9 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { IconCamera } from '../icons';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
+import useUserMutate from 'src/hooks/useUserMutate';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -21,24 +24,26 @@ const Profile = () => {
     refetchOnMount: false
   });
 
+  const { nicknameMutation, profileImgMutation } = useUserMutate();
+
   useEffect(() => {
     setNickname(data?.data?.nickname);
     setCurrentNickname(data?.data?.nickname);
   }, [data]);
 
   //닉네임 수정 시 바로 렌더링
-  const nicknameMutation = useMutation(updateUserNickname, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
-    }
-  });
+  // const nicknameMutation = useMutation(updateUserNickname, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['loginUser']);
+  //   }
+  // });
 
-  //프로필 이미지 수정 시 바로 렌더링
-  const profileImgMutation = useMutation(updateProfileImg, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
-    }
-  });
+  // //프로필 이미지 수정 시 바로 렌더링
+  // const profileImgMutation = useMutation(updateProfileImg, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['loginUser']);
+  //   }
+  // });
 
   const encodeFileTobase64 = (fileBlob: Blob) => {
     const reader = new FileReader();
@@ -145,13 +150,10 @@ interface ProfileImgProps {
 }
 
 const S = {
-  Container: styled.div`
+  Container: styled(FlexBoxCenter)`
     width: 100%;
     height: 75vh;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background: #fff;
     border-radius: 10px;
     gap: 24px;
@@ -159,7 +161,7 @@ const S = {
   ProfileChange: styled.input`
     visibility: hidden;
   `,
-  ProfileChangeButton: styled.div`
+  ProfileChangeButton: styled(FlexBoxCenter)`
     width: 42px;
     height: 42px;
     background: #fff;
@@ -168,9 +170,6 @@ const S = {
     bottom: 0;
     right: 0;
     box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
   `,
   ProfileBox: styled.div`
     width: 130px;
@@ -178,29 +177,22 @@ const S = {
     margin-bottom: 30px;
     position: relative;
   `,
-  ProfileImgArea: styled.div<ProfileImgProps>`
+  ProfileImgArea: styled(FlexBoxCenter)<ProfileImgProps>`
     width: 130px;
     height: 130px;
     border-radius: 100px;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-image: url(${(props) => props.$url});
     background-position: center;
     background-size: contain;
   `,
   InputWrapper: styled.div``,
   InfoCaption: styled.div`
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 16px;
+    ${styleFont.labelSmall}
   `,
-  InfoInputBox: styled.div`
+  InfoInputBox: styled(FlexBoxAlignCenter)`
     width: 330px;
-    display: flex;
     margin-top: 4px;
-    align-items: center;
     padding: 8px 8px 8px 12px;
     height: 36px;
     background: #efefef;
@@ -208,6 +200,7 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
 
     color: var(--font-black, var(--black, #242424));
+
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
@@ -220,14 +213,11 @@ const S = {
 
     border: none;
   `,
-  InfoSubmitButton: styled.div`
+  InfoSubmitButton: styled(FlexBox)`
     margin-left: auto;
     border-radius: 10px;
-    display: flex;
     height: 20px;
     padding: 2px 8px;
-    justify-content: center;
-    align-items: center;
     background: var(--neutral-100, #f2f4f7);
     color: var(--font-black, var(--black, #242424));
     text-align: center;
@@ -239,11 +229,9 @@ const S = {
     font-weight: 600;
     line-height: 16px; /* 145.455% */
   `,
-  NicknameInputBox: styled.div`
+  NicknameInputBox: styled(FlexBoxAlignCenter)`
     width: 330px;
-    display: flex;
     margin-top: 4px;
-    align-items: center;
     padding: 8px 8px 8px 12px;
     border-radius: 10px;
     border: 1px solid var(--neutral-100, #f2f4f7);

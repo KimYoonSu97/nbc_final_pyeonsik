@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
+import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
 const WriteHeader = () => {
   //여기에 작성(생성)하는 함수
 
   return (
     <S.TopBarMenuContainer>
-      <S.AddButton type="submit">
+      <S.AddButton as="button" type="submit">
         <S.AddText>공유하기</S.AddText>
         <S.AddIcon>
           <Add />
@@ -20,14 +21,12 @@ const WriteHeader = () => {
 export default WriteHeader;
 
 const S = {
-  TopBarMenuContainer: styled.div`
-    display: flex;
-    align-items: center;
+  TopBarMenuContainer: styled(FlexBoxAlignCenter)`
     gap: 24px;
     position: absolute;
     right: 16px;
   `,
-  AddButton: styled.button`
+  AddButton: styled(FlexBoxCenter)`
     background: #d9d9d9;
 
     width: 110px;
@@ -35,9 +34,6 @@ const S = {
     padding: 5px 15px;
     border-radius: 10px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 4px;
   `,
 

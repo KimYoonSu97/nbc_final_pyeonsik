@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
+import { styleFont } from 'src/styles/styleFont';
 
 const brands = [
   {
@@ -70,9 +71,7 @@ const S = {
     display: flex;
     align-items: center;
     padding: 10px 12px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16px;
+    ${styleFont.labelLarge}
     border-radius: 10px;
     text-decoration: none;
     color: black;

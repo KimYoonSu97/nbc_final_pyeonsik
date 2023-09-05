@@ -6,6 +6,7 @@ import { getEventProd } from 'src/api/product';
 import { useLocation } from 'react-router';
 import { useInView } from 'react-intersection-observer';
 import { InfinityProductList } from 'src/types/types';
+import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 const ProdList = () => {
   const location = useLocation();
@@ -66,10 +67,8 @@ const ProdList = () => {
 export default ProdList;
 
 const S = {
-  Container: styled.div`
+  Container: styled(FlexBoxAlignCenter)`
     width: 100%;
-    display: flex;
-    align-items: center;
     align-content: center;
     gap: 30px;
     flex-wrap: wrap;

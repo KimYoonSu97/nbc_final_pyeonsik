@@ -1,3 +1,5 @@
+import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
 interface LocationProps {
@@ -5,10 +7,7 @@ interface LocationProps {
 }
 
 export const S = {
-  FunctionButtonBox: styled.div<LocationProps>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  FunctionButtonBox: styled(FlexBoxCenter)<LocationProps>`
     gap: ${(props) => {
       switch (props.$location) {
         case '/':
@@ -31,8 +30,9 @@ export const S = {
         return css`
           color: var(--neutral-500, #667085);
           text-align: center;
-          font-style: normal;
+          font-family: Pretendard;
           font-size: 16px;
+          font-style: normal;
           font-weight: 400;
           line-height: 28px; /* 175% */
         `;
@@ -41,12 +41,7 @@ export const S = {
           color: var(--neutral-400, var(--neutral-400, #98a2b3));
           text-align: center;
 
-          /* body-small */
-          font-family: Pretendard;
-          font-size: 12px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 16px; /* 133.333% */
+          ${styleFont.bodySmall}
         `;
       }
     }};
