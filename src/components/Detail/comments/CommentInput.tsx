@@ -21,7 +21,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
   const userId = useLoginUserId();
   const { id: postId } = useParams();
 
-  const { updateCommentButton, WriteCommentButton } = useCommentMutate();
+  const { updateCommentButton, WriteCommentButton } = useCommentMutate(postId!);
 
   const functionChanger = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

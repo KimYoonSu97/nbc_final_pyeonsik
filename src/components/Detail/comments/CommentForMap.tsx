@@ -42,7 +42,7 @@ const CommentForMap = ({ comment }: Props) => {
   const [isOpenReCommentInput, setIsOpenReCommentInput] = useState(false);
 
   // 삭제 뮤테이션
-  const { deleteCommentButton } = useCommentMutate();
+  const { deleteCommentButton } = useCommentMutate(comment.postId);
 
   const { data: reCommentData, isLoading: reCommentIsLoading } = useQuery({
     queryKey: ['reComment', comment.id],

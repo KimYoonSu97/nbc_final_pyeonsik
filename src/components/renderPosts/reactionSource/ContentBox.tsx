@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 // import { S } from '../style/StyledPostDetail';
-import TagImage from 'src/components/ImageTag/TagImage';
+import TagImage from 'src/components/ImageTag/ShowTag';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
@@ -136,7 +136,7 @@ export const S = {
   PostBodyCommon: styled.pre<BodyHeightProps>`
     width: 790px;
     ${(props) => {
-      if (props.$location !== '/') {
+      if (props.$location === 'detail') {
         return css`
           min-height: 40vh;
         `;
