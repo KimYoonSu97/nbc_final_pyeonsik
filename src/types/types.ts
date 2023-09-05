@@ -243,3 +243,12 @@ export interface AddImageTagProps {
   body?: string[] | null;
   isEditMode?: boolean;
 }
+
+// 카카오맵
+export interface LocInform {
+  position: {
+    lat: number | string;
+    lng: number | string;
+  },
+  content: string;
+}

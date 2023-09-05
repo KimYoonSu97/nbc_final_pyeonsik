@@ -1,3 +1,4 @@
+import { atom, useAtom } from 'jotai';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -6,6 +7,7 @@ interface TermsModalProps {
   onClose: () => void;
   termsContent: string;
 }
+export const termsAllAgreedAtom = atom<boolean>(false);
 
 const TermsModalComponent: React.FC<TermsModalProps> = ({ isOpen, onClose, termsContent }) => {
   if (!isOpen) return null;
@@ -22,7 +24,6 @@ const TermsModalComponent: React.FC<TermsModalProps> = ({ isOpen, onClose, terms
 };
 
 const TermsAndConditions: React.FC = () => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [terms1ModalOpen, setTerms1ModalOpen] = useState(false);
   const [terms2ModalOpen, setTerms2ModalOpen] = useState(false);
   const [terms1Agreed, setTerms1Agreed] = useState(false);
@@ -43,6 +44,10 @@ const TermsAndConditions: React.FC = () => {
 
   const allAgreed = terms1Agreed && terms2Agreed;
 
+  // 체크 값 전역 상태관리
+  const [_, setTerms] = useAtom(termsAllAgreedAtom);
+
+  setTerms(allAgreed);
   return (
     <div>
       <label>
@@ -81,16 +86,6 @@ export default TermsAndConditions;
 const TermsCheckbox = styled.input`
   /* 체크박스 스타일링 */
   margin-right: 8px;
-`;
-
-const ModalButton = styled.button`
-  /* 모달 버튼 스타일링 */
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
 `;
 
 const TermsModal = styled.div`
