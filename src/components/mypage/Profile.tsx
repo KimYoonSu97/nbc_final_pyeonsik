@@ -138,6 +138,7 @@ const Profile = () => {
             <S.InfoSubmitButton>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
+        <button>탈퇴하기</button>
       </S.Container>
     </>
   );
