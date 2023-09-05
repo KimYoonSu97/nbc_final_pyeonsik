@@ -6,6 +6,7 @@ import { atom, useAtom } from 'jotai';
 import { Tag } from 'src/types/types';
 import { ReactComponent as TrashCanIcon } from 'src/components/ImageTag/svg/TrashCanIcon.svg';
 import { AddImageTagProps } from 'src/types/types';
+import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 
 //Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
@@ -92,8 +93,8 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
         />
       </div>
     );
-setInputData((prevInputData) => ({ ...prevInputData, [componentUuid]: '' }));
-setTagsData((prevTagsData) => ({ ...prevTagsData, [componentUuid]: [] }));
+    setInputData((prevInputData) => ({ ...prevInputData, [componentUuid]: '' }));
+    setTagsData((prevTagsData) => ({ ...prevTagsData, [componentUuid]: [] }));
     setImageTagComponents((prevComponents) => [...prevComponents, newImageTagComponent]);
   };
 
@@ -231,6 +232,7 @@ setTagsData((prevTagsData) => ({ ...prevTagsData, [componentUuid]: [] }));
               {/* 아래가 위아래로 움직이는 버튼입니다 CSS는 적용이 안되어있습니다...ㅜ.ㅜ */}
               <S.UpDownButtonArea>
                 <S.UpDownButton
+                  as="button"
                   type="button"
                   onClick={() => changeComponentOrder(index, index - 1)}
                   disabled={index === 0}
@@ -238,6 +240,7 @@ setTagsData((prevTagsData) => ({ ...prevTagsData, [componentUuid]: [] }));
                   위
                 </S.UpDownButton>
                 <S.UpDownButton
+                  as="button"
                   type="button"
                   onClick={() => changeComponentOrder(index, index + 1)}
                   disabled={index === imageTagComponents.length - 1}
@@ -257,8 +260,7 @@ export default AddImageTagComponent;
 
 const S = {
   //김윤수 추가 2
-  UpDownButtonArea: styled.div`
-    display: flex;
+  UpDownButtonArea: styled(FlexBox)`
     flex-direction: column;
     gap: 10px;
 
@@ -266,16 +268,12 @@ const S = {
     left: 962px;
     bottom: 20px;
   `,
-  UpDownButton: styled.button`
+  UpDownButton: styled(FlexBoxCenter)`
     border-radius: 10px;
 
     width: 48px;
     height: 48px;
     background-color: white;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     &:disabled {
       background-color: transparent;
@@ -283,41 +281,29 @@ const S = {
     }
   `,
   // 김윤수 추가
-  ButtonThumbnailArea: styled.div`
+  ButtonThumbnailArea: styled(FlexBox)`
     width: 48px;
     position: fixed;
     left: calc((100vw - 1280px) / 2 + 93px);
     z-index: 999;
-    display: flex;
     flex-direction: column;
     gap: 8px;
-    /* background-color: royalblue; */
   `,
-  SmallButton: styled.div`
-    /* width: 48px; */
-    /* height: 48px; */
-    /* border-radius: 10px; */
-  `,
+  SmallButton: styled.div``,
   ThumbnailImg: styled.img`
     width: 48px;
     height: 48px;
     object-fit: cover;
   `,
-  Contents: styled.div`
-    display: flex;
+  Contents: styled(FlexBox)`
     position: relative;
   `,
-  ContentArea: styled.div`
-    /* background-color: royalblue; */
-  `,
-
+  ContentArea: styled.div``,
   RemoveButton: styled.button`
     width: 48px;
     height: 48px;
     position: absolute;
     left: 962px;
-    /* margin-left: 950px; */
-    /* z-index: 999; */
   `,
 
   AddBtn: styled.button`

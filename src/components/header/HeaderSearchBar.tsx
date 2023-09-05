@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 import styled from 'styled-components';
 
 const HeaderSearchBar = () => {
@@ -49,13 +50,10 @@ const HeaderSearchBar = () => {
 export default HeaderSearchBar;
 
 const S = {
-  Area: styled.div`
+  Area: styled(FlexBoxAlignCenter)`
     height: 34px;
     background: #f4f4f4;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    /* width: 300px; */
     padding: 7px 8px;
     right: 16px;
     position: absolute;

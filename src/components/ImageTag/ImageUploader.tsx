@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/CameraIcon.svg';
 import { ImageUploaderProps } from 'src/types/types';
+import { FlexBoxCenter } from 'src/styles/styleBox';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
   const [, setImageSelect] = useState(false);
@@ -22,7 +23,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
   return (
     <div>
       <S.ImageContainer id="stylebox" imageselected={imageSelected}>
-        <S.FileLabel imageselected={imageSelected}>
+        <S.FileLabel as="label" imageselected={imageSelected}>
           <S.IconWrapper imageselected={imageSelected}>{imageSelected ? '🔃' : <CameraIcon />}</S.IconWrapper>
           <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
         </S.FileLabel>
@@ -43,11 +44,8 @@ const S = {
     opacity: 0;
     cursor: pointer;
   `,
-  FileLabel: styled.label<{ imageselected: boolean }>`
+  FileLabel: styled(FlexBoxCenter)<{ imageselected: boolean }>`
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     border-radius: 10px;
 
