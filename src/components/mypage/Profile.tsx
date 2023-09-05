@@ -8,6 +8,7 @@ import { styled } from 'styled-components';
 import { IconCamera } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import useUserMutate from 'src/hooks/useUserMutate';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -23,24 +24,26 @@ const Profile = () => {
     refetchOnMount: false
   });
 
+  const { nicknameMutation, profileImgMutation } = useUserMutate();
+
   useEffect(() => {
     setNickname(data?.data?.nickname);
     setCurrentNickname(data?.data?.nickname);
   }, [data]);
 
   //닉네임 수정 시 바로 렌더링
-  const nicknameMutation = useMutation(updateUserNickname, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
-    }
-  });
+  // const nicknameMutation = useMutation(updateUserNickname, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['loginUser']);
+  //   }
+  // });
 
-  //프로필 이미지 수정 시 바로 렌더링
-  const profileImgMutation = useMutation(updateProfileImg, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
-    }
-  });
+  // //프로필 이미지 수정 시 바로 렌더링
+  // const profileImgMutation = useMutation(updateProfileImg, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(['loginUser']);
+  //   }
+  // });
 
   const encodeFileTobase64 = (fileBlob: Blob) => {
     const reader = new FileReader();

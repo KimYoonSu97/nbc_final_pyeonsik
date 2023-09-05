@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import usePost from 'src/hooks/usePost';
 import { CANCLE, DELETE } from 'src/function/alertMessage';
 import { styleFont } from 'src/styles/styleFont';
+import UserLevel from 'src/components/header/UserLevel';
 
 interface WriterContainerProps {
   isModal?: boolean;
@@ -18,7 +19,6 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
   const navigate = useNavigate();
 
   const { deletePostMutate } = usePost();
-
   const clickDelete = (id: string) => {
     if (!window.confirm(DELETE)) {
       alert(CANCLE);
@@ -40,7 +40,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
       <S.WriterContainer>
         <div>
           <S.WriterInfo $isModal={isModal}>
-            <S.WriterLevel>Lv. 수습</S.WriterLevel>
+            <UserLevel level={writer?.level} />
             {writer.nickname}
             <S.WriterSir $isModal={isModal}>님의</S.WriterSir>
             {post.postCategory === 'common' && '그르륵갉'}

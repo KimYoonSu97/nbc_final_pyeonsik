@@ -17,6 +17,7 @@ interface CommentDataType {
   users: {
     profileImg: string;
     nickname: string;
+    level: string;
   };
 }
 
@@ -89,30 +90,7 @@ const S = {
     height: 36px;
     border-radius: 100px;
   `,
-  Level: styled.div`
-    border-radius: 100px;
-    border: 1px solid transparent;
 
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
-    margin-left: 13px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  Leveltext: styled.div`
-    width: 100%;
-    background: #fff;
-    margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px; /* 133.333% */
-  `,
   Nickname: styled.div`
     margin-left: 4px;
     color: var(--font-black, var(--Black, #242424));

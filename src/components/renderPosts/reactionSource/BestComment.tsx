@@ -11,7 +11,7 @@ interface BestCommentProps {
 }
 
 interface BestComment {
-  commentId: { comment: string; created_at: string; id: string; postId: string; userId: string };
+  commentId: { comment: string; created_at: string; id: string; postId: string; userId: { nickname: string } };
   userId: { nickname: string };
 }
 
@@ -29,7 +29,7 @@ const BestComment = ({ postId }: BestCommentProps) => {
     return <S.NoComment>베스트 댓글이 없습니다! </S.NoComment>;
   }
 
-  const { commentId, userId } = data as BestComment;
+  const { commentId } = data as unknown as BestComment;
 
   return (
     <S.Container>
@@ -39,7 +39,7 @@ const BestComment = ({ postId }: BestCommentProps) => {
       <S.CommentContainer>
         <S.UserBox>
           <S.BestBedge>BEST</S.BestBedge>
-          <S.Nickname>{userId.nickname}</S.Nickname>
+          <S.Nickname>{commentId.userId.nickname}</S.Nickname>
         </S.UserBox>
         <S.Comment>{commentId.comment}</S.Comment>
       </S.CommentContainer>

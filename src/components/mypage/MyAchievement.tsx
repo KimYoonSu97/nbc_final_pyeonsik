@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
+import { styleFont } from 'src/styles/styleFont';
 import { styled } from 'styled-components';
 
 const MyAchievement = () => {
-  return <S.Container>MyAchievement</S.Container>;
+  // return
+  return <S.Container>서비스 준비중입니다.</S.Container>;
 };
 
 export default MyAchievement;
 
 const S = {
   Container: styled.div`
-    background-color: orange;
+    ${styleFont.bodyLarge}
   `
 };

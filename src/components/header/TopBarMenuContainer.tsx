@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import UserLevel from './UserLevel';
 
 interface User {
   id: string;
@@ -126,10 +127,7 @@ const TopBarMenuContainer = () => {
               <IconBell />
             </S.Icon>
 
-            <S.Level>
-              <S.Leveltext>Lv. 식신</S.Leveltext>
-            </S.Level>
-            {/* <p>Hello, {userData?.nickname}</p> */}
+            <UserLevel level={data?.data?.level} />
 
             <S.ProfileImg
               $url={data?.data?.profileImg}
@@ -218,33 +216,7 @@ const S = {
     width: 20px;
     height: 20px;
     background-color: black;
-  `,
-
-  Level: styled.div`
-    border-radius: 100px;
-    border: 1px solid transparent;
-
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
-    margin-left: 4px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  Leveltext: styled.div`
-    width: 100%;
-    background: #fff;
-    margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px; /* 133.333% */
+    margin-right: 8px;
   `,
 
   ProfileImgArea: styled.div`

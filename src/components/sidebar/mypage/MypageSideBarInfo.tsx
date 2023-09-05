@@ -6,6 +6,7 @@ import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { IconBadge, IconCommon, IconRecipe } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
+import UserLevel from 'src/components/header/UserLevel';
 
 const MypageSideBarInfo = () => {
   const userId = useLoginUserId();
@@ -44,9 +45,7 @@ const MypageSideBarInfo = () => {
       <S.ProfileArea>
         <S.ProfileImg $url={userData?.data?.profileImg}></S.ProfileImg>
         <S.DetailArea>
-          <S.Level>
-            <S.Leveltext>Lv.식신</S.Leveltext>
-          </S.Level>
+          <UserLevel level={userData?.data?.level} />
           <S.NickName>{userData?.data?.nickname}</S.NickName>
         </S.DetailArea>
       </S.ProfileArea>
@@ -117,30 +116,6 @@ const S = {
   `,
 
   DetailArea: styled.div``,
-  Level: styled.div`
-    border-radius: 100px;
-    border: 1px solid transparent;
-
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  Leveltext: styled.div`
-    width: 100%;
-    background: #fff;
-    margin: 0 12px;
-    color: var(--font-black, var(--Black, #242424));
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px; /* 133.333% */
-  `,
 
   NickName: styled.div`
     color: var(--font-black, var(--black, #242424));
