@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { getMyPostsById } from 'src/api/posts';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { queries } from '@testing-library/react';
 import { IconBadge, IconCommon, IconRecipe } from 'src/components/icons';
+import { styleFont } from 'src/styles/styleFont';
+import UserLevel from 'src/components/header/UserLevel';
 
 const MypageSideBarInfo = () => {
   const userId = useLoginUserId();
@@ -44,9 +45,7 @@ const MypageSideBarInfo = () => {
       <S.ProfileArea>
         <S.ProfileImg $url={userData?.data?.profileImg}></S.ProfileImg>
         <S.DetailArea>
-          <S.Level>
-            <S.Leveltext>Lv.식신</S.Leveltext>
-          </S.Level>
+          <UserLevel level={userData?.data?.level} />
           <S.NickName>{userData?.data?.nickname}</S.NickName>
         </S.DetailArea>
       </S.ProfileArea>
@@ -56,35 +55,35 @@ const MypageSideBarInfo = () => {
             <IconRecipe />
           </S.IconArea>
           <S.Caption>편식조합</S.Caption>
-          <S.Caption>
+          <S.CaptionCount>
             {
               myPostData?.data?.filter((item) => {
                 return item.postCategory === 'recipe';
               }).length
             }
             개
-          </S.Caption>
+          </S.CaptionCount>
         </S.SummaryButton>
         <S.SummaryButton>
           <S.IconArea>
             <IconCommon />
           </S.IconArea>
           <S.Caption>그르르갉</S.Caption>
-          <S.Caption>
+          <S.CaptionCount>
             {
               myPostData?.data?.filter((item) => {
                 return item.postCategory === 'common';
               }).length
             }
             개
-          </S.Caption>
+          </S.CaptionCount>
         </S.SummaryButton>
         <S.SummaryButton>
           <S.IconArea>
             <IconBadge />
           </S.IconArea>
           <S.Caption>뱃지 개수</S.Caption>
-          <S.Caption>15개</S.Caption>
+          <S.CaptionCount>15개</S.CaptionCount>
         </S.SummaryButton>
       </S.ButtonArea>
     </>
@@ -117,34 +116,13 @@ const S = {
   `,
 
   DetailArea: styled.div``,
-  Level: styled.div`
-    border-radius: 100px;
-    border: 1px solid transparent;
-
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  Leveltext: styled.div`
-    width: 100%;
-    background: #fff;
-    margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px; /* 133.333% */
-  `,
 
   NickName: styled.div`
     color: var(--font-black, var(--black, #242424));
 
     margin-top: 4px;
+
+    font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -153,7 +131,8 @@ const S = {
 
   ButtonArea: styled.div`
     display: flex;
-    margin: 0 16px 24px 16px;
+    margin: 0 16px 0 16px;
+    padding-bottom: 24px;
     /* justify-content: center; */
     gap: 9px;
   `,
@@ -187,8 +166,11 @@ const S = {
   `,
 
   Caption: styled.p`
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px;
+    ${styleFont.labelMedium}
+  `,
+  CaptionCount: styled.p`
+    color: var(--neutral-500, #667085);
+
+    ${styleFont.bodySmall}
   `
 };

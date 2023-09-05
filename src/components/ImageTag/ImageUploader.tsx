@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-
 import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/CameraIcon.svg';
-
 import { ImageUploaderProps } from 'src/types/types';
+import { FlexBoxCenter } from 'src/styles/styleBox';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
   const [, setImageSelect] = useState(false);
@@ -23,9 +22,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
 
   return (
     <div>
-      <S.ImageContainer imageselected={imageSelected}>
-        <S.FileLabel imageselected={imageSelected}>
-          <S.IconWrapper imageselected={imageSelected}>{imageSelected ? '🔃' : <CameraIcon />}</S.IconWrapper>
+      <S.ImageContainer id="stylebox" imageselected={imageSelected}>
+        <S.FileLabel as="label" imageselected={imageSelected}>
+          <S.IconWrapper imageselected={imageSelected}>
+            {imageSelected === 'true' ? '🔃' : <CameraIcon />}
+          </S.IconWrapper>
           <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
         </S.FileLabel>
       </S.ImageContainer>
@@ -36,35 +37,35 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
 export default ImageUploader;
 
 const S = {
-  ImageContainer: styled.div<{ imageselected: boolean }>`
-    position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
-    top: ${(props) => (props.imageselected ? '94%' : 'initial')};
+  ImageContainer: styled.div<{ imageselected: string }>`
+    position: ${(props) => (props.imageselected === 'true' ? 'absolute' : 'initial')};
+    top: ${(props) => (props.imageselected === 'true' ? '94%' : 'initial')};
   `,
-
   FileInput: styled.input`
     opacity: 0;
     cursor: pointer;
   `,
-  FileLabel: styled.label<{ imageselected: boolean }>`
+  FileLabel: styled(FlexBoxCenter)<{ imageselected: string }>`
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    border: ${(props) => (props.imageselected ? 'none' : '1px solid #ccc')};
-    width: ${(props) => (props.imageselected ? '40px' : '360px')};
-    height: ${(props) => (props.imageselected ? '40px' : '360px')};
-    position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
-    margin-left: ${(props) => (props.imageselected ? '30px' : '0')};
+    border-radius: 10px;
+
+    border: ${(props) => (props.imageselected === 'true' ? 'none' : '1px solid #ccc')};
+    /* width: 474px;
+    height: 360px; */
+
+    width: ${(props) => (props.imageselected === 'true' ? '40px' : '474px')};
+    height: ${(props) => (props.imageselected === 'true' ? '40px' : '360px')};
+    position: ${(props) => (props.imageselected === 'true' ? 'absolute' : 'initial')};
+    margin-left: ${(props) => (props.imageselected === 'true' ? '30px' : '0')};
+    margin-top: ${(props) => (props.imageselected === 'true' ? '-30px' : '0')};
+
     z-index: 1;
-    /* &:hover {
-      background-color: ${(props) => (props.imageselected ? 'skyblue' : 'initial')};
-    } */
   `,
 
-  IconWrapper: styled.span<{ imageselected: boolean }>`
+  IconWrapper: styled.span<{ imageselected: string }>`
     &:hover {
-      transform: ${(props) => (props.imageselected ? 'scale(1.5)' : 'initial')};
+      transform: ${(props) => (props.imageselected === 'true' ? 'scale(1.5)' : 'initial')};
     }
   `,
 

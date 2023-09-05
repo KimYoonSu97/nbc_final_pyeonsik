@@ -1,106 +1,108 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getPostLike } from 'src/api/postLikes';
 import { getPostBookmark } from 'src/api/postBookmark';
 import { getQuotationPosts } from 'src/api/posts';
+import { getCommentCountDataByPostId } from 'src/api/comment';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
-import { S } from 'src/components/post/style/StyledBottomFunction';
+import { NON_MEMBER } from '../../../utility/alertMessage';
+import BottomShare from './BottomShare';
+import { S } from 'src/components/post/detail/StyledBottomFunction';
 import {
   IconBookmark,
+  IconComment,
   IconLike,
   IconQuotation,
   IconUnBookmark,
   IconUnLike,
-  IconUnLink,
   IconUnQuotation
 } from 'src/components/icons';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
-  const { id } = useParams<string>();
   const { pathname } = useLocation();
+  // id로 main과 detail 구분 (main => 댓글 수, detail => link 복사)
+  const { id } = useParams<string>();
+  const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes(post.id);
+  const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark(post.id);
 
-  const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes();
-  const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark();
-
-  const { data: postLikeData } = useQuery({ queryKey: ['post_likes'], queryFn: () => getPostLike(id!) });
-  const { data: postBookmarkData } = useQuery({ queryKey: ['post_bookmark'], queryFn: () => getPostBookmark(id!) });
-  const { data: postQuotationData } = useQuery({ queryKey: ['post_quotation'], queryFn: () => getQuotationPosts(id!) });
-
+  // query key id 값 추가 (props의 post.id)
+  const { data: commentCountData } = useQuery({
+    queryKey: ['commentCount', post.id],
+    queryFn: () => getCommentCountDataByPostId(post.id!),
+    enabled: !id ? true : false
+  });
+  const { data: postLikeData } = useQuery({ queryKey: ['post_like', post.id], queryFn: () => getPostLike(post.id!) });
+  const { data: postBookmarkData } = useQuery({
+    queryKey: ['post_bookmark', post.id],
+    queryFn: () => getPostBookmark(post.id!)
+  });
+  const { data: postQuotationData } = useQuery({
+    queryKey: ['post_quotation', post.id],
+    queryFn: () => getQuotationPosts(post.id!)
+  });
   const postLikeList = postLikeData?.data;
   const postBookmarkList = postBookmarkData?.data;
   const postQuotationList = postQuotationData?.data;
-
   const postLike = postLikeList?.find((like) => like.userId === userId);
   const postBookmark = postBookmarkList?.find((bookmark) => bookmark.userId === userId);
   const postQuotation = postQuotationList?.find((Quotation) => Quotation.userId === userId);
 
-  // 좋아요
-  const clickPostLike = () => {
-    if (!postLike) {
-      const newPostLike = {
+  const clickFunction = (type: string) => {
+    if (!userId) {
+      alert(NON_MEMBER);
+    } else {
+      const payload = {
         postId: post.id,
         userId
       };
-      addPostLikeMutate.mutate(newPostLike);
-    } else {
-      deletePostLikeMutate.mutate(postLike.id);
-    }
-  };
-
-  // bookmark
-  const clickPostBookmark = () => {
-    if (!postBookmark) {
-      const newPostBookmark = {
-        postId: post.id,
-        userId
-      };
-      addPostBookmarkMutate.mutate(newPostBookmark);
-    } else {
-      deletePostBookmarkMutate.mutate(postBookmark.id);
-    }
-  };
-
-  // 인용
-  const clickQuotation = () => {
-    navigate('/write', { state: post });
-  };
-
-  // clip board
-  const clickCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(`${pathname}`);
-      alert('주소가 복사되었습니다.');
-    } catch (err) {
-      console.log(err);
+      switch (type) {
+        case 'like':
+          postLike ? deletePostLikeMutate.mutate(postLike.id) : addPostLikeMutate.mutate(payload);
+          break;
+        case 'bookmark':
+          postBookmark ? deletePostBookmarkMutate.mutate(postBookmark.id) : addPostBookmarkMutate.mutate(payload);
+          break;
+        case 'quotation':
+          navigate('/write', { state: post });
+          break;
+      }
     }
   };
 
   return (
-    <S.FunctionBox>
-      <S.FunctionButtonBox>
-        <S.FunctionButton onClick={clickPostLike}>{postLike ? <IconLike /> : <IconUnLike />}</S.FunctionButton>
-        <S.FunctionCount>{postLikeList?.length}</S.FunctionCount>
+    <>
+      {!id && (
+        <S.FunctionButtonBox $location={pathname}>
+          <S.FunctionButton className="comments">
+            <IconComment />
+          </S.FunctionButton>
+          <S.FunctionCount $location={pathname}>{commentCountData}</S.FunctionCount>
+        </S.FunctionButtonBox>
+      )}
+      <S.FunctionButtonBox $location={pathname}>
+        <S.FunctionButton onClick={() => clickFunction('like')}>
+          {postLike ? <IconLike /> : <IconUnLike />}
+        </S.FunctionButton>
+        <S.FunctionCount $location={pathname}>{postLikeList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
-      <S.FunctionButtonBox>
-        <S.FunctionButton onClick={clickQuotation}>
+      <S.FunctionButtonBox $location={pathname}>
+        <S.FunctionButton onClick={() => clickFunction('quotation')}>
           {postQuotation ? <IconQuotation /> : <IconUnQuotation />}
         </S.FunctionButton>
-        <S.FunctionCount>{postQuotationList?.length}</S.FunctionCount>
+        <S.FunctionCount $location={pathname}>{postQuotationList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
-      <S.FunctionButtonBox>
-        <S.FunctionButton onClick={clickPostBookmark}>
+      <S.FunctionButtonBox $location={pathname}>
+        <S.FunctionButton onClick={() => clickFunction('bookmark')}>
           {postBookmark ? <IconBookmark /> : <IconUnBookmark />}
         </S.FunctionButton>
-        <S.FunctionCount>{postBookmarkList?.length}</S.FunctionCount>
+        <S.FunctionCount $location={pathname}>{postBookmarkList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
-      <S.FunctionButton onClick={clickCopyLink}>
-        <IconUnLink />
-      </S.FunctionButton>
-    </S.FunctionBox>
+      {id && <BottomShare />}
+    </>
   );
 };
 

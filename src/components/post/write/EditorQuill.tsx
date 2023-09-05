@@ -4,7 +4,7 @@ import ReactQuill, { Quill } from 'react-quill';
 import { ImageResize } from 'quill-image-resize-module-ts';
 import 'react-quill/dist/quill.snow.css';
 import { CommonBodyProps } from 'src/types/types';
-import 'src/components/post/style/StyledEditorQuill.css';
+import 'src/components/post/write/StyledEditorQuill.css';
 import styled from 'styled-components';
 
 Quill.register('modules/ImageResize', ImageResize);
@@ -12,8 +12,6 @@ Quill.register('modules/ImageResize', ImageResize);
 const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   const QuillRef = useRef<ReactQuill>();
 
-  // quill에서 사용할 module 설정 code
-  // key 입력 시 imageHandler로 인한 focus 풀림 방지
   const modules = useMemo(
     () => ({
       ImageResize: {

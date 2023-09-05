@@ -6,9 +6,11 @@ import { getEventProd } from 'src/api/product';
 import { useLocation } from 'react-router';
 import { useInView } from 'react-intersection-observer';
 import { InfinityProductList } from 'src/types/types';
+import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 const ProdList = () => {
   const location = useLocation();
+
   let brandParam: string;
   if (location.search === '') {
     brandParam = 'all';
@@ -22,7 +24,7 @@ const ProdList = () => {
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery<InfinityProductList>({
-    queryKey: [`event${brandParam}`],
+    queryKey: [`event`, brandParam],
     queryFn: ({ pageParam }) => getEventProd(pageParam, brandParam),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages) {
@@ -43,8 +45,8 @@ const ProdList = () => {
 
   const { ref } = useInView({
     threshold: 1,
-    onChange: (inview) => {
-      if (!inview || !hasNextPage || isFetchingNextPage) return;
+    onChange: (inView) => {
+      if (!inView || !hasNextPage || isFetchingNextPage) return;
       fetchNextPage();
     }
   });
@@ -65,10 +67,8 @@ const ProdList = () => {
 export default ProdList;
 
 const S = {
-  Container: styled.div`
+  Container: styled(FlexBoxAlignCenter)`
     width: 100%;
-    display: flex;
-    align-items: center;
     align-content: center;
     gap: 30px;
     flex-wrap: wrap;

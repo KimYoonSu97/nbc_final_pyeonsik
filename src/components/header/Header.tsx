@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import TopBarMenuContainer from './TopBarMenuContainer';
 import BoardSearchContainer from './BoardSearchContainer';
 import { IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
+import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -54,20 +55,16 @@ const S = {
     top: 0;
     background-color: white;
   `,
-  UpperContainer: styled.div`
+  UpperContainer: styled(FlexBoxAlignCenter)`
     width: 1280px;
     height: 56px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
     position: relative;
   `,
-  LowerContainer: styled.div`
+  LowerContainer: styled(FlexBoxAlignCenter)`
     width: 1280px;
     height: 50px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
     position: relative;
   `,
   LogoContainer: styled.div`

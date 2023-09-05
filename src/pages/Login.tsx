@@ -46,7 +46,7 @@ const Login = () => {
       email: email,
       password: password
     });
-    console.log(data);
+
     if (data.user) {
       const { data: userLogin, error: userLoginError } = await supabase
         .from('users')
@@ -58,10 +58,8 @@ const Login = () => {
       setUserLogin(userLogin);
       navigate(-1);
     }
-
     if (error) {
       setErrorMessage('Error logging in: ' + error.message);
-    } else {
     }
   };
 
@@ -117,17 +115,7 @@ const Login = () => {
           <S.SocialArea>
             간편한 소셜 로그인
             {/* 버튼영역 */}
-            <S.SocialButtonArea>
-              <S.SocialButton>
-                <IconGoogle />
-                <OAuthLogin provider="google" />
-              </S.SocialButton>
-              <S.SocialButton>
-                <IconKakao />
-                <OAuthLogin provider="kakao" />
-              </S.SocialButton>
-            </S.SocialButtonArea>
-            {/* <OAuthLogin provider="github" /> */}
+            <OAuthLogin />
           </S.SocialArea>
         </S.LoginFormContainer>
       </S.FixedBox>
@@ -147,15 +135,17 @@ const S = {
     position: fixed;
     top: calc((100vh - 516px) / 2);
     right: calc((100vw - 490px) / 2);
-    z-index: 9;
+    z-index: 99999;
   `,
   Background: styled.div`
     width: 100%;
     height: 100%;
     position: fixed;
+    z-index: 9;
     background-color: rgba(0, 0, 0, 0.6);
     top: 0;
     right: 0;
+    /* transition: backdrop-filter 1s; */
     backdrop-filter: blur(10px);
   `,
   LoginFormContainer: styled.div`

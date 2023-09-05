@@ -1,5 +1,4 @@
 import React from 'react';
-import Comment from 'src/components/Detail/comments/Comment';
 import PostDetail from 'src/components/post/detail/PostDetail';
 
 const Detail = () => {
@@ -7,7 +6,6 @@ const Detail = () => {
     <div>
       {/* <PostDetailCommon /> */}
       <PostDetail />
-      {/* <Comment /> */}
     </div>
   );
 };

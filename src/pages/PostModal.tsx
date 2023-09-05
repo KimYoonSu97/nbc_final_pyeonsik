@@ -1,18 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Comment from 'src/components/Detail/comments/Comment';
 import PostDetail from 'src/components/post/detail/PostDetail';
-import PostDetailModal from 'src/components/Detail/modal/PostDetailModal';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const PostModal = () => {
   const postBoxRef = useRef<any>(null);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // window.addEventListener('beforeunload', (event) => {
-  //   navigate(location.pathname);
-  // });
 
   return (
     <>
@@ -20,7 +14,7 @@ const PostModal = () => {
       <S.PostContainer id="postbox">
         <S.PostArea ref={postBoxRef}>
           <S.PostBox>
-            <PostDetail />
+            <PostDetail isModal={true} />
             {/* <Comment /> */}
           </S.PostBox>
         </S.PostArea>
@@ -72,5 +66,6 @@ const S = {
     top: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
   `
 };

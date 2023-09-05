@@ -1,27 +1,29 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
+import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
+import { styleFont } from 'src/styles/styleFont';
 
 const brands = [
   {
     name: 'GS25',
     path: '?=GS25',
-    logoImg: ''
-  },
-  {
-    name: 'CU',
-    path: '?=CU',
-    logoImg: ''
+    logoImg: <GS25 />
   },
   {
     name: 'SEVEN ELEVEN',
     path: '?=7-ELEVEn',
-    logoImg: ''
+    logoImg: <SevenEleven />
   },
   {
     name: 'E-MART24',
     path: '?=emart24',
-    logoImg: ''
+    logoImg: <Emart24 />
+  },
+  {
+    name: 'CU',
+    path: '?=CU',
+    logoImg: <CU />
   }
 ];
 
@@ -30,14 +32,12 @@ const BrandSelector = () => {
   return (
     <S.Container>
       <S.TapButton to={'event'} $type={''} $location={location.search}>
-        전체보기
-        <S.Icon></S.Icon>
+        행사 상품 전체보기
       </S.TapButton>
       {brands.map((brand) => {
         return (
           <S.TapButton key={brand.name} to={`event${brand.path}`} $type={brand.path} $location={location.search}>
-            {brand.name}
-            <S.Icon></S.Icon>
+            <S.Icon>{brand.logoImg}</S.Icon>
           </S.TapButton>
         );
       })}
@@ -61,8 +61,9 @@ const S = {
   `,
 
   Icon: styled.div`
-    width: 20px;
-    height: 20px;
+    padding: 10px 0;
+    /* width: 20px; */
+    /* height: 20px; */
     margin-right: 4px;
   `,
 
@@ -70,9 +71,7 @@ const S = {
     display: flex;
     align-items: center;
     padding: 10px 12px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16px;
+    ${styleFont.labelLarge}
     border-radius: 10px;
     text-decoration: none;
     color: black;

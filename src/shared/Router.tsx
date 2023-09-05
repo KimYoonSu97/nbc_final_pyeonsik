@@ -1,6 +1,6 @@
 import React from 'react';
 import { GlobalStyle } from '../styles/GlobalStyle';
-import { Location, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Location, Route, Routes, useLocation } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import Layout from '../layout/Layout';
 // pages
@@ -15,19 +15,19 @@ import Mypage from 'src/pages/Mypage';
 import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
-import Report from 'src/components/sidebar/Report';
 import PostModal from 'src/pages/PostModal';
-import KakaoMap from 'src/pages/KakaoMap';
+import { GlobalFont } from 'src/styles/GlobalFont';
+import KakaoMap from 'src/kakaoMap/KakaoMap';
+import Report from 'src/pages/Report';
 
 const Router = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-
   let state = location.state as { backgroundLocation?: Location };
 
   return (
     <>
       <GlobalStyle />
+      <GlobalFont/>
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
@@ -51,7 +51,6 @@ const Router = () => {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="/login" element={<Login />} />
-
           <Route path="/detail/:id" element={<PostModal />} />
         </Routes>
       )}

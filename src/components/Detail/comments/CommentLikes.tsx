@@ -5,21 +5,24 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import styled from 'styled-components';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
-import { useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import { NON_MEMBER } from 'src/utility/alertMessage';
 
 interface Props {
   commentId: string;
 }
 
 const CommentLikes = ({ commentId }: Props) => {
-  const userId: string = useLoginUserId();
-  const { id: postId } = useParams();
   const [isLike, setIsLike] = useState<boolean>();
+  const userId: string = useLoginUserId();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { id: postId } = useParams();
   const [likeNum, setLikeNum] = useState<number>(0);
 
   // //좋아요 데이터 받기
   const { data: likeData, isLoading } = useQuery(['likes', commentId], () => getLikeByCommentId(commentId, userId), {
-    enabled: userId ? true : false,
+    // enabled: userId ? true : false,
     refetchOnWindowFocus: false
   });
 
@@ -36,6 +39,9 @@ const CommentLikes = ({ commentId }: Props) => {
   // 내 좋아요 상태에 따라 다른....작동...
   const clickButton = async () => {
     if (!userId) {
+      // navigate('/login', { state: { backgroundLocation: location } }
+      alert(NON_MEMBER);
+      navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
     if (isLike) {

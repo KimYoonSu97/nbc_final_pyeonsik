@@ -1,35 +1,67 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getPosts } from 'src/api/posts';
+import React, { useMemo } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useLocation } from 'react-router';
 import { Post } from 'src/types/types';
+import { useInView } from 'react-intersection-observer';
 import { styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
+import { getPosts } from 'src/api/mainPage/getPostInfinity';
+import { InfinityPostList } from 'src/types/types';
 
 const PostList = () => {
-  const { isLoading, data } = useQuery({
-    queryKey: ['posts'],
-    queryFn: () => getPosts()
+  const location = useLocation();
+
+  let pageKey: string;
+  if (location.search === '') {
+    pageKey = '/';
+  } else {
+    pageKey = location.search;
+  }
+
+  const {
+    data: posts,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery<InfinityPostList>({
+    queryKey: [`postList`, pageKey],
+    queryFn: ({ pageParam }) => getPosts(pageParam, pageKey),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+    }
   });
 
-  if (isLoading) {
-    return <p>Loading…</p>;
-  }
-  if (data?.error) {
-    // error 검사 필요
-    return <p>Error</p>;
-  }
-  if (data?.data.length === 0) {
-    return <p>none</p>;
-  }
-  const posts = data?.data as Post[];
-  return <PostCards posts={posts} />;
+  const postList = useMemo(() => {
+    return posts?.pages
+      .map((data) => {
+        return data.posts;
+      })
+      .flat();
+  }, [posts]);
+
+  const { ref } = useInView({
+    threshold: 1,
+    onChange: (inView) => {
+      if (!inView || !hasNextPage || isFetchingNextPage) return;
+      fetchNextPage();
+    }
+  });
+
+  return (
+    <>
+      <PostCards posts={postList as Post[]} />
+      <S.LoadingBox ref={ref} />
+    </>
+  );
 };
 
 export default PostList;
 
 export const S = {
-  PostBox: styled.div`
-    cursor: pointer;
-    border: 1px solid black;
+  LoadingBox: styled.div`
+    width: 200px;
+    height: 200px;
   `
 };

@@ -56,6 +56,7 @@ const getSearchProd = async (pageParam: number = 0, keyword: string) => {
 
   //하단 리턴문을 위한 데이터 설정
   const data = response!.data;
+
   //페이지가 어디냐에 따라 다른 전체 페이지 수
   let pageCount;
   const { count } = await supabase
@@ -65,6 +66,7 @@ const getSearchProd = async (pageParam: number = 0, keyword: string) => {
   pageCount = count;
 
   //리턴을 위한 총 페이지 수는?
+
   const total_pages = Math.floor(pageCount! / 100);
   return { products: data!, page: pageParam, total_pages, total_results: pageCount! };
 };

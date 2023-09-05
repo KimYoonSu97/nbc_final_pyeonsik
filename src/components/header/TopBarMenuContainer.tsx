@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { loginModalAtom, userAtom } from 'src/globalState/jotai';
+import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
+import UserLevel from './UserLevel';
 
 interface User {
   id: string;
@@ -92,16 +95,23 @@ const TopBarMenuContainer = () => {
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
-        <S.QuickPostButton>나만의 편식조합 공유하기</S.QuickPostButton>
-        <S.QuickPostButton>신제품 리뷰하기</S.QuickPostButton>
+        <S.QuickPostButton onClick={() => navigate('/write')}>나만의 편식조합 공유하기</S.QuickPostButton>
+        <S.QuickPostButton
+          onClick={() => {
+            alert('서비스 준비중입니다.');
+          }}
+        >
+          신제품 리뷰하기
+        </S.QuickPostButton>
         <S.QuickPostButton onClick={() => navigate('/event')}>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
-      <S.TopBarLogContainer $logged={data ? true : false}>
+      <S.TopBarLogContainer as="ul" $logged={data ? true : false}>
         {/* 공통 */}
         {/* 로그인 전 */}
         {!data ? (
           <>
             <S.TopBarLogButton
+              as="li"
               onClick={() => navigate('/login', { state: { backgroundLocation: location } })}
               $signIn={false}
             >
@@ -118,9 +128,9 @@ const TopBarMenuContainer = () => {
               <IconBell />
             </S.Icon>
 
-            <S.Level>
+            {/* <S.Level>
               <S.Leveltext>Lv. 식신</S.Leveltext>
-            </S.Level>
+            </S.Level> */}
             {/* <p>Hello, {userData?.nickname}</p> */}
             <button onClick={()=> navigate('/map')}>kakao Map</button>
             <S.ProfileImg
@@ -145,10 +155,12 @@ interface ImageProps {
   $url?: string;
 }
 
+const Afont = styled.div`
+  color: black;
+`;
+
 const S = {
-  TopBarMenuContainer: styled.div`
-    display: flex;
-    align-items: center;
+  TopBarMenuContainer: styled(FlexBoxAlignCenter)`
     gap: 24px;
 
     position: absolute;
@@ -159,52 +171,34 @@ const S = {
     display: flex;
   `,
 
-  QuickButtonArea: styled.div`
-    display: flex;
-    align-items: center;
+  QuickButtonArea: styled(FlexBoxAlignCenter)`
     gap: 8px;
   `,
 
-  QuickPostButton: styled.div`
-    display: flex;
-    align-items: center;
+  QuickPostButton: styled(FlexBoxAlignCenter)`
     border-radius: 100px;
     border: 1px solid var(--neutral-200, #e4e7ec);
     padding: 3px 18px;
     height: 34px;
-    color: var(--font-black, var(--black, #242424));
+    color: var(--font-black, var(--Black, #242424));
+
+    font-family: Pretendard;
     font-size: 14px;
+    font-style: normal;
     font-weight: 600;
     line-height: 16px; /* 114.286% */
   `,
-
-  TopBarMenu: styled.li`
-    padding: 5px 13px;
-    height: 30px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  TopBarLogContainer: styled.ul<{ $logged: boolean }>`
-    display: flex;
+  TopBarLogContainer: styled(FlexBoxAlignCenter)<{ $logged: boolean }>`
     gap: ${(props) => (props.$logged ? '0px' : '12px')};
-    align-items: center;
   `,
 
-  TopBarLogButton: styled.li<Props>`
+  TopBarLogButton: styled(FlexBoxCenter)<Props>`
     border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 30px;
     padding: 5px 15px;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 20px;
+
+    ${styleFont.buttonSmall}
+
     color: ${(props) => {
       if (props.$signIn) {
         return ' var(--white, #FFF)';
@@ -226,43 +220,24 @@ const S = {
     width: 20px;
     height: 20px;
     background-color: black;
+    margin-right: 8px;
   `,
-  Level: styled.div`
-    border-radius: 100px;
-    border: 1px solid transparent;
 
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
-    margin-left: 4px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  Leveltext: styled.div`
-    width: 100%;
-    background: #fff;
-    margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px; /* 133.333% */
-  `,
   ProfileImgArea: styled.div`
     position: fixed;
   `,
-  ProfileTapMenu: styled.div`
+
+  ProfileTapMenu: styled(FlexBox)`
     top: 0;
     right: calc((100vw - 1280px) / 2 + 16px);
+
     position: fixed;
     width: 200px;
     height: 200px;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 0;
   `,
+
   ProfileImg: styled.div<ImageProps>`
     position: relative;
     z-index: 9999;

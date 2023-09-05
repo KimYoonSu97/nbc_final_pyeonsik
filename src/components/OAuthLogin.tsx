@@ -1,96 +1,69 @@
-import { atom, useAtom } from 'jotai';
 import React from 'react';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import { userAtom } from 'src/globalState/jotai';
+import { IconGoogle, IconKakao, IconLogoSymbolH32, IconWaterMarkH32 } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
 
 type Provider = 'google' | 'kakao' | 'github';
 
-interface OAuthLoginProps {
-  provider: Provider;
-}
-
-const OAuthLogin = ({ provider }: OAuthLoginProps) => {
+const OAuthLogin = () => {
   const navigate = useNavigate();
 
-  const [, setUserLogin] = useAtom(userAtom);
-
-  const handleLogin = async () => {
+  const handleLogin = async (provider: Provider) => {
     try {
-      const response = await supabase.auth.signInWithOAuth({
-        provider: provider,
-        options: { redirectTo: '/' }
-      });
+      await supabase.auth.signInWithOAuth({
+        provider
 
+      });
       localStorage.setItem('social', provider);
+
+      navigate('/');
+
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <>
-      <div onClick={handleLogin}>{provider === 'google' ? '구글 로그인' : '카카오 로그인'}</div>
-    </>
+    <S.SocialButtonArea>
+      <S.SocialButton
+        onClick={() => {
+          handleLogin('google');
+        }}
+      >
+        <IconGoogle />
+        구글 로그인
+      </S.SocialButton>
+      <S.SocialButton
+        onClick={() => {
+          handleLogin('kakao');
+        }}
+      >
+        <IconKakao />
+        카카오 로그인
+      </S.SocialButton>
+    </S.SocialButtonArea>
   );
 };
 
 export default OAuthLogin;
 
-// <button
-//   style={
-//     {
-//       // backgroundImage: `url('${applyImageLogo(provider)}')`, // 함수 호출 추가
-//       // backgroundSize: 'cover', // 이미지가 버튼을 가득 채우도록 설정
-//       // width: '50px', // 버튼의 너비
-//       // height: '50px', // 버튼의 높이
-//       // border: 'none', // 테두리 제거
-//       // color: 'white', // 텍스트 색상
-//       // fontSize: '16px', // 폰트 크기
-//       // cursor: 'pointer', // 커서 스타일 변경
-//       // margin: '5px'
-//     }
-//   }
+const S = {
+  SocialButtonArea: styled.div`
+    display: flex;
+    align-items: center;
 
-// </button>
-// >
-
-// const getUserDataForHeader = async (id: string) => {
-//   const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
-//   if (error) {
-//   }
-//   setUserData(data as User);
-// };
-
-// // 소셜로그인
-// const socialLogin = async (social: string) => {
-//   const user = await supabase.auth.getUser();
-//   const { data, error } = await supabase.from('users').select('*').eq('id', user.data.user?.id).single();
-//   if (data) {
-//     setUserData(data as User);
-//   } else {
-//     const socialData = user.data.user?.identities?.filter((v) => v.provider === social);
-//     if (socialData !== undefined && socialData[0].identity_data && user.data.user) {
-//       const data = socialData[0].identity_data;
-
-//       const newSocialUser: User = {
-//         email: data.email,
-//         nickname: data.name || data.user_name, // goggle, kakao: name  / github : user_name
-//         profileImg: data.avatar_url
-//       };
-//       const { data: userData, error } = await supabase.from('users').insert(newSocialUser).select('*');
-//       setUserData(newSocialUser as User);
-//     }
-//   }
-// };
-
-// const applyImageLogo = (provider: string) => {
-//   switch (provider) {
-//     case 'google':
-//       return 'google.png';
-//     case 'kakao':
-//       return 'kakao.jpg';
-//     case 'github':
-//       return 'github.png';
-//   }
-// };
+    gap: 6px;
+  `,
+  SocialButton: styled.button`
+    display: flex;
+    background: transparent;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    border-radius: 87px;
+    border: 1px solid #efefef;
+    padding-right: 35px;
+    cursor: pointer;
+  `
+};

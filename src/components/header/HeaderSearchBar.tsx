@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import useInput from 'src/hooks/useInput';
+import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 import styled from 'styled-components';
 
 const HeaderSearchBar = () => {
@@ -50,19 +50,20 @@ const HeaderSearchBar = () => {
 export default HeaderSearchBar;
 
 const S = {
-  Area: styled.div`
+  Area: styled(FlexBoxAlignCenter)`
     height: 34px;
     background: #f4f4f4;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    /* width: 300px; */
     padding: 7px 8px;
     right: 16px;
     position: absolute;
+    border: 1px solid var(--neutral-300, #d0d5dd);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    background: var(--neutral-100, #f2f4f7);
   `,
   SearchArea: styled.input`
     background-color: transparent;
+
     outline: none;
     border: none;
     font-size: 14px;
@@ -70,7 +71,10 @@ const S = {
     line-height: 20px;
     margin-left: 8px;
     transition: 0.5s;
+
     width: 300px;
+
+    border-radius: 8px;
 
     &:focus {
       transition: 0.5s;
