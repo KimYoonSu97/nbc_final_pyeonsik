@@ -115,10 +115,6 @@
 //     navigate(`/detail/${prams}`);
 //   };
 
-//   const clickCancle = () => {
-//     navigate(-1);
-//   };
-
 //   if (isLoading) {
 //     return <p>Loading…</p>;
 //   }
@@ -140,13 +136,13 @@
 //           {category === 'common' && <EditorQuill body={body} setBody={setBody} />}
 //         </S.WritePostArea>
 //       </S.WriteForm>
-//         {category === 'recipe' && (
-//           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-//             <div style={{ width: '950px' }}>
-//               {/* <AddImageTagComponent imageData={allSelectedImages} tagData={tagData} body={body} isEditMode={true} /> */}
-//             </div>
+//       {category === 'recipe' && (
+//         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+//           <div style={{ width: '950px' }}>
+//             {/* <AddImageTagComponent imageData={allSelectedImages} tagData={tagData} body={body} isEditMode={true} /> */}
 //           </div>
-//         )}
+//         </div>
+//       )}
 //       {category === 'common' && orgPost && <OrgPostCard orgPost={orgPost} />}
 //     </>
 //   );

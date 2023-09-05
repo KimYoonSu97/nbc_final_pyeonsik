@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
@@ -28,12 +28,42 @@ const PostWrite = () => {
   const { addPostMutate, addRecipePostMutate } = usePost();
   const { levelMutation } = useUserMutate();
 
+  const [isIn] = useState(true);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isIn) {
+        e.preventDefault();
+        e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      setContentsAtom({});
+      setTagsDataAtom({});
+      setImagesDataAtom({});
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isIn]);
+
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (title.trim() === '' || (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '')) {
       alert('제목과 내용을 입력해 주세요.');
       return false;
+    }
+
+    if (category === 'recipe' && Object.keys(allContents).length === 0) {
+      alert('내용을 입력해 주세요.');
+      return;
+    }
+
+    const confirmMessage = '작성하시겠습니까?';
+    if (!window.confirm(confirmMessage)) {
+      return;
     }
 
     const imageUrls = [];

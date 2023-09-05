@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
+import { atom, useAtom, useSetAtom } from 'jotai';
+
 import ImageTag from './ImageTag';
-import { atom, useAtom } from 'jotai';
-import { Tag } from 'src/types/types';
+import { Tag, AddImageTagProps } from 'src/types/types';
 import { ReactComponent as TrashCanIcon } from 'src/components/ImageTag/svg/TrashCanIcon.svg';
-import { AddImageTagProps } from 'src/types/types';
-import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
+import { S } from './StyledAddImageTagComponent';
 
 //Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
@@ -16,15 +15,16 @@ export const imagesAtom = atom<{ [key: string]: File }>({});
 // 이미지 태그를 추가하는 컴포넌트 정의
 const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tagData, isEditMode }) => {
   const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
-  const [, setInputData] = useAtom(contentsAtom);
+  const setInputData = useSetAtom(contentsAtom);
+  const setTagsData = useSetAtom(tagsDataAtom);
   const [image, setImages] = useAtom(imagesAtom);
-  const [, setTagsData] = useAtom(tagsDataAtom);
 
   //데이터를 받아와서 세팅하기 위한 변수
   const [, setSelectedImage] = useState<File[] | null>(imageData ?? null);
   const [, setTags] = useState<Tag[][]>(tagData ?? []);
   const [, setContents] = useState<string[]>(body ?? []);
   const [editMode] = useState<boolean>(isEditMode ?? false);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     if (!editMode) {
@@ -33,9 +33,9 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     setSelectedImage(imageData ?? null);
     setTags(tagData ?? []);
     setContents(body ?? []);
-  }, [body, imageData, body]);
+  }, [imageData, tagData, body]);
 
-  //수정 페이지에서 접근 시 필요합니다
+  // 수정 페이지에서 접근 시 필요합니다
   useEffect(() => {
     if (imageData && imageData.length > 0) {
       const newComponents = imageData.map((image, index) => {
@@ -80,7 +80,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     const componentUuid = uuidv4();
 
     if (imageTagComponents.length >= 10) {
-      alert('이미지는 10개까지 첨부 가능합니다!');
+      alert('이미지는 10개까지 첨부 가능합니다.');
       return;
     }
 
@@ -93,6 +93,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
         />
       </div>
     );
+
     setInputData((prevInputData) => ({ ...prevInputData, [componentUuid]: '' }));
     setTagsData((prevTagsData) => ({ ...prevTagsData, [componentUuid]: [] }));
     setImageTagComponents((prevComponents) => [...prevComponents, newImageTagComponent]);
@@ -186,9 +187,52 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     });
   };
 
+  const handleDragStart = (index: number, event: React.DragEvent) => {
+    event.dataTransfer.setData('text/plain', index.toString());
+    setDragging(true);
+  };
+
+  const handleDrop = (index: number, event: React.DragEvent) => {
+    event.preventDefault();
+    const sourceIndex = Number(event.dataTransfer.getData('text/plain'));
+
+    if (dragging && sourceIndex !== index) {
+      const updatedComponents = [...imageTagComponents];
+      const [movedComponent] = updatedComponents.splice(sourceIndex, 1);
+      updatedComponents.splice(index, 0, movedComponent);
+
+      // 이미지 컴포넌트 순서 업데이트
+      setImageTagComponents(updatedComponents);
+
+      // Atom에서도 순서 업데이트
+      const componentsOrder = updatedComponents.map((component) => (component.key as string) || '');
+      setInputData((prevInputData) => {
+        const updatedInputData: { [key: string]: string } = {};
+        componentsOrder.forEach((uuid, index) => {
+          updatedInputData[uuid] = prevInputData[uuid];
+        });
+        return updatedInputData;
+      });
+      setImages((prevImages) => {
+        const updatedImages: { [key: string]: File } = {};
+        componentsOrder.forEach((uuid, index) => {
+          updatedImages[uuid] = prevImages[uuid];
+        });
+        return updatedImages;
+      });
+      setTagsData((prevTagsData) => {
+        const updatedTagsData: { [key: string]: Tag[] } = {};
+        componentsOrder.forEach((uuid, index) => {
+          updatedTagsData[uuid] = prevTagsData[uuid];
+        });
+        return updatedTagsData;
+      });
+      setDragging(false);
+    }
+  };
+
   return (
     <>
-      {/* 이미지 추가 버튼은 따로 빼서 고정 위드값과 관계없음. */}
       <S.ButtonThumbnailArea>
         <S.SmallButton>
           <S.AddBtn type="button" onClick={addImageTagComponent}>
@@ -196,24 +240,35 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
           </S.AddBtn>
         </S.SmallButton>
 
-        {imageTagComponents.map((component) => {
+        {imageTagComponents.map((component, index) => {
           const componentUuid = (component.key as string) || '';
           return (
             // 김윤수 추가 S.Contests
-            <>
+            <React.Fragment key={componentUuid}>
               {image[componentUuid] && (
                 <S.SmallButton>
                   {typeof image[componentUuid] === 'string' ? (
                     <S.ThumbnailImg
                       src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${image[componentUuid]}`}
                       alt="이미지"
+                      draggable
+                      onDragStart={(e) => handleDragStart(index, e)}
+                      onDrop={(e) => handleDrop(index, e)}
+                      onDragOver={(e) => e.preventDefault()}
                     />
                   ) : (
-                    <S.ThumbnailImg src={URL.createObjectURL(image[componentUuid])} alt="이미지" />
+                    <S.ThumbnailImg
+                      src={URL.createObjectURL(image[componentUuid])}
+                      alt="이미지"
+                      draggable
+                      onDragStart={(e) => handleDragStart(index, e)}
+                      onDrop={(e) => handleDrop(index, e)}
+                      onDragOver={(e) => e.preventDefault()}
+                    />
                   )}
                 </S.SmallButton>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </S.ButtonThumbnailArea>
@@ -229,7 +284,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
                 <TrashCanIcon />
               </S.RemoveButton>
 
-              {/* 아래가 위아래로 움직이는 버튼입니다 CSS는 적용이 안되어있습니다...ㅜ.ㅜ */}
               <S.UpDownButtonArea>
                 <S.UpDownButton
                   as="button"
@@ -257,66 +311,3 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   );
 };
 export default AddImageTagComponent;
-
-const S = {
-  //김윤수 추가 2
-  UpDownButtonArea: styled(FlexBox)`
-    flex-direction: column;
-    gap: 10px;
-
-    position: absolute;
-    left: 962px;
-    bottom: 20px;
-  `,
-  UpDownButton: styled(FlexBoxCenter)`
-    border-radius: 10px;
-
-    width: 48px;
-    height: 48px;
-    background-color: white;
-
-    &:disabled {
-      background-color: transparent;
-      cursor: not-allowed;
-    }
-  `,
-  // 김윤수 추가
-  ButtonThumbnailArea: styled(FlexBox)`
-    width: 48px;
-    position: fixed;
-    left: calc((100vw - 1280px) / 2 + 93px);
-    z-index: 999;
-    flex-direction: column;
-    gap: 8px;
-  `,
-  SmallButton: styled.div``,
-  ThumbnailImg: styled.img`
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-  `,
-  Contents: styled(FlexBox)`
-    position: relative;
-  `,
-  ContentArea: styled.div``,
-  RemoveButton: styled.button`
-    width: 48px;
-    height: 48px;
-    position: absolute;
-    left: 962px;
-  `,
-
-  AddBtn: styled.button`
-    width: 48px;
-    height: 48px;
-  `,
-  BackGroundColor: styled.div`
-    width: 100vw;
-    height: 100vh;
-    background: var(--Background, #f6f7f9);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  `
-};
