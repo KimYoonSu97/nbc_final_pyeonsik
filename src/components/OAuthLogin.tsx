@@ -19,10 +19,11 @@ const OAuthLogin = ({ provider }: OAuthLoginProps) => {
     try {
       const response = await supabase.auth.signInWithOAuth({
         provider: provider,
-        options: { redirectTo: '/' }
+        
       });
 
       localStorage.setItem('social', provider);
+navigate('/');
     } catch (error) {
       console.log(error);
     }
