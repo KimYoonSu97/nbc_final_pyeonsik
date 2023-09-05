@@ -30,6 +30,8 @@ const PostWrite = () => {
 
   const [isIn] = useState(true);
 
+  console.log('allContents', Object.keys(allContents).length);
+
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (isIn) {
@@ -56,7 +58,9 @@ const PostWrite = () => {
       return false;
     }
 
-    if (category === 'recipe' && Object.keys(allContents).length === 0) {
+    const isAllContentsEmpty = Object.keys(allContents).every((key) => allContents[key] === '');
+
+    if (category === 'recipe' && isAllContentsEmpty) {
       alert('내용을 입력해 주세요.');
       return;
     }

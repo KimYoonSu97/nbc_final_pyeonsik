@@ -41,11 +41,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
       const y = event.clientY - imageRect.top;
 
       // 이미 값을 가지고 있는 태그 중 마지막에 값을 가지지 않은 태그의 인덱스를 찾음
-      const lastEmptyTagIndex = tags
-        .slice()
-        .reverse()
-        .findIndex((tag) => !tag.prodData);
-
+      const lastEmptyTagIndex = tags.findIndex((tag) => !tag.prodData);
       const updatedTags = [...tags];
 
       // 값이 없는 태그가 있고, 그 태그가 마지막에 추가한 태그라면 삭제 처리
