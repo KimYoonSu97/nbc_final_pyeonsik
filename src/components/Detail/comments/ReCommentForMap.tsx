@@ -5,7 +5,7 @@ import CommentUserInfo from './CommentUserInfo';
 import ReCommentLikes from './ReCommentLikes';
 import ReCommentInput from './ReCommentInput';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
-import CreatedAt from 'src/function/CreatedAt';
+import CreatedAt from 'src/utility/CreatedAt';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 interface CommentDataType {

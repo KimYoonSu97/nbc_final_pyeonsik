@@ -1,10 +1,10 @@
 import React from 'react';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import CreatedAt from 'src/function/CreatedAt';
+import CreatedAt from 'src/utility/CreatedAt';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router';
 import usePost from 'src/hooks/usePost';
-import { CANCLE, DELETE } from 'src/function/alertMessage';
+import { CANCLE, DELETE } from 'src/utility/alertMessage';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from 'src/components/header/UserLevel';
 

@@ -26,6 +26,11 @@ export { ReactComponent as IconUnLike } from './post/IconUnLike.svg';
 export { ReactComponent as IconUnLink } from './post/IconUnLink.svg';
 export { ReactComponent as IconUnQuotation } from './post/IconUnQuotation.svg';
 export { ReactComponent as IconComment } from './post/IconComment.svg';
+export { ReactComponent as IconLinkFacebook } from './post/IconLinkFacebook.svg';
+export { ReactComponent as IconLinkTwitter } from './post/IconLinkTwitter.svg';
+export { ReactComponent as IconLinkKakao } from './post/IconLinkKakao.svg';
+export { ReactComponent as IconLinkCopy } from './post/IconLinkCopy.svg';
+
 export { ReactComponent as IconBestComment } from './IconBestComment.svg';
 
 // comment
