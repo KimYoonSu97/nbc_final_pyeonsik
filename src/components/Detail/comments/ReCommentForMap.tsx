@@ -6,6 +6,7 @@ import ReCommentLikes from './ReCommentLikes';
 import ReCommentInput from './ReCommentInput';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
 import CreatedAt from 'src/function/CreatedAt';
+import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 interface CommentDataType {
   comment: string;
@@ -75,24 +76,17 @@ export default ReCommentForMap;
 const S = {
   CommentArea: styled.div``,
   UpWrapper: styled.div``,
-  LowWrapper: styled.div`
-    display: flex;
+  LowWrapper: styled(FlexBox)`
     gap: 4px;
     margin-left: 45px;
   `,
-  ButtonArea: styled.div`
-    display: flex;
-    align-items: center;
+  ButtonArea: styled(FlexBoxAlignCenter)`
     margin-left: auto;
   `,
-  UserArea: styled.div`
-    display: flex;
-    align-items: center;
-  `,
+  UserArea: styled(FlexBoxAlignCenter)``,
   ProfileImg: styled.img`
     width: 36px;
     height: 36px;
-    /* background-color: royalblue; */
     border-radius: 100px;
   `,
   Level: styled.div`

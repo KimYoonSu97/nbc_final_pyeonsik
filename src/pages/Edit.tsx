@@ -6,7 +6,7 @@ import { S } from './Write';
 
 const Edit = () => {
   const location = useLocation();
-  const category = location.state.postCategory;
+  const category = location.state?.postCategory;
 
   return (
     <S.ViewPort>

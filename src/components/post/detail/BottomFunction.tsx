@@ -55,7 +55,6 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const postBookmark = postBookmarkList?.find((bookmark) => bookmark.userId === userId);
   const postQuotation = postQuotationList?.find((Quotation) => Quotation.userId === userId);
 
-  // 좋아요
   const clickPostLike = () => {
     if (!userId) {
       alert(NON_MEMBER);
@@ -70,7 +69,6 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     }
   };
 
-  // bookmark
   const clickPostBookmark = () => {
     if (!userId) {
       alert(NON_MEMBER);
@@ -85,7 +83,6 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     }
   };
 
-  // 인용
   const clickQuotation = () => {
     if (!userId) {
       alert(NON_MEMBER);
@@ -94,7 +91,6 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     }
   };
 
-  // clip board
   const clickCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`https://nbc-final-pyeonsik-897l29vm7-kimyoonsu97.vercel.app/${pathname}`);

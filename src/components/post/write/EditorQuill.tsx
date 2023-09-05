@@ -12,8 +12,6 @@ Quill.register('modules/ImageResize', ImageResize);
 const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   const QuillRef = useRef<ReactQuill>();
 
-  // quill에서 사용할 module 설정 code
-  // key 입력 시 imageHandler로 인한 focus 풀림 방지
   const modules = useMemo(
     () => ({
       ImageResize: {

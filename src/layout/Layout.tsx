@@ -50,7 +50,7 @@ const S = {
     background: var(--background, #f6f7f9);
     display: flex;
     gap: 62px;
-    justify-content: center;
+    /* justify-content: center; */
   `,
 
   BottomContainer: styled.div<Props>`

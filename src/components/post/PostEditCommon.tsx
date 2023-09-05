@@ -20,7 +20,6 @@ const PostEditCommon = () => {
 
   const { updatePostMutate } = usePost(prams!);
 
-  // read
   const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
   const category = post?.postCategory as string;
@@ -31,12 +30,11 @@ const PostEditCommon = () => {
     setBody(post?.body);
   }, [post]);
 
-  // edit
   const submitPost = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
-      alert('내용을 입력해 주세요.');
+    if (title.trim() === '' || body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
+      alert('제목과 내용을 입력해 주세요.');
       return false;
     }
 
@@ -75,7 +73,7 @@ const PostEditCommon = () => {
           {category === 'common' && <EditorQuill body={body} setBody={setBody} />}
         </S.WritePostArea>
       </S.WriteForm>
-      {category === 'common' && orgPost && <OrgPostCard orgPost={orgPost} />}
+      {category === 'common' && post.hasOrgPost && <OrgPostCard orgPost={orgPost} />}
     </>
   );
 };

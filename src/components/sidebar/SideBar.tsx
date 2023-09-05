@@ -36,19 +36,25 @@ export default SideBar;
 
 const S = {
   Container: styled.div`
-    /* width: 296px; */
-    margin-left: auto;
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 50px - 56px - 31px);
+    position: fixed;
+    right: calc(((100vw - 1280px) / 2) + 16px);
   `,
 
   FixedContainer: styled.div`
-    /* position: absolute; */
     margin-left: auto;
-    display: flex;
-    flex-direction: column;
+    position: relative;
 
     height: calc(100vh - 50px - 56px - 31px);
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    display: flex;
+    flex-direction: column;
+  `,
+  EmptyBox: styled.div`
+    width: 100px;
+    height: 100px;
+    background: #62aaff;
   `
 };

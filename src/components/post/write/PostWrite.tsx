@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
 import HeaderArea from './HeaderArea';
@@ -7,28 +7,22 @@ import TitleArea from './TitleArea';
 import EditorQuill from './EditorQuill';
 import OrgPostCard from '../detail/OrgPostCard';
 import { S } from 'src/components/post/write/StyledPostWrite';
-// recipe
 import supabase from 'src/lib/supabaseClient';
 import { useAtom } from 'jotai';
 import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
 
 const PostWrite = () => {
-  const navigate = useNavigate();
   const { state: orgPost } = useLocation();
   const userId: string | undefined = useLoginUserId();
 
-  // common
   const [category, setCategory] = useState<string>('common');
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  // recipe, 제출 후 값을 초기화 해주기 위해 선언
   const [allContents, setContentsAtom] = useAtom(contentsAtom);
   const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
 
-  const [isIn, setIsIn] = useState(true);
-
-  console.log('allTags', allTags);
+  const [isIn] = useState(true);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -44,37 +38,32 @@ const PostWrite = () => {
       setContentsAtom({});
       setTagsDataAtom({});
       setImagesDataAtom({});
-      // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isIn]);
 
   // common
   const { addPostMutate } = usePost();
-  // recipe, 입력 값이 배열로 바뀌었기에 query 선언을 하나 더
   const { addRecipePostMutate } = usePost();
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (title.trim() === '') {
-      alert('제목을 입력해 주세요');
-      return;
-    }
-
-    // common
-    if (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
-      alert('내용을 입력해 주세요.');
+    if (title.trim() === '' || (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '')) {
+      alert('제목과 내용을 입력해 주세요.');
       return false;
     }
 
-    const Submit = window.confirm('작성하시겠습니까?');
-
-    if (!Submit) {
+    if (category === 'recipe' && Object.keys(allContents).length === 0) {
+      alert('내용을 입력해 주세요.');
       return;
     }
 
-    // recipe
+    const confirmMessage = '작성하시겠습니까?';
+    if (!window.confirm(confirmMessage)) {
+      return;
+    }
+
     const imageUrls = [];
     for (const selectedImage of Object.values(selectedImages)) {
       const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
@@ -90,6 +79,7 @@ const PostWrite = () => {
     if (category === 'common') {
       const newPost = {
         postCategory: category,
+        hasOrgPost: !!orgPost,
         orgPostId: orgPost?.id,
         title,
         body,
@@ -113,8 +103,6 @@ const PostWrite = () => {
     setContentsAtom({});
     setTagsDataAtom({});
     setImagesDataAtom({});
-
-    navigate(`/`);
   };
 
   return (

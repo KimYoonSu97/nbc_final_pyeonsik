@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Product } from 'src/types/types';
+import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
 interface Props {
   data: Product;
@@ -11,6 +12,7 @@ const ProdCard = ({ data }: Props) => {
     <S.ProdBox>
       <S.EventBar $brandName={data.prodBrand}>
         <S.EventBarBrand>{data.prodBrand}</S.EventBarBrand>
+        <S.EventDetailMonth>8월 간</S.EventDetailMonth>
         <S.EventDetail>{data.event?.type}</S.EventDetail>
       </S.EventBar>
       <S.ProdInfoBox>
@@ -39,10 +41,7 @@ const S = {
     position: relative;
     background-color: white;
   `,
-  EventBar: styled.div<ColorProps>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  EventBar: styled(FlexBoxCenter)<ColorProps>`
     height: 28px;
     gap: 4px;
     background-color: ${(props) => {
@@ -62,9 +61,12 @@ const S = {
     }};
   `,
   EventBarBrand: styled.div`
+    display: center;
+    justify-content: center;
+    align-items: center;
     border-radius: 100px;
     padding: 2px 7px;
-    padding-top: 4px;
+    /* padding-top: 4px; */
     color: #000;
     text-align: center;
     /* label-small */
@@ -84,15 +86,24 @@ const S = {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
   `,
-  ProdInfoBox: styled.div`
+  EventDetailMonth: styled.div`
+    color: var(--white, #fff);
+    text-align: center;
+
+    /* body-medium */
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  `,
+  ProdInfoBox: styled(FlexBoxAlignCenter)`
     position: absolute;
     width: 100%;
     bottom: 0;
     height: 60px;
 
-    display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 8px 4px;
     gap: 8px;
   `,

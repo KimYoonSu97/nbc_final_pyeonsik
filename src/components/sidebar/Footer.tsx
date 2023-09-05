@@ -1,5 +1,6 @@
 import React from 'react';
-import { SideFotter, FotterContainer } from './StyledSideBar';
+// import { SideFotter, FotterContainer } from './StyledSideBar';
+import styled from 'styled-components';
 
 const Footer = () => {
   return (
@@ -12,3 +13,22 @@ const Footer = () => {
 };
 
 export default Footer;
+
+export const SideFotter = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 10px;
+  width: 182px;
+  cursor: pointer;
+`;
+
+export const FotterContainer = styled.div`
+  /* position: absolute; */
+  /* bottom: 0; */
+  margin-top: auto;
+  /* position: fixed; */
+  /* right: calc(((100vw - 1280px) / 2) + 16px); */
+  width: 296px;
+  border-top: 1px solid black;
+  /* margin-top: auto; */
+`;
