@@ -10,7 +10,7 @@ import ReCommentForMap from './ReCommentForMap';
 import { getReCommentDataByCommentId } from 'src/api/ReComment';
 import { useQuery } from '@tanstack/react-query';
 import CommentUserInfo from './CommentUserInfo';
-import CreatedAt from 'src/function/CreatedAt';
+import CreatedAt from 'src/utility/CreatedAt';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 
