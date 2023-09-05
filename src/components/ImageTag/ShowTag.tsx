@@ -23,7 +23,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
     <S.ImageContainer>
       <div onMouseEnter={() => setIsMouseOverImage(true)} onMouseLeave={() => setIsMouseOverImage(false)}>
         <S.Image src={imageUrl} alt={imageUrl} />
-        {tagsForImage.map((tag, tagIndex) => (
+        {tagsForImage?.map((tag, tagIndex) => (
           <S.TagContainer
             key={tagIndex}
             style={{
@@ -51,7 +51,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
       </div>
       <div style={{ width: '790px' }}>
         <Carousel showThumbs={false} showArrows={true} showStatus={false} centerMode={true} centerSlidePercentage={25}>
-          {tagsForImage.map((tag, tagIndex) => (
+          {tagsForImage?.map((tag, tagIndex) => (
             <S.ProductWrapper
               key={tagIndex}
               onMouseEnter={() => handleProductMouseEnter(tagIndex)}

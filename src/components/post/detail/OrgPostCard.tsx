@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { Post } from 'src/types/types';
-import CreatedAt from 'src/function/CreatedAt';
+import CreatedAt from 'src/utility/CreatedAt';
 // import { S } from 'src/components/post/style/StyledOrgPostCard';
 import { IconOrgPost } from 'src/components/icons';
 import styled from 'styled-components';
