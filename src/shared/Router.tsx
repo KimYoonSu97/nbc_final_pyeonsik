@@ -17,6 +17,7 @@ import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
 import Report from 'src/components/sidebar/Report';
+import ProdReview from 'src/components/Detail/prodReview/ProdReview';
 
 const Router = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/prodReview" element={<ProdReview />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
