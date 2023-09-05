@@ -115,17 +115,7 @@ const Login = () => {
           <S.SocialArea>
             간편한 소셜 로그인
             {/* 버튼영역 */}
-            <S.SocialButtonArea>
-              <S.SocialButton>
-                <IconGoogle />
-                <OAuthLogin provider="google" />
-              </S.SocialButton>
-              <S.SocialButton>
-                <IconKakao />
-                <OAuthLogin provider="kakao" />
-              </S.SocialButton>
-            </S.SocialButtonArea>
-            {/* <OAuthLogin provider="github" /> */}
+            <OAuthLogin />
           </S.SocialArea>
         </S.LoginFormContainer>
       </S.FixedBox>
