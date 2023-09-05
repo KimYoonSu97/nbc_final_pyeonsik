@@ -26,7 +26,6 @@ export const S = {
   FunctionButton: styled.button`
     height: 24px;
 
-    position: relative;
     display: flex;
     justify-content: center;
 
@@ -36,10 +35,16 @@ export const S = {
     svg:hover {
       fill: #f02826;
     }
+  `,
+
+  FunctionLink: styled.div`
+    height: 24px;
+
+    display: flex;
+    justify-content: center;
 
     &:hover .dropDownLink {
       cursor: auto;
-
       display: flex;
       position: absolute;
     }
@@ -47,6 +52,9 @@ export const S = {
       display: none;
     }
 
+    svg {
+      fill: #667085;
+    }
     .linkFacebook {
       svg:hover {
         fill: #4285f4;

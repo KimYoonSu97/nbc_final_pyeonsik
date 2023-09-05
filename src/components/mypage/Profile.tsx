@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserData, updateUserNickname, updateProfileImg } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { IconCamera } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import useUserMutate from 'src/hooks/useUserMutate';
+// 탈퇴
+import UserDelete from '../register/UserDelete';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -115,7 +116,7 @@ const Profile = () => {
           <S.NicknameInputBox>
             <S.InputArea
               type="text"
-              value={nickname}
+              value={nickname || ''}
               onChange={(e) => {
                 setNickname(e.target.value);
               }}
@@ -138,7 +139,7 @@ const Profile = () => {
             <S.InfoSubmitButton>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
-        <button>탈퇴하기</button>
+        <UserDelete />
       </S.Container>
     </>
   );

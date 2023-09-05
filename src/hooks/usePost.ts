@@ -15,17 +15,16 @@ const usePost = (prams?: string) => {
       navigate(`/`);
     }
   };
+  const addPostMutate = useMutation(addPost, success);
+  const deletePostMutate = useMutation(deletePost, success);
 
-  const recipeSuccess = {
+  const successRecipe = {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['postList', '/'] });
     }
   };
-
   // 레시피 작성은 여기서 네비게이트 하면 안됨 유저 레벨때문에 삭제 작성따로 네비게이트 만들어주겠음
-  const addPostMutate = useMutation(addPost, success);
-  const deletePostMutate = useMutation(deletePost, success);
-  const addRecipePostMutate = useMutation(addRecipePost, recipeSuccess);
+  const addRecipePostMutate = useMutation(addRecipePost, successRecipe);
 
   // 수정
   const successUpdate = {
