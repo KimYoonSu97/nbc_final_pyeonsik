@@ -119,6 +119,7 @@ const S = {
     background-color: transparent;
     cursor: pointer;
   `,
+
   SearchResults: styled.div`
     margin-top: 12px;
     flex-direction: column;

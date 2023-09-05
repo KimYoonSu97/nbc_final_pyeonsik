@@ -25,9 +25,10 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 button{
+	cursor: pointer;
+	background-color: transparent;
     outline: none;
     border: none;
-	cursor: pointer;
 }
 
 html, body, div, span, applet, object, iframe,

@@ -30,6 +30,7 @@ export { ReactComponent as IconLinkFacebook } from './post/IconLinkFacebook.svg'
 export { ReactComponent as IconLinkTwitter } from './post/IconLinkTwitter.svg';
 export { ReactComponent as IconLinkKakao } from './post/IconLinkKakao.svg';
 export { ReactComponent as IconLinkCopy } from './post/IconLinkCopy.svg';
+export { ReactComponent as IconClose } from './post/IconClose.svg';
 
 export { ReactComponent as IconBestComment } from './IconBestComment.svg';
 

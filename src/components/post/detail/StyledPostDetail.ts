@@ -149,8 +149,6 @@ export const S = {
   `,
 
   WriterButton: styled.button<ColorProps>`
-    background-color: transparent;
-
     width: 40px;
     height: 26px;
     padding: 3px 4px;
