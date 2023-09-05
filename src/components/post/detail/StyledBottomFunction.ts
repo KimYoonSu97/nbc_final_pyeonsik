@@ -24,7 +24,6 @@ export const S = {
   `,
 
   FunctionButton: styled.button`
-    background-color: transparent;
     height: 24px;
 
     position: relative;
@@ -108,7 +107,6 @@ export const S = {
   `,
 
   LlinkButton: styled.button`
-    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
