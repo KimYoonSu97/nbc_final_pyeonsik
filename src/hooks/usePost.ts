@@ -31,10 +31,11 @@ const usePost = (prams?: string) => {
   const successUpdate = {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', prams] });
+      navigate(`/detail/${prams}`);
     }
   };
-  const updatePostMutate = useMutation(updatePost, successUpdate);
   const tagUpdatePostMutate = useMutation(tagUpdatePost, successUpdate);
+  const updatePostMutate = useMutation(updatePost, successUpdate);
 
   return { addPostMutate, updatePostMutate, deletePostMutate, addRecipePostMutate, tagUpdatePostMutate };
 };

@@ -64,6 +64,7 @@ export interface NewPost {
 
 export interface NewRecipePost {
   // orgPostId: string | null;
+  hasOrgPost: boolean;
   postCategory: string;
   title: string;
   recipeBody: string[];
