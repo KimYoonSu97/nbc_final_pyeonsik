@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { Link } from 'react-router-dom';
 import TermsAndConditions from './TermsAndConditions';
+import { termsAllAgreedAtom } from './TermsAndConditions';
+import { useAtom } from 'jotai';
 
 interface Props {
   setNextStep: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +17,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const [checkPassword, setCheckPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [termsAllAgreed] = useAtom(termsAllAgreedAtom);
 
   // 이메일 정규식 표현
   const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
@@ -32,6 +35,11 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     }
     if (password !== checkPassword) {
       setErrorMessage('비밀번호가 일치하지 않습니다!');
+      return;
+    }
+
+    if (!termsAllAgreed) {
+      alert('이용약관에 동의해야 합니다.');
       return;
     }
 
