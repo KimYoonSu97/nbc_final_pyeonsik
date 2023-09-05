@@ -92,8 +92,6 @@ const PostEditRecipe = () => {
     setContentsAtom({});
     setTagsDataAtom({});
     setImagesDataAtom({});
-
-    navigate(`/detail/${prams}`);
   };
 
   if (isLoading) {
@@ -113,7 +111,7 @@ const PostEditRecipe = () => {
         <HeaderArea />
         <S.WritePostArea>
           <TitleArea category={category} title={title} setTitle={setTitle} />
-          {category === 'recipe' && orgPost && <OrgPostCard orgPost={orgPost} />}
+          {category === 'recipe' && post.hasOrgPost && <OrgPostCard orgPost={orgPost} />}
         </S.WritePostArea>
       </S.WriteForm>
       {category === 'recipe' && (

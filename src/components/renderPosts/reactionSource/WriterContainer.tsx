@@ -4,6 +4,7 @@ import CreatedAt from 'src/function/CreatedAt';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router';
 import usePost from 'src/hooks/usePost';
+import { CANCLE, DELETE } from 'src/function/alertMessage';
 
 interface WriterContainerProps {
   isModal?: boolean;
@@ -17,15 +18,13 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
 
   const { deletePostMutate } = usePost();
 
-  // delete post
   const clickDelete = (id: string) => {
-    if (!window.confirm('삭제하시겠습니까?')) {
-      alert('취소되었습니다.');
+    if (!window.confirm(DELETE)) {
+      alert(CANCLE);
       return;
     }
 
     deletePostMutate.mutate(post.id);
-    navigate('/');
   };
 
   const clickEdit = () => {

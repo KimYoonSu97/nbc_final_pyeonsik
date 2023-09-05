@@ -14,7 +14,7 @@ const OrgPostCard = ({ orgPost }: OrgPostCardProps) => {
   const navigate = useNavigate();
 
   const clickOrgPost = () => {
-    navigate(`/detail/${orgPost.id}`);
+    orgPost && navigate(`/detail/${orgPost.id}`);
   };
 
   return (
@@ -27,12 +27,18 @@ const OrgPostCard = ({ orgPost }: OrgPostCardProps) => {
           <S.OrgText>인용 게시글</S.OrgText>
         </S.OrgTextBox>
         <S.OrgContentsBox onClick={clickOrgPost}>
-          <S.OrgTitle>{orgPost.title ? orgPost.title : '제목 없는 게시물'}</S.OrgTitle>
-          <S.OrgInfoBox>
-            {orgPost.userId.nickname}
-            <div>·</div>
-            <CreatedAt createdAt={orgPost.created_at} />
-          </S.OrgInfoBox>
+          {orgPost ? (
+            <>
+              <S.OrgTitle>{orgPost.title ? orgPost.title : '제목 없는 게시물'}</S.OrgTitle>
+              <S.OrgInfoBox>
+                {orgPost.userId.nickname}
+                <div>·</div>
+                <CreatedAt createdAt={orgPost.created_at} />
+              </S.OrgInfoBox>
+            </>
+          ) : (
+            <div>해당 게시글이 삭제되었습니다.</div>
+          )}
         </S.OrgContentsBox>
       </S.OrgContainer>
     </S.OrgArea>
@@ -92,6 +98,7 @@ export const S = {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
   `,
 
   OrgTitle: styled.div`
