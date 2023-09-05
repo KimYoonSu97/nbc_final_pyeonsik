@@ -7,6 +7,7 @@ import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { IconCamera } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -184,9 +185,7 @@ const S = {
   `,
   InputWrapper: styled.div``,
   InfoCaption: styled.div`
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 16px;
+    ${styleFont.labelSmall}
   `,
   InfoInputBox: styled(FlexBoxAlignCenter)`
     width: 330px;
@@ -198,6 +197,7 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
 
     color: var(--font-black, var(--black, #242424));
+
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;

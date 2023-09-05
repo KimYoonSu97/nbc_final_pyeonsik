@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router';
 import usePost from 'src/hooks/usePost';
 import { CANCLE, DELETE } from 'src/function/alertMessage';
+import { styleFont } from 'src/styles/styleFont';
 
 interface WriterContainerProps {
   isModal?: boolean;
@@ -110,6 +111,7 @@ export const S = {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 100px;
 
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -126,10 +128,7 @@ export const S = {
             color: var(--neutral-500, #667085);
           `}
 
-    font-style: normal;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
 
     display: inline-flex;
     align-items: flex-start;
@@ -175,10 +174,7 @@ export const S = {
             color: var(--neutral-500, #667085);
           `}
 
-    font-style: normal;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    ${styleFont.bodySmall}
   `,
 
   WriterFunction: styled.div<ColorProps>`

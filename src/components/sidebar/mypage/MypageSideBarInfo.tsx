@@ -5,6 +5,7 @@ import { getMyPostsById } from 'src/api/posts';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { IconBadge, IconCommon, IconRecipe } from 'src/components/icons';
+import { styleFont } from 'src/styles/styleFont';
 
 const MypageSideBarInfo = () => {
   const userId = useLoginUserId();
@@ -55,35 +56,35 @@ const MypageSideBarInfo = () => {
             <IconRecipe />
           </S.IconArea>
           <S.Caption>편식조합</S.Caption>
-          <S.Caption>
+          <S.CaptionCount>
             {
               myPostData?.data?.filter((item) => {
                 return item.postCategory === 'recipe';
               }).length
             }
             개
-          </S.Caption>
+          </S.CaptionCount>
         </S.SummaryButton>
         <S.SummaryButton>
           <S.IconArea>
             <IconCommon />
           </S.IconArea>
           <S.Caption>그르르갉</S.Caption>
-          <S.Caption>
+          <S.CaptionCount>
             {
               myPostData?.data?.filter((item) => {
                 return item.postCategory === 'common';
               }).length
             }
             개
-          </S.Caption>
+          </S.CaptionCount>
         </S.SummaryButton>
         <S.SummaryButton>
           <S.IconArea>
             <IconBadge />
           </S.IconArea>
           <S.Caption>뱃지 개수</S.Caption>
-          <S.Caption>15개</S.Caption>
+          <S.CaptionCount>15개</S.CaptionCount>
         </S.SummaryButton>
       </S.ButtonArea>
     </>
@@ -133,7 +134,8 @@ const S = {
     width: 100%;
     background: #fff;
     margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
@@ -144,6 +146,8 @@ const S = {
     color: var(--font-black, var(--black, #242424));
 
     margin-top: 4px;
+
+    font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -152,7 +156,8 @@ const S = {
 
   ButtonArea: styled.div`
     display: flex;
-    margin: 0 16px 24px 16px;
+    margin: 0 16px 0 16px;
+    padding-bottom: 24px;
     /* justify-content: center; */
     gap: 9px;
   `,
@@ -186,8 +191,11 @@ const S = {
   `,
 
   Caption: styled.p`
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px;
+    ${styleFont.labelMedium}
+  `,
+  CaptionCount: styled.p`
+    color: var(--neutral-500, #667085);
+
+    ${styleFont.bodySmall}
   `
 };

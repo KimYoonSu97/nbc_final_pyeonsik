@@ -158,7 +158,8 @@ const S = {
     width: 100%;
     background: #fff;
     margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
