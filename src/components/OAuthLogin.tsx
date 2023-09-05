@@ -14,7 +14,6 @@ const OAuthLogin = () => {
       await supabase.auth.signInWithOAuth({
         provider
       });
-
       localStorage.setItem('social', provider);
       navigate('/');
     } catch (error) {
