@@ -3,19 +3,24 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 
 // 폰트 스타일
-@font-face {
+/* @font-face {
     font-family: 'Pretendard-Regular';
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
-}
+} */
+
+/* @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css'); */
 
 // 폰트 크기를 변수로 선언
 
+/* * {
+	font-family: Pretendard,'Noto Sans KR', sans-serif;
+} */
 
 // reset.css
 *{
-	font-family: "Pretendard-Regular";
+	/* font-family: "Pretendard-Regular"; */
     box-sizing: border-box;
 }
 

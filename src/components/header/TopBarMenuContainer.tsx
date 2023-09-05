@@ -10,6 +10,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 
 interface User {
   id: string;
@@ -190,9 +191,9 @@ const S = {
     border-radius: 4px;
     height: 30px;
     padding: 5px 15px;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 20px;
+
+    ${styleFont.buttonSmall}
+
     color: ${(props) => {
       if (props.$signIn) {
         return ' var(--white, #FFF)';
