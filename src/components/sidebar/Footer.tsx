@@ -7,7 +7,9 @@ const Footer = () => {
     <FotterContainer>
       <SideFotter>팀원 소개 · 이용약관 · 개인정보처리방침 </SideFotter>
       {/* 아래 스타일에서  marginBottom: '20px' 제거 */}
-      <div style={{ fontSize: '10px', marginBottom: '20px' }}>© 2023. SE7EN DAYS all rights reserved. </div>
+      <FooterCopyRight style={{ fontSize: '10px', marginBottom: '20px' }}>
+        © 2023. SE7EN DAYS all rights reserved.{' '}
+      </FooterCopyRight>
     </FotterContainer>
   );
 };
@@ -20,6 +22,12 @@ export const SideFotter = styled.div`
   font-size: 10px;
   width: 182px;
   cursor: pointer;
+  color: var(--neutral-400, var(--neutral-400, #98a2b3));
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 160% */
 `;
 
 export const FotterContainer = styled.div`
@@ -31,4 +39,14 @@ export const FotterContainer = styled.div`
   width: 296px;
   border-top: 1px solid black;
   /* margin-top: auto; */
+`;
+
+const FooterCopyRight = styled.div`
+  margin-bottom: 20px;
+  color: var(--neutral-600, #475467);
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 160% */
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Product } from 'src/types/types';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 
 interface Props {
   data: Product;
@@ -69,33 +70,19 @@ const S = {
     /* padding-top: 4px; */
     color: #000;
     text-align: center;
-    /* label-small */
-    font-size: 11px;
-    font-style: normal;
-    font-weight: 600;
-    /* line-height: 16px; */
+    ${styleFont.labelSmall}
     background-color: white;
   `,
   EventDetail: styled.div`
     color: white;
     text-align: center;
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `,
   EventDetailMonth: styled.div`
     color: var(--white, #fff);
     text-align: center;
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `,
   ProdInfoBox: styled(FlexBoxAlignCenter)`
     position: absolute;
@@ -108,7 +95,11 @@ const S = {
     gap: 8px;
   `,
   ProdName: styled.div`
+    overflow: hidden;
+    color: #000;
+    text-align: center;
     text-overflow: ellipsis;
+    font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;

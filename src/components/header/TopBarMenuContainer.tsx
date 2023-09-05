@@ -178,8 +178,11 @@ const S = {
     border: 1px solid var(--neutral-200, #e4e7ec);
     padding: 3px 18px;
     height: 34px;
-    color: var(--font-black, var(--black, #242424));
+    color: var(--font-black, var(--Black, #242424));
+
+    font-family: Pretendard;
     font-size: 14px;
+    font-style: normal;
     font-weight: 600;
     line-height: 16px; /* 114.286% */
   `,
@@ -237,6 +240,7 @@ const S = {
     background: #fff;
     margin: 0 12px;
     color: var(--font-black, var(--black, #242424));
+    font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
