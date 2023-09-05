@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Product } from 'src/types/types';
+import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
 interface Props {
   data: Product;
@@ -40,10 +41,7 @@ const S = {
     position: relative;
     background-color: white;
   `,
-  EventBar: styled.div<ColorProps>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  EventBar: styled(FlexBoxCenter)<ColorProps>`
     height: 28px;
     gap: 4px;
     background-color: ${(props) => {
@@ -99,15 +97,13 @@ const S = {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
   `,
-  ProdInfoBox: styled.div`
+  ProdInfoBox: styled(FlexBoxAlignCenter)`
     position: absolute;
     width: 100%;
     bottom: 0;
     height: 60px;
 
-    display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 8px 4px;
     gap: 8px;
   `,

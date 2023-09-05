@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import styled from 'styled-components';
 
 interface Props {
@@ -25,27 +26,20 @@ export default CommentUserInfo;
 const S = {
   CommentArea: styled.div``,
   UpWrapper: styled.div``,
-  LowWrapper: styled.div`
-    display: flex;
+  LowWrapper: styled(FlexBox)`
     gap: 4px;
     margin-left: 45px;
   `,
-  ButtonArea: styled.div`
-    display: flex;
-    align-items: center;
+  ButtonArea: styled(FlexBoxAlignCenter)`
     margin-left: auto;
   `,
-  UserArea: styled.div`
-    display: flex;
-    align-items: center;
-  `,
+  UserArea: styled(FlexBoxAlignCenter)``,
   ProfileImg: styled.img`
     width: 36px;
     height: 36px;
-    /* background-color: royalblue; */
     border-radius: 100px;
   `,
-  Level: styled.div`
+  Level: styled(FlexBoxCenter)`
     border-radius: 100px;
     border: 1px solid transparent;
 
@@ -55,9 +49,6 @@ const S = {
 
     margin-left: 13px;
     height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   `,
   Leveltext: styled.div`
     width: 100%;
@@ -131,10 +122,7 @@ const S = {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
   `,
-  ReCommentAddButton: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  ReCommentAddButton: styled(FlexBoxCenter)`
     margin-top: auto;
     width: 20px;
     height: 20px;
@@ -142,11 +130,8 @@ const S = {
     border: 0.625px solid var(--neutral-500, #667085);
     background: var(--neutral-100, #f2f4f7);
   `,
-  EditButtonArea: styled.div`
-    display: flex;
+  EditButtonArea: styled(FlexBoxAlignCenter)`
     justify-content: flex-end;
-
-    align-items: center;
     text-align: center;
 
     /* body-small */
@@ -156,12 +141,10 @@ const S = {
     font-weight: 400;
     line-height: 16px; /* 133.333% */
   `,
-  EditButton: styled.div`
-    display: flex;
+  EditButton: styled(FlexBoxJustifyCenter)`
     width: 28px;
     height: 40px;
     flex-direction: column;
-    justify-content: center;
     flex-shrink: 0;
     color: var(--neutral-400, var(--neutral-400, #98a2b3));
   `

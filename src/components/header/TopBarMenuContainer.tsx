@@ -9,6 +9,7 @@ import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
 interface User {
   id: string;
@@ -101,12 +102,13 @@ const TopBarMenuContainer = () => {
         </S.QuickPostButton>
         <S.QuickPostButton onClick={() => navigate('/event')}>행사 제품</S.QuickPostButton>
       </S.QuickButtonArea>
-      <S.TopBarLogContainer $logged={data ? true : false}>
+      <S.TopBarLogContainer as="ul" $logged={data ? true : false}>
         {/* 공통 */}
         {/* 로그인 전 */}
         {!data ? (
           <>
             <S.TopBarLogButton
+              as="li"
               onClick={() => navigate('/login', { state: { backgroundLocation: location } })}
               $signIn={false}
             >
@@ -150,20 +152,12 @@ interface ImageProps {
   $url?: string;
 }
 
-const FlexBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Afont = styled.div`
   color: black;
 `;
 
 const S = {
-  TopBarMenuContainer: styled.div`
-    display: flex;
-    align-items: center;
+  TopBarMenuContainer: styled(FlexBoxAlignCenter)`
     gap: 24px;
 
     position: absolute;
@@ -174,15 +168,11 @@ const S = {
     display: flex;
   `,
 
-  QuickButtonArea: styled.div`
-    display: flex;
-    align-items: center;
+  QuickButtonArea: styled(FlexBoxAlignCenter)`
     gap: 8px;
   `,
 
-  QuickPostButton: styled.div`
-    display: flex;
-    align-items: center;
+  QuickPostButton: styled(FlexBoxAlignCenter)`
     border-radius: 100px;
     border: 1px solid var(--neutral-200, #e4e7ec);
     padding: 3px 18px;
@@ -192,29 +182,12 @@ const S = {
     font-weight: 600;
     line-height: 16px; /* 114.286% */
   `,
-
-  TopBarMenu: styled.li`
-    padding: 5px 13px;
-    height: 30px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  TopBarLogContainer: styled.ul<{ $logged: boolean }>`
-    display: flex;
+  TopBarLogContainer: styled(FlexBoxAlignCenter)<{ $logged: boolean }>`
     gap: ${(props) => (props.$logged ? '0px' : '12px')};
-    align-items: center;
   `,
 
-  TopBarLogButton: styled.li<Props>`
+  TopBarLogButton: styled(FlexBoxCenter)<Props>`
     border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 30px;
     padding: 5px 15px;
     font-size: 14px;

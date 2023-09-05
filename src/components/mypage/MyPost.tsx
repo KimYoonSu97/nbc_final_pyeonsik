@@ -7,6 +7,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import { Post } from 'src/types/types';
 import { css, styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
+import { FlexBox } from 'src/styles/styleBox';
 
 const MyPost = () => {
   const id = useLoginUserId();
@@ -117,8 +118,7 @@ const MyPost = () => {
 export default MyPost;
 
 const S = {
-  ButtonArea: styled.div`
-    display: flex;
+  ButtonArea: styled(FlexBox)`
     gap: 5px;
     justify-content: flex-end;
     position: fixed;

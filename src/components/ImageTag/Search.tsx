@@ -4,6 +4,7 @@ import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
 import { SearchProps } from 'src/types/types';
 import { ReactComponent as SearchIcon } from 'src/components/ImageTag/svg/SearchIcon.svg';
+import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
@@ -48,6 +49,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
           <SearchIcon />
         </S.SearchButton>
         <S.SearchInput
+          as="input"
           type="text"
           value={searchKeyword}
           onChange={(event) => handleSearchTextChange(event.target.value)}
@@ -85,22 +87,20 @@ const S = {
     /* z-index: 9999; */
     /* z-index: 999; */
   `,
-  SearchInputArea: styled.div`
+  SearchInputArea: styled(FlexBox)`
     width: 356px;
     height: 42px;
-    display: flex;
 
     align-items: center;
     border-radius: 10px;
 
     border: 1px solid #ccc;
   `,
-  SearchInput: styled.input`
+  SearchInput: styled(FlexBox)`
     width: 80%;
 
     outline: none;
     border: none;
-    display: flex;
 
     color: #000;
 
@@ -132,9 +132,8 @@ const S = {
     }
   `,
 
-  SearchResultItem: styled.div`
+  SearchResultItem: styled(FlexBox)`
     border-radius: 10px;
-    display: flex;
     cursor: pointer;
     width: 356px;
     height: 100px;
@@ -158,13 +157,9 @@ const S = {
     }
   `,
 
-  ImageAndTextContainer: styled.div`
-    display: flex;
-    align-items: center;
-  `,
+  ImageAndTextContainer: styled(FlexBoxAlignCenter)``,
 
-  TextContainer: styled.div`
-    display: flex;
+  TextContainer: styled(FlexBox)`
     flex-direction: column;
     margin-left: 10px;
     color: #000;
