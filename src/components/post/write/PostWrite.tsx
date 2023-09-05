@@ -59,6 +59,7 @@ const PostWrite = () => {
     } else if (category === 'recipe') {
       const newPost = {
         postCategory: category,
+        hasOrgPost: !!orgPost,
         orgPostId: orgPost?.id,
         userId,
         title,

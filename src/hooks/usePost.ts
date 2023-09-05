@@ -13,18 +13,19 @@ const usePost = (prams?: string) => {
       navigate(`/`);
     }
   };
+  const addRecipePostMutate = useMutation(addRecipePost, success);
   const addPostMutate = useMutation(addPost, success);
   const deletePostMutate = useMutation(deletePost, success);
-  const addRecipePostMutate = useMutation(addRecipePost, success);
 
   // 수정
   const successUpdate = {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', prams] });
+      navigate(`/detail/${prams}`);
     }
   };
-  const updatePostMutate = useMutation(updatePost, successUpdate);
   const tagUpdatePostMutate = useMutation(tagUpdatePost, successUpdate);
+  const updatePostMutate = useMutation(updatePost, successUpdate);
 
   return { addPostMutate, updatePostMutate, deletePostMutate, addRecipePostMutate, tagUpdatePostMutate };
 };
