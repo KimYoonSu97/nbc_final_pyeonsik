@@ -14,6 +14,10 @@ import {
   IconBookmark,
   IconComment,
   IconLike,
+  IconLinkCopy,
+  IconLinkFacebook,
+  IconLinkKakao,
+  IconLinkTwitter,
   IconQuotation,
   IconUnBookmark,
   IconUnLike,
@@ -91,9 +95,20 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     }
   };
 
+  const shareUrl = 'nbc-final-pyeonsik-897l29vm7-kimyoonsu97.vercel.app/' + pathname;
+
+  const clickFacebook = () => {
+    window.open(`http://www.facebook.com/sharer/sharer.php?u=${shareUrl}`);
+  };
+
+  const clickTwitter = () => {
+    const shareText = post.title; // 전달할 텍스트
+    window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`);
+  };
+
   const clickCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(`https://nbc-final-pyeonsik-897l29vm7-kimyoonsu97.vercel.app/${pathname}`);
+      await navigator.clipboard.writeText(`https://${shareUrl}`);
       alert('주소가 복사되었습니다.');
     } catch (error) {
       console.log(error);
@@ -104,7 +119,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     <>
       {!id && (
         <S.FunctionButtonBox $location={pathname}>
-          <S.FunctionButton>
+          <S.FunctionButton className="comments">
             <IconComment />
           </S.FunctionButton>
           <S.FunctionCount $location={pathname}>{commentCountData}</S.FunctionCount>
@@ -130,9 +145,28 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
           {postBookmarkList?.length === 0 ? 0 : postBookmarkList?.length}
         </S.FunctionCount>
       </S.FunctionButtonBox>
+      {/* component 분리 필요 */}
       {id && (
-        <S.FunctionButton onClick={clickCopyLink}>
+        <S.FunctionButton>
           <IconUnLink />
+          <S.LinkBubble className="dropDownLink">
+            <S.LinkTail />
+            <S.LinkTailFalse />
+            <S.LinkBox>
+              <S.LlinkButton className="linkFacebook" onClick={clickFacebook}>
+                <IconLinkFacebook />
+              </S.LlinkButton>
+              <S.LlinkButton className="linkTwitter" onClick={clickTwitter}>
+                <IconLinkTwitter />
+              </S.LlinkButton>
+              <S.LlinkButton className="linkKakao">
+                <IconLinkKakao />
+              </S.LlinkButton>
+              <S.LlinkButton onClick={clickCopyLink}>
+                <IconLinkCopy />
+              </S.LlinkButton>
+            </S.LinkBox>
+          </S.LinkBubble>
         </S.FunctionButton>
       )}
     </>
