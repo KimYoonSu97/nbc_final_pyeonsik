@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
 import { SearchProps } from 'src/types/types';
@@ -44,17 +43,19 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
 
   return (
     <S.SearchContainer>
-      <S.SearchButton onClick={performSearch}>
-        <SearchIcon />
-      </S.SearchButton>
-      <S.SearchInput
-        type="text"
-        value={searchKeyword}
-        onChange={(event) => handleSearchTextChange(event.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="제품명을 검색해주세요."
-        autoFocus
-      />
+      <S.SearchInputArea>
+        <S.SearchButton onClick={performSearch}>
+          <SearchIcon />
+        </S.SearchButton>
+        <S.SearchInput
+          type="text"
+          value={searchKeyword}
+          onChange={(event) => handleSearchTextChange(event.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="제품명을 검색해주세요."
+          autoFocus
+        />
+      </S.SearchInputArea>
 
       <S.SearchResults>
         {searchResults.map((result, index) => (
@@ -80,38 +81,55 @@ export default Search;
 const S = {
   SearchContainer: styled.div`
     position: relative;
+    padding: 20px;
+    /* z-index: 9999; */
+    /* z-index: 999; */
   `,
-
-  SearchInput: styled.input`
-    text-align: center;
+  SearchInputArea: styled.div`
     width: 356px;
     height: 42px;
-    padding: 8px;
-    margin-bottom: 8px;
+    display: flex;
+
+    align-items: center;
+    border-radius: 10px;
+
     border: 1px solid #ccc;
-    border-radius: 4px;
+  `,
+  SearchInput: styled.input`
+    width: 80%;
+
+    outline: none;
+    border: none;
+    display: flex;
+
+    color: #000;
+
+    /* body-large */
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    &::placeholder {
+      color: var(--neutral-400, #98a2b3);
+    }
   `,
 
   SearchButton: styled.button`
-    position: absolute;
-    margin-top: 10px;
-    margin-left: 5px;
-    z-index: 2;
     background-color: transparent;
     cursor: pointer;
   `,
   SearchResults: styled.div`
+    margin-top: 12px;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    width: 380px;
-    height: 400px;
-    overflow-y: auto;
-    /* -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* width: 380px; */
+    max-height: 400px;
+    overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
-    } */
+    }
   `,
 
   SearchResultItem: styled.div`
@@ -120,10 +138,10 @@ const S = {
     cursor: pointer;
     width: 356px;
     height: 100px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     background-color: white;
     &:hover {
-      background-color: gray;
+      background: #efefef;
     }
   `,
 
@@ -149,5 +167,13 @@ const S = {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+    color: #000;
+
+    /* label-large */
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 150% */
   `
 };

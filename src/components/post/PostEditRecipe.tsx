@@ -1,45 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { getPost } from 'src/api/posts';
+import useLoginUserId from 'src/hooks/useLoginUserId';
+import usePost from 'src/hooks/usePost';
+import HeaderArea from './write/HeaderArea';
+
 import supabase from 'src/lib/supabaseClient';
 import { useAtom } from 'jotai';
-
-import { getPost } from 'src/api/posts';
-import usePost from 'src/hooks/usePost';
 import { Tag } from 'src/types/types';
-import useLoginUserId from 'src/hooks/useLoginUserId';
-import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from 'src/components/icons';
-import { S } from './style/StyledPostWrite';
-import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
 import { contentsAtom, tagsDataAtom, imagesAtom } from '../ImageTag/AddImageTagComponent';
+import AddImageTagComponent from '../ImageTag/AddImageTagComponent';
+import { S } from 'src/components/post/write/StyledPostWrite';
+import TitleArea from './write/TitleArea';
+import OrgPostCard from './detail/OrgPostCard';
 
 const PostEditRecipe = () => {
-  const [allContents, setContentsAtom] = useAtom(contentsAtom);
-  const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
-  const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
+  const navigate = useNavigate();
+  const { id: prams } = useParams<string>();
+  const userId: string | undefined = useLoginUserId();
+
+  const [title, setTitle] = useState<string>('');
+  const [body, setBody] = useState<string[]>([]);
+  const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
+  const [tagData, setTagData] = useState<Tag[][]>([]);
 
   const [, setInputData] = useState<string[]>([]);
   const [, setTagsData] = useState<Tag[][]>([]);
 
-  const { id: prams } = useParams<string>();
-  const navigate = useNavigate();
+  const [allContents, setContentsAtom] = useAtom(contentsAtom);
+  const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
+  const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
+
   const { tagUpdatePostMutate } = usePost(prams!);
-
-  const [title, setTitle] = useState<string>('');
-
-  const [body, setBody] = useState<string[]>([]);
-  const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
-  const [tagData, setTagData] = useState<Tag[][]>([]);
-  // const [isEditMode, setIsEditMode] = useState<boolean>(true);
-
-  const postRef = useRef<HTMLInputElement>(null);
-
-  // current user id
-  const userId: string | undefined = useLoginUserId();
 
   // read
   const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
+  const category = post?.postCategory as string;
+  const orgPost = post?.orgPostId;
 
   // useEffect 순서 확인하기!
   useEffect(() => {
@@ -63,13 +62,11 @@ const PostEditRecipe = () => {
         const { data, error } = await supabase.storage
           .from('photos')
           .upload(`tags/${selectedImage.name}`, selectedImage);
-
         if (error) {
           console.error('Error uploading image to Supabase storage:', error);
           alert('이미지 업로드 중 에러가 발생했습니다!');
           return;
         }
-
         updatedImageUrls.push(data.path);
       } else {
         updatedImageUrls.push(selectedImage);
@@ -93,16 +90,6 @@ const PostEditRecipe = () => {
     navigate(`/detail/${prams}`);
   };
 
-  const clickLogo = () => {
-    navigate(`/`);
-  };
-  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-  const clickCancle = () => {
-    navigate(`/detail/${prams}`);
-  };
-
   if (isLoading) {
     return <p>Loading…</p>;
   }
@@ -115,42 +102,22 @@ const PostEditRecipe = () => {
   }
 
   return (
-    <S.WriteArea>
+    <>
       <S.WriteForm onSubmit={submitPost}>
-        <S.WriteHeader>
-          <S.WriteHeaderBox>
-            <S.LogoContainer onClick={clickLogo}>
-              <IconLogoSymbolH22 />
-              <IconWaterMarkH22 />
-            </S.LogoContainer>
-            <S.AddButton type="submit">
-              공유하기
-              <S.AddIcon>
-                <IconAdd />
-              </S.AddIcon>
-            </S.AddButton>
-          </S.WriteHeaderBox>
-        </S.WriteHeader>
-        <S.TitleBox>
-          <S.CategoryText>편식조합</S.CategoryText>
-          <S.Contour />
-          <S.Title
-            ref={postRef}
-            type="text"
-            name="title"
-            placeholder="제목 생략 가능"
-            value={title}
-            onChange={changeTitle}
-            autoFocus
-          />
-        </S.TitleBox>
+        <HeaderArea />
+        <S.WritePostArea>
+          <TitleArea category={category} title={title} setTitle={setTitle} />
+          {category === 'recipe' && orgPost && <OrgPostCard orgPost={orgPost} />}
+        </S.WritePostArea>
       </S.WriteForm>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ width: '950px' }}>
-          <AddImageTagComponent imageData={allSelectedImages} tagData={tagData} body={body} isEditMode={true} />
+      {category === 'recipe' && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '950px' }}>
+            <AddImageTagComponent imageData={allSelectedImages} tagData={tagData} body={body} isEditMode={true} />
+          </div>
         </div>
-      </div>
-    </S.WriteArea>
+      )}
+    </>
   );
 };
 

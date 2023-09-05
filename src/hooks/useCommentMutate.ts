@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { WriteCommentData, deleteCommentData, updateCommentData } from 'src/api/comment';
-import { Navigate } from 'react-router';
+
 const useCommentMutate = () => {
   const queryclient = useQueryClient();
 

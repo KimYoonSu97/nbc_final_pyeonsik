@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router';
+import { NON_MEMBER } from 'src/function/alertMessage';
 
 export const PrivateRoute = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const PrivateRoute = () => {
       return true;
     } else {
       // navigate('/login', { state: { backgroundLocation: location } });
-      alert('로그인 후 이용 가능합니다.');
+      alert(NON_MEMBER);
       return false;
     }
   };

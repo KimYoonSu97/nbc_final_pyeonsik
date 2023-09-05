@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-
 import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/CameraIcon.svg';
-
 import { ImageUploaderProps } from 'src/types/types';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
@@ -57,8 +55,8 @@ const S = {
     width: 474px;
     height: 360px;
 
-    /* width: ${(props) => (props.imageselected ? '40px' : '360px')}; */
-    /* height: ${(props) => (props.imageselected ? '40px' : '360px')}; */
+    /* width: ${(props) => (props.imageselected ? '40px' : '360px')};
+    height: ${(props) => (props.imageselected ? '40px' : '360px')}; */
     position: ${(props) => (props.imageselected ? 'absolute' : 'initial')};
     margin-left: ${(props) => (props.imageselected ? '30px' : '0')};
     z-index: 1;
