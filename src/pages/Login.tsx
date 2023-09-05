@@ -145,6 +145,7 @@ const S = {
     background-color: rgba(0, 0, 0, 0.6);
     top: 0;
     right: 0;
+    /* transition: backdrop-filter 1s; */
     backdrop-filter: blur(10px);
   `,
   LoginFormContainer: styled.div`

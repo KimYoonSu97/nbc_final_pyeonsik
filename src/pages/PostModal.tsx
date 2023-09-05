@@ -2,16 +2,11 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Comment from 'src/components/Detail/comments/Comment';
 import PostDetail from 'src/components/post/detail/PostDetail';
-import { Location, useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const PostModal = () => {
   const postBoxRef = useRef<any>(null);
   const navigate = useNavigate();
-  // const location = useLocation();
-
-  // window.addEventListener('beforeunload', (event) => {
-  //   navigate(location.pathname);
-  // });
 
   return (
     <>
