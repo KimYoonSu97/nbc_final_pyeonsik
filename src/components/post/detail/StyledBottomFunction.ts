@@ -1,3 +1,4 @@
+import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 import styled, { css } from 'styled-components';
 
 interface LocationProps {
@@ -5,10 +6,7 @@ interface LocationProps {
 }
 
 export const S = {
-  FunctionButtonBox: styled.div<LocationProps>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  FunctionButtonBox: styled(FlexBoxCenter)<LocationProps>`
     gap: ${(props) => {
       switch (props.$location) {
         case '/':

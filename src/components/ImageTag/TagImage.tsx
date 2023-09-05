@@ -5,6 +5,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { TagImageProps } from 'src/types/types';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage }) => {
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
   const [isMouseOverImage, setIsMouseOverImage] = useState(false);
@@ -78,11 +79,9 @@ const S = {
     position: relative;
     margin-bottom: 30px;
   `,
-  ProductImageContainer: styled.div`
+  ProductImageContainer: styled(FlexBoxAlignCenter)`
     width: 790px;
     height: 210px;
-    display: flex;
-    align-items: center;
     justify-content: flex-start;
   `,
   ProductImage: styled.img`
@@ -115,16 +114,13 @@ const S = {
     width: 80px;
     height: 80px;
   `,
-  TagIconContainer: styled.div`
+  TagIconContainer: styled(FlexBoxCenter)`
     width: 40px;
     height: 40px;
     background-color: white;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   `,
-  TagDataContainer: styled.div`
+  TagDataContainer: styled(FlexBox)`
     margin-top: 10px;
     z-index: 2;
     position: absolute;
@@ -132,14 +128,12 @@ const S = {
     width: 356px;
     height: 100px;
     background-color: white;
-    display: flex;
     padding: 8px;
     box-sizing: border-box;
   `,
-  DataContainer: styled.div`
+  DataContainer: styled(FlexBox)`
     margin-top: 25px;
     margin-left: 20px;
-    display: flex;
     flex-direction: column;
   `,
   ProdContainer: styled.div`
@@ -152,16 +146,15 @@ const S = {
     margin-bottom: 5px;
     font-size: 14px;
     height: 20px;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    /* justify-content: center; */
   `,
-  ProductWrapper: styled.div`
+  ProductWrapper: styled(FlexBox)`
     height: 200px;
     position: relative;
-    display: flex;
     flex-direction: row;
   `,
-  ProdDataOverlay: styled.div`
+  ProdDataOverlay: styled(FlexBoxCenter)`
     position: absolute;
     top: 0;
     left: 0;
@@ -169,8 +162,5 @@ const S = {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   `
 };
