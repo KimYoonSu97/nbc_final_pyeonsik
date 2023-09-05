@@ -16,7 +16,7 @@ export const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 84px 0;
+    margin: 84px;
   `,
 
   PostHead: styled.div`

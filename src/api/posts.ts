@@ -42,17 +42,29 @@ const tagUpdatePost = async (post: TagEditPost) => {
 
 // MyPosts
 const getMyPostsById = async (id: string) => {
-  const response = await supabase.from('posts').select('*,userId(nickname,profileImg,level)').eq('userId', id);
+  const response = await supabase
+    .from('posts')
+    .select('*,userId(nickname,profileImg,level)')
+    .eq('userId', id)
+    .order('created_at', { ascending: false });
   return response;
 };
 
 const getMyBookMarkById = async (id: string) => {
-  const response = await supabase.from('post_bookmark').select('postId(*,userId(*))').eq('userId', id);
+  const response = await supabase
+    .from('post_bookmark')
+    .select('postId(*,userId(*))')
+    .eq('userId', id)
+    .order('created_at', { ascending: false });
   return response;
 };
 
 const getMyLikePostById = async (id: string) => {
-  const response = await supabase.from('post_likes').select('postId(*,userId(*))').eq('userId', id);
+  const response = await supabase
+    .from('post_likes')
+    .select('postId(*,userId(*))')
+    .eq('userId', id)
+    .order('created_at', { ascending: false });
   return response;
 };
 

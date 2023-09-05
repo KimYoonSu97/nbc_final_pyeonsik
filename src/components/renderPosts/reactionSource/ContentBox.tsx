@@ -136,7 +136,7 @@ export const S = {
   PostBodyCommon: styled.pre<BodyHeightProps>`
     width: 790px;
     ${(props) => {
-      if (props.$location !== '/') {
+      if (props.$location === 'detail') {
         return css`
           min-height: 40vh;
         `;
