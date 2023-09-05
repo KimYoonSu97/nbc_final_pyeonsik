@@ -8,6 +8,7 @@ import supabase from 'src/lib/supabaseClient';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
 import { useLocation } from 'react-router';
 import { NON_MEMBER } from 'src/function/alertMessage';
+import { styleFont } from 'src/styles/styleFont';
 
 interface Props {
   commentId: string;
@@ -72,7 +73,7 @@ const ReCommentLikes = ({ commentId }: Props) => {
   return (
     <>
       <S.LikeButton onClick={clickButton}>{isLike ? <IconLiked /> : <IconUnLiked />}</S.LikeButton>
-      <S.LikeNum>{likeNum}개</S.LikeNum>
+      <S.LikeNum>{likeNum ? likeNum : '0'}개</S.LikeNum>
     </>
   );
 };
@@ -83,12 +84,7 @@ const S = {
     color: var(--neutral-500, #667085);
     text-align: right;
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `
 };
 export default ReCommentLikes;

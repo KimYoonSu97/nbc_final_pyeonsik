@@ -6,6 +6,7 @@ import useCommentMutate from 'src/hooks/useCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
 import { NON_MEMBER } from 'src/function/alertMessage';
+import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 interface Props {
   type: string;
@@ -20,7 +21,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
   const userId = useLoginUserId();
   const { id: postId } = useParams();
 
-  const { updateCommentButton, WriteCommentButton } = useCommentMutate();
+  const { updateCommentButton, WriteCommentButton } = useCommentMutate(postId!);
 
   const functionChanger = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,7 +55,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
   };
 
   return (
-    <S.CommentInputForm onSubmit={functionChanger}>
+    <S.CommentInputForm as="form" onSubmit={functionChanger}>
       <S.CommentInput
         placeholder="댓글을 남겨보세요!"
         type="text"
@@ -71,10 +72,8 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
 export default CommentInput;
 
 const S = {
-  CommentInputArea: styled.div`
-    display: flex;
+  CommentInputArea: styled(FlexBox)`
     gap: 8px;
-    /* margin-bottom: 30px; */
   `,
   CommentInPutProfile: styled.div`
     width: 36px;
@@ -82,10 +81,8 @@ const S = {
     border-radius: 100px;
     background: lightgray;
   `,
-  CommentInputForm: styled.form`
+  CommentInputForm: styled(FlexBoxAlignCenter)`
     width: 100%;
-    display: flex;
-    align-items: center;
     background: var(--neutral-100, #f2f4f7);
     border-radius: 10px;
     padding-right: 10px;

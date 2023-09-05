@@ -24,7 +24,6 @@ const PostEditRecipe = () => {
   const [body, setBody] = useState<string[]>([]);
   const [allSelectedImages, setAllSelectedImages] = useState<File[]>([]);
   const [tagData, setTagData] = useState<Tag[][]>([]);
-  // const [isEditMode, setIsEditMode] = useState<boolean>(true);
 
   const [, setInputData] = useState<string[]>([]);
   const [, setTagsData] = useState<Tag[][]>([]);

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
+
 import { Tag, Data } from 'src/types/types';
 import { ImageTagProps } from 'src/types/types';
 import ImageUploader from './ImageUploader';
@@ -8,6 +8,7 @@ import PostWriteBodyInput from '../post/write/PostWriteBodyInput';
 import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
 import { ReactComponent as DeleteIcon } from 'src/components/ImageTag/svg/DeleteIcon.svg';
 import { IconPlusTag } from '../icons';
+import { S } from './StyledImageTag';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -18,12 +19,13 @@ const ImageTag: React.FC<ImageTagProps> = ({
   tagData
 }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(imageData ?? null);
+  const [contents, setContents] = useState(body ?? '');
   const [tags, setTags] = useState<Tag[]>(tagData ?? []);
   const [addTagMode, setAddingTagMode] = useState(false);
   const [selectedTagIndex, setSelectedTagIndex] = useState<number | null>(null);
   const [searchFormHandler, setSearchFormHandler] = useState(false);
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
-  const [contents, setContents] = useState(body ?? '');
+  const [imageBlobUrl, setImageBlobUrl] = useState<string | null>(null);
 
   const postRef = useRef<HTMLTextAreaElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -31,10 +33,9 @@ const ImageTag: React.FC<ImageTagProps> = ({
   //이미지 클릭 시 태그를 찍는 함수 x,y 값과 text, img, price, prodBrand, id를 갖고있다
   const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
     if (addTagMode) {
+      //  이미지를 정해서 해당 이미지에서만 Tag가 찍힘
       const image = event.currentTarget;
       const imageRect = image.getBoundingClientRect();
-
-      //  이미지 밖으로 태그를 빠져나가지 못하게 하는 함수필요
 
       const x = event.clientX - imageRect.left;
       const y = event.clientY - imageRect.top;
@@ -44,6 +45,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
         .slice()
         .reverse()
         .findIndex((tag) => !tag.prodData);
+
       const updatedTags = [...tags];
 
       // 값이 없는 태그가 있고, 그 태그가 마지막에 추가한 태그라면 삭제 처리
@@ -117,6 +119,12 @@ const ImageTag: React.FC<ImageTagProps> = ({
   //이미지 선택 함수
   const handleImageSelect = (imageFile: File) => {
     setSelectedImage(imageFile);
+
+    //선택된 이미지를 blob객체로 만들어서 이미지를 디스플레이
+    const blob = new Blob([imageFile], { type: imageFile.type });
+    const blobUrl = URL.createObjectURL(blob);
+    setImageBlobUrl(blobUrl);
+
     //선택된 이미지 값을 콜백으로 전달
     onImageSelect(imageFile);
   };
@@ -173,7 +181,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
   return (
     <>
       <S.ImageTagContainer>
-        {!selectedImage && <ImageUploader onImageSelect={handleImageSelect} imageSelected={!!selectedImage} />}
+        <ImageUploader onImageSelect={handleImageSelect} imageSelected={selectedImage ? 'true' : 'false'} />
+
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
@@ -184,7 +193,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
                 onClick={handleImageClick}
               />
             ) : (
-              <S.Image src={URL.createObjectURL(selectedImage)} alt="이미지" onClick={handleImageClick} />
+              <S.Image src={imageBlobUrl || 'null'} alt="이미지" onClick={handleImageClick} />
             )}
             <S.AddTagButton
               onClick={(e) => {
@@ -202,7 +211,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
               <S.TagContainer
                 key={index}
                 onClick={() => handleTagClick(index)}
-                // 요 onMouseDown은 JS내장 함수라할까요 내장된 친구입니다
                 onMouseDown={(event) => handleTagDrag(index, event)}
                 style={{
                   left: tag.x,
@@ -263,192 +271,3 @@ const ImageTag: React.FC<ImageTagProps> = ({
 };
 
 export default ImageTag;
-
-const S = {
-  ImageTagContainer: styled.div`
-    display: flex;
-
-    position: relative;
-    gap: 12px;
-    padding-bottom: 20px;
-  `,
-  AddTagButton: styled.div`
-    width: 180px;
-    height: 48px;
-
-    /* height: 48px; */
-    /* wi */
-    /* padding: 12px 32px 12px 33px; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    /* flex-shrink: 0; */
-    border-radius: 100px;
-    background: var(--white, #fff);
-
-    color: var(--font-black, var(--Black, #242424));
-    text-align: center;
-    position: absolute;
-
-    bottom: 32px;
-    left: calc((474px - 180px) / 2);
-
-    /* label-large */
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px; /* 150% */
-    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
-    &:hover {
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      /* translate:  */
-    }
-  `,
-  IconBox: styled.div`
-    width: 20px;
-    height: 20px;
-    background: var(--neutral-200, #e4e7ec);
-    border-radius: 50px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-  `,
-
-  ImageContainer: styled.div`
-    position: relative;
-    border-radius: 10px;
-    /* overflow: hidden; */
-    /* background-color: royalblue; */
-    /* margin-right: 10px; */
-  `,
-  // 이미지 태그 사이즈 고정....
-
-  Image: styled.img`
-    width: 474px;
-    height: 360px;
-    object-fit: cover;
-    border-radius: 10px;
-  `,
-
-  TagImage: styled.img`
-    width: 80px;
-    height: 80px;
-  `,
-
-  TagContainer: styled.div`
-    width: 356px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    background-size: 30px;
-    position: absolute;
-    display: flex;
-    width: 20px;
-    height: 20px;
-  `,
-
-  TagDataContainer: styled.div<{ searchFormHandler: boolean }>`
-    margin-top: 150px;
-    z-index: 2;
-    position: absolute;
-    left: -178px;
-    width: 356px;
-    height: 100px;
-    background-color: ${(props) => (props.searchFormHandler ? 'transparent' : 'white')};
-    display: flex;
-    padding: 8px;
-    box-sizing: border-box;
-    border-radius: 10px;
-  `,
-
-  DataContainer: styled.div`
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-  `,
-
-  ProdContainer: styled.div`
-    width: 246px;
-    font-size: 16px;
-    height: 50px;
-  `,
-
-  ProdBrandContainer: styled.div`
-    width: 113px;
-    margin-bottom: 5px;
-    font-size: 14px;
-    height: 20px;
-  `,
-
-  DeleteButton: styled.button`
-    width: 24px;
-    height: 16px;
-    font-size: 8px;
-    background-color: transparent;
-    cursor: pointer;
-  `,
-
-  CloseButton: styled.button`
-    width: 40px;
-    height: 30px;
-    position: absolute;
-    right: 30px;
-    top: 25px;
-    /* margin-left: 300px; */
-    /* margin-top: 5px; */
-    cursor: pointer;
-    color: black;
-    background-color: transparent;
-
-    &:hover {
-      color: gray;
-    }
-  `,
-
-  SearchResultsContainer: styled.div`
-    width: 400px;
-    height: 478px;
-    border-radius: 10px;
-    background-color: white;
-    position: relative;
-
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
-  `,
-
-  DeleteIconContainer: styled.div`
-    display: flex;
-    width: 34px;
-    margin-left: 210px;
-    align-items: center;
-  `,
-
-  TagIconContainer: styled.div`
-    /* width: 40px; */
-    /* height: 40px; */
-    /* background-color: white; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    position: relative;
-  `,
-  TagIconBox: styled.div`
-    width: 40px;
-    height: 40px;
-
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background-color: white;
-
-    position: absolute;
-    top: -30px;
-    left: -20px;
-  `
-};

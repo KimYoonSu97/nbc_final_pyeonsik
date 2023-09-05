@@ -1,12 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { WriteCommentData, deleteCommentData, updateCommentData } from 'src/api/comment';
-
-const useCommentMutate = () => {
+interface Props {
+  postId?: string;
+}
+const useCommentMutate = (postId?: string) => {
   const queryclient = useQueryClient();
 
   const success = {
     onSuccess: () => {
-      queryclient.invalidateQueries(['comment']);
+      queryclient.invalidateQueries(['comment', postId]);
+      queryclient.invalidateQueries(['commentCount', postId]);
+    }
+  };
+  const updateSuccess = {
+    onSuccess: () => {
+      queryclient.invalidateQueries(['comment', postId]);
     }
   };
 
@@ -43,7 +51,7 @@ const useCommentMutate = () => {
 
   const writeCommentMutation = useMutation(WriteCommentData, success);
   const deleteCommentMutation = useMutation(deleteCommentData, success);
-  const updateCommentMutation = useMutation(updateCommentData, success);
+  const updateCommentMutation = useMutation(updateCommentData, updateSuccess);
 
   return {
     writeCommentMutation,

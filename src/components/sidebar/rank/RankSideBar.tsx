@@ -7,11 +7,15 @@ import styled from 'styled-components';
 const RankSideBar = () => {
   return (
     <S.Container>
+      <S.TitleArea>지금 인기있는 편식 조합</S.TitleArea>
       <S.ContentsBox>
         <FetchPosts />
         <RealTimeCombo />
       </S.ContentsBox>
-      {/* <NewReview /> */}
+      <S.TitleArea>편의점 신제품 리뷰</S.TitleArea>
+      <S.ContentsBox>
+        <NewReview />
+      </S.ContentsBox>
     </S.Container>
   );
 };
@@ -20,14 +24,23 @@ export default RankSideBar;
 
 const S = {
   Container: styled.div`
-    position: fixed;
-
-    right: calc(((100vw - 1280px) / 2) + 16px);
+    padding-bottom: 100px;
   `,
 
   ContentsBox: styled.div`
     background: white;
     border-radius: 10px;
     margin-bottom: 20px;
+  `,
+  TitleArea: styled.div`
+    margin: 3px 0 11px 0;
+    color: var(--font-black, var(--Black, #242424));
+
+    /* title-small */
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
   `
 };

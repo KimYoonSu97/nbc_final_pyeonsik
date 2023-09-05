@@ -197,7 +197,7 @@ export interface SearchProps {
 
 export interface ImageUploaderProps {
   onImageSelect: (imageFile: File) => void;
-  imageSelected: boolean;
+  imageSelected: string;
 }
 export interface TagImageProps {
   imageUrl: string;

@@ -16,7 +16,8 @@ import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
-import Report from 'src/components/sidebar/Report';
+import Report from 'src/pages/Report';
+import { GlobalFont } from 'src/styles/GlobalFont';
 
 const Router = () => {
   const location = useLocation();
@@ -25,6 +26,7 @@ const Router = () => {
   return (
     <>
       <GlobalStyle />
+      <GlobalFont />
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />

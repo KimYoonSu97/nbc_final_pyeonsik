@@ -11,6 +11,8 @@ import { getReCommentDataByCommentId } from 'src/api/ReComment';
 import { useQuery } from '@tanstack/react-query';
 import CommentUserInfo from './CommentUserInfo';
 import CreatedAt from 'src/function/CreatedAt';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 
 interface CommentDataType {
   comment: string;
@@ -21,6 +23,7 @@ interface CommentDataType {
   users: {
     profileImg: string;
     nickname: string;
+    level: string;
   };
 }
 
@@ -39,7 +42,7 @@ const CommentForMap = ({ comment }: Props) => {
   const [isOpenReCommentInput, setIsOpenReCommentInput] = useState(false);
 
   // 삭제 뮤테이션
-  const { deleteCommentButton } = useCommentMutate();
+  const { deleteCommentButton } = useCommentMutate(comment.postId);
 
   const { data: reCommentData, isLoading: reCommentIsLoading } = useQuery({
     queryKey: ['reComment', comment.id],
@@ -79,7 +82,7 @@ const CommentForMap = ({ comment }: Props) => {
           <S.ReCommentAddButton
             onClick={() => {
               setIsOpenReCommentInput(!isOpenReCommentInput);
-              setIsOpenReComment(!isOpenReComment);
+              setIsOpenReComment(true);
             }}
           >
             <IconAddReComment />
@@ -129,94 +132,44 @@ export default CommentForMap;
 const S = {
   CommentArea: styled.div``,
   UpWrapper: styled.div``,
-  LowWrapper: styled.div`
-    display: flex;
+  LowWrapper: styled(FlexBox)`
     gap: 4px;
     margin-left: 25px;
   `,
-  ButtonArea: styled.div`
-    display: flex;
-    align-items: center;
+  ButtonArea: styled(FlexBoxAlignCenter)`
     margin-left: auto;
   `,
-  UserArea: styled.div`
-    display: flex;
-    align-items: center;
-  `,
+  UserArea: styled(FlexBoxAlignCenter)``,
   ProfileImg: styled.img`
     width: 36px;
     height: 36px;
     border-radius: 100px;
   `,
-  Level: styled.div`
-    border-radius: 100px;
-    border: 1px solid transparent;
-
-    background-image: linear-gradient(#fff, #fff), linear-gradient(40deg, #ffb334, #d9d9d9);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-
-    margin-left: 13px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  Leveltext: styled.div`
-    width: 100%;
-    background: #fff;
-    margin: 0 12px;
-    color: var(--font-black, var(--black, #242424));
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px; /* 133.333% */
-  `,
   Nickname: styled.div`
     margin-left: 4px;
     color: var(--font-black, var(--Black, #242424));
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `,
   Time: styled.div`
     margin-left: 4px;
 
     color: #737373;
 
-    /* body-small */
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    ${styleFont.bodySmall}
   `,
   ReCommentToggle: styled.div`
     margin-right: 12px;
     color: var(--neutral-500, #667085);
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `,
   LikeButton: styled.div``,
   LikeNum: styled.div`
     color: var(--neutral-500, #667085);
     text-align: right;
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `,
   CommentBody: styled.div`
     padding: 10px 14px;
@@ -227,17 +180,9 @@ const S = {
 
     color: var(--font-black, #242424);
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `,
-  ReCommentAddButton: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  ReCommentAddButton: styled(FlexBoxCenter)`
     margin-top: auto;
     width: 20px;
     height: 20px;
@@ -245,35 +190,27 @@ const S = {
     border: 0.625px solid var(--neutral-500, #667085);
     background: var(--neutral-100, #f2f4f7);
   `,
-  EditButtonArea: styled.div`
-    display: flex;
+  EditButtonArea: styled(FlexBoxAlignCenter)`
     justify-content: flex-end;
 
-    align-items: center;
     text-align: center;
 
-    /* body-small */
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    ${styleFont.bodySmall}
   `,
-  EditButton: styled.div`
-    display: flex;
+  EditButton: styled(FlexBoxJustifyCenter)`
     width: 28px;
     height: 40px;
     flex-direction: column;
-    justify-content: center;
     flex-shrink: 0;
     color: var(--neutral-400, var(--neutral-400, #98a2b3));
   `,
   ReCommentArea: styled.div``,
-  ReCommentInputArea: styled.div``,
-  ReCommentRenderArea: styled.div`
+  ReCommentInputArea: styled.div`
+    margin-top: 16px;
+  `,
+  ReCommentRenderArea: styled(FlexBox)`
     margin-top: 24px;
     margin-left: 50px;
-    display: flex;
     flex-direction: column;
     gap: 10px;
   `
