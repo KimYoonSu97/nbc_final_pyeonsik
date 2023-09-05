@@ -12,6 +12,8 @@ interface ContentBoxProps {
 const ContentBox = ({ post }: ContentBoxProps) => {
   const { pathname } = useLocation();
 
+  console.log(post);
+
   return (
     <>
       {post.title && <S.PostTitle>{post.title}</S.PostTitle>}
@@ -20,14 +22,18 @@ const ContentBox = ({ post }: ContentBoxProps) => {
       )}
       <S.PostBodyRecipe $location={pathname}>
         {post.postCategory === 'recipe' &&
-          post.tagimage.map((tagImageUrl: string, index: string) => (
-            <TagImage
-              key={index}
-              imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
-              recipeBody={post.recipeBody[index]}
-              tagsForImage={post.tags[index] || []}
-            />
-          ))}
+          post.recipeBody.map((recipeText: string, index: number) =>
+            post.tagimage[index] ? (
+              <TagImage
+                key={index}
+                imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[index]}`}
+                recipeBody={recipeText}
+                tagsForImage={post.tags[index] || []}
+              />
+            ) : (
+              <div key={index}>{recipeText}</div>
+            )
+          )}
       </S.PostBodyRecipe>
     </>
   );

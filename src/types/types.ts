@@ -200,9 +200,9 @@ export interface ImageUploaderProps {
   imageSelected: string;
 }
 export interface TagImageProps {
-  imageUrl: string;
-  recipeBody?: string;
-  tagsForImage: ImageTag[];
+  imageUrl?: string;
+  recipeBody: string;
+  tagsForImage?: ImageTag[];
 }
 //여기까지
 
