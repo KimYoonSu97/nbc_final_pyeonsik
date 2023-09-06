@@ -125,7 +125,6 @@ const TopBarMenuContainer = () => {
             <S.Icon>
               <IconBell />
             </S.Icon>
-
             {/* <S.Level>
               <S.Leveltext>Lv. 식신</S.Leveltext>
             </S.Level> */}
