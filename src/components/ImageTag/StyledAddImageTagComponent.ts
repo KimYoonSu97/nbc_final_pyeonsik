@@ -37,6 +37,7 @@ export const S = {
     width: 48px;
     height: 48px;
     object-fit: cover;
+    cursor: pointer;
   `,
   Contents: styled(FlexBox)`
     position: relative;

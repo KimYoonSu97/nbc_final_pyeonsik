@@ -253,3 +253,8 @@ export interface LocInform {
   };
   content: string;
 }
+
+export interface Badge {
+  name: string;
+  yourBooleanProp: boolean;
+}

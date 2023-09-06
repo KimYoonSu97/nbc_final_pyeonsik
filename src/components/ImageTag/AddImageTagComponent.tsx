@@ -152,6 +152,36 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     }
   };
 
+  const updateComponentOrder = (newOrder: string[]) => {
+    const filteredComponents = newOrder
+      .map((uuid) => imageTagComponents.find((component) => (component.key as string) === uuid))
+      .filter(Boolean);
+
+    setImageTagComponents(filteredComponents as JSX.Element[]);
+
+    setInputData((prevInputData) => {
+      const updatedInputData: { [key: string]: string } = {};
+      newOrder.forEach((uuid, index) => {
+        updatedInputData[uuid] = prevInputData[uuid];
+      });
+      return updatedInputData;
+    });
+    setImages((prevImages) => {
+      const updatedImages: { [key: string]: File } = {};
+      newOrder.forEach((uuid, index) => {
+        updatedImages[uuid] = prevImages[uuid];
+      });
+      return updatedImages;
+    });
+    setTagsData((prevTagsData) => {
+      const updatedTagsData: { [key: string]: Tag[] } = {};
+      newOrder.forEach((uuid, index) => {
+        updatedTagsData[uuid] = prevTagsData[uuid];
+      });
+      return updatedTagsData;
+    });
+  };
+
   const changeComponentOrder = (currentIndex: number, targetIndex: number) => {
     if (currentIndex === targetIndex) return;
 
@@ -159,32 +189,8 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     const [movedComponent] = updatedComponents.splice(currentIndex, 1);
     updatedComponents.splice(targetIndex, 0, movedComponent);
 
-    // 이미지 컴포넌트 순서 업데이트
-    setImageTagComponents(updatedComponents);
-
-    // Atom에서도 순서 업데이트
     const componentsOrder = updatedComponents.map((component) => (component.key as string) || '');
-    setInputData((prevInputData) => {
-      const updatedInputData: { [key: string]: string } = {};
-      componentsOrder.forEach((uuid, index) => {
-        updatedInputData[uuid] = prevInputData[uuid];
-      });
-      return updatedInputData;
-    });
-    setImages((prevImages) => {
-      const updatedImages: { [key: string]: File } = {};
-      componentsOrder.forEach((uuid, index) => {
-        updatedImages[uuid] = prevImages[uuid];
-      });
-      return updatedImages;
-    });
-    setTagsData((prevTagsData) => {
-      const updatedTagsData: { [key: string]: Tag[] } = {};
-      componentsOrder.forEach((uuid, index) => {
-        updatedTagsData[uuid] = prevTagsData[uuid];
-      });
-      return updatedTagsData;
-    });
+    updateComponentOrder(componentsOrder);
   };
 
   const handleDragStart = (index: number, event: React.DragEvent) => {
@@ -201,32 +207,8 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
       const [movedComponent] = updatedComponents.splice(sourceIndex, 1);
       updatedComponents.splice(index, 0, movedComponent);
 
-      // 이미지 컴포넌트 순서 업데이트
-      setImageTagComponents(updatedComponents);
-
-      // Atom에서도 순서 업데이트
       const componentsOrder = updatedComponents.map((component) => (component.key as string) || '');
-      setInputData((prevInputData) => {
-        const updatedInputData: { [key: string]: string } = {};
-        componentsOrder.forEach((uuid, index) => {
-          updatedInputData[uuid] = prevInputData[uuid];
-        });
-        return updatedInputData;
-      });
-      setImages((prevImages) => {
-        const updatedImages: { [key: string]: File } = {};
-        componentsOrder.forEach((uuid, index) => {
-          updatedImages[uuid] = prevImages[uuid];
-        });
-        return updatedImages;
-      });
-      setTagsData((prevTagsData) => {
-        const updatedTagsData: { [key: string]: Tag[] } = {};
-        componentsOrder.forEach((uuid, index) => {
-          updatedTagsData[uuid] = prevTagsData[uuid];
-        });
-        return updatedTagsData;
-      });
+      updateComponentOrder(componentsOrder);
       setDragging(false);
     }
   };
