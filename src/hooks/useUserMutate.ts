@@ -6,7 +6,7 @@ const useUserMutate = () => {
 
   const success = {
     onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
+      queryClient.invalidateQueries({ queryKey: ['loginUser'] });
     }
   };
 
@@ -18,7 +18,11 @@ const useUserMutate = () => {
   const levelMutation = useMutation(updateUserLevel, success);
 
   // 사용자 정보 삭제
-  const deleteUserMutate = useMutation(deleteUser, success);
+  const deleteUserMutate = useMutation(deleteUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['delete_user'] });
+    }
+  });
 
   return { nicknameMutation, profileImgMutation, levelMutation, deleteUserMutate };
 };
