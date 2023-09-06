@@ -14,6 +14,7 @@ interface Props {
   prevComment?: string;
   setIsEditComment?: React.Dispatch<React.SetStateAction<boolean>>;
 }
+//왜 안돼?
 
 const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props) => {
   const [comment, setComment] = useState('');

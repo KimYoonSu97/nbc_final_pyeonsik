@@ -21,6 +21,7 @@ interface CommentDataType {
   };
 }
 
+//왜 안돼?
 interface Props {
   reComment: CommentDataType;
   parentId: string;

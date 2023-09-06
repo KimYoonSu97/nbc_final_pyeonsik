@@ -19,6 +19,7 @@ interface CommentDataType {
     level: string;
   };
 }
+//왜 안돼?
 
 const Comment = () => {
   const { id: postId } = useParams<string>();

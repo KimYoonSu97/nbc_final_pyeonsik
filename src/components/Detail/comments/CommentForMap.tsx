@@ -14,6 +14,8 @@ import CreatedAt from 'src/utility/CreatedAt';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 
+//왜 안돼?
+
 interface CommentDataType {
   comment: string;
   created_at: string;

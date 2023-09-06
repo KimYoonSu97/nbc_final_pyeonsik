@@ -12,6 +12,7 @@ interface Props {
   commentId: string;
 }
 
+//왜 안돼?
 const CommentLikes = ({ commentId }: Props) => {
   const [isLike, setIsLike] = useState<boolean>();
   const userId: string = useLoginUserId();

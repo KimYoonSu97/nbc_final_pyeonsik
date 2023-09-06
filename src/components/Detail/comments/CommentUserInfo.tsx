@@ -11,6 +11,7 @@ interface Props {
   };
 }
 
+//왜 안돼?
 const CommentUserInfo = ({ users }: Props) => {
   return (
     <>
