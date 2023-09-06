@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
@@ -11,6 +11,7 @@ import { FlexBoxCenter } from 'src/styles/styleBox';
 
 const UserDelete = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const userId = useLoginUserId();
 
