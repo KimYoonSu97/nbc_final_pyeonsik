@@ -1,45 +1,40 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
-
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useUserMutate from 'src/hooks/useUserMutate';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { FlexBoxCenter } from 'src/styles/styleBox';
+import { deleteUser } from 'src/api/userLogin';
+import Confirm from '../popUp/Confirm';
 
 const UserDelete = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  // const location = useLocation();
   const queryClient = useQueryClient();
   const userId = useLoginUserId();
 
-  const [userLogin, setUserLogin] = useAtom(userAtom);
-  const { deleteUserMutate } = useUserMutate();
+  const [_, setUserLogin] = useAtom(userAtom);
+  // const { deleteUserMutate } = useUserMutate();
 
   const clickWithdraw = async () => {
-    if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      const { data, error: deleteError } = await supabase.auth.admin.deleteUser(userId);
-      if (deleteError) {
+    if (await Confirm('userDelete')) {
+      const { error: deleteError } = await supabase.auth.admin.deleteUser(userId);
+      await deleteUser(userId);
+      const { error: singOutError } = await supabase.auth.signOut();
+      if (deleteError || singOutError) {
         alert('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
-      } else if (!deleteError) {
-        alert('탈퇴가 완료되었습니다.');
-        deleteUserMutate.mutate(userId);
-        navigate('/');
-        // signout
-        const { error: singOutError } = await supabase.auth.signOut();
-        singOutError && alert('로그아웃 부탁드립니다.');
-        setUserLogin(null);
-        if (location.pathname.split('/')[1] === 'mypage') {
-          window.location.reload();
-        }
-        localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
-        localStorage.removeItem('social');
-        queryClient.removeQueries(['loginUser']);
-        queryClient.resetQueries(['loginUser']);
+        return;
       }
+      setUserLogin(null);
+      navigate('/');
+
+      localStorage.removeItem('social');
+      queryClient.removeQueries(['loginUser']);
+      queryClient.resetQueries(['loginUser']);
     }
   };
   // SQL: grant select on table auth.users to service_role;

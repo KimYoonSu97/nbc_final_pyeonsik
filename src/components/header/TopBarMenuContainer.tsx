@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import UserLevel from './UserLevel';
 
 interface User {
   id: string;
@@ -41,8 +42,7 @@ const TopBarMenuContainer = () => {
       }
     },
     {
-      enabled: userLogin !== null || userId ? true : false,
-      staleTime: Infinity
+      enabled: userLogin !== null || userId ? true : false
     }
   );
 
@@ -90,6 +90,7 @@ const TopBarMenuContainer = () => {
     }
   }, [localStorage.getItem('social')]);
 
+  // console.log(data);
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
@@ -106,7 +107,7 @@ const TopBarMenuContainer = () => {
       <S.TopBarLogContainer as="ul" $logged={data ? true : false}>
         {/* 공통 */}
         {/* 로그인 전 */}
-        {!data ? (
+        {data === undefined || data === null ? (
           <>
             <S.TopBarLogButton
               as="li"
@@ -115,7 +116,7 @@ const TopBarMenuContainer = () => {
             >
               로그인
             </S.TopBarLogButton>
-            <S.TopBarLogButton onClick={() => navigate('/register')} $signIn={true}>
+            <S.TopBarLogButton as="li" onClick={() => navigate('/register')} $signIn={true}>
               회원가입
             </S.TopBarLogButton>
           </>
@@ -125,11 +126,7 @@ const TopBarMenuContainer = () => {
             <S.Icon>
               <IconBell />
             </S.Icon>
-
-            {/* <S.Level>
-              <S.Leveltext>Lv. 식신</S.Leveltext>
-            </S.Level> */}
-            {/* <p>Hello, {userData?.nickname}</p> */}
+            <UserLevel level={data?.data?.level} />
             <button onClick={() => navigate('/map')}>kakao Map</button>
             <S.ProfileImg
               $url={data?.data?.profileImg}
