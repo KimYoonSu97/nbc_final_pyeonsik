@@ -47,31 +47,30 @@ export const CommentWrap = styled.div``;
 
 export const CommentInner = styled.div`
   margin: 12px 0px;
-  .commentInfo{
+  .commentInfo {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    div{
+    div {
       display: flex;
       align-items: center;
       gap: 5px;
     }
-    img{
+    img {
       width: 36px;
       height: 36px;
       border-radius: 50%;
     }
-    span{
+    span {
       font-size: 13px;
-      letter-spacing: -.5px;
+      letter-spacing: -0.5px;
       color: #777;
     }
-    button{
+    button {
       background: none;
     }
   }
-  h1{
-    
+  h1 {
   }
   h2 {
     border: solid 1px #eee;
@@ -80,61 +79,63 @@ export const CommentInner = styled.div`
     border-radius: 6px;
     margin-left: 40px;
   }
-  .fnButton{
+  .fnButton {
     display: flex;
     justify-content: end;
     margin-left: 40px;
-    button{
-      position: relative; right: 0; top: 0;
+    button {
+      position: relative;
+      right: 0;
+      top: 0;
       background: none;
-      color: #98A2B3;
-      &:first-child:after{
+      color: #98a2b3;
+      &:first-child:after {
         display: block;
-        content: "";
+        content: '';
         width: 1px;
         height: 11px;
-        position: absolute; right: -1px; top: 4px;
-        background-color: #98A2B3;
+        position: absolute;
+        right: -1px;
+        top: 4px;
+        background-color: #98a2b3;
       }
     }
   }
 `;
 export const ReCommentToggle = styled.button`
   background: none;
-`
+`;
 
 export const ReCommentWrap = styled.div`
   margin-left: 50px;
-  .reCommentInner{
+  .reCommentInner {
     margin-bottom: 15px;
   }
-  .recommentInfo{
+  .recommentInfo {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    div{
+    div {
       display: flex;
       align-items: center;
       gap: 5px;
     }
-    img{
+    img {
       width: 36px;
       height: 36px;
       border-radius: 50%;
     }
-    h1{
+    h1 {
       font-size: 14px;
     }
-    span{
+    span {
       font-size: 12px;
-      letter-spacing: -.5px;
+      letter-spacing: -0.5px;
       color: #777;
     }
-    button{
+    button {
       background: none;
     }
   }
-`
-export const ReCommentWriteWrap = styled.div`
-`
-
+`;
+export const ReCommentWriteWrap = styled.div``;
