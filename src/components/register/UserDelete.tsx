@@ -1,10 +1,9 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import useUserMutate from 'src/hooks/useUserMutate';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { FlexBoxCenter } from 'src/styles/styleBox';
@@ -13,17 +12,17 @@ import Confirm from '../popUp/Confirm';
 
 const UserDelete = () => {
   const navigate = useNavigate();
-  // const location = useLocation();
   const queryClient = useQueryClient();
   const userId = useLoginUserId();
 
   const [_, setUserLogin] = useAtom(userAtom);
-  // const { deleteUserMutate } = useUserMutate();
 
   const clickWithdraw = async () => {
     if (await Confirm('userDelete')) {
       const { error: deleteError } = await supabase.auth.admin.deleteUser(userId);
       await deleteUser(userId);
+
+      // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
         alert('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
@@ -37,7 +36,6 @@ const UserDelete = () => {
       queryClient.resetQueries(['loginUser']);
     }
   };
-  // SQL: grant select on table auth.users to service_role;
 
   return <S.WithdrawButton onClick={clickWithdraw}>탈퇴하기</S.WithdrawButton>;
 };
