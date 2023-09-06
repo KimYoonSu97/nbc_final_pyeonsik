@@ -3,10 +3,16 @@ import { S } from './StyledBottomFunction';
 import { IconLinkCopy, IconLinkFacebook, IconLinkKakao, IconLinkTwitter, IconUnLink } from 'src/components/icons';
 import { useLocation } from 'react-router';
 
-const BottomShare = () => {
-  const { pathname } = useLocation();
+interface BottomShareProps {
+  title: string;
+  likeCount?: number;
+  commentCount?: number | null;
+  sharedCount?: number;
+}
 
-  const shareUrl = 'nbc-final-pyeonsik-897l29vm7-kimyoonsu97.vercel.app/' + pathname;
+const BottomShare = ({ title, likeCount, commentCount, sharedCount }: BottomShareProps) => {
+  const { pathname } = useLocation();
+  const shareUrl = 'nbc-final-pyeonsik.vercel.app/' + pathname;
 
   const clickFacebook = () => {
     window.open(`http://www.facebook.com/sharer/sharer.php?u=${shareUrl}`);
@@ -17,7 +23,36 @@ const BottomShare = () => {
     window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`);
   };
 
-  const clickKakao = () => {};
+  const clickKakao = () => {
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '편식, 까탈스러운 편식쟁이들의 놀이터',
+        description: '나만 아는 꿀조합, 인기 많은 편스토랑 메뉴와 이번 달의 편의점 행사 상품까지 한 번에!',
+        imageUrl: 'https://wwkfivwrtwucsiwsnisz.supabase.co/storage/v1/object/public/photos/logo/logo.png',
+        link: {
+          webUrl: `https://${shareUrl}`
+        }
+      },
+      itemContent: {
+        // profileText: '편식, 까탈스러운 편식쟁이들의 놀이터'
+      },
+      social: {
+        likeCount,
+        commentCount,
+        sharedCount
+      },
+      buttons: [
+        {
+          title: '자세히 보기',
+          link: {
+            mobileWebUrl: `https://${shareUrl}`,
+            webUrl: `https://${shareUrl}`
+          }
+        }
+      ]
+    });
+  };
 
   const clickCopyLink = async () => {
     try {

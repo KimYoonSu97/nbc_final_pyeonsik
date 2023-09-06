@@ -101,7 +101,14 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
         </S.FunctionButton>
         <S.FunctionCount $location={pathname}>{postBookmarkList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
-      {id && <BottomShare />}
+      {id && (
+        <BottomShare
+          title={post.title}
+          likeCount={postLikeList?.length}
+          commentCount={commentCountData}
+          sharedCount={postQuotationList?.length}
+        />
+      )}
     </>
   );
 };
