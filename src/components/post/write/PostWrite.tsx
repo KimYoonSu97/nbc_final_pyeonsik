@@ -30,8 +30,6 @@ const PostWrite = () => {
 
   const [isIn] = useState(true);
 
-  console.log('allContents', Object.keys(allContents).length);
-
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (isIn) {
