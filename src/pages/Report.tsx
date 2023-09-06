@@ -4,6 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 const Report = () => {
   const [step, setStep] = useState<number>(1);

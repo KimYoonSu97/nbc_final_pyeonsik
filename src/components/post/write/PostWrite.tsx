@@ -14,6 +14,7 @@ import { levelChecker } from './userLevelUp';
 import useUserMutate from 'src/hooks/useUserMutate';
 import Confirm from 'src/components/popUp/Confirm';
 import { toast } from 'react-toastify';
+import { updateFirstRecipeBadge } from 'src/api/badge';
 
 const PostWrite = () => {
   const navigate = useNavigate();
@@ -113,6 +114,7 @@ const PostWrite = () => {
         tagimage: imageUrls
       };
       addRecipePostMutate.mutate(newPost);
+      updateFirstRecipeBadge(userId);
 
       // 이다음에 체크하고 네비게이트
       // 이 함수가 반환하는 것은 레벨업데이트가 필요한지 여부에대한 것과 어떤 레벨로 업데이트 할것인지에 대한 것임
