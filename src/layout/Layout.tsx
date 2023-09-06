@@ -1,11 +1,10 @@
 import React from 'react';
 import Header from '../components/header/Header';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import SideBar from 'src/components/sidebar/SideBar';
 
 const Layout = () => {
-  const param = useParams();
   const location = useLocation();
   const path = location.pathname.split('/')[1];
   return (

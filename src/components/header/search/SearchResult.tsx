@@ -5,7 +5,7 @@ const SearchResult = () => {
   return (
     <>
       <S.SearchResultBox>SearchResult</S.SearchResultBox>
-      <S.SearchBg></S.SearchBg>
+      <S.SearchBg />
     </>
   );
 };

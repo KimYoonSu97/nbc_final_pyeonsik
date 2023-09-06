@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { styleFont } from 'src/styles/styleFont';
 import { FlexBoxCenter } from 'src/styles/styleBox';
 
 interface Props {

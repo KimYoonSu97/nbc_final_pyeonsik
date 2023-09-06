@@ -1,7 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
-import { updateUserLevel } from './userLogin';
-import useUserMutate from 'src/hooks/useUserMutate';
 
 // post
 const getPost = async (id: string) => {

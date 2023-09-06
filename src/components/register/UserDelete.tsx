@@ -19,7 +19,6 @@ const UserDelete = () => {
 
   const clickWithdraw = async () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      console.log(userId);
       const { data, error: deleteError } = await supabase.auth.admin.deleteUser(userId);
       if (deleteError) {
         alert('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');

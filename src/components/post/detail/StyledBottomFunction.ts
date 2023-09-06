@@ -1,4 +1,4 @@
-import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
@@ -39,14 +39,19 @@ export const S = {
 
   FunctionLink: styled.div`
     height: 24px;
+    position: relative;
 
     display: flex;
     justify-content: center;
 
     &:hover .dropDownLink {
       cursor: auto;
-      display: flex;
       position: absolute;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
     .dropDownLink {
       display: none;
@@ -72,12 +77,7 @@ export const S = {
     }
   `,
 
-  LinkBubble: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  `,
+  LinkBubble: styled.div``,
 
   LinkTail: styled.div`
     display: flex;
