@@ -25,7 +25,6 @@ const UserDelete = () => {
         alert('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
       } else if (!deleteError) {
         deleteUserMutate.mutate(userId);
-        alert('탈퇴가 완료되었습니다.');
         navigate('/');
         // signout
         const { error: singOutError } = await supabase.auth.signOut();
