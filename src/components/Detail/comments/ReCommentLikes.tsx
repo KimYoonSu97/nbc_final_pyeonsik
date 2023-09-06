@@ -9,7 +9,6 @@ import { IconLiked, IconUnLiked } from 'src/components/icons';
 import { useLocation } from 'react-router';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 import { styleFont } from 'src/styles/styleFont';
-//왜 안돼?
 
 interface Props {
   commentId: string;

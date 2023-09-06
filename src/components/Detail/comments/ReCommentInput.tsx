@@ -16,7 +16,6 @@ interface Props {
   setIsOpenReCommentInput?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-//왜 안돼?
 const ReCommentInput = ({
   type,
   commentId,
