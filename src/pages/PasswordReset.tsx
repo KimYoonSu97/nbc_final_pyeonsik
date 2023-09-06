@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 
@@ -17,7 +18,7 @@ const PasswordReset: React.FC = () => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
 
     if (!error) {
-      alert('성공적으로 해당 이메일로 발신하였습니다.');
+      toast('성공적으로 해당 이메일로 발신하였습니다.');
     }
     console.log(error);
   };
@@ -28,14 +29,14 @@ const PasswordReset: React.FC = () => {
       if (event === 'PASSWORD_RECOVERY') {
         const newPassword = prompt('What would you like your new password to be?');
         if (newPassword === null) {
-          alert('비밀번호가 공백입니다!');
+          toast('비밀번호가 공백입니다!');
           return;
         }
         setPassword(newPassword);
         const { data, error } = await supabase.auth.updateUser({ password: password });
 
-        if (data) alert('Password updated successfully!');
-        if (error) alert('There was an error updating your password.');
+        if (data) toast('Password updated successfully!');
+        if (error) toast('There was an error updating your password.');
       }
     });
   }, []);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 
 export const PrivateRoute = () => {
@@ -13,7 +14,7 @@ export const PrivateRoute = () => {
       return true;
     } else {
       // navigate('/login', { state: { backgroundLocation: location } });
-      alert(NON_MEMBER);
+      toast(NON_MEMBER);
       return false;
     }
   };

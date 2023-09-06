@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import TermsAndConditions from './TermsAndConditions';
 import { termsAllAgreedAtom } from './TermsAndConditions';
 import { useAtom } from 'jotai';
+import { toast } from 'react-toastify';
 
 interface Props {
   setNextStep: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,7 +40,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     }
 
     if (!termsAllAgreed) {
-      alert('이용약관에 동의해야 합니다.');
+      toast('이용약관에 동의해야 합니다.');
       return;
     }
 

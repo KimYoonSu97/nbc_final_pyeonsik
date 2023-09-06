@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import { deleteReCommentData, updateReCommentData, writeReCommentData } from 'src/api/ReComment';
 
 const useReCommentMutate = (parent_commentId: string) => {
@@ -12,7 +13,7 @@ const useReCommentMutate = (parent_commentId: string) => {
 
   const writeReCommentButton = (userId: string, postId: string, reComment: string, parent_commentId: string) => {
     if (reComment.trim() === '') {
-      alert('댓글을 작성해 주세요.');
+      toast('댓글을 작성해 주세요.');
       return;
     }
     const newReComment = {
@@ -30,7 +31,7 @@ const useReCommentMutate = (parent_commentId: string) => {
     if (window.confirm('댓글을 삭제하시겠습니까?')) {
       deleteReCommentMutation.mutate(id);
     } else {
-      alert('삭제가 취소되었습니다.');
+      toast('삭제가 취소되었습니다.');
     }
   };
 
@@ -39,7 +40,7 @@ const useReCommentMutate = (parent_commentId: string) => {
     if (window.confirm('댓글을 수정 하시겠습니까?')) {
       updateReCommentMutation.mutate({ id, comment: updateComment });
     } else {
-      alert('수정이 취소되었습니다.');
+      toast('수정이 취소되었습니다.');
     }
   };
 
