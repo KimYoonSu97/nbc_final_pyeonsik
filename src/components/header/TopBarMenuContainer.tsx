@@ -4,15 +4,13 @@ import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import baseImage from '../../images/baseprofile.jpeg';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
-import UserLevel from './UserLevel';
 
 interface User {
   id: string;
@@ -132,7 +130,7 @@ const TopBarMenuContainer = () => {
               <S.Leveltext>Lv. 식신</S.Leveltext>
             </S.Level> */}
             {/* <p>Hello, {userData?.nickname}</p> */}
-            <button onClick={()=> navigate('/map')}>kakao Map</button>
+            <button onClick={() => navigate('/map')}>kakao Map</button>
             <S.ProfileImg
               $url={data?.data?.profileImg}
               onClick={() => {

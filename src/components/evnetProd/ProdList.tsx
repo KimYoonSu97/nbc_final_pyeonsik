@@ -57,7 +57,6 @@ const ProdList = () => {
         {products?.map((item) => {
           return <ProdCard key={item.id} data={item} />;
         })}
-        <></>
       </S.Container>
       <S.EmptyBox ref={ref}></S.EmptyBox>
     </>

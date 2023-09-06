@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import { IconGoogle, IconKakao, IconLogoSymbolH32, IconWaterMarkH32 } from 'src/components/icons';
+import { IconGoogle, IconKakao } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
 
 type Provider = 'google' | 'kakao' | 'github';
@@ -13,12 +13,10 @@ const OAuthLogin = () => {
     try {
       await supabase.auth.signInWithOAuth({
         provider
-
       });
       localStorage.setItem('social', provider);
 
       navigate('/');
-
     } catch (error) {
       console.log(error);
     }

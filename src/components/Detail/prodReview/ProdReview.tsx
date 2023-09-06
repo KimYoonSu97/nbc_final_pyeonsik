@@ -5,7 +5,7 @@ import supabase from 'src/lib/supabaseClient';
 import ProdReviewDnd from './ProdReviewDnd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { IconBadBig } from 'src/components/icons';
+import { IconBadBig, IconGoodFace } from 'src/components/icons';
 import styled from 'styled-components';
 
 const ProdReview = () => {
@@ -98,7 +98,7 @@ const ProdReview = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div>
+      <S.containerWrap>
         {step === prodId?.length ? (
           <p>신제품 리뷰 다함</p>
         ) : (
@@ -107,12 +107,13 @@ const ProdReview = () => {
               <ProdReviewDnd
                 index={-1}
                 id={-1}
-                prodName="또 사먹을래요!"
-                prodImg="dd"
+                prodName="또먹"
+                prodImg="/images/reviewLike.png"
                 handleMoveItem={handleMoveItem}
                 onDropToLike={onDropToLike}
                 onDropToDisLike={onDropToDisLike}
-              />
+                // styled="like"
+              ></ProdReviewDnd>
             </S.ReviewLike>
             {prodId?.map((prod, index) => {
               if (step === index)
@@ -127,7 +128,9 @@ const ProdReview = () => {
                       handleMoveItem={handleMoveItem}
                       onDropToLike={onDropToLike}
                       onDropToDisLike={onDropToDisLike}
+                      // styled="product"
                     />
+                    
                   </S.ReviewProducts>
                 );
             })}
@@ -135,16 +138,17 @@ const ProdReview = () => {
               <ProdReviewDnd
                 index={-2}
                 id={-2}
-                prodName="그만 먹을래요!"
-                prodImg="dislike_image_url"
+                prodName="또먹"
+                prodImg="/images/reviewLike.png"
                 handleMoveItem={handleMoveItem}
                 onDropToLike={onDropToLike}
                 onDropToDisLike={onDropToDisLike}
+                // styled="disLike"
               />
             </S.ReviewDisLike>
           </S.ProdReviewWrap>
         )}
-      </div>
+      </S.containerWrap>
     </DndProvider>
   );
 };
@@ -152,13 +156,45 @@ const ProdReview = () => {
 export default ProdReview;
 
 const S = {
+  containerWrap: styled.div`
+    background-color: #fff;
+  `,
   ProdReviewWrap: styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    border: solid 1px #111;
+    justify-content: center;
+    gap: 24px;
   `,
-  ReviewLike: styled.div``,
-  ReviewProducts: styled.div``,
-  ReviewDisLike: styled.div``
+  ReviewLike: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 160px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
+  `,
+  ReviewProducts: styled.div`
+    /* background-color: red; */
+    /* padding: 20px;
+    border-radius: 10px;
+    border: 2px solid;
+    border-radius: 20px;
+    background-image: linear-gradient(#fff, #fff), 
+    linear-gradient(to right, red 0%,  orange 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    margin: 10px; */
+  `,
+  ReviewDisLike: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 160px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
+  `
 };

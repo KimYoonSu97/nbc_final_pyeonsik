@@ -29,7 +29,7 @@ const BottomShare = () => {
   };
 
   return (
-    <S.FunctionButton>
+    <S.FunctionLink>
       <IconUnLink />
       <S.LinkBubble className="dropDownLink">
         <S.LinkTail />
@@ -49,7 +49,7 @@ const BottomShare = () => {
           </S.LlinkButton>
         </S.LinkBox>
       </S.LinkBubble>
-    </S.FunctionButton>
+    </S.FunctionLink>
   );
 };
 

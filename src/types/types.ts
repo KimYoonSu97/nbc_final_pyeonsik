@@ -8,6 +8,7 @@ export interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   autoFocus?: boolean;
 }
+
 export interface TextAreaInputProps {
   type: string;
   name: string;
@@ -249,6 +250,6 @@ export interface LocInform {
   position: {
     lat: number | string;
     lng: number | string;
-  },
+  };
   content: string;
 }
