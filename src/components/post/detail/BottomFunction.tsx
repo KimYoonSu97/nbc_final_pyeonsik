@@ -67,6 +67,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
         case 'bookmark':
           postBookmark ? deletePostBookmarkMutate.mutate(postBookmark.id) : addPostBookmarkMutate.mutate(payload);
 
+          //요기서 업적 업데이트가 호출됩니다! -원유길-
           updateBadge(userId, 'bookMark');
           break;
         case 'quotation':
