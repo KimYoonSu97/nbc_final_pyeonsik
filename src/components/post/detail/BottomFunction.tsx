@@ -11,6 +11,7 @@ import { BottomFunctionProps } from 'src/types/types';
 import { NON_MEMBER } from '../../../utility/alertMessage';
 import BottomShare from './BottomShare';
 import { S } from 'src/components/post/detail/StyledBottomFunction';
+import { updateBadge } from 'src/api/badge';
 import {
   IconBookmark,
   IconComment,
@@ -65,6 +66,8 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
           break;
         case 'bookmark':
           postBookmark ? deletePostBookmarkMutate.mutate(postBookmark.id) : addPostBookmarkMutate.mutate(payload);
+
+          updateBadge(userId, 'bookMark');
           break;
         case 'quotation':
           navigate('/write', { state: post });
