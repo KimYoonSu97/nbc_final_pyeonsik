@@ -40,12 +40,16 @@ export { ReactComponent as IconAddReComment } from './IconAddReComment.svg';
 export { ReactComponent as IconLiked } from './IconLiked.svg';
 export { ReactComponent as IconUnLiked } from './IconUnLiked.svg';
 
-// export { ReactComponent as  } from './';
-
 export { ReactComponent as IconWriteButton } from './IconWriteButton.svg';
 export { ReactComponent as IconPlusTag } from './IconPlusTag.svg';
 
+// brand
 export { ReactComponent as SevenEleven } from './brand/SevenEleven.svg';
 export { ReactComponent as GS25 } from './brand/GS25.svg';
 export { ReactComponent as Emart24 } from './brand/Emart24.svg';
 export { ReactComponent as CU } from './brand/CU.svg';
+
+// review
+export { ReactComponent as IconBad } from './IconBad.svg';
+
+// export { ReactComponent as  } from './';

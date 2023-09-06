@@ -1,5 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
-import { ProdEvent, Product, InfinityProductList } from 'src/types/types';
+import { InfinityProductList } from 'src/types/types';
 
 const getEventProd = async (pageParam: number = 0, brandParam: string): Promise<InfinityProductList> => {
   //페이지가 어디냐에 따라 다른 쿼리

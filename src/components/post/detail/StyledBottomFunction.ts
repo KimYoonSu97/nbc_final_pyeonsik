@@ -1,4 +1,4 @@
-import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
@@ -26,7 +26,6 @@ export const S = {
   FunctionButton: styled.button`
     height: 24px;
 
-    position: relative;
     display: flex;
     justify-content: center;
 
@@ -36,17 +35,31 @@ export const S = {
     svg:hover {
       fill: #f02826;
     }
+  `,
+
+  FunctionLink: styled.div`
+    height: 24px;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
 
     &:hover .dropDownLink {
       cursor: auto;
+      position: absolute;
 
       display: flex;
-      position: absolute;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
     .dropDownLink {
       display: none;
     }
 
+    svg {
+      fill: #667085;
+    }
     .linkFacebook {
       svg:hover {
         fill: #4285f4;
@@ -64,12 +77,7 @@ export const S = {
     }
   `,
 
-  LinkBubble: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  `,
+  LinkBubble: styled.div``,
 
   LinkTail: styled.div`
     display: flex;

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
-import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import 'react-kakao-maps-sdk';
 import { useGeoLocation } from './useGeoLocation';
 import { GetDistanceBtw } from './GetDistanceBtw';
 import { GetDetailAddress } from './GetDetailAddress';
 import { LocInform } from 'src/types/types';
-
 
 declare global {
   interface Window {

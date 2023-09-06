@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { TextAreaInputProps } from 'src/types/types';
 
 const PostWriteBodyInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
-  ({ name, id = name, title, value, onChange, autoFocus }, ref) => {
+  ({ name, value, onChange, autoFocus }, ref) => {
     return (
       <S.InputContainer>
-        {/* <S.Label htmlFor={id}>{title}</S.Label> */}
         <S.TextAreaElement ref={ref} name={name} value={value} onChange={onChange} autoFocus={autoFocus} />
       </S.InputContainer>
     );

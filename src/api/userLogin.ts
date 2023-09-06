@@ -27,4 +27,8 @@ const updateUserLevel = async ({ userId, level }: UpdateUserLevel) => {
   await supabase.from('users').update({ level }).eq('id', userId);
 };
 
-export { getUserData, updateProfileImg, updateUserNickname, updateUserLevel };
+const deleteUser = async (id: string) => {
+  await supabase.from('users').delete().eq('id', id);
+};
+
+export { getUserData, updateProfileImg, updateUserNickname, updateUserLevel, deleteUser };

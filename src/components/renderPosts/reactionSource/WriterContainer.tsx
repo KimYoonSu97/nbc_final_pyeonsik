@@ -20,6 +20,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
   const navigate = useNavigate();
 
   const { deletePostMutate } = usePost();
+
   const clickDelete = (id: string) => {
     if (!window.confirm(DELETE)) {
       alert(CANCLE);
