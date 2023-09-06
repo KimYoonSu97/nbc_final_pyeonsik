@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
-
+import { toast } from 'react-toastify';
 
 interface Props {
   userEmail: string;
@@ -21,8 +21,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [_, setLoginUser] = useAtom(userAtom);
-
-
 
   const correctNickNameMessages = [
     '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
@@ -98,20 +96,18 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
 
-  
-
     // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
     if (!nicknamePattern.test(nickname)) {
-      alert('올바른 닉네임 형식이 아닙니다.');
+      toast('올바른 닉네임 형식이 아닙니다.');
       return;
     }
     if (nickname.length < 2) {
-      alert('2글자 이상 이어야 합니다.');
+      toast('2글자 이상 이어야 합니다.');
       return;
     }
     if (filterdNickName.includes('*')) {
-      alert('비속어는 사용할 수 없어요. 🤬');
+      toast('비속어는 사용할 수 없어요. 🤬');
       return;
     }
 
@@ -121,11 +117,11 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       profileImg: profileImgSrc
     };
     if (!nickname) {
-      alert('닉네임을 입력해주세요');
+      toast('닉네임을 입력해주세요');
       return;
     }
     if (profileImgSrc === '') {
-      alert('사진을 등록해주세요');
+      toast('사진을 등록해주세요');
       return;
     }
 
