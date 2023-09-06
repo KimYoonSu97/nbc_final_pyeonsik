@@ -3,7 +3,6 @@ import { styleFont } from 'src/styles/styleFont';
 import { styled } from 'styled-components';
 
 const MyAchievement = () => {
-  // return
   return <S.Container>서비스 준비중입니다.</S.Container>;
 };
 
