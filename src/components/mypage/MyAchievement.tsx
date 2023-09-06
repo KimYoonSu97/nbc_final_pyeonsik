@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { styleFont } from 'src/styles/styleFont';
 import { styled } from 'styled-components';
 

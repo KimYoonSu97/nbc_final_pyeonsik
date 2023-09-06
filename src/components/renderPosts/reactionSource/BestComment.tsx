@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { styled } from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
-import { getCommentDataByPostId } from 'src/api/comment';
 import { getBestCommentLikeByPostId } from 'src/api/commentLike';
 import { IconBestComment } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';

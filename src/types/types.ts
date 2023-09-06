@@ -8,6 +8,7 @@ export interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   autoFocus?: boolean;
 }
+
 export interface TextAreaInputProps {
   type: string;
   name: string;
@@ -242,4 +243,13 @@ export interface AddImageTagProps {
   tagData?: Tag[][] | null;
   body?: string[] | null;
   isEditMode?: boolean;
+}
+
+// 카카오맵
+export interface LocInform {
+  position: {
+    lat: number | string;
+    lng: number | string;
+  };
+  content: string;
 }

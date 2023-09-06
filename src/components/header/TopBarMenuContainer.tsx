@@ -11,7 +11,6 @@ import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
-import UserLevel from './UserLevel';
 
 interface User {
   id: string;
@@ -127,8 +126,11 @@ const TopBarMenuContainer = () => {
               <IconBell />
             </S.Icon>
 
-            <UserLevel level={data?.data?.level} />
-
+            {/* <S.Level>
+              <S.Leveltext>Lv. 식신</S.Leveltext>
+            </S.Level> */}
+            {/* <p>Hello, {userData?.nickname}</p> */}
+            <button onClick={() => navigate('/map')}>kakao Map</button>
             <S.ProfileImg
               $url={data?.data?.profileImg}
               onClick={() => {

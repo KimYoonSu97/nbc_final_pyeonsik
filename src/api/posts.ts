@@ -1,7 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
-import { updateUserLevel } from './userLogin';
-import useUserMutate from 'src/hooks/useUserMutate';
 
 // post
 const getPost = async (id: string) => {
@@ -20,6 +18,7 @@ const getQuotationPosts = async (orgPostId: string) => {
 
 const addPost = async (post: NewPost) => {
   await supabase.from('posts').insert(post).select();
+  alert('작성이 완료되었습니다.');
 };
 
 const updatePost = async (post: EditPost) => {

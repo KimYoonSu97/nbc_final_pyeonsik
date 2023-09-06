@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPost } from 'src/api/posts';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -16,7 +16,6 @@ import TitleArea from './write/TitleArea';
 import OrgPostCard from './detail/OrgPostCard';
 
 const PostEditRecipe = () => {
-  const navigate = useNavigate();
   const { id: prams } = useParams<string>();
   const userId: string | undefined = useLoginUserId();
 
