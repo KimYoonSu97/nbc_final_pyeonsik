@@ -8,6 +8,7 @@ import { CANCLE, DELETE } from 'src/utility/alertMessage';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from 'src/components/header/UserLevel';
 import { IconClose } from 'src/components/icons';
+import Confirm from 'src/components/popUp/Confirm';
 
 interface WriterContainerProps {
   isModal?: boolean;
@@ -21,13 +22,13 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
 
   const { deletePostMutate } = usePost();
 
-  const clickDelete = (id: string) => {
-    if (!window.confirm(DELETE)) {
+  const clickDelete = async (id: string) => {
+    if (await Confirm('postDelete')) {
+      deletePostMutate.mutate(post.id);
+    } else {
       alert(CANCLE);
       return;
     }
-
-    deletePostMutate.mutate(post.id);
   };
 
   const clickEdit = () => {
