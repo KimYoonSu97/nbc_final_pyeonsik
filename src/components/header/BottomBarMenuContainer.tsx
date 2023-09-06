@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
 const BottomBarMenuContainer = () => {
@@ -56,11 +58,8 @@ type Props = {
 export default BottomBarMenuContainer;
 
 const S = {
-  ButtonArea: styled.div`
-    display: flex;
+  ButtonArea: styled(FlexBoxCenter)`
     margin-right: 14px;
-    justify-content: center;
-    align-items: center;
   `,
   BoardButton: styled(Link)<Props>`
     display: flex;
@@ -69,6 +68,7 @@ const S = {
     padding: 3px 18px;
     border-bottom: 2px solid white;
     text-decoration: none;
+    ${styleFont.labelLarge}
     color: var(--font-black, var(--black, #242424));
     ${(props) =>
       props.$type === props.$location &&
@@ -81,37 +81,24 @@ const S = {
       border-bottom: 2px solid #000;
     }
   `,
-  QuickButtonArea: styled.div`
-    display: flex;
-    align-items: center;
+  QuickButtonArea: styled(FlexBoxAlignCenter)`
     gap: 8px;
   `,
-  QuickPostButton: styled.div`
-    display: flex;
-    align-items: center;
+  QuickPostButton: styled(FlexBoxAlignCenter)`
     border-radius: 100px;
     background-color: #f5f5f5;
     padding: 3px 18px;
     height: 34px;
   `,
   SearchCategoryArea: styled.div``,
-  SearchCategory: styled.div`
-    display: flex;
+  SearchCategory: styled(FlexBoxCenter)`
     height: 34px;
     padding: 0 18px;
     padding-top: 2px;
-    justify-content: center;
-    align-items: center;
     margin-bottom: 4px;
     border-radius: 100px;
     background: var(--neutral-200, #e4e7ec);
     color: var(--font-black, var(--black, #242424));
-
-    /* label-large */
-
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    /* line-height: 24px; 150% */
+    ${styleFont.labelLarge}
   `
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import usePost from 'src/hooks/usePost';
@@ -7,40 +7,69 @@ import TitleArea from './TitleArea';
 import EditorQuill from './EditorQuill';
 import OrgPostCard from '../detail/OrgPostCard';
 import { S } from 'src/components/post/write/StyledPostWrite';
-// recipe
 import supabase from 'src/lib/supabaseClient';
 import { useAtom } from 'jotai';
 import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
+import { levelChecker } from './userLevelUp';
+import useUserMutate from 'src/hooks/useUserMutate';
 
 const PostWrite = () => {
   const navigate = useNavigate();
   const { state: orgPost } = useLocation();
   const userId: string | undefined = useLoginUserId();
 
-  // common
   const [category, setCategory] = useState<string>('common');
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  // recipe, 제출 후 값을 초기화 해주기 위해 선언
   const [allContents, setContentsAtom] = useAtom(contentsAtom);
   const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
 
-  // common
-  const { addPostMutate } = usePost();
-  // recipe, 입력 값이 배열로 바뀌었기에 query 선언을 하나 더
-  const { addRecipePostMutate } = usePost();
+  const { addPostMutate, addRecipePostMutate } = usePost();
+  const { levelMutation } = useUserMutate();
+
+  const [isIn] = useState(true);
+
+  console.log('allContents', Object.keys(allContents).length);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isIn) {
+        e.preventDefault();
+        e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      setContentsAtom({});
+      setTagsDataAtom({});
+      setImagesDataAtom({});
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isIn]);
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // common
     if (title.trim() === '' || (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '')) {
       alert('제목과 내용을 입력해 주세요.');
       return false;
     }
 
-    // recipe
+    const isAllContentsEmpty = Object.keys(allContents).every((key) => allContents[key] === '');
+
+    if (category === 'recipe' && isAllContentsEmpty) {
+      alert('내용을 입력해 주세요.');
+      return;
+    }
+
+    const confirmMessage = '작성하시겠습니까?';
+    if (!window.confirm(confirmMessage)) {
+      return;
+    }
+
     const imageUrls = [];
     for (const selectedImage of Object.values(selectedImages)) {
       const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
@@ -56,15 +85,18 @@ const PostWrite = () => {
     if (category === 'common') {
       const newPost = {
         postCategory: category,
+        hasOrgPost: !!orgPost,
         orgPostId: orgPost?.id,
         title,
         body,
         userId
       };
+
       addPostMutate.mutate(newPost);
     } else if (category === 'recipe') {
       const newPost = {
         postCategory: category,
+        hasOrgPost: !!orgPost,
         orgPostId: orgPost?.id,
         userId,
         title,
@@ -73,14 +105,29 @@ const PostWrite = () => {
         tags: Object.values(allTags),
         tagimage: imageUrls
       };
+
       addRecipePostMutate.mutate(newPost);
+      // 이다음에 체크하고 네비게이트
+      // 이 함수가 반환하는 것은 레벨업데이트가 필요한지 여부에대한 것과 어떤 레벨로 업데이트 할것인지에 대한 것임
+      const result = await levelChecker(userId);
+
+      //만약 업데이트 가 필요하지 않다면 그냥 바로 네비게이트로 홈으로 보내버림
+      if (!result.isNeedUpdate) {
+        navigate('/');
+        return;
+      }
+      // 만약 True가 나와서 필요하다면 업데이트 및 로그인 유저에대한 데이터를 인벨리데이트 시켜버려서 새로 패치함
+      const update = {
+        userId,
+        level: result.userLevel as string
+      };
+      levelMutation.mutate(update);
+      navigate('/');
     }
 
     setContentsAtom({});
     setTagsDataAtom({});
     setImagesDataAtom({});
-
-    navigate(`/`);
   };
 
   return (

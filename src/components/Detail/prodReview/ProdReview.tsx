@@ -5,6 +5,8 @@ import supabase from 'src/lib/supabaseClient';
 import ProdReviewDnd from './ProdReviewDnd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { IconBadBig } from 'src/components/icons';
+import styled from 'styled-components';
 
 const ProdReview = () => {
   const [review, setReview] = useState(0);
@@ -100,41 +102,47 @@ const ProdReview = () => {
         {step === prodId?.length ? (
           <p>신제품 리뷰 다함</p>
         ) : (
-          <div>
-            <ProdReviewDnd
-              index={-1}
-              id={-1}
-              prodName="또 사먹을래요!"
-              prodImg="like_image_url"
-              handleMoveItem={handleMoveItem}
-              onDropToLike={onDropToLike}
-              onDropToDisLike={onDropToDisLike}
-            />
+          <S.ProdReviewWrap>
+            <S.ReviewLike>
+              <ProdReviewDnd
+                index={-1}
+                id={-1}
+                prodName="또 사먹을래요!"
+                prodImg="dd"
+                handleMoveItem={handleMoveItem}
+                onDropToLike={onDropToLike}
+                onDropToDisLike={onDropToDisLike}
+              />
+            </S.ReviewLike>
             {prodId?.map((prod, index) => {
-              if(step === index)
-              return (
-                <ProdReviewDnd
-                  key={prod.id}
-                  index={index}
-                  id={prod.id}
-                  prodName={prod.prodName}
-                  prodImg={prod.prodImg}
-                  handleMoveItem={handleMoveItem}
-                  onDropToLike={onDropToLike}
-                  onDropToDisLike={onDropToDisLike}
-                />
-              );
+              if (step === index)
+                return (
+                  <S.ReviewProducts>
+                    <ProdReviewDnd
+                      key={prod.id}
+                      index={index}
+                      id={prod.id}
+                      prodName={prod.prodName}
+                      prodImg={prod.prodImg}
+                      handleMoveItem={handleMoveItem}
+                      onDropToLike={onDropToLike}
+                      onDropToDisLike={onDropToDisLike}
+                    />
+                  </S.ReviewProducts>
+                );
             })}
-            <ProdReviewDnd
-              index={-2}
-              id={-2}
-              prodName="그만 먹을래요!"
-              prodImg="dislike_image_url"
-              handleMoveItem={handleMoveItem}
-              onDropToLike={onDropToLike}
-              onDropToDisLike={onDropToDisLike}
-            />
-          </div>
+            <S.ReviewDisLike>
+              <ProdReviewDnd
+                index={-2}
+                id={-2}
+                prodName="그만 먹을래요!"
+                prodImg="dislike_image_url"
+                handleMoveItem={handleMoveItem}
+                onDropToLike={onDropToLike}
+                onDropToDisLike={onDropToDisLike}
+              />
+            </S.ReviewDisLike>
+          </S.ProdReviewWrap>
         )}
       </div>
     </DndProvider>
@@ -142,3 +150,15 @@ const ProdReview = () => {
 };
 
 export default ProdReview;
+
+const S = {
+  ProdReviewWrap: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: solid 1px #111;
+  `,
+  ReviewLike: styled.div``,
+  ReviewProducts: styled.div``,
+  ReviewDisLike: styled.div``
+};

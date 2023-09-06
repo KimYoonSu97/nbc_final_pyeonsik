@@ -11,6 +11,7 @@ interface User {
   email: string;
   nickname: string;
   profileImg: string;
+  level: string;
 }
 
 export const userAtom = atom<User | null>(null);

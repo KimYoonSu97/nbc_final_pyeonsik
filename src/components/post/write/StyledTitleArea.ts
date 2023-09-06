@@ -1,3 +1,4 @@
+import { styleFont } from 'src/styles/styleFont';
 import styled from 'styled-components';
 
 export const S = {
@@ -14,10 +15,8 @@ export const S = {
   `,
   CategoryText: styled.div`
     color: #000;
-    font-style: normal;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.titleSmall}
+    width: 50px;
   `,
   Contour: styled.div`
     background: #f6f7f9;
@@ -30,10 +29,7 @@ export const S = {
     outline: none;
     color: #000;
     width: 723px;
-    font-style: normal;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px; /* 150% */
+    ${styleFont.bodyLarge}
   `,
   SelectCategory: styled.div`
     gap: 8px;
@@ -46,12 +42,9 @@ export const S = {
     height: 20px;
   `,
   SelectText: styled.button`
-    background-color: transparent;
+    width: 50px;
     padding: 0px;
     color: var(--neutral-400, #98a2b3);
-    font-style: normal;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.titleSmall}
   `
 };

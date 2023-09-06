@@ -4,13 +4,14 @@ import { useQuery } from '@tanstack/react-query';
 import { getCommentDataByPostId } from 'src/api/comment';
 import { getBestCommentLikeByPostId } from 'src/api/commentLike';
 import { IconBestComment } from 'src/components/icons';
+import { styleFont } from 'src/styles/styleFont';
 
 interface BestCommentProps {
   postId: string;
 }
 
 interface BestComment {
-  commentId: { comment: string; created_at: string; id: string; postId: string; userId: string };
+  commentId: { comment: string; created_at: string; id: string; postId: string; userId: { nickname: string } };
   userId: { nickname: string };
 }
 
@@ -25,10 +26,10 @@ const BestComment = ({ postId }: BestCommentProps) => {
   }
 
   if (!data?.commentId) {
-    return <div>작성된 댓글이 없습니다! </div>;
+    return <S.NoComment>베스트 댓글이 없습니다! </S.NoComment>;
   }
 
-  const { commentId, userId } = data as BestComment;
+  const { commentId } = data as unknown as BestComment;
 
   return (
     <S.Container>
@@ -38,7 +39,7 @@ const BestComment = ({ postId }: BestCommentProps) => {
       <S.CommentContainer>
         <S.UserBox>
           <S.BestBedge>BEST</S.BestBedge>
-          <S.Nickname>{userId.nickname}</S.Nickname>
+          <S.Nickname>{commentId.userId.nickname}</S.Nickname>
         </S.UserBox>
         <S.Comment>{commentId.comment}</S.Comment>
       </S.CommentContainer>
@@ -105,12 +106,10 @@ const S = {
     color: var(--font-black, var(--Black, #242424));
     text-overflow: ellipsis;
     white-space: nowrap;
+    ${styleFont.bodyMedium}
+  `,
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+  NoComment: styled.div`
+    ${styleFont.bodyMedium}
   `
 };

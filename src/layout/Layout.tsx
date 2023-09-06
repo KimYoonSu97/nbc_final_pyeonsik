@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/header/Header';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import SideBar from 'src/components/sidebar/SideBar';
 
 const Layout = () => {
@@ -17,17 +17,10 @@ const Layout = () => {
           <Header />
           <S.BottomContainer $path={path}>
             <S.Container id="scroll">
-              <S.ContentsArea>
+              <S.ContentsArea $path={path}>
                 <Outlet />
               </S.ContentsArea>
-              {location.pathname === '/login' ||
-              location.pathname === '/register' ||
-              location.pathname.split('/')[1] === 'detail' ||
-              location.pathname.split('/')[1] === 'report' ? (
-                <></>
-              ) : (
-                <SideBar />
-              )}
+              {path === 'login' || path === 'register' || path === 'detail' || path === 'report' ? <></> : <SideBar />}
             </S.Container>
           </S.BottomContainer>
         </>
@@ -50,7 +43,7 @@ const S = {
     background: var(--background, #f6f7f9);
     display: flex;
     gap: 62px;
-    justify-content: center;
+    /* justify-content: center; */
   `,
 
   BottomContainer: styled.div<Props>`
@@ -84,12 +77,17 @@ const S = {
       display: none;
     }
   `,
-
-  ContentsArea: styled.div`
+  ContentsArea: styled.div<Props>`
     position: relative;
     width: 890px;
+    ${(props) => {
+      if (props.$path === 'register' || props.$path === 'detail') {
+        return css`
+          margin: 0 auto;
+        `;
+      }
+    }}
   `,
-
   PositionBox: styled.div`
     width: 296px;
     height: 10px;

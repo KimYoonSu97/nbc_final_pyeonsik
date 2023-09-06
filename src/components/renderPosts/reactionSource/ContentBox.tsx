@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 // import { S } from '../style/StyledPostDetail';
-import TagImage from 'src/components/ImageTag/TagImage';
+import TagImage from 'src/components/ImageTag/ShowTag';
+import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
 interface ContentBoxProps {
@@ -19,14 +20,18 @@ const ContentBox = ({ post }: ContentBoxProps) => {
       )}
       <S.PostBodyRecipe $location={pathname}>
         {post.postCategory === 'recipe' &&
-          post.tagimage.map((tagImageUrl: string, index: string) => (
-            <TagImage
-              key={index}
-              imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${tagImageUrl}`}
-              recipeBody={post.recipeBody[index]}
-              tagsForImage={post.tags[index] || []}
-            />
-          ))}
+          post.recipeBody.map((recipeText: string, index: number) =>
+            post.tagimage[index] ? (
+              <TagImage
+                key={index}
+                imageUrl={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${post.tagimage[index]}`}
+                recipeBody={recipeText}
+                tagsForImage={post.tags[index] || []}
+              />
+            ) : (
+              <div key={index}>{recipeText}</div>
+            )
+          )}
       </S.PostBodyRecipe>
     </>
   );
@@ -129,16 +134,13 @@ export const S = {
     align-items: center;
 
     color: var(--black, #242424);
-    font-style: normal;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    ${styleFont.titleLarge}
   `,
 
   PostBodyCommon: styled.pre<BodyHeightProps>`
     width: 790px;
     ${(props) => {
-      if (props.$location !== '/') {
+      if (props.$location === 'detail') {
         return css`
           min-height: 40vh;
         `;
@@ -151,7 +153,7 @@ export const S = {
     color: var(--Black, #242424);
 
     /* body-게시글 */
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -161,7 +163,7 @@ export const S = {
     /* border: 1px solid black; */
     /* border-radius: 10px; */
 
-    font-family: 'inherit';
+    /* font-family: 'inherit'; */
     /* background-color: royalblue; */
   `,
   PostBodyRecipe: styled.div<BodyHeightProps>`

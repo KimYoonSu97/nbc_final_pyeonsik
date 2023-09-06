@@ -16,7 +16,7 @@ export const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 84px 0;
+    margin: 84px;
   `,
 
   PostHead: styled.div`
@@ -149,8 +149,6 @@ export const S = {
   `,
 
   WriterButton: styled.button<ColorProps>`
-    background-color: transparent;
-
     width: 40px;
     height: 26px;
     padding: 3px 4px;

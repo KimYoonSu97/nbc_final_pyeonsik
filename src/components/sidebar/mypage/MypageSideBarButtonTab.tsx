@@ -89,9 +89,12 @@ const S = {
     display: flex;
     align-items: center;
     padding: 10px 12px;
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
     font-size: 14px;
+    font-style: normal;
     font-weight: 400;
-    line-height: 16px;
+    line-height: 16px; /* 114.286% */
     border-radius: 10px;
     text-decoration: none;
     color: ${(props) => (props.$type === props.$location ? 'black' : 'var(--neutral-500, #667085)')};
@@ -109,12 +112,16 @@ const S = {
     display: flex;
     align-items: center;
     padding: 10px 12px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16px;
     border-radius: 10px;
     text-decoration: none;
     color: ${(props) => (props.$type === props.$location ? 'black' : 'var(--neutral-500, #667085)')};
+
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 114.286% */
 
     ${(props) =>
       props.$type === props.$location &&

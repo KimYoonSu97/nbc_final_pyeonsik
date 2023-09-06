@@ -4,7 +4,8 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/function/alertMessage';
+import { NON_MEMBER } from 'src/utility/alertMessage';
+import { styleFont } from 'src/styles/styleFont';
 
 interface Props {
   type: string;
@@ -64,27 +65,31 @@ const ReCommentInput = ({
   };
 
   return (
-    <S.CommentInputForm onSubmit={functionChanger}>
-      <S.CommentInput
-        placeholder="댓글을 남겨보세요!"
-        type="text"
-        value={reComment || ''}
-        onChange={(e) => setReComment(e.target.value)}
-      />
-      <S.CommentInputAddButton>
-        <IconCommentInput />
-      </S.CommentInputAddButton>
-    </S.CommentInputForm>
+    <S.Container>
+      <S.CommentInPutProfile></S.CommentInPutProfile>
+      <S.CommentInputForm onSubmit={functionChanger}>
+        <S.CommentInput
+          placeholder="댓글을 남겨보세요!"
+          type="text"
+          value={reComment || ''}
+          onChange={(e) => setReComment(e.target.value)}
+        />
+        <S.CommentInputAddButton>
+          <IconCommentInput />
+        </S.CommentInputAddButton>
+      </S.CommentInputForm>
+    </S.Container>
   );
 };
 
 export default ReCommentInput;
 
 const S = {
-  CommentInputArea: styled.div`
+  Container: styled.div`
     display: flex;
-    gap: 8px;
-    margin: 16px 0 0 50px;
+    margin-left: 25px;
+    align-items: center;
+    /* margin: 16px 0 50px 0; */
   `,
   CommentInPutProfile: styled.div`
     width: 36px;
@@ -98,8 +103,8 @@ const S = {
     align-items: center;
     background: var(--neutral-100, #f2f4f7);
     border-radius: 10px;
-    padding-right: 10px;
-    margin: 16px 0 0 50px;
+    margin-left: 16px;
+    /* margin: 16px 0 50px; */
   `,
   CommentInput: styled.input`
     width: 100%;
@@ -112,12 +117,9 @@ const S = {
 
     color: var(--neutral-500, #667085);
 
-    /* body-medium */
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
   `,
-  CommentInputAddButton: styled.button``
+  CommentInputAddButton: styled.button`
+    background: transparent;
+  `
 };

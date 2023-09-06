@@ -54,7 +54,8 @@ export interface BottomFunctionProps {
 
 // 게시글 작성 임시
 export interface NewPost {
-  orgPostId: any;
+  orgPostId: string;
+  hasOrgPost: boolean;
   postCategory: string;
   title: string;
   body: string;
@@ -63,6 +64,7 @@ export interface NewPost {
 
 export interface NewRecipePost {
   // orgPostId: string | null;
+  hasOrgPost: boolean;
   postCategory: string;
   title: string;
   recipeBody: string[];
@@ -195,12 +197,12 @@ export interface SearchProps {
 
 export interface ImageUploaderProps {
   onImageSelect: (imageFile: File) => void;
-  imageSelected: boolean;
+  imageSelected: string;
 }
 export interface TagImageProps {
-  imageUrl: string;
-  recipeBody?: string;
-  tagsForImage: ImageTag[];
+  imageUrl?: string;
+  recipeBody: string;
+  tagsForImage?: ImageTag[];
 }
 //여기까지
 
@@ -240,4 +242,13 @@ export interface AddImageTagProps {
   tagData?: Tag[][] | null;
   body?: string[] | null;
   isEditMode?: boolean;
+}
+
+// 카카오맵
+export interface LocInform {
+  position: {
+    lat: number | string;
+    lng: number | string;
+  },
+  content: string;
 }

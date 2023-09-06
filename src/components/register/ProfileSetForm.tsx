@@ -7,6 +7,7 @@ import baseImage from '../../images/baseprofile.jpeg';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 
+
 interface Props {
   userEmail: string;
 }
@@ -20,6 +21,8 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [_, setLoginUser] = useAtom(userAtom);
+
+
 
   const correctNickNameMessages = [
     '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
@@ -94,6 +97,8 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const setProfile = async () => {
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
+
+  
 
     // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;

@@ -1,9 +1,13 @@
 import React from 'react';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import CreatedAt from 'src/function/CreatedAt';
+import CreatedAt from 'src/utility/CreatedAt';
 import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router';
 import usePost from 'src/hooks/usePost';
+import { CANCLE, DELETE } from 'src/utility/alertMessage';
+import { styleFont } from 'src/styles/styleFont';
+import UserLevel from 'src/components/header/UserLevel';
+import { IconClose } from 'src/components/icons';
 
 interface WriterContainerProps {
   isModal?: boolean;
@@ -16,20 +20,21 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
   const navigate = useNavigate();
 
   const { deletePostMutate } = usePost();
-
-  // delete post
   const clickDelete = (id: string) => {
-    if (!window.confirm('삭제하시겠습니까?')) {
-      alert('취소되었습니다.');
+    if (!window.confirm(DELETE)) {
+      alert(CANCLE);
       return;
     }
 
     deletePostMutate.mutate(post.id);
-    navigate('/');
   };
 
   const clickEdit = () => {
     navigate(`/edit/${post.id}`, { state: post });
+  };
+
+  const clickClose = () => {
+    navigate(-1);
   };
 
   return (
@@ -40,7 +45,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
       <S.WriterContainer>
         <div>
           <S.WriterInfo $isModal={isModal}>
-            <S.WriterLevel>Lv. 수습</S.WriterLevel>
+            <UserLevel level={writer?.level} />
             {writer.nickname}
             <S.WriterSir $isModal={isModal}>님의</S.WriterSir>
             {post.postCategory === 'common' && '그르륵갉'}
@@ -50,17 +55,24 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
             <CreatedAt createdAt={post.created_at} />
           </S.PostDate>
         </div>
-        {userId === writer.id && (
-          <S.WriterFunction $isModal={isModal}>
-            <S.WriterButton $isModal={isModal} onClick={clickEdit}>
-              수정
-            </S.WriterButton>
-            <S.Contour />
-            <S.WriterButton $isModal={isModal} onClick={() => clickDelete(post.id)}>
-              삭제
-            </S.WriterButton>
-          </S.WriterFunction>
-        )}
+        <S.FunctionBox>
+          {userId === writer.id && (
+            <S.WriterFunction $isModal={isModal}>
+              <S.WriterButton $isModal={isModal} onClick={clickEdit}>
+                수정
+              </S.WriterButton>
+              <S.Contour />
+              <S.WriterButton $isModal={isModal} onClick={() => clickDelete(post.id)}>
+                삭제
+              </S.WriterButton>
+            </S.WriterFunction>
+          )}
+          {isModal && (
+            <S.CloseButton>
+              <IconClose onClick={clickClose} />
+            </S.CloseButton>
+          )}
+        </S.FunctionBox>
       </S.WriterContainer>
     </>
   );
@@ -73,6 +85,25 @@ interface ColorProps {
 }
 
 export const S = {
+  FunctionBox: styled.div`
+    position: absolute;
+    right: 0;
+    height: 32px;
+    padding: 0px;
+    margin: 0px 0px 10px 0px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+
+  CloseButton: styled.button`
+    padding: 0px;
+
+    width: 32px;
+    height: 32px;
+  `,
+
   DtailArea: styled.div`
     display: flex;
     justify-content: center;
@@ -111,6 +142,7 @@ export const S = {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 100px;
 
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -127,10 +159,7 @@ export const S = {
             color: var(--neutral-500, #667085);
           `}
 
-    font-style: normal;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    ${styleFont.bodyMedium}
 
     display: inline-flex;
     align-items: flex-start;
@@ -176,10 +205,7 @@ export const S = {
             color: var(--neutral-500, #667085);
           `}
 
-    font-style: normal;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    ${styleFont.bodySmall}
   `,
 
   WriterFunction: styled.div<ColorProps>`
@@ -191,14 +217,11 @@ export const S = {
 
     width: 90px;
     height: 26px;
-    margin: 8px 0px;
-    right: 0;
+    margin: 3px 20px 0px 0px;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    position: absolute;
   `,
 
   Contour: styled.div`
@@ -211,8 +234,6 @@ export const S = {
   `,
 
   WriterButton: styled.button<ColorProps>`
-    background-color: transparent;
-
     width: 40px;
     height: 26px;
     padding: 3px 4px;

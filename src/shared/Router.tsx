@@ -16,7 +16,9 @@ import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
-import Report from 'src/components/sidebar/Report';
+import { GlobalFont } from 'src/styles/GlobalFont';
+import KakaoMap from 'src/kakaoMap/KakaoMap';
+import Report from 'src/pages/Report';
 import ProdReview from 'src/components/Detail/prodReview/ProdReview';
 
 const Router = () => {
@@ -26,6 +28,7 @@ const Router = () => {
   return (
     <>
       <GlobalStyle />
+      <GlobalFont/>
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
@@ -37,6 +40,7 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/map" element={<KakaoMap />} />
           <Route path="/prodReview" element={<ProdReview />} />
 
           <Route element={<PrivateRoute />}>

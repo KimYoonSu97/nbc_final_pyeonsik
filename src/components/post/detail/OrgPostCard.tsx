@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { Post } from 'src/types/types';
-import CreatedAt from 'src/function/CreatedAt';
+import CreatedAt from 'src/utility/CreatedAt';
 // import { S } from 'src/components/post/style/StyledOrgPostCard';
 import { IconOrgPost } from 'src/components/icons';
 import styled from 'styled-components';
+import { FlexBoxAlignCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 
 interface OrgPostCardProps {
   orgPost: Post;
@@ -14,7 +15,7 @@ const OrgPostCard = ({ orgPost }: OrgPostCardProps) => {
   const navigate = useNavigate();
 
   const clickOrgPost = () => {
-    navigate(`/detail/${orgPost.id}`);
+    orgPost && navigate(`/detail/${orgPost.id}`);
   };
 
   return (
@@ -27,12 +28,18 @@ const OrgPostCard = ({ orgPost }: OrgPostCardProps) => {
           <S.OrgText>인용 게시글</S.OrgText>
         </S.OrgTextBox>
         <S.OrgContentsBox onClick={clickOrgPost}>
-          <S.OrgTitle>{orgPost.title ? orgPost.title : '제목 없는 게시물'}</S.OrgTitle>
-          <S.OrgInfoBox>
-            {orgPost.userId.nickname}
-            <div>·</div>
-            <CreatedAt createdAt={orgPost.created_at} />
-          </S.OrgInfoBox>
+          {orgPost ? (
+            <>
+              <S.OrgTitle>{orgPost.title ? orgPost.title : '제목 없는 게시물'}</S.OrgTitle>
+              <S.OrgInfoBox>
+                {orgPost.userId.nickname}
+                <div>·</div>
+                <CreatedAt createdAt={orgPost.created_at} />
+              </S.OrgInfoBox>
+            </>
+          ) : (
+            <div>해당 게시글이 삭제되었습니다.</div>
+          )}
         </S.OrgContentsBox>
       </S.OrgContainer>
     </S.OrgArea>
@@ -58,12 +65,9 @@ export const S = {
     border-radius: 10px;
   `,
 
-  OrgTextBox: styled.div`
+  OrgTextBox: styled(FlexBoxAlignCenter)`
     margin: 0px 0px 10px 0px;
     gap: 4px;
-
-    display: flex;
-    align-items: center;
   `,
 
   OrgIcon: styled.div`
@@ -82,16 +86,15 @@ export const S = {
     line-height: 24px; /* 133.333% */
   `,
 
-  OrgContentsBox: styled.div`
+  OrgContentsBox: styled(FlexBoxJustifyCenter)`
     height: 80px;
     padding: 16px;
     gap: 8px;
     border-radius: 10px;
     border: 1px solid var(--neutral-400, #98a2b3);
 
-    display: flex;
     flex-direction: column;
-    justify-content: center;
+    cursor: pointer;
   `,
 
   OrgTitle: styled.div`
@@ -104,11 +107,8 @@ export const S = {
     line-height: 24px; /* 150% */
   `,
 
-  OrgInfoBox: styled.div`
+  OrgInfoBox: styled(FlexBoxAlignCenter)`
     gap: 4px;
-
-    display: flex;
-    align-items: center;
 
     color: var(--font-black, var(--black, #242424));
     font-style: normal;

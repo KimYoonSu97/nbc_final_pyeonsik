@@ -1,11 +1,13 @@
 import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
+import { updateUserLevel } from './userLogin';
+import useUserMutate from 'src/hooks/useUserMutate';
 
 // post
 const getPost = async (id: string) => {
   const response = await supabase
     .from('posts')
-    .select('*,userId(id,nickname,profileImg),orgPostId(*,userId(nickname))')
+    .select('*,userId(id,nickname,profileImg,level),orgPostId(*,userId(nickname))')
     .eq('id', id)
     .single();
   return response;
@@ -31,6 +33,7 @@ const deletePost = async (id: string) => {
 //값 타입이 달라져서 추가했습니다! - 원유길
 const addRecipePost = async (post: NewRecipePost) => {
   await supabase.from('posts').insert(post).select();
+  alert('작성이 완료되었습니다.');
 };
 
 const tagUpdatePost = async (post: TagEditPost) => {
@@ -39,17 +42,29 @@ const tagUpdatePost = async (post: TagEditPost) => {
 
 // MyPosts
 const getMyPostsById = async (id: string) => {
-  const response = await supabase.from('posts').select('*,userId(nickname,profileImg)').eq('userId', id);
+  const response = await supabase
+    .from('posts')
+    .select('*,userId(nickname,profileImg,level)')
+    .eq('userId', id)
+    .order('created_at', { ascending: false });
   return response;
 };
 
 const getMyBookMarkById = async (id: string) => {
-  const response = await supabase.from('post_bookmark').select('postId(*,userId(*))').eq('userId', id);
+  const response = await supabase
+    .from('post_bookmark')
+    .select('postId(*,userId(*))')
+    .eq('userId', id)
+    .order('created_at', { ascending: false });
   return response;
 };
 
 const getMyLikePostById = async (id: string) => {
-  const response = await supabase.from('post_likes').select('postId(*,userId(*))').eq('userId', id);
+  const response = await supabase
+    .from('post_likes')
+    .select('postId(*,userId(*))')
+    .eq('userId', id)
+    .order('created_at', { ascending: false });
   return response;
 };
 

@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import CommentForMap from './CommentForMap';
 import CommentInput from './CommentInput';
+import { FlexBox } from 'src/styles/styleBox';
 
 interface CommentDataType {
   id: string;
@@ -15,6 +16,7 @@ interface CommentDataType {
   users: {
     profileImg: string;
     nickname: string;
+    level: string;
   };
 }
 
@@ -52,15 +54,11 @@ export default Comment;
 
 const S = {
   CommentArea: styled.div`
-    padding-top: 12px;
-    /* margin: 0 50px; */
-    padding: 0 50px;
+    padding: 12px 50px 0 50px;
     width: 100%;
-    /* height: 80px; */
     background-color: white;
   `,
-  CommentInputArea: styled.div`
-    display: flex;
+  CommentInputArea: styled(FlexBox)`
     gap: 8px;
     margin-bottom: 30px;
   `,
@@ -69,14 +67,6 @@ const S = {
     height: 36px;
     border-radius: 100px;
     background: lightgray;
-  `,
-  CommentInputForm: styled.form`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background: var(--neutral-100, #f2f4f7);
-    border-radius: 10px;
-    padding-right: 10px;
   `,
   CommentInput: styled.input`
     width: 100%;
@@ -96,10 +86,8 @@ const S = {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
   `,
-  CommentInputAddButton: styled.button``,
-  CommentRenderArea: styled.div`
+  CommentRenderArea: styled(FlexBox)`
     margin-top: 30px;
-    display: flex;
     flex-direction: column;
     gap: 24px;
   `

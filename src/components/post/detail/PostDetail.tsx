@@ -19,8 +19,6 @@ const PostDetail = ({ isModal }: Props) => {
 
   const userId: string | undefined = useLoginUserId();
 
-  // 트러블 슈팅 1
-  // 게시글 데이터 패치 시 쿼리키 문제 => 게시글 아이디로 쿼리키 고유화
   const { isLoading, data } = useQuery({
     queryKey: ['post', id],
     queryFn: () => getPost(id!)
@@ -38,14 +36,11 @@ const PostDetail = ({ isModal }: Props) => {
   return (
     <S.DtailArea>
       <S.PostHead>
-        {/* 유저 정보*/}
         <WriterContainer isModal={isModal} post={post} writer={writer} />
       </S.PostHead>
       <S.ContentsBox>
-        {/* 내부 컨텐츠 */}
         <ContentBox post={post} />
-        {post.orgPostId && <OrgPostCard orgPost={post.orgPostId} />}
-        {/* 내부 요소 */}
+        {post.hasOrgPost && <OrgPostCard orgPost={post.orgPostId} />}
         <S.FunctionBox>
           <BottomFunction userId={userId} post={post} />
         </S.FunctionBox>
