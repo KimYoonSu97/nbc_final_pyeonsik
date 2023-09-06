@@ -28,7 +28,7 @@ const UserDelete = () => {
       await deleteUser(userId);
       //로그인된 유저 로그아웃 => 쿼리 실행조건 중 1개
       const { error: singOutError } = await supabase.auth.signOut();
-      //혹시 둘중 어떤 로직이라도 오류가 있을시 리턴을 먼저해줌.
+      //혹시 둘중 어떤 로직이라도 오류가 있을시 리턴을 해줌.
       if (deleteError || singOutError) {
         alert('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
         return;
@@ -36,8 +36,6 @@ const UserDelete = () => {
       setUserLogin(null);
       navigate('/');
 
-      //login user data를 같이쓰는 마이페이지에서 로그아웃시 새로고침 시켜줘야함...
-      localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
       localStorage.removeItem('social');
       queryClient.removeQueries(['loginUser']);
       queryClient.resetQueries(['loginUser']);
