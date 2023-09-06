@@ -27,9 +27,12 @@ const updateUserLevel = async ({ userId, level }: UpdateUserLevel) => {
   await supabase.from('users').update({ level }).eq('id', userId);
 };
 
-const deleteUser = async (userId: string) => {
-  await supabase.from('users').delete().eq('id', userId);
-  alert('탈퇴가 완료되었습니다.');
+const deleteUser = async (id: string) => {
+  try {
+    await supabase.from('users').delete().eq('id', id);
+  } catch (error) {
+    alert('에러가 발생했습니다.');
+  }
 };
 
 export { getUserData, updateProfileImg, updateUserNickname, updateUserLevel, deleteUser };

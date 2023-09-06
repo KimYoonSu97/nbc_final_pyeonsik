@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 import { updateProfileImg, updateUserNickname, updateUserLevel, deleteUser } from 'src/api/userLogin';
 
 const useUserMutate = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const success = {
@@ -18,13 +20,9 @@ const useUserMutate = () => {
   const levelMutation = useMutation(updateUserLevel, success);
 
   // 사용자 정보 삭제
-  const deleteUserMutate = useMutation(deleteUser, {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['delete_user'] });
-    }
-  });
+  // const deleteUserMutate = useMutation(deleteUser, successDelete);
 
-  return { nicknameMutation, profileImgMutation, levelMutation, deleteUserMutate };
+  return { nicknameMutation, profileImgMutation, levelMutation };
 };
 
 export default useUserMutate;
