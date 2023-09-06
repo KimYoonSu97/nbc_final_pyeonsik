@@ -1,8 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
+
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useUserMutate from 'src/hooks/useUserMutate';
 import supabase from 'src/lib/supabaseClient';
@@ -10,6 +11,7 @@ import { styled } from 'styled-components';
 import { FlexBoxCenter } from 'src/styles/styleBox';
 
 const UserDelete = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userId = useLoginUserId();
