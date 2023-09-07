@@ -7,7 +7,7 @@ import WriterContainer from 'src/components/renderPosts/reactionSource/WriterCon
 import ContentBox from 'src/components/renderPosts/reactionSource/ContentBox';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
-import Comment from 'src/components/Detail/comments/Comment';
+import Comment from 'src/components/detail/comments/Comment';
 import { S } from './StyledPostDetail';
 
 interface Props {

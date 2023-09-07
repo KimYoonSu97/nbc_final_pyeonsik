@@ -18,6 +18,7 @@ const Main = () => {
           <S.FilterButton $isSelected={false}>최신글</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
+      <S.FixedBox></S.FixedBox>
       <PostList />
     </>
   );
@@ -35,10 +36,21 @@ const S = {
 
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
 
     position: fixed;
-    top: 137px;
+    /* top: 137px; */
+    padding: 20px 0 10px;
+    top: 106px;
+    right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
+    z-index: 1;
+    background: #f6f7f9;
+  `,
+  FixedBox: styled.div`
+    width: 100%;
+    height: 20px;
+    position: fixed;
+    top: 156px;
+    background: linear-gradient(0deg, transparent 0%, #f6f7f9 50%, #f6f7f9 100%);
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
     z-index: 1;
   `,

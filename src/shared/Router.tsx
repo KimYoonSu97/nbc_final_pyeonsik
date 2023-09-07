@@ -19,7 +19,7 @@ import PostModal from 'src/pages/PostModal';
 import { GlobalFont } from 'src/styles/GlobalFont';
 import KakaoMap from 'src/kakaoMap/KakaoMap';
 import Report from 'src/pages/Report';
-import ProdReview from 'src/components/Detail/prodReview/ProdReview';
+import ProdReview from 'src/components/detail/prodReview/ProdReview';
 
 const Router = () => {
   const location = useLocation();
