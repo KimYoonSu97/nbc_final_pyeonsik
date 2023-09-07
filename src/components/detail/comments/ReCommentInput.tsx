@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useLocation, useParams } from 'react-router';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { IconCommentInput } from 'src/components/icons';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 import { styleFont } from 'src/styles/styleFont';
 import { updateFirstCommentBadge } from 'src/api/badge';
+import { toast } from 'react-toastify';
 
 interface Props {
   type: string;
@@ -27,6 +28,7 @@ const ReCommentInput = ({
 }: Props) => {
   const { id: postId } = useParams<string>();
   const [reComment, setReComment] = useState('');
+  const navigate = useNavigate();
   const location = useLocation();
   const userId = useLoginUserId();
 
@@ -50,8 +52,9 @@ const ReCommentInput = ({
   const addReComment = () => {
     // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
-      alert(NON_MEMBER);
-      return <Navigate to="/login" state={{ backgroundLocation: location }} />;
+      toast(NON_MEMBER);
+      navigate('/login', { state: { backgroundLocation: location } });
+      return;
     }
     const parent_commentId = commentId;
     writeReCommentButton(userId, postId!, reComment, parent_commentId!);

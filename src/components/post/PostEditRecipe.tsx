@@ -14,6 +14,7 @@ import AddImageTagComponent from '../imageTag/AddImageTagComponent';
 import { S } from 'src/components/post/write/StyledPostWrite';
 import TitleArea from './write/TitleArea';
 import OrgPostCard from './detail/OrgPostCard';
+import { toast } from 'react-toastify';
 
 const PostEditRecipe = () => {
   const { id: prams } = useParams<string>();
@@ -54,7 +55,7 @@ const PostEditRecipe = () => {
     e.preventDefault();
 
     if (title.trim() === '') {
-      alert('제목과 내용을 입력해 주세요.');
+      toast('제목과 내용을 입력해 주세요.');
       return false;
     }
 
@@ -68,7 +69,7 @@ const PostEditRecipe = () => {
           .upload(`tags/${selectedImage.name}`, selectedImage);
         if (error) {
           console.error('Error uploading image to Supabase storage:', error);
-          alert('이미지 업로드 중 에러가 발생했습니다!');
+          toast('이미지 업로드 중 에러가 발생했습니다!');
           return;
         }
         updatedImageUrls.push(data.path);
@@ -99,7 +100,7 @@ const PostEditRecipe = () => {
     return <p>Error</p>;
   }
   if (userId && post?.userId.id !== userId) {
-    alert('접근할 수 없습니다.');
+    toast('접근할 수 없습니다.');
     return <Navigate to="/" />;
   }
 

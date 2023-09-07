@@ -6,6 +6,8 @@ import ImageTag from './ImageTag';
 import { Tag, AddImageTagProps } from 'src/types/types';
 import { ReactComponent as TrashCanIcon } from 'src/components/imageTag/svg/TrashCanIcon.svg';
 import { S } from './StyledAddImageTagComponent';
+import { NON_MEMBER } from 'src/utility/alertMessage';
+import { toast } from 'react-toastify';
 
 //Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
@@ -80,7 +82,8 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     const componentUuid = uuidv4();
 
     if (imageTagComponents.length >= 10) {
-      alert('이미지는 10개까지 첨부 가능합니다.');
+      toast('이미지는 10개까지 첨부 가능합니다.');
+      // alert('이미지는 10개까지 첨부 가능합니다.');
       return;
     }
 
