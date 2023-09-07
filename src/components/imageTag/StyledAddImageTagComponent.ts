@@ -93,7 +93,7 @@ export const S = {
     z-index: -1;
   `,
   ModalOverlay: styled(FlexBoxCenter)`
-    background-color: black;
+    background-color: #242424;
     border-radius: 5px;
     position: absolute;
     width: 140px;
@@ -105,6 +105,10 @@ export const S = {
   ModalContainer: styled.div``,
 
   ModalContent: styled.div`
-    color: gray;
+    color: #ffffff;
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
   `
 };
