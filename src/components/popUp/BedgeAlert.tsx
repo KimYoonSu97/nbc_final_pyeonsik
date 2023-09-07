@@ -11,10 +11,10 @@ interface AchievementType {
   description: string;
 }
 
-const BedgeAlert = () => {
-  // const text = confirmModalText(type);
-  let type = 'bookmark';
+const BedgeAlert = (type: string) => {
   const text = AchievementModal(type);
+
+  console.log(text.component);
 
   return new Promise<boolean>((resolve, reject) => {
     confirmAlert({
@@ -29,6 +29,7 @@ const BedgeAlert = () => {
                 <S.Description>{text.description}</S.Description>
                 <S.ButtonArea>
                   <S.Button
+                    as="button"
                     $type={type}
                     onClick={() => {
                       onClose();
@@ -123,16 +124,19 @@ const S = {
 
     ${styleFont.bodyLarge};
   `,
-  ButtonArea: styled(FlexBox)``,
+  ButtonArea: styled(FlexBox)`
+    cursor: pointer;
+  `,
   Button: styled(ButtonBasic)<ButtonProps>`
     background: var(--Black, #242424);
     color: #fff;
     ${styleFont.buttonSmall}
+    cursor: pointer;
   `,
   Bedge: styled(FlexBoxCenter)`
     width: 140px;
     height: 140px;
-    background-color: royalblue;
+    /* background-color: royalblue; */
     position: absolute;
     top: -70px;
   `

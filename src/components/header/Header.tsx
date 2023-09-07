@@ -15,8 +15,12 @@ const Header = () => {
   return (
     <S.Area $path={path}>
       <S.UpperContainer>
-        {/* <S.LogoContainer onClick={() => navigate('/')}> */}
-        <S.LogoContainer onClick={() => BedgeAlert()}>
+        <S.LogoContainer
+          onClick={() => {
+            navigate('/');
+            window.location.reload();
+          }}
+        >
           <IconLogoSymbolH22 />
           <IconWaterMarkH22 />
         </S.LogoContainer>
