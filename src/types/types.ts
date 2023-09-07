@@ -244,14 +244,16 @@ export interface AddImageTagProps {
   body?: string[] | null;
   isEditMode?: boolean;
 }
-
 // 카카오맵
-export interface LocInform {
+export interface ConvsInform {
+  brand_name: string;
+  position_name: string;
+  full_name: string;
+  distance: number;
   position: {
     lat: number | string;
     lng: number | string;
   };
-  content: string;
 }
 
 export interface Badge {
