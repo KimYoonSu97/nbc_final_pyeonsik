@@ -12,6 +12,9 @@ import { useAtom } from 'jotai';
 import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
 import { levelChecker } from './userLevelUp';
 import useUserMutate from 'src/hooks/useUserMutate';
+import Confirm from 'src/components/popUp/Confirm';
+import { toast } from 'react-toastify';
+import { updateFirstRecipeBadge } from 'src/api/badge';
 
 const PostWrite = () => {
   const navigate = useNavigate();
@@ -30,23 +33,38 @@ const PostWrite = () => {
 
   const [isIn] = useState(true);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isIn) {
-        e.preventDefault();
-        e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
-      }
-    };
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  //     if (isIn) {
+  //       e.preventDefault();
+  //       e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
+  //     }
+  //   };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
 
-    return () => {
-      setContentsAtom({});
-      setTagsDataAtom({});
-      setImagesDataAtom({});
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isIn]);
+  //   return () => {
+  //     setContentsAtom({});
+  //     setTagsDataAtom({});
+  //     setImagesDataAtom({});
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, [isIn]);
+
+  // const beforeUnload =async () => {
+  //   if( await Confirm('writePage') ){
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   } else {
+
+  //   }
+
+  // }
+
+  //   useEffect(()=>{
+  // return async ()=>{
+
+  // }
+  //   },[])
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,7 +75,7 @@ const PostWrite = () => {
       (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '') ||
       (category === 'recipe' && isAllContentsEmpty)
     ) {
-      alert('제목과 내용을 입력해 주세요.');
+      toast('제목과 내용을 입력해 주세요.');
       return false;
     }
 
@@ -66,7 +84,7 @@ const PostWrite = () => {
       const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
-        alert('이미지 업로드 중 에러가 발생했습니다!');
+        toast('이미지 업로드 중 에러가 발생했습니다!');
         return;
       }
       imageUrls.push(data.path);
@@ -96,6 +114,7 @@ const PostWrite = () => {
         tagimage: imageUrls
       };
       addRecipePostMutate.mutate(newPost);
+      updateFirstRecipeBadge(userId);
 
       // 이다음에 체크하고 네비게이트
       // 이 함수가 반환하는 것은 레벨업데이트가 필요한지 여부에대한 것과 어떤 레벨로 업데이트 할것인지에 대한 것임

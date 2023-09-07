@@ -11,6 +11,7 @@ import { BottomFunctionProps } from 'src/types/types';
 import { NON_MEMBER } from '../../../utility/alertMessage';
 import BottomShare from './BottomShare';
 import { S } from 'src/components/post/detail/StyledBottomFunction';
+import { updateBadge } from 'src/api/badge';
 import {
   IconBookmark,
   IconComment,
@@ -20,6 +21,7 @@ import {
   IconUnLike,
   IconUnQuotation
 } from 'src/components/icons';
+import { toast } from 'react-toastify';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
@@ -53,7 +55,8 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   const clickFunction = (type: string) => {
     if (!userId) {
-      alert(NON_MEMBER);
+      toast(NON_MEMBER);
+      return;
     } else {
       const payload = {
         postId: post.id,
@@ -65,6 +68,9 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
           break;
         case 'bookmark':
           postBookmark ? deletePostBookmarkMutate.mutate(postBookmark.id) : addPostBookmarkMutate.mutate(payload);
+
+          //요기서 업적 업데이트가 호출됩니다! -원유길-
+          updateBadge(userId, 'bookMark');
           break;
         case 'quotation':
           navigate('/write', { state: post });

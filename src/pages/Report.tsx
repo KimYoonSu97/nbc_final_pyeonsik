@@ -4,6 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 const Report = () => {
   const [step, setStep] = useState<number>(1);
@@ -43,14 +44,14 @@ const Report = () => {
     if (selectedInquiry1) {
       nextStep();
     } else {
-      alert('문의항목을 선택해 주세요.');
+      toast('문의항목을 선택해 주세요.');
     }
   };
   const handleNext2 = () => {
     if (selectedInquiry2) {
       nextStep();
     } else {
-      alert('항목을 선택해 주세요.');
+      toast('항목을 선택해 주세요.');
     }
   };
 
@@ -71,7 +72,7 @@ const Report = () => {
       const { data, error } = await supabase.storage.from('photos').upload(`report/${imageName}`, image);
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
-        alert('이미지 업로드 중 에러가 발생했습니다!');
+        toast('이미지 업로드 중 에러가 발생했습니다!');
         return;
       }
       url.push(data.path);
