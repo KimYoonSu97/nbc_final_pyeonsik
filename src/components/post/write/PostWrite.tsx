@@ -9,10 +9,10 @@ import OrgPostCard from '../detail/OrgPostCard';
 import { S } from 'src/components/post/write/StyledPostWrite';
 import supabase from 'src/lib/supabaseClient';
 import { useAtom } from 'jotai';
-import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
+import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../imageTag/AddImageTagComponent';
 import { levelChecker } from './userLevelUp';
 import useUserMutate from 'src/hooks/useUserMutate';
-import { updateFirstRecipeBadge } from 'src/api/badge';
+import { updateFirstRecipeBadge, updateCommonPostBadge } from 'src/api/badge';
 
 const PostWrite = () => {
   const navigate = useNavigate();
@@ -84,6 +84,7 @@ const PostWrite = () => {
         userId
       };
       addPostMutate.mutate(newPost);
+      updateCommonPostBadge(userId);
     } else if (category === 'recipe') {
       const newPost = {
         postCategory: category,

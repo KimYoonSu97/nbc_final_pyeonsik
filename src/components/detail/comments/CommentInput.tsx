@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
+import { updateFirstCommentBadge } from 'src/api/badge';
 
 interface Props {
   type: string;
@@ -45,6 +46,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
       return <Navigate to="/login" state={{ backgroundLocation: location }} />;
     }
     WriteCommentButton(userId, postId!, comment);
+    updateFirstCommentBadge(userId);
     setComment('');
   };
 
