@@ -11,7 +11,7 @@ interface AchievementType {
   description: string;
 }
 
-const BedgeAlert = (type: string) => {
+const BadgeAlert = (type: string) => {
   const text = AchievementModal(type);
 
   console.log(text.component);
@@ -23,7 +23,7 @@ const BedgeAlert = (type: string) => {
           <>
             <S.Container>
               <S.ConfirmBox>
-                <S.Bedge>{text.component}</S.Bedge>
+                <S.Badge>{text.component}</S.Badge>
                 <S.Title>야호! 뱃지를 획득했어요!</S.Title>
                 <S.Caption>{text.name}</S.Caption>
                 <S.Description>{text.description}</S.Description>
@@ -54,7 +54,7 @@ const BedgeAlert = (type: string) => {
   });
 };
 
-export default BedgeAlert;
+export default BadgeAlert;
 
 const ButtonBasic = styled(FlexBoxCenter)`
   width: 122px;
@@ -133,7 +133,7 @@ const S = {
     ${styleFont.buttonSmall}
     cursor: pointer;
   `,
-  Bedge: styled(FlexBoxCenter)`
+  Badge: styled(FlexBoxCenter)`
     width: 140px;
     height: 140px;
     /* background-color: royalblue; */

@@ -1,3 +1,4 @@
+import BadgeAlert from 'src/components/popUp/BadgeAlert';
 import supabase from 'src/lib/supabaseClient';
 
 const updateBadge = async (user_id: string, badgeField: string) => {
@@ -11,7 +12,7 @@ const updateBadge = async (user_id: string, badgeField: string) => {
   if (data && data.length > 0 && !data[0][badgeField as keyof (typeof data)[0]]) {
     const updatedData = { [badgeField]: true };
     const { error: updateError } = await supabase.from('badge').update(updatedData).eq('user_id', user_id);
-    alert('업적 달성! 찾았다 인생 조합! ');
+    await BadgeAlert('bookmark');
     if (updateError) {
       console.error('데이터를 업데이트할 수 없습니다.');
       return;
@@ -53,7 +54,8 @@ const updateFirstRecipeBadge = async (userId: string) => {
 
   if (postCount === 1) {
     const { error: updateError } = await supabase.from('badge').update({ firstRecipe: true }).eq('user_id', userId);
-    alert('업적 달성! 나만의 첫 레시피! ');
+    // alert('업적 달성! 나만의 첫 레시피! ');
+    await BadgeAlert('firstRecipe');
     if (updateError) {
       console.error('데이터를 업데이트할 수 없습니다.');
       return;
@@ -62,7 +64,8 @@ const updateFirstRecipeBadge = async (userId: string) => {
 
   if (postCount >= 10) {
     const { error: updateError } = await supabase.from('badge').update({ recipeMania: true }).eq('user_id', userId);
-    alert('업적 달성! 레시피 마니아! ');
+    // alert('업적 달성! 레시피 마니아! ');
+    await BadgeAlert('recipeMania');
     if (updateError) {
       console.error('데이터를 업데이트할 수 없습니다.');
       return;
@@ -98,7 +101,8 @@ const updateCommonPostBadge = async (userId: string) => {
 
   if (postCount === 1) {
     const { error: updateError } = await supabase.from('badge').update({ soilChair: true }).eq('user_id', userId);
-    alert('업적 달성! 그르르갉! ');
+    // alert('업적 달성! 그르르갉! ');
+    await BadgeAlert('soilChair');
     if (updateError) {
       console.error('데이터를 업데이트할 수 없습니다.');
       return;
@@ -123,7 +127,8 @@ const updateFirstCommentBadge = async (userId: string) => {
   }
 
   const { error: updateError } = await supabase.from('badge').update({ firstComment: true }).eq('user_id', userId);
-  alert('업적 달성! 따뜻함의 시작! ');
+  // alert('업적 달성! 따뜻함의 시작! ');
+  await BadgeAlert('firstComment');
 
   if (updateError) {
     console.error('데이터를 업데이트할 수 없습니다.');
@@ -145,7 +150,8 @@ const updateBugBadge = async (userId: string) => {
   }
 
   const { error: updateError } = await supabase.from('badge').update({ bug: true }).eq('user_id', userId);
-  alert('업적 달성! 사실상 당첨!');
+  // alert('업적 달성! 사실상 당첨!');
+  await BadgeAlert('bug');
 
   if (updateError) {
     console.error('데이터를 업데이트할 수 없습니다.');
@@ -167,7 +173,8 @@ const updateSheriffBadge = async (userId: string) => {
   }
 
   const { error: updateError } = await supabase.from('badge').update({ sheriff: true }).eq('user_id', userId);
-  alert('업적 달성! 잡았다 요놈!');
+  // alert('업적 달성! 잡았다 요놈!');
+  await BadgeAlert('sheriff');
 
   if (updateError) {
     console.error('데이터를 업데이트할 수 없습니다.');
