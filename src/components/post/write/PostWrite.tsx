@@ -33,25 +33,23 @@ const PostWrite = () => {
 
   const [isIn] = useState(true);
 
-  const handleBeforeUnload = async (e: BeforeUnloadEvent) => {
-    if (await Confirm('writePage')) {
-      e.preventDefault();
-    }
-  };
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  //     if (isIn) {
+  //       e.preventDefault();
+  //       e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
+  //     }
+  //   };
 
-  const eventListen = async () => {
-    window.addEventListener('beforeunload', handleBeforeUnload);
-  };
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
 
-  useEffect(() => {
-    eventListen();
-    return () => {
-      setContentsAtom({});
-      setTagsDataAtom({});
-      setImagesDataAtom({});
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isIn]);
+  //   return () => {
+  //     setContentsAtom({});
+  //     setTagsDataAtom({});
+  //     setImagesDataAtom({});
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, [isIn]);
 
   // const beforeUnload =async () => {
   //   if( await Confirm('writePage') ){
@@ -61,6 +59,12 @@ const PostWrite = () => {
   //   }
 
   // }
+
+  //   useEffect(()=>{
+  // return async ()=>{
+
+  // }
+  //   },[])
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
