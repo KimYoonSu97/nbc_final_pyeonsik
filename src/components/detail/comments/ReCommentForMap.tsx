@@ -20,7 +20,7 @@ interface CommentDataType {
     level: string;
   };
 }
-
+// console.log('ff')
 interface Props {
   reComment: CommentDataType;
   parentId: string;
