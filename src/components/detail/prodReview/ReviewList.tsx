@@ -6,7 +6,7 @@ import { styled } from 'styled-components';
 import ReviewProduct from './ReviewProduct';
 import { FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { getSwiperData } from 'src/api/ReviewSwiper';
-import { LOGO_IMAGE } from 'src/utility/message';
+import { LOGO_IMAGE } from 'src/utility/guide';
 
 const ReviewList = () => {
   const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });

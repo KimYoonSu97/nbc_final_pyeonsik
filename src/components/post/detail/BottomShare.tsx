@@ -3,7 +3,7 @@ import { S } from './StyledBottomFunction';
 import { IconLinkCopy, IconLinkFacebook, IconLinkKakao, IconLinkTwitter, IconUnLink } from 'src/components/icons';
 import { useLocation } from 'react-router';
 import { toast } from 'react-toastify';
-import { LOGO_IMAGE, VERCEL_URL } from 'src/utility/message';
+import { LOGO_IMAGE, VERCEL_URL } from 'src/utility/guide';
 
 interface BottomShareProps {
   title: string;

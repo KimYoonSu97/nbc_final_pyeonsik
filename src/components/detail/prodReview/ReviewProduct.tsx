@@ -1,6 +1,6 @@
 import React from 'react';
 import { Product } from 'src/types/types';
-import { LOGO_IMAGE } from 'src/utility/message';
+import { LOGO_IMAGE } from 'src/utility/guide';
 import { styled } from 'styled-components';
 
 interface ReviewProductProps {

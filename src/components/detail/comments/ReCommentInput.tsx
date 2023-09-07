@@ -4,7 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/utility/message';
+import { NON_MEMBER } from 'src/utility/guide';
 import { styleFont } from 'src/styles/styleFont';
 import { toast } from 'react-toastify';
 

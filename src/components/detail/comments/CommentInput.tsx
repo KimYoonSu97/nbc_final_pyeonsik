@@ -5,7 +5,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/utility/message';
+import { NON_MEMBER } from 'src/utility/guide';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import { toast } from 'react-toastify';
 
