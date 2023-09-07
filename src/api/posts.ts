@@ -75,9 +75,16 @@ interface Search {
 
 const getPostByKeyword = async ({ keyword, type }: Search) => {
   if (type === 'all') {
-    return await supabase.from('posts').select('*').ilike('title_body', `%${keyword}%`);
+    return await supabase
+      .from('posts')
+      .select('*,userId(id,nickname,profileImg,level)')
+      .ilike('title_body', `%${keyword}%`);
   } else {
-    return await supabase.from('posts').select('*').eq('postCategory', type).textSearch('title_body', keyword);
+    return await supabase
+      .from('posts')
+      .select('*,userId(id,nickname,profileImg,level)')
+      .eq('postCategory', type)
+      .textSearch('title_body', keyword);
   }
 };
 
