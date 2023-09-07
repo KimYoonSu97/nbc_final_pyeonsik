@@ -132,6 +132,7 @@ const TopBarMenuContainer = () => {
             <S.TopBarLogButton as="li" onClick={() => navigate('/register')} $signIn={true}>
               회원가입
             </S.TopBarLogButton>
+            <button onClick={() => navigate('/map')}>kakao Map</button>
           </>
         ) : (
           // 로그인 후

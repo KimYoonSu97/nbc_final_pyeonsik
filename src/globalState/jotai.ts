@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { Post } from 'src/types/types';
+import {  Post } from 'src/types/types';
 import { atomWithHash } from 'jotai-location';
 import { Location } from 'react-router';
 
@@ -29,3 +29,5 @@ interface LoginModalProps {
 }
 
 export const loginModalAtom = atom<LoginModalProps>({ state: false, location: null });
+
+
