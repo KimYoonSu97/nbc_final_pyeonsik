@@ -102,7 +102,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
             onChange={checkPasswordHandler}
           />
         </S.InputArea>
-        <S.Error>{errorMessage}</S.Error>
+        {/* <ErrorMessage>{errorMessage}</ErrorMessage> */}
         <TermsAndConditions
           terms1Agreed={terms1Agreed}
           setTerms1Agreed={setTerms1Agreed}
@@ -217,10 +217,5 @@ const S = {
     margin: 0 auto;
     margin-top: 10px;
     ${styleFont.bodyMedium}
-  `,
-  Error: styled.div`
-    color: #ff7474;
-
-    ${styleFont.bodySmall}
   `
 };
