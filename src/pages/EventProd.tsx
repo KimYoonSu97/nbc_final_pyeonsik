@@ -1,5 +1,5 @@
 import React from 'react';
-import ProdList from 'src/components/evnetProd/ProdList';
+import ProdList from 'src/components/eventProd/ProdList';
 
 const EventProd = () => {
   return <ProdList />;
