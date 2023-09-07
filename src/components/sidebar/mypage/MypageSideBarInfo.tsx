@@ -8,6 +8,7 @@ import { IconBadge, IconCommon, IconRecipe } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from 'src/components/header/UserLevel';
 import supabase from 'src/lib/supabaseClient';
+import { FlexBox } from 'src/styles/styleBox';
 
 const getUserIdBadgeCount = async (userId: string) => {
   const { data, error } = await supabase.from('badge').select('*').eq('user_id', userId);
@@ -152,7 +153,10 @@ const S = {
     background-position: center;
   `,
 
-  DetailArea: styled.div``,
+  DetailArea: styled(FlexBox)`
+    flex-direction: column;
+    align-items: flex-start;
+  `,
 
   NickName: styled.div`
     color: var(--font-black, var(--black, #242424));
