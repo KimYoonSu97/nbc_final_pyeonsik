@@ -5,6 +5,7 @@ import TopBarMenuContainer from './TopBarMenuContainer';
 import BoardSearchContainer from './BoardSearchContainer';
 import { IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
+import BedgeAlert from '../popUp/BedgeAlert';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,7 +15,8 @@ const Header = () => {
   return (
     <S.Area $path={path}>
       <S.UpperContainer>
-        <S.LogoContainer onClick={() => navigate('/')}>
+        {/* <S.LogoContainer onClick={() => navigate('/')}> */}
+        <S.LogoContainer onClick={() => BedgeAlert()}>
           <IconLogoSymbolH22 />
           <IconWaterMarkH22 />
         </S.LogoContainer>
