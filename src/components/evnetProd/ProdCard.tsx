@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Product } from 'src/types/types';
-import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 
 interface Props {
@@ -42,7 +42,7 @@ const S = {
     position: relative;
     background-color: white;
   `,
-  EventBar: styled(FlexBoxCenter)<ColorProps>`
+  EventBar: styled(FlexBoxColumn)<ColorProps>`
     height: 28px;
     gap: 4px;
     background-color: ${(props) => {

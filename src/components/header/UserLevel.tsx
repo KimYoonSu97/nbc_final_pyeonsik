@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBoxColumn } from 'src/styles/styleBox';
 
 interface Props {
   level: string;
@@ -17,7 +17,7 @@ const UserLevel = ({ level }: Props) => {
 export default UserLevel;
 
 const S = {
-  Level: styled(FlexBoxCenter)`
+  Level: styled(FlexBoxColumn)`
     border-radius: 100px;
     border: 1px solid transparent;
 

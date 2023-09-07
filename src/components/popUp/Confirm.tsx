@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { confirmAlert, ReactConfirmAlertProps } from 'react-confirm-alert';
-import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxColumn } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 
 interface ConfirmModalTextResult {
@@ -93,7 +93,7 @@ const Confirm = (type: string) => {
 
 export default Confirm;
 
-const ButtonBasic = styled(FlexBoxCenter)`
+const ButtonBasic = styled(FlexBoxColumn)`
   width: 122px;
   height: 36px;
   border-radius: 6px;
@@ -111,7 +111,7 @@ const S = {
     z-index: 102;
     overflow: hidden;
   `,
-  Background: styled(FlexBoxCenter)`
+  Background: styled(FlexBoxColumn)`
     position: fixed;
     top: 0;
     right: 0;
@@ -121,7 +121,7 @@ const S = {
     backdrop-filter: blur(10px);
     z-index: 101;
   `,
-  ConfirmBox: styled(FlexBoxCenter)`
+  ConfirmBox: styled(FlexBoxColumn)`
     width: 400px;
     height: 274px;
     border-radius: 10px;

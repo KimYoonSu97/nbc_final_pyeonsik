@@ -5,7 +5,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/utility/alertMessage';
+import { NON_MEMBER } from 'src/utility/message';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 interface Props {

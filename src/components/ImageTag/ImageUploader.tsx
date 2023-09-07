@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/CameraIcon.svg';
 import { ImageUploaderProps } from 'src/types/types';
-import { FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBoxColumn } from 'src/styles/styleBox';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
   const [, setImageSelect] = useState(false);
@@ -45,7 +45,7 @@ const S = {
     opacity: 0;
     cursor: pointer;
   `,
-  FileLabel: styled(FlexBoxCenter)<{ imageselected: string }>`
+  FileLabel: styled(FlexBoxColumn)<{ imageselected: string }>`
     cursor: pointer;
     flex-direction: column;
     border-radius: 10px;

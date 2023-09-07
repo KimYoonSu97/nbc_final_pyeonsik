@@ -9,7 +9,7 @@ import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { useQuery } from '@tanstack/react-query';
 import { IconBell } from '../icons';
-import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
 
@@ -187,7 +187,7 @@ const S = {
     gap: ${(props) => (props.$logged ? '0px' : '12px')};
   `,
 
-  TopBarLogButton: styled(FlexBoxCenter)<Props>`
+  TopBarLogButton: styled(FlexBoxColumn)<Props>`
     border-radius: 4px;
     height: 30px;
     padding: 5px 15px;

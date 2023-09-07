@@ -8,7 +8,7 @@ import { getCommentCountDataByPostId } from 'src/api/comment';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
-import { NON_MEMBER } from '../../../utility/alertMessage';
+import { NON_MEMBER } from '../../../utility/message';
 import BottomShare from './BottomShare';
 import { S } from 'src/components/post/detail/StyledBottomFunction';
 import { updateBadge } from 'src/api/badge';

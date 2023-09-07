@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { NON_MEMBER } from 'src/utility/alertMessage';
+import { NON_MEMBER } from 'src/utility/message';
 
 interface Props {
   commentId: string;

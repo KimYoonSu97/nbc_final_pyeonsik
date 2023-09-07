@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
-import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
@@ -58,7 +58,7 @@ type Props = {
 export default BottomBarMenuContainer;
 
 const S = {
-  ButtonArea: styled(FlexBoxCenter)`
+  ButtonArea: styled(FlexBoxColumn)`
     margin-right: 14px;
   `,
   BoardButton: styled(Link)<Props>`
@@ -91,7 +91,7 @@ const S = {
     height: 34px;
   `,
   SearchCategoryArea: styled.div``,
-  SearchCategory: styled(FlexBoxCenter)`
+  SearchCategory: styled(FlexBoxColumn)`
     height: 34px;
     padding: 0 18px;
     padding-top: 2px;

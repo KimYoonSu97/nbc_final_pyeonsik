@@ -74,7 +74,6 @@ const ProdReview = () => {
             </div>
           );
       })}
-
       {/* <button onClick={handleSubmitButton}>제출해버리기</button> */}
     </div>
   );

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
 
 export const S = {
   ImageTagContainer: styled(FlexBox)`
@@ -7,7 +7,7 @@ export const S = {
     gap: 12px;
     padding-bottom: 20px;
   `,
-  AddTagButton: styled(FlexBoxCenter)`
+  AddTagButton: styled(FlexBoxColumn)`
     width: 180px;
     height: 48px;
     gap: 8px;
@@ -32,7 +32,7 @@ export const S = {
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
   `,
-  IconBox: styled(FlexBoxCenter)`
+  IconBox: styled(FlexBoxColumn)`
     width: 20px;
     height: 20px;
     background: var(--neutral-200, #e4e7ec);
@@ -136,10 +136,10 @@ export const S = {
     margin-left: 210px;
   `,
 
-  TagIconContainer: styled(FlexBoxCenter)`
+  TagIconContainer: styled(FlexBoxColumn)`
     position: relative;
   `,
-  TagIconBox: styled(FlexBoxCenter)`
+  TagIconBox: styled(FlexBoxColumn)`
     width: 40px;
     height: 40px;
 

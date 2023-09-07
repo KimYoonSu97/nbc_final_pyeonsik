@@ -1,4 +1,4 @@
-import { FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBoxColumn } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
@@ -7,7 +7,7 @@ interface LocationProps {
 }
 
 export const S = {
-  FunctionButtonBox: styled(FlexBoxCenter)<LocationProps>`
+  FunctionButtonBox: styled(FlexBoxColumn)<LocationProps>`
     gap: ${(props) => {
       switch (props.$location) {
         case '/':
