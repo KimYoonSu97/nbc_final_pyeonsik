@@ -1,6 +1,7 @@
 import React from 'react';
-import { GlobalStyle } from '../styles/GlobalStyle';
 import { Location, Route, Routes, useLocation } from 'react-router-dom';
+import { GlobalStyle } from '../styles/GlobalStyle';
+import { GlobalFont } from 'src/styles/GlobalFont';
 import { PrivateRoute } from './PrivateRoute';
 import Layout from '../layout/Layout';
 // pages
@@ -16,10 +17,9 @@ import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
-import { GlobalFont } from 'src/styles/GlobalFont';
 import KakaoMap from 'src/kakaoMap/KakaoMap';
 import Report from 'src/pages/Report';
-import ReviewList from 'src/components/detail/prodReview/ReviewList';
+import ProdReview from 'src/components/detail/prodReview/ProdReview';
 
 const Router = () => {
   const location = useLocation();
@@ -41,7 +41,7 @@ const Router = () => {
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/map" element={<KakaoMap />} />
-          <Route path="/review" element={<ReviewList />} />
+          <Route path="/review" element={<ProdReview />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />

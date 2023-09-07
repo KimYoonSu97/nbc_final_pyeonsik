@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import OAuthLogin from '../components/OAuthLogin';
 import { IconGoogle, IconKakao, IconLogoSymbolH32, IconWaterMarkH32 } from 'src/components/icons';
+import { toast } from 'react-toastify';
 
 interface User {
   id: string;
@@ -54,7 +55,7 @@ const Login = () => {
         .eq('id', data.user.id)
         .single();
 
-      alert('로그인 완료!');
+      toast('로그인 완료!');
       setUserLogin(userLogin);
       navigate(-1);
     }

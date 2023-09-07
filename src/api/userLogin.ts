@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import supabase from 'src/lib/supabaseClient';
 
 interface UpdateUser {
@@ -31,7 +32,7 @@ const deleteUser = async (id: string) => {
   try {
     await supabase.from('users').delete().eq('id', id);
   } catch (error) {
-    alert('오류가 발생했습니다.');
+    toast('오류가 발생했습니다.');
   }
 };
 

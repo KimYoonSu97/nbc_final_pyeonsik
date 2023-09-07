@@ -12,6 +12,7 @@ import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
+import { toast } from 'react-toastify';
 
 interface User {
   id: string;
@@ -83,6 +84,8 @@ const TopBarMenuContainer = () => {
     }
   };
 
+  console.log(data);
+
   //소셜로그인
   useEffect(() => {
     if (localStorage.getItem('social') && !data) {
@@ -97,7 +100,7 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton onClick={() => navigate('/write')}>나만의 편식조합 공유하기</S.QuickPostButton>
         <S.QuickPostButton
           onClick={() => {
-            alert('서비스 준비중입니다.');
+            toast('서비스 준비중입니다.');
           }}
         >
           신제품 리뷰하기

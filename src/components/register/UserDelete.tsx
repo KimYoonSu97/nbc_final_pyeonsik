@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
@@ -9,9 +9,11 @@ import { styled } from 'styled-components';
 import { FlexBoxColumn } from 'src/styles/styleBox';
 import { deleteUser } from 'src/api/userLogin';
 import Confirm from '../popUp/Confirm';
+import { toast } from 'react-toastify';
 
 const UserDelete = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const userId = useLoginUserId();
 
@@ -25,15 +27,20 @@ const UserDelete = () => {
       // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
-        alert('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
+        toast('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
         return;
       }
       setUserLogin(null);
       navigate('/');
 
+      if (location.pathname.split('/')[1] === 'mypage') {
+        window.location.reload();
+      }
+      localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
       localStorage.removeItem('social');
       queryClient.removeQueries(['loginUser']);
       queryClient.resetQueries(['loginUser']);
+      alert('회원탈퇴 완료!');
     }
   };
 

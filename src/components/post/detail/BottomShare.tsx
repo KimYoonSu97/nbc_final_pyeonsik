@@ -2,6 +2,7 @@ import React from 'react';
 import { S } from './StyledBottomFunction';
 import { IconLinkCopy, IconLinkFacebook, IconLinkKakao, IconLinkTwitter, IconUnLink } from 'src/components/icons';
 import { useLocation } from 'react-router';
+import { toast } from 'react-toastify';
 import { LOGO_IMAGE, VERCEL_URL } from 'src/utility/message';
 
 interface BottomShareProps {
@@ -58,7 +59,7 @@ const BottomShare = ({ title, likeCount, commentCount, sharedCount }: BottomShar
   const clickCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
-      alert('주소가 복사되었습니다.');
+      toast('주소가 복사되었습니다.');
     } catch (error) {
       console.log(error);
     }

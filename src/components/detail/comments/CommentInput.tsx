@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useLocation, useParams } from 'react-router';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
 import { NON_MEMBER } from 'src/utility/message';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
+import { toast } from 'react-toastify';
 
 interface Props {
   type: string;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props) => {
+  const navigate = useNavigate();
   const [comment, setComment] = useState('');
   const location = useLocation();
   const userId = useLoginUserId();
@@ -41,8 +43,9 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
   const addComment = () => {
     // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
-      alert(NON_MEMBER);
-      return <Navigate to="/login" state={{ backgroundLocation: location }} />;
+      toast(NON_MEMBER);
+      navigate('/login', { state: { backgroundLocation: location } });
+      return;
     }
     WriteCommentButton(userId, postId!, comment);
     setComment('');

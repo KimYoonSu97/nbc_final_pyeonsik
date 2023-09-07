@@ -7,6 +7,7 @@ import { IconLiked, IconUnLiked } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { NON_MEMBER } from 'src/utility/message';
+import { toast } from 'react-toastify';
 
 interface Props {
   commentId: string;
@@ -39,8 +40,7 @@ const CommentLikes = ({ commentId }: Props) => {
   // 내 좋아요 상태에 따라 다른....작동...
   const clickButton = async () => {
     if (!userId) {
-      // navigate('/login', { state: { backgroundLocation: location } }
-      alert(NON_MEMBER);
+      toast(NON_MEMBER);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }

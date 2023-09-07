@@ -21,6 +21,7 @@ import {
   IconUnLike,
   IconUnQuotation
 } from 'src/components/icons';
+import { toast } from 'react-toastify';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const navigate = useNavigate();
@@ -54,7 +55,8 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
 
   const clickFunction = (type: string) => {
     if (!userId) {
-      alert(NON_MEMBER);
+      toast(NON_MEMBER);
+      return;
     } else {
       const payload = {
         postId: post.id,

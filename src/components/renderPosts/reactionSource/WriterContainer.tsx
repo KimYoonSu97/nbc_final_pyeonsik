@@ -9,6 +9,7 @@ import { styleFont } from 'src/styles/styleFont';
 import UserLevel from 'src/components/header/UserLevel';
 import { IconClose } from 'src/components/icons';
 import Confirm from 'src/components/popUp/Confirm';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface WriterContainerProps {
   isModal?: boolean;
@@ -24,9 +25,10 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
 
   const clickDelete = async (id: string) => {
     if (await Confirm('postDelete')) {
+      toast('삭제되었습니다.');
       deletePostMutate.mutate(post.id);
     } else {
-      alert(CANCLE);
+      toast(CANCLE);
       return;
     }
   };
