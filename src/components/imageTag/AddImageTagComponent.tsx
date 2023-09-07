@@ -5,7 +5,10 @@ import { atom, useAtom, useSetAtom } from 'jotai';
 import ImageTag from './ImageTag';
 import { Tag, AddImageTagProps } from 'src/types/types';
 import { ReactComponent as TrashCanIcon } from 'src/components/imageTag/svg/TrashCanIcon.svg';
-import { S } from './StyledAddImageTagComponent';
+import { ReactComponent as AddBtn } from 'src/components/imageTag/svg/AddBtn.svg';
+import { ReactComponent as ArrowIcon } from 'src/components/imageTag/svg/ArrowIcon.svg';
+import { ReactComponent as DotIcon } from 'src/components/imageTag/svg/DotIcon.svg';
+import { ArrowIconWrapper, S, DocIconWrapper } from './StyledAddImageTagComponent';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 import { toast } from 'react-toastify';
 
@@ -27,6 +30,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   const [, setContents] = useState<string[]>(body ?? []);
   const [editMode] = useState<boolean>(isEditMode ?? false);
   const [dragging, setDragging] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!editMode) {
@@ -185,17 +189,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     });
   };
 
-  const changeComponentOrder = (currentIndex: number, targetIndex: number) => {
-    if (currentIndex === targetIndex) return;
-
-    const updatedComponents = [...imageTagComponents];
-    const [movedComponent] = updatedComponents.splice(currentIndex, 1);
-    updatedComponents.splice(targetIndex, 0, movedComponent);
-
-    const componentsOrder = updatedComponents.map((component) => (component.key as string) || '');
-    updateComponentOrder(componentsOrder);
-  };
-
   const handleDragStart = (index: number, event: React.DragEvent) => {
     event.dataTransfer.setData('text/plain', index.toString());
     setDragging(true);
@@ -216,47 +209,67 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <S.ButtonThumbnailArea>
-        <S.SmallButton>
-          <S.AddBtn type="button" onClick={addImageTagComponent}>
-            이미지 추가
-          </S.AddBtn>
-        </S.SmallButton>
-
         {imageTagComponents.map((component, index) => {
           const componentUuid = (component.key as string) || '';
           return (
             // 김윤수 추가 S.Contests
             <React.Fragment key={componentUuid}>
               {image[componentUuid] && (
-                <S.SmallButton>
-                  {typeof image[componentUuid] === 'string' ? (
-                    <S.ThumbnailImg
-                      src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${image[componentUuid]}`}
-                      alt="이미지"
-                      draggable
-                      onDragStart={(e) => handleDragStart(index, e)}
-                      onDrop={(e) => handleDrop(index, e)}
-                      onDragOver={(e) => e.preventDefault()}
-                    />
-                  ) : (
-                    <S.ThumbnailImg
-                      src={URL.createObjectURL(image[componentUuid])}
-                      alt="이미지"
-                      draggable
-                      onDragStart={(e) => handleDragStart(index, e)}
-                      onDrop={(e) => handleDrop(index, e)}
-                      onDragOver={(e) => e.preventDefault()}
-                    />
-                  )}
-                </S.SmallButton>
+                <S.ThumbnailImgWrapper>
+                  <S.SmallButton
+                    draggable
+                    onDragStart={(e) => handleDragStart(index, e)}
+                    onDrop={(e) => handleDrop(index, e)}
+                    onDragOver={(e) => e.preventDefault()}
+                  >
+                    {typeof image[componentUuid] === 'string' ? (
+                      <S.ThumbnailImg
+                        src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${image[componentUuid]}`}
+                        alt="이미지"
+                      />
+                    ) : (
+                      <S.ThumbnailImg src={URL.createObjectURL(image[componentUuid])} alt="이미지" />
+                    )}
+                    <div>
+                      <ArrowIconWrapper>
+                        <ArrowIcon />
+                      </ArrowIconWrapper>
+
+                      <DocIconWrapper onMouseOver={openModal} onMouseOut={closeModal}>
+                        <DotIcon />
+                        {isModalOpen && (
+                          <S.ModalOverlay>
+                            <S.ModalContainer>
+                              <S.ModalContent>드래그해서 옮기기</S.ModalContent>
+                            </S.ModalContainer>
+                          </S.ModalOverlay>
+                        )}
+                      </DocIconWrapper>
+                    </div>
+                  </S.SmallButton>
+                </S.ThumbnailImgWrapper>
               )}
             </React.Fragment>
           );
         })}
+        <S.SmallButton>
+          <S.AddBtn type="button" onClick={addImageTagComponent}>
+            <AddBtn />
+          </S.AddBtn>
+        </S.SmallButton>
       </S.ButtonThumbnailArea>
+
       {/* 여기는 전체 에디터가 담길 부분임. */}
       <S.ContentArea>
         {imageTagComponents.map((component, index) => {
@@ -268,25 +281,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
               <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
                 <TrashCanIcon />
               </S.RemoveButton>
-
-              <S.UpDownButtonArea>
-                <S.UpDownButton
-                  as="button"
-                  type="button"
-                  onClick={() => changeComponentOrder(index, index - 1)}
-                  disabled={index === 0}
-                >
-                  위
-                </S.UpDownButton>
-                <S.UpDownButton
-                  as="button"
-                  type="button"
-                  onClick={() => changeComponentOrder(index, index + 1)}
-                  disabled={index === imageTagComponents.length - 1}
-                >
-                  아래
-                </S.UpDownButton>
-              </S.UpDownButtonArea>
             </S.Contents>
           );
         })}

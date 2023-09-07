@@ -50,7 +50,15 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
         ))}
       </div>
       <div style={{ width: '790px' }}>
-        <Carousel showThumbs={false} showArrows={true} showStatus={false} centerMode={true} centerSlidePercentage={25}>
+        <Carousel
+          showThumbs={false}
+          showArrows={true}
+          showStatus={false}
+          centerMode={true}
+          centerSlidePercentage={25}
+          showIndicators={false}
+          selectedItem={0}
+        >
           {tagsForImage?.map((tag, tagIndex) => (
             <S.ProductWrapper
               key={tagIndex}

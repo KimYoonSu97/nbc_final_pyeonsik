@@ -8,7 +8,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Confirm = (type: string) => {
   const text = confirmModalText(type);
-
   return new Promise<boolean>((resolve, reject) => {
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -64,7 +63,6 @@ const Confirm = (type: string) => {
 };
 
 export default Confirm;
-
 const ButtonBasic = styled(FlexBoxCenter)`
   width: 122px;
   height: 36px;
@@ -74,7 +72,6 @@ const ButtonBasic = styled(FlexBoxCenter)`
 interface ButtonProps {
   $type: string;
 }
-
 const S = {
   Container: styled(motion.div)`
     position: fixed;
@@ -101,9 +98,7 @@ const S = {
     height: 274px;
     border-radius: 10px;
     background: #fff;
-
     padding: 30px;
-
     position: fixed;
     top: calc((100vh - 274px) / 2);
     right: calc((100vw - 400px) / 2);
