@@ -1,28 +1,18 @@
 import styled from 'styled-components';
-import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBox } from 'src/styles/styleBox';
+
+export const ArrowIconWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+`;
 
 export const S = {
-  //김윤수 추가 2
-  UpDownButtonArea: styled(FlexBox)`
-    flex-direction: column;
-    gap: 10px;
-
-    position: absolute;
-    left: 962px;
-    bottom: 20px;
-  `,
-  UpDownButton: styled(FlexBoxCenter)`
-    border-radius: 10px;
-
-    width: 48px;
-    height: 48px;
-    background-color: white;
-
-    &:disabled {
-      background-color: transparent;
-      cursor: not-allowed;
-    }
-  `,
   // 김윤수 추가
   ButtonThumbnailArea: styled(FlexBox)`
     width: 48px;
@@ -32,13 +22,34 @@ export const S = {
     flex-direction: column;
     gap: 8px;
   `,
+
   SmallButton: styled.div``,
+
   ThumbnailImg: styled.img`
+    border-radius: 20%;
     width: 48px;
     height: 48px;
     object-fit: cover;
     cursor: pointer;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+    &:hover {
+      filter: brightness(0.6);
+    }
   `,
+
+  ThumbnailImgWrapper: styled.div`
+    position: relative;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+
+    &:hover {
+      ${ArrowIconWrapper} {
+        opacity: 1;
+      }
+    }
+  `,
+
   Contents: styled(FlexBox)`
     position: relative;
   `,
@@ -51,8 +62,7 @@ export const S = {
   `,
 
   AddBtn: styled.button`
-    width: 48px;
-    height: 48px;
+    margin-left: -6px;
   `,
   BackGroundColor: styled.div`
     width: 100vw;

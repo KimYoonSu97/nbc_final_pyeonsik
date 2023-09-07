@@ -6,6 +6,7 @@ export const S = {
     position: relative;
     gap: 12px;
     padding-bottom: 20px;
+    margin-bottom: 20px;
   `,
   AddTagButton: styled(FlexBoxCenter)`
     width: 180px;
