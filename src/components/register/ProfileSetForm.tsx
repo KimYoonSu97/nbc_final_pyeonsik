@@ -1,18 +1,23 @@
 import Filter from 'badwords-ko'; // 비속어 필터링(한글)
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import baseImage from '../../images/baseprofile.jpeg';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
-
+import { toast } from 'react-toastify';
+import { FlexBoxCenter, FlexBoxAlignCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
+import { IconCameraSmall } from '../icons';
 
 interface Props {
   userEmail: string;
 }
 
 const ProfileSetForm = ({ userEmail }: Props) => {
+  const inputRef = useRef<any>(null);
+
   const filter = new Filter();
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
@@ -21,8 +26,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [_, setLoginUser] = useAtom(userAtom);
-
-
 
   const correctNickNameMessages = [
     '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
@@ -98,20 +101,18 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
 
-  
-
     // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
     if (!nicknamePattern.test(nickname)) {
-      alert('올바른 닉네임 형식이 아닙니다.');
+      toast('올바른 닉네임 형식이 아닙니다.');
       return;
     }
     if (nickname.length < 2) {
-      alert('2글자 이상 이어야 합니다.');
+      toast('2글자 이상 이어야 합니다.');
       return;
     }
     if (filterdNickName.includes('*')) {
-      alert('비속어는 사용할 수 없어요. 🤬');
+      toast('비속어는 사용할 수 없어요. 🤬');
       return;
     }
 
@@ -121,132 +122,168 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       profileImg: profileImgSrc
     };
     if (!nickname) {
-      alert('닉네임을 입력해주세요');
+      toast('닉네임을 입력해주세요');
       return;
     }
     if (profileImgSrc === '') {
-      alert('사진을 등록해주세요');
+      toast('사진을 등록해주세요');
       return;
     }
 
     const { data, error } = await supabase.from('users').insert(newUser).select().single();
 
     setLoginUser(data);
-
-    alert('회원가입 완료!');
+    toast('회원가입 완료!');
     navigate('/');
   };
 
   return (
     <>
-      <RegisterFormContainer>
-        <ProfileImgnameBox>
-          <ProfileImgLabel>프로필 설정</ProfileImgLabel>
-          <div>
-            <PreviewImage src={profileImgSrc || baseImg} alt="프로필 이미지" />
-            <ProfileImgInput
-              src={baseImg}
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                encodeFileTobase64(e.target.files![0] as Blob);
-              }}
-            />
-          </div>
-        </ProfileImgnameBox>
-
-        {!isError && <SuccessMessage>{successMessage}</SuccessMessage>}
-        {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
-        <Label>닉네임</Label>
-        <NickNameInput maxLength={15} type="text" value={nickname} placeholder="닉네임" onChange={nickNameHandler} />
-        <InformMessage>편식에서만의 닉네임을 사용해보세요!</InformMessage>
-        <Button onClick={setProfile}>편식 시작하기</Button>
-      </RegisterFormContainer>
+      <S.Container>
+        <S.Title>프로필 설정</S.Title>
+        <S.ProfileBox>
+          <S.ProfileChangeButton
+            onClick={() => {
+              inputRef.current.click();
+            }}
+          >
+            <IconCameraSmall />
+          </S.ProfileChangeButton>
+          <S.ProfileImg src={profileImgSrc || baseImg} alt="프로필 이미지" />
+          <S.ProfileInput
+            ref={inputRef}
+            src={baseImg}
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              encodeFileTobase64(e.target.files![0] as Blob);
+            }}
+          />
+        </S.ProfileBox>
+        <S.InputArea>
+          <S.Input
+            maxLength={15}
+            type="text"
+            value={nickname}
+            placeholder="닉네임을 입력해주세요."
+            onChange={nickNameHandler}
+          />
+        </S.InputArea>
+        {!isError && <S.SuccessMessage>{successMessage}</S.SuccessMessage>}
+        {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+        {isError ? (
+          <S.SubmitDisable>편식 시작하기</S.SubmitDisable>
+        ) : (
+          <S.Submit onClick={setProfile}>편식 시작하기</S.Submit>
+        )}
+      </S.Container>
     </>
   );
 };
 
 export default ProfileSetForm;
 
-export const ProfileImgLabel = styled.div`
-  flex: 0px;
-  font-weight: bold;
-`;
-
-export const ProfileImgInput = styled.input`
-  border: 1px solid black;
-  width: 300px;
-  border-radius: 6px;
-  margin-right: 118px;
-`;
-
-const ProfileImgnameBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 5px;
-
-  justify-content: center;
-
-  flex-direction: column;
-`;
-
-const InformMessage = styled.div`
-  font-size: 10px;
-  color: blue;
-`;
-
-const PreviewImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  border: black solid 2px;
-  display: block;
-  margin: 20px auto;
-`;
-
-const RegisterFormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 600px;
-  margin: 0 auto;
-
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-  margin-bottom: 6px;
-`;
-
-const NickNameInput = styled.input`
-  padding: 10px;
-  width: 150px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-const ErrorMessage = styled.div`
-  margin-top: 10px;
-  color: red;
-  font-size: 14px;
-`;
-
-const SuccessMessage = styled.div`
-  width: 300px;
-  height: 44px;
-
-  margin-top: 10px;
-  color: blue;
-  font-size: 14px;
-`;
+const S = {
+  Container: styled(FlexBoxCenter)`
+    padding: 30px;
+    width: 490px;
+    height: 360px;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+    background: #fff;
+    flex-direction: column;
+    margin: 0 auto;
+    position: relative;
+  `,
+  ProfileBox: styled.div`
+    width: 80px;
+    height: 80px;
+    margin-bottom: 26px;
+    position: relative;
+  `,
+  ProfileChangeButton: styled(FlexBoxCenter)`
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 80px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
+  `,
+  Title: styled.div`
+    color: var(--font-black, var(--Black, #242424));
+    margin-bottom: 30px;
+    ${styleFont.titleLarge}
+  `,
+  ProfileImg: styled.img`
+    width: 80px;
+    height: 80px;
+    border-radius: 100px;
+    border: 1px solid #fff;
+  `,
+  ProfileInput: styled.input`
+    display: none;
+  `,
+  InputArea: styled(FlexBoxCenter)`
+    width: 294px;
+    height: 42px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    background: #fff;
+    padding: 12px 11px;
+    /* margin-bottom: 8px; */
+  `,
+  Input: styled.input`
+    outline: none;
+    width: 100%;
+    color: var(--font-black, var(--Black, #242424));
+    border: none;
+    ${styleFont.bodyMedium}
+    &::placeholder {
+      color: var(--neutral-400, var(--neutral-400, #98a2b3));
+    }
+  `,
+  ErrorMessage: styled.div`
+    margin-top: 10px;
+    width: 294px;
+    height: 44px;
+    color: red;
+    ${styleFont.bodyMedium}
+  `,
+  SuccessMessage: styled.div`
+    width: 294px;
+    height: 44px;
+    padding: 0 10px;
+    margin-top: 10px;
+    color: blue;
+    ${styleFont.bodyMedium}
+  `,
+  SubmitDisable: styled(FlexBoxCenter)`
+    cursor: pointer;
+    display: flex;
+    width: 294px;
+    height: 42px;
+    justify-content: center;
+    align-items: center;
+    background: var(--neutral-300, #d0d5dd);
+    border-radius: 6px;
+    color: #fff;
+    text-align: center;
+    ${styleFont.buttonSmall}
+  `,
+  Submit: styled(FlexBoxCenter)`
+    cursor: pointer;
+    display: flex;
+    width: 294px;
+    height: 42px;
+    justify-content: center;
+    align-items: center;
+    background: var(--main, #f02826);
+    border-radius: 6px;
+    color: #fff;
+    text-align: center;
+    ${styleFont.buttonSmall}
+  `
+};

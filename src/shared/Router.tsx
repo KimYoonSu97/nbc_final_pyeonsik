@@ -19,6 +19,7 @@ import PostModal from 'src/pages/PostModal';
 import { GlobalFont } from 'src/styles/GlobalFont';
 import KakaoMap from 'src/kakaoMap/KakaoMap';
 import Report from 'src/pages/Report';
+import ProdReview from 'src/components/detail/prodReview/ProdReview';
 
 const Router = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ const Router = () => {
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/map" element={<KakaoMap />} />
+          <Route path="/prodReview" element={<ProdReview />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />

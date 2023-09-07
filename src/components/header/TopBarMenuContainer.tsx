@@ -12,6 +12,7 @@ import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
+import { toast } from 'react-toastify';
 
 interface User {
   id: string;
@@ -83,6 +84,8 @@ const TopBarMenuContainer = () => {
     }
   };
 
+  console.log(data);
+
   //소셜로그인
   useEffect(() => {
     if (localStorage.getItem('social') && !data) {
@@ -94,10 +97,20 @@ const TopBarMenuContainer = () => {
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
-        <S.QuickPostButton onClick={() => navigate('/write')}>나만의 편식조합 공유하기</S.QuickPostButton>
         <S.QuickPostButton
           onClick={() => {
-            alert('서비스 준비중입니다.');
+            if (!userId) {
+              toast('로그인 후 이용 가능합니다.');
+              return;
+            }
+            navigate('/write');
+          }}
+        >
+          나만의 편식조합 공유하기
+        </S.QuickPostButton>
+        <S.QuickPostButton
+          onClick={() => {
+            toast('서비스 준비중입니다.');
           }}
         >
           신제품 리뷰하기
@@ -127,11 +140,7 @@ const TopBarMenuContainer = () => {
             <S.Icon>
               <IconBell />
             </S.Icon>
-            {/* <S.Level>
-              <S.Leveltext>Lv. 식신</S.Leveltext>
-            </S.Level> */}
-            {/* <p>Hello, {userData?.nickname}</p> */}
-
+            <UserLevel level={data?.data?.level} />
             <S.ProfileImg
               $url={data?.data?.profileImg}
               onClick={() => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { ReactComponent as CameraIcon } from 'src/components/ImageTag/svg/CameraIcon.svg';
+import { ReactComponent as CameraIcon } from 'src/components/imageTag/svg/CameraIcon.svg';
 import { ImageUploaderProps } from 'src/types/types';
 import { FlexBoxCenter } from 'src/styles/styleBox';
 

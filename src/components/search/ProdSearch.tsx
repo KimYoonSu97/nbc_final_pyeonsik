@@ -4,7 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSearchProd } from 'src/api/product';
 import { useInView } from 'react-intersection-observer';
 import { InfinityProductList } from 'src/types/types';
-import ProdCard from '../evnetProd/ProdCard';
+import ProdCard from '../eventProd/ProdCard';
 
 const ProdSearch = () => {
   const keyword: string = decodeURI(window.location.search).slice(2);

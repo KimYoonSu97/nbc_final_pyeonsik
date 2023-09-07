@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Tag, TagImageProps } from 'src/types/types';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
+import { ReactComponent as TagIcon } from 'src/components/imageTag/svg/TagIcon.svg';
 import { S } from './StyledShowTag';
 
 const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage }) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 // import { S } from '../style/StyledPostDetail';
-import TagImage from 'src/components/ImageTag/ShowTag';
+import TagImage from 'src/components/imageTag/ShowTag';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 

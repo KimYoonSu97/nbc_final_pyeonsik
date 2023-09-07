@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
 
@@ -18,7 +19,7 @@ const getQuotationPosts = async (orgPostId: string) => {
 
 const addPost = async (post: NewPost) => {
   await supabase.from('posts').insert(post).select();
-  alert('작성이 완료되었습니다.');
+  toast('작성이 완료되었습니다.');
 };
 
 const updatePost = async (post: EditPost) => {
@@ -32,7 +33,7 @@ const deletePost = async (id: string) => {
 //값 타입이 달라져서 추가했습니다! - 원유길
 const addRecipePost = async (post: NewRecipePost) => {
   await supabase.from('posts').insert(post).select();
-  alert('작성이 완료되었습니다.');
+  toast('작성이 완료되었습니다.');
 };
 
 const tagUpdatePost = async (post: TagEditPost) => {
@@ -74,9 +75,16 @@ interface Search {
 
 const getPostByKeyword = async ({ keyword, type }: Search) => {
   if (type === 'all') {
-    return await supabase.from('posts').select('*').ilike('title_body', `%${keyword}%`);
+    return await supabase
+      .from('posts')
+      .select('*,userId(id,nickname,profileImg,level)')
+      .ilike('title_body', `%${keyword}%`);
   } else {
-    return await supabase.from('posts').select('*').eq('postCategory', type).textSearch('title_body', keyword);
+    return await supabase
+      .from('posts')
+      .select('*,userId(id,nickname,profileImg,level)')
+      .eq('postCategory', type)
+      .textSearch('title_body', keyword);
   }
 };
 

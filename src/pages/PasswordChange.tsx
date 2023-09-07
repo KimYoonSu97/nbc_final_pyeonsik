@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
@@ -38,14 +39,14 @@ const PasswordChange: React.FC = () => {
       });
 
       if (!error) {
-        alert('비밀번호 재설정 완료!');
+        toast('비밀번호 재설정 완료!');
         // setUser('');
         supabase.auth.signOut();
         navigate('/login');
         const successMsg = 'Password changed successfully';
         setSuccessMessage(successMsg);
       } else {
-        alert(error);
+        toast(error.message);
         setErrorMessage(error.message);
         console.error('Error changing password:', error.message);
       }
