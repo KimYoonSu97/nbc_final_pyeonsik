@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
-import { NON_MEMBER } from 'src/utility/alertMessage';
+import { NON_MEMBER } from 'src/utility/message';
 
 export const PrivateRoute = () => {
   const navigate = useNavigate();

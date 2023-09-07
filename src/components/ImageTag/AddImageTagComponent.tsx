@@ -6,7 +6,7 @@ import ImageTag from './ImageTag';
 import { Tag, AddImageTagProps } from 'src/types/types';
 import { ReactComponent as TrashCanIcon } from 'src/components/ImageTag/svg/TrashCanIcon.svg';
 import { S } from './StyledAddImageTagComponent';
-import { NON_MEMBER } from 'src/utility/alertMessage';
+import { NON_MEMBER } from 'src/utility/message';
 import { toast } from 'react-toastify';
 
 //Jotai atom을 이용 데이터 전역관리
