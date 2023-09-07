@@ -24,6 +24,7 @@ import {
 import { toast } from 'react-toastify';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   // id로 main과 detail 구분 (main => 댓글 수, detail => link 복사)
@@ -56,6 +57,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const clickFunction = (type: string) => {
     if (!userId) {
       toast(NON_MEMBER);
+      navigate('/login', { state: { backgroundLocation: location } });
       return;
     } else {
       const payload = {
