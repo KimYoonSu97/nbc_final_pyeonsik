@@ -7,7 +7,6 @@ import { confirmModalText } from './confirmModalText';
 
 const Confirm = (type: string) => {
   const text = confirmModalText(type);
-
   return new Promise<boolean>((resolve, reject) => {
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -19,6 +18,7 @@ const Confirm = (type: string) => {
                 <S.Caption>{text.caption}</S.Caption>
                 <S.ButtonArea>
                   <S.FalseButton
+                    as="button"
                     $type={type}
                     onClick={() => {
                       resolve(false);
@@ -28,6 +28,7 @@ const Confirm = (type: string) => {
                     {text.false}
                   </S.FalseButton>
                   <S.TrueButton
+                    as="button"
                     $type={type}
                     onClick={() => {
                       resolve(true);
@@ -55,7 +56,6 @@ const Confirm = (type: string) => {
 };
 
 export default Confirm;
-
 const ButtonBasic = styled(FlexBoxCenter)`
   width: 122px;
   height: 36px;
@@ -65,7 +65,6 @@ const ButtonBasic = styled(FlexBoxCenter)`
 interface ButtonProps {
   $type: string;
 }
-
 const S = {
   Container: styled.div`
     position: fixed;
@@ -89,9 +88,7 @@ const S = {
     height: 274px;
     border-radius: 10px;
     background: #fff;
-
     padding: 30px;
-
     position: fixed;
     top: calc((100vh - 274px) / 2);
     right: calc((100vw - 400px) / 2);
@@ -117,11 +114,12 @@ const S = {
   TrueButton: styled(ButtonBasic)<ButtonProps>`
     background: var(--main, #f02826);
     color: #fff;
+    cursor: pointer;
     ${styleFont.buttonSmall}
   `,
   FalseButton: styled(ButtonBasic)<ButtonProps>`
     color: var(--font-black, var(--Black, #242424));
-
+    cursor: pointer;
     ${styleFont.buttonSmall}
   `
 };
