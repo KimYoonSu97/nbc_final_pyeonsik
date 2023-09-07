@@ -34,17 +34,15 @@ const PostWrite = () => {
   const [isIn] = useState(true);
 
   const handleBeforeUnload = async (e: BeforeUnloadEvent) => {
-    if (await Confirm('writePage')) {
-      e.preventDefault();
-    }
-  };
-
-  const eventListen = async () => {
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    e.preventDefault();
+    e.returnValue = '';
+    // if (await Confirm('writePage')) {
+    // } else {
+    // }
   };
 
   useEffect(() => {
-    eventListen();
+    window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
       setContentsAtom({});
       setTagsDataAtom({});

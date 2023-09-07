@@ -8,6 +8,7 @@ import ContentBox from './reactionSource/ContentBox';
 import BottomFunction from '../post/detail/BottomFunction';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import BestComment from './reactionSource/BestComment';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface Props {
   item: Post;
@@ -20,30 +21,32 @@ const PostForMain = ({ item: postData }: Props) => {
   const writer = post?.userId;
 
   return (
-    <S.Container>
-      {/* 게시글 작성자 정보 */}
-      <S.Head>
-        <WriterContainer post={post} writer={writer} />
-      </S.Head>
-      {/* 여기를 클릭하면 링크로 넘어감 */}
-      <S.ContentAreaForClickEvent to={`/detail/${postData.id}`} state={{ backgroundLocation: location }}>
-        {/* 게시글 데이터 */}
-        <S.ContentArea>
-          <S.ContentBox>
-            <ContentBox post={post} />
-          </S.ContentBox>
-        </S.ContentArea>
-        <S.LinearContainer />
-      </S.ContentAreaForClickEvent>
-      <S.BottomContainer>
-        {/* 베스트 댓글 => 좋아요가 많은 댓글 */}
-        <BestComment postId={post.id} />
-        {/* 인터렉션 버튼 */}
-        <S.FunctionBox>
-          <BottomFunction userId={userId} post={post} />
-        </S.FunctionBox>
-      </S.BottomContainer>
-    </S.Container>
+    <AnimatePresence>
+      <S.Container key={postData.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        {/* 게시글 작성자 정보 */}
+        <S.Head>
+          <WriterContainer post={post} writer={writer} />
+        </S.Head>
+        {/* 여기를 클릭하면 링크로 넘어감 */}
+        <S.ContentAreaForClickEvent to={`/detail/${postData.id}`} state={{ backgroundLocation: location }}>
+          {/* 게시글 데이터 */}
+          <S.ContentArea>
+            <S.ContentBox>
+              <ContentBox post={post} />
+            </S.ContentBox>
+          </S.ContentArea>
+          <S.LinearContainer />
+        </S.ContentAreaForClickEvent>
+        <S.BottomContainer>
+          {/* 베스트 댓글 => 좋아요가 많은 댓글 */}
+          <BestComment postId={post.id} />
+          {/* 인터렉션 버튼 */}
+          <S.FunctionBox>
+            <BottomFunction userId={userId} post={post} />
+          </S.FunctionBox>
+        </S.BottomContainer>
+      </S.Container>
+    </AnimatePresence>
   );
 };
 
@@ -81,7 +84,7 @@ const S = {
     gap: 30px;
     background: #fff;
   `,
-  Container: styled.div`
+  Container: styled(motion.div)`
     min-height: 250px;
     max-height: 580px;
     margin-bottom: 50px;
