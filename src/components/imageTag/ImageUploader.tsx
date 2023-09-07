@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { ReactComponent as CameraIcon } from 'src/components/imageTag/svg/CameraIcon.svg';
+import { ReactComponent as SelectedFileIcon } from 'src/components/imageTag/svg/SelectedFileIcon.svg';
+
 import { ImageUploaderProps } from 'src/types/types';
 import { FlexBoxCenter } from 'src/styles/styleBox';
 
@@ -25,7 +27,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
       <S.ImageContainer id="stylebox" imageselected={imageSelected}>
         <S.FileLabel as="label" imageselected={imageSelected}>
           <S.IconWrapper imageselected={imageSelected}>
-            {imageSelected === 'true' ? '🔃' : <CameraIcon />}
+            {imageSelected === 'true' ? <SelectedFileIcon /> : <CameraIcon />}
           </S.IconWrapper>
           <S.FileInput type="file" accept="image/*" onChange={handleImageUpload} />
         </S.FileLabel>
@@ -57,17 +59,13 @@ const S = {
     width: ${(props) => (props.imageselected === 'true' ? '40px' : '474px')};
     height: ${(props) => (props.imageselected === 'true' ? '40px' : '360px')};
     position: ${(props) => (props.imageselected === 'true' ? 'absolute' : 'initial')};
-    margin-left: ${(props) => (props.imageselected === 'true' ? '30px' : '0')};
-    margin-top: ${(props) => (props.imageselected === 'true' ? '-30px' : '0')};
+    margin-left: ${(props) => (props.imageselected === 'true' ? '220px' : '0')};
+    margin-top: ${(props) => (props.imageselected === 'true' ? '0' : '0')};
 
     z-index: 1;
   `,
 
-  IconWrapper: styled.span<{ imageselected: string }>`
-    &:hover {
-      transform: ${(props) => (props.imageselected === 'true' ? 'scale(1.5)' : 'initial')};
-    }
-  `,
+  IconWrapper: styled.span<{ imageselected: string }>``,
 
   FileLabelText: styled.span`
     margin-left: 140px;
