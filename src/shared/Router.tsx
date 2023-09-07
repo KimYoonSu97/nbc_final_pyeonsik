@@ -27,7 +27,7 @@ const Router = () => {
   return (
     <>
       <GlobalStyle />
-      <GlobalFont/>
+      <GlobalFont />
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />

@@ -119,6 +119,7 @@ const TopBarMenuContainer = () => {
             <S.TopBarLogButton as="li" onClick={() => navigate('/register')} $signIn={true}>
               회원가입
             </S.TopBarLogButton>
+            <button onClick={() => navigate('/map')}>kakao Map</button>
           </>
         ) : (
           // 로그인 후
@@ -126,8 +127,11 @@ const TopBarMenuContainer = () => {
             <S.Icon>
               <IconBell />
             </S.Icon>
-            <UserLevel level={data?.data?.level} />
-            <button onClick={() => navigate('/map')}>kakao Map</button>
+            {/* <S.Level>
+              <S.Leveltext>Lv. 식신</S.Leveltext>
+            </S.Level> */}
+            {/* <p>Hello, {userData?.nickname}</p> */}
+
             <S.ProfileImg
               $url={data?.data?.profileImg}
               onClick={() => {
