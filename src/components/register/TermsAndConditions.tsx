@@ -1,37 +1,18 @@
 import { atom, useAtom } from 'jotai';
 import React, { useState } from 'react';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 import styled from 'styled-components';
+import { IconConsent, IconConsentConfirm } from '../icons/register';
 
-interface TermsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  termsContent: string;
+interface Consent {
+  terms1Agreed: boolean;
+  setTerms1Agreed: React.Dispatch<React.SetStateAction<boolean>>;
+  terms2Agreed: boolean;
+  setTerms2Agreed: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const termsAllAgreedAtom = atom<boolean>(false);
 
-const TermsModalComponent: React.FC<TermsModalProps> = ({ isOpen, onClose, termsContent }) => {
-  if (!isOpen) return null;
-
-  return (
-    <TermsModal>
-      <ModalContent>
-        {/* 이용약관 내용 */}
-        <p>{termsContent}</p>
-        <button onClick={onClose}>닫기</button>
-      </ModalContent>
-    </TermsModal>
-  );
-};
-
-const TermsAndConditions: React.FC = () => {
-  const [terms1ModalOpen, setTerms1ModalOpen] = useState(false);
-  const [terms2ModalOpen, setTerms2ModalOpen] = useState(false);
-  const [terms1Agreed, setTerms1Agreed] = useState(false);
-  const [terms2Agreed, setTerms2Agreed] = useState(false);
-
-  const terms1Content = '이용약관 1 내용을 여기에 작성하세요.';
-  const terms2Content = '이용약관 2 내용을 여기에 작성하세요.';
-
+const TermsAndConditions = ({ terms1Agreed, setTerms1Agreed, terms2Agreed, setTerms2Agreed }: Consent) => {
   const toggleAllAgree = () => {
     if (terms1Agreed && terms2Agreed) {
       setTerms1Agreed(false);
@@ -41,47 +22,85 @@ const TermsAndConditions: React.FC = () => {
       setTerms2Agreed(true);
     }
   };
+  const toggle1Agreed = () => {
+    setTerms1Agreed(!terms1Agreed);
+  };
+  const toggle2Agreed = () => {
+    setTerms2Agreed(!terms2Agreed);
+  };
 
-  const allAgreed = terms1Agreed && terms2Agreed;
-
-  // 체크 값 전역 상태관리
-  const [_, setTerms] = useAtom(termsAllAgreedAtom);
-
-  setTerms(allAgreed);
   return (
-    <div>
-      <label>
-        <AllAgreeLabel>
-          <TermsCheckbox type="checkbox" checked={allAgreed} onChange={toggleAllAgree} />
-          전체 동의합니다.
-        </AllAgreeLabel>
-        <br />
-        <TermsCheckbox type="checkbox" checked={terms1Agreed} onChange={() => setTerms1Agreed(!terms1Agreed)} />
-        이용약관 1에 동의합니다.
-        <button onClick={() => setTerms1ModalOpen(true)}>보기</button>
-        <TermsModalComponent
-          isOpen={terms1ModalOpen}
-          onClose={() => setTerms1ModalOpen(false)}
-          termsContent={terms1Content}
-        />
-      </label>
-      <br />
-      <label>
-        <TermsCheckbox type="checkbox" checked={terms2Agreed} onChange={() => setTerms2Agreed(!terms2Agreed)} />
-        이용약관 2에 동의합니다.
-        <button onClick={() => setTerms2ModalOpen(true)}>보기</button>
-        <TermsModalComponent
-          isOpen={terms2ModalOpen}
-          onClose={() => setTerms2ModalOpen(false)}
-          termsContent={terms2Content}
-        />
-      </label>
-      <br />
-    </div>
+    <S.Container>
+      <S.AllCheckArea onClick={toggleAllAgree}>
+        {terms1Agreed && terms2Agreed ? <IconConsentConfirm /> : <IconConsent />}
+        전체 동의합니다.
+      </S.AllCheckArea>
+      <S.ConsentArea>
+        <S.CheckConsent>
+          {terms1Agreed ? <IconConsentConfirm onClick={toggle1Agreed} /> : <IconConsent onClick={toggle1Agreed} />}
+          <p onClick={toggle1Agreed}>편식 서비스 이용 약관동의 (필수)</p>
+          <S.PostButton>보기</S.PostButton>
+        </S.CheckConsent>
+        <S.CheckConsent>
+          {terms2Agreed ? <IconConsentConfirm onClick={toggle2Agreed} /> : <IconConsent onClick={toggle2Agreed} />}
+          <p onClick={toggle2Agreed}>개인정보 수집 및 이용 동의 (필수)</p>
+          <S.PostButton>보기</S.PostButton>
+        </S.CheckConsent>
+      </S.ConsentArea>
+    </S.Container>
   );
 };
 
 export default TermsAndConditions;
+
+const S = {
+  Container: styled(FlexBoxJustifyCenter)`
+    flex-direction: column;
+    margin-top: 44px;
+  `,
+  AllCheckArea: styled(FlexBoxAlignCenter)`
+    width: 294px;
+    height: 42px;
+    border-radius: 4px;
+    background: var(--Neutral-50, #f9fafb);
+    padding: 9px 12px;
+    gap: 10px;
+    cursor: pointer;
+
+    color: var(--font-black, var(--Black, #242424));
+    ${styleFont.labelLarge}
+  `,
+  ConsentArea: styled(FlexBox)`
+    flex-direction: column;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    gap: 12px;
+  `,
+  CheckConsent: styled(FlexBoxAlignCenter)`
+    width: 294px;
+    height: 24px;
+    padding: 0 12px;
+    /* margin: 8px 0; */
+    color: var(--font-black, var(--Black, #242424));
+    ${styleFont.labelLarge}
+    font-size: 14px;
+    font-weight: 400;
+    gap: 10px;
+    cursor: pointer;
+  `,
+  PostButton: styled.div`
+    margin-left: auto;
+    color: #4285f4;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 145.455% */
+    text-decoration-line: underline;
+    cursor: pointer;
+  `
+};
 
 const TermsCheckbox = styled.input`
   /* 체크박스 스타일링 */
