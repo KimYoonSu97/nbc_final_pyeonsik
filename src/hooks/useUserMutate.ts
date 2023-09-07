@@ -1,12 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateProfileImg, updateUserNickname, updateUserLevel } from 'src/api/userLogin';
+import { useNavigate } from 'react-router';
+import { updateProfileImg, updateUserNickname, updateUserLevel, deleteUser } from 'src/api/userLogin';
 
 const useUserMutate = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const success = {
     onSuccess: () => {
-      queryClient.invalidateQueries(['loginUser']);
+      queryClient.invalidateQueries({ queryKey: ['loginUser'] });
     }
   };
 
@@ -16,6 +18,9 @@ const useUserMutate = () => {
   const profileImgMutation = useMutation(updateProfileImg, success);
   // 유저 레벨업
   const levelMutation = useMutation(updateUserLevel, success);
+
+  // 사용자 정보 삭제
+  // const deleteUserMutate = useMutation(deleteUser, successDelete);
 
   return { nicknameMutation, profileImgMutation, levelMutation };
 };

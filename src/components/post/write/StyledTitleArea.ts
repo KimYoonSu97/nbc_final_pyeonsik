@@ -43,7 +43,6 @@ export const S = {
   `,
   SelectText: styled.button`
     width: 50px;
-    background-color: transparent;
     padding: 0px;
     color: var(--neutral-400, #98a2b3);
     ${styleFont.titleSmall}

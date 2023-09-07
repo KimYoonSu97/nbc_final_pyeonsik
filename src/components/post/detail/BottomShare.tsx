@@ -2,6 +2,7 @@ import React from 'react';
 import { S } from './StyledBottomFunction';
 import { IconLinkCopy, IconLinkFacebook, IconLinkKakao, IconLinkTwitter, IconUnLink } from 'src/components/icons';
 import { useLocation } from 'react-router';
+import { toast } from 'react-toastify';
 
 const BottomShare = () => {
   const { pathname } = useLocation();
@@ -22,14 +23,14 @@ const BottomShare = () => {
   const clickCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(`https://${shareUrl}`);
-      alert('주소가 복사되었습니다.');
+      toast('주소가 복사되었습니다.');
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <S.FunctionButton>
+    <S.FunctionLink>
       <IconUnLink />
       <S.LinkBubble className="dropDownLink">
         <S.LinkTail />
@@ -49,7 +50,7 @@ const BottomShare = () => {
           </S.LlinkButton>
         </S.LinkBox>
       </S.LinkBubble>
-    </S.FunctionButton>
+    </S.FunctionLink>
   );
 };
 

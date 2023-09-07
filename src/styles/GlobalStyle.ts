@@ -2,21 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
-// 폰트 스타일
-/* @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-} */
-
-/* @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css'); */
-
-// 폰트 크기를 변수로 선언
-
-/* * {
-	font-family: Pretendard,'Noto Sans KR', sans-serif;
-} */
+/* 라이브러리 오류같음 해당 태그가 생성되기때문에 안보이게 처리 */
+#react-confirm-alert-firm-svg {
+  display: none;
+}
 
 // reset.css
 *{
@@ -25,9 +14,10 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 button{
+	cursor: pointer;
+	background-color: transparent;
     outline: none;
     border: none;
-	cursor: pointer;
 }
 
 html, body, div, span, applet, object, iframe,

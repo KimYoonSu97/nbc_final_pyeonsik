@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import supabase from 'src/lib/supabaseClient';
 
 interface UpdateUser {
@@ -27,4 +28,12 @@ const updateUserLevel = async ({ userId, level }: UpdateUserLevel) => {
   await supabase.from('users').update({ level }).eq('id', userId);
 };
 
-export { getUserData, updateProfileImg, updateUserNickname, updateUserLevel };
+const deleteUser = async (id: string) => {
+  try {
+    await supabase.from('users').delete().eq('id', id);
+  } catch (error) {
+    toast('에러가 발생했습니다.');
+  }
+};
+
+export { getUserData, updateProfileImg, updateUserNickname, updateUserLevel, deleteUser };

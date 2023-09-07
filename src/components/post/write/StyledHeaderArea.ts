@@ -24,7 +24,6 @@ export const S = {
   `,
 
   BackButton: styled.button`
-    background-color: transparent;
     color: var(--neutral-400, var(--neutral-400, #98a2b3));
 
     font-size: 16px;

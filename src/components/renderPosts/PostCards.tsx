@@ -22,6 +22,6 @@ export default PostCards;
 
 const S = {
   Area: styled.div`
-    margin-top: 30px;
+    margin-top: 40px;
   `
 };

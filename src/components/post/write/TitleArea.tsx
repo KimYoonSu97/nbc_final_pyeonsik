@@ -31,7 +31,7 @@ const TitleArea = ({ category, setCategory, title, setTitle }: TitleAreaProps) =
         type="text"
         name="title"
         placeholder="제목을 입력해 주세요."
-        value={title}
+        value={title || ''}
         onChange={changeTitle}
         autoFocus
       />

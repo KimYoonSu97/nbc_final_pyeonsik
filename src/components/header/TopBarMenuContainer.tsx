@@ -4,8 +4,7 @@ import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import baseImage from '../../images/baseprofile.jpeg';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { useQuery } from '@tanstack/react-query';
@@ -13,6 +12,7 @@ import { IconBell } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
+import { toast } from 'react-toastify';
 
 interface User {
   id: string;
@@ -43,8 +43,7 @@ const TopBarMenuContainer = () => {
       }
     },
     {
-      enabled: userLogin !== null || userId ? true : false,
-      staleTime: Infinity
+      enabled: userLogin !== null || userId ? true : false
     }
   );
 
@@ -85,6 +84,8 @@ const TopBarMenuContainer = () => {
     }
   };
 
+  console.log(data);
+
   //소셜로그인
   useEffect(() => {
     if (localStorage.getItem('social') && !data) {
@@ -92,13 +93,14 @@ const TopBarMenuContainer = () => {
     }
   }, [localStorage.getItem('social')]);
 
+  // console.log(data);
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
         <S.QuickPostButton onClick={() => navigate('/write')}>나만의 편식조합 공유하기</S.QuickPostButton>
         <S.QuickPostButton
           onClick={() => {
-            alert('서비스 준비중입니다.');
+            toast('서비스 준비중입니다.');
           }}
         >
           신제품 리뷰하기
@@ -108,7 +110,7 @@ const TopBarMenuContainer = () => {
       <S.TopBarLogContainer as="ul" $logged={data ? true : false}>
         {/* 공통 */}
         {/* 로그인 전 */}
-        {!data ? (
+        {data === undefined || data === null ? (
           <>
             <S.TopBarLogButton
               as="li"
@@ -117,7 +119,7 @@ const TopBarMenuContainer = () => {
             >
               로그인
             </S.TopBarLogButton>
-            <S.TopBarLogButton onClick={() => navigate('/register')} $signIn={true}>
+            <S.TopBarLogButton as="li" onClick={() => navigate('/register')} $signIn={true}>
               회원가입
             </S.TopBarLogButton>
           </>
@@ -127,12 +129,8 @@ const TopBarMenuContainer = () => {
             <S.Icon>
               <IconBell />
             </S.Icon>
-
-            {/* <S.Level>
-              <S.Leveltext>Lv. 식신</S.Leveltext>
-            </S.Level> */}
-            {/* <p>Hello, {userData?.nickname}</p> */}
-            <button onClick={()=> navigate('/map')}>kakao Map</button>
+            <UserLevel level={data?.data?.level} />
+            <button onClick={() => navigate('/map')}>kakao Map</button>
             <S.ProfileImg
               $url={data?.data?.profileImg}
               onClick={() => {

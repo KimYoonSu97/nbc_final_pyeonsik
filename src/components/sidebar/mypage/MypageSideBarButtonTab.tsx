@@ -6,6 +6,7 @@ import { userAtom } from 'src/globalState/jotai';
 import { useAtom } from 'jotai';
 import { useQueryClient } from '@tanstack/react-query';
 import supabase from 'src/lib/supabaseClient';
+import { toast } from 'react-toastify';
 
 const MypageSideBarButtonTab = () => {
   const location = useLocation();
@@ -28,7 +29,7 @@ const MypageSideBarButtonTab = () => {
     localStorage.removeItem('social');
     queryClient.removeQueries(['loginUser']);
     queryClient.resetQueries(['loginUser']);
-    alert('로그아웃 완료!');
+    toast('로그아웃 완료!');
     // handleRefresh();
   };
 

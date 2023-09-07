@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { styleFont } from 'src/styles/styleFont';
 import { styled } from 'styled-components';
+import Achievement from './Achievement';
 
 const MyAchievement = () => {
-  // return
-  return <S.Container>서비스 준비중입니다.</S.Container>;
+  return (
+    <S.Container>
+      <Achievement />
+    </S.Container>
+  );
 };
 
 export default MyAchievement;

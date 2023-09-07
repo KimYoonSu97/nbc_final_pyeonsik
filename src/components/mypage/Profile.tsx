@@ -2,13 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserData, updateUserNickname, updateProfileImg } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { IconCamera } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import useUserMutate from 'src/hooks/useUserMutate';
+// 탈퇴
+import UserDelete from '../register/UserDelete';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const queryClient = useQueryClient();
@@ -31,20 +33,6 @@ const Profile = () => {
     setCurrentNickname(data?.data?.nickname);
   }, [data]);
 
-  //닉네임 수정 시 바로 렌더링
-  // const nicknameMutation = useMutation(updateUserNickname, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(['loginUser']);
-  //   }
-  // });
-
-  // //프로필 이미지 수정 시 바로 렌더링
-  // const profileImgMutation = useMutation(updateProfileImg, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(['loginUser']);
-  //   }
-  // });
-
   const encodeFileTobase64 = (fileBlob: Blob) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
@@ -62,7 +50,7 @@ const Profile = () => {
 
   const updateNickname = async () => {
     if (nickname === currentNickname) {
-      alert('새로운 닉네임을 입력하지 않았습니다.');
+      toast('새로운 닉네임을 입력하지 않았습니다.');
       return;
     }
     const { data: allNickname, error: allNicknameError } = await supabase
@@ -71,7 +59,7 @@ const Profile = () => {
       .eq('nickname', nickname);
 
     if (allNickname?.length !== 0) {
-      alert('이미 있는 닉네임 입니다ㅠㅠ');
+      toast('이미 있는 닉네임 입니다ㅠㅠ');
       return;
     }
 
@@ -115,7 +103,7 @@ const Profile = () => {
           <S.NicknameInputBox>
             <S.InputArea
               type="text"
-              value={nickname}
+              value={nickname || ''}
               onChange={(e) => {
                 setNickname(e.target.value);
               }}
@@ -138,6 +126,7 @@ const Profile = () => {
             <S.InfoSubmitButton>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
+        <UserDelete />
       </S.Container>
     </>
   );

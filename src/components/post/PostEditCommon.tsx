@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPost } from 'src/api/posts';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -9,9 +9,9 @@ import OrgPostCard from './detail/OrgPostCard';
 import { S } from 'src/components/post/write/StyledPostWrite';
 import HeaderArea from './write/HeaderArea';
 import TitleArea from './write/TitleArea';
+import { toast } from 'react-toastify';
 
 const PostEditCommon = () => {
-  const navigate = useNavigate();
   const { id: prams } = useParams<string>();
   const userId: string | undefined = useLoginUserId();
 
@@ -34,7 +34,7 @@ const PostEditCommon = () => {
     e.preventDefault();
 
     if (title.trim() === '' || body.replace(/[<][^>]*[>]/gi, '').trim() === '') {
-      alert('제목과 내용을 입력해 주세요.');
+      toast('제목과 내용을 입력해 주세요.');
       return false;
     }
 
@@ -57,7 +57,7 @@ const PostEditCommon = () => {
     return <p>Error</p>;
   }
   if (userId && post.userId?.id && userId !== post.userId.id) {
-    alert('접근할 수 없습니다.');
+    toast('접근할 수 없습니다.');
     return <Navigate to="/" />;
   }
 

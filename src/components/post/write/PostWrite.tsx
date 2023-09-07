@@ -9,9 +9,12 @@ import OrgPostCard from '../detail/OrgPostCard';
 import { S } from 'src/components/post/write/StyledPostWrite';
 import supabase from 'src/lib/supabaseClient';
 import { useAtom } from 'jotai';
-import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
+import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../imageTag/AddImageTagComponent';
 import { levelChecker } from './userLevelUp';
 import useUserMutate from 'src/hooks/useUserMutate';
+import { updateFirstRecipeBadge, updateCommonPostBadge } from 'src/api/badge';
+import Confirm from 'src/components/popUp/Confirm';
+import { toast } from 'react-toastify';
 
 const PostWrite = () => {
   const navigate = useNavigate();
@@ -30,44 +33,50 @@ const PostWrite = () => {
 
   const [isIn] = useState(true);
 
-  console.log('allContents', Object.keys(allContents).length);
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+  //     if (isIn) {
+  //       e.preventDefault();
+  //       e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
+  //     }
+  //   };
 
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isIn) {
-        e.preventDefault();
-        e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
-      }
-    };
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+  //   return () => {
+  //     setContentsAtom({});
+  //     setTagsDataAtom({});
+  //     setImagesDataAtom({});
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, [isIn]);
 
-    return () => {
-      setContentsAtom({});
-      setTagsDataAtom({});
-      setImagesDataAtom({});
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isIn]);
+  // const beforeUnload =async () => {
+  //   if( await Confirm('writePage') ){
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   } else {
+
+  //   }
+
+  // }
+
+  //   useEffect(()=>{
+  // return async ()=>{
+
+  // }
+  //   },[])
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (title.trim() === '' || (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '')) {
-      alert('제목과 내용을 입력해 주세요.');
-      return false;
-    }
-
     const isAllContentsEmpty = Object.keys(allContents).every((key) => allContents[key] === '');
-
-    if (category === 'recipe' && isAllContentsEmpty) {
-      alert('내용을 입력해 주세요.');
-      return;
-    }
-
-    const confirmMessage = '작성하시겠습니까?';
-    if (!window.confirm(confirmMessage)) {
-      return;
+    if (
+      title.trim() === '' ||
+      (category === 'common' && body.replace(/[<][^>]*[>]/gi, '').trim() === '') ||
+      (category === 'recipe' && isAllContentsEmpty)
+    ) {
+      toast('제목과 내용을 입력해 주세요.');
+      return false;
     }
 
     const imageUrls = [];
@@ -75,7 +84,7 @@ const PostWrite = () => {
       const { data, error } = await supabase.storage.from('photos').upload(`tags/${selectedImage.name}`, selectedImage);
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
-        alert('이미지 업로드 중 에러가 발생했습니다!');
+        toast('이미지 업로드 중 에러가 발생했습니다!');
         return;
       }
       imageUrls.push(data.path);
@@ -91,8 +100,8 @@ const PostWrite = () => {
         body,
         userId
       };
-
       addPostMutate.mutate(newPost);
+      updateCommonPostBadge(userId);
     } else if (category === 'recipe') {
       const newPost = {
         postCategory: category,
@@ -105,12 +114,12 @@ const PostWrite = () => {
         tags: Object.values(allTags),
         tagimage: imageUrls
       };
-
       addRecipePostMutate.mutate(newPost);
+      updateFirstRecipeBadge(userId);
+
       // 이다음에 체크하고 네비게이트
       // 이 함수가 반환하는 것은 레벨업데이트가 필요한지 여부에대한 것과 어떤 레벨로 업데이트 할것인지에 대한 것임
       const result = await levelChecker(userId);
-
       //만약 업데이트 가 필요하지 않다면 그냥 바로 네비게이트로 홈으로 보내버림
       if (!result.isNeedUpdate) {
         navigate('/');
