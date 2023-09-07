@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import 'react-kakao-maps-sdk';
 import { ConvsInform } from 'src/types/types';
 import { GetConvList } from './GetConvList';
-import { GetDetailAddress } from './GetDetailAddress';
 import styled from 'styled-components';
 import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
 
@@ -13,13 +12,13 @@ declare global {
 }
 
 const KakaoMap = () => {
-  const [curLocation, setCurLocation] = useState<string>();
   const [convs, setConvs] = useState<ConvsInform[]>([]);
   const [myLat, setMyLat] = useState<number | null>(null); // 위도 상태 변수
   const [myLng, setMyLng] = useState<number | null>(null); // 경도 상태 변수
 
   const [nearConv, setNearConv] = useState<ConvsInform>();
   const [Logo, setLogo] = useState<React.FunctionComponent<React.SVGProps<SVGSVGElement>> | null>(null);
+  const coloredBalls = ['🟢', '🟣', '🔵', '🟡', '🟠'];
 
   // 현재 자신의 위치 좌표를 지정해줍니다.
   const setMyPosition = () => {
@@ -27,8 +26,8 @@ const KakaoMap = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         let lat = position.coords.latitude;
         let lng = position.coords.longitude;
-        setMyLat(lat);
-        setMyLng(lng);
+        setMyLat(lat); 
+        setMyLng(lng); 
       });
 
       console.log('위치 수정 완료');
@@ -65,10 +64,11 @@ const KakaoMap = () => {
     if (convs.length === 0) {
       console.log('배열이 비어있습니다.');
     } else {
-      let closestConv = convs[0]; // 초기값으로 첫 번째 원소를 선택
+      let closestConv = convs.find((v) => v.distance > 0); // 초기값으로 값이 있는 원소
+      if (!closestConv) closestConv = convs[0];
 
-      for (let i = 1; i < convs.length; i++) {
-        if (convs[i].distance === 0) continue;
+      for (let i = 0; i < convs.length; i++) {
+        if (convs[i].distance <= 0) continue; // 빈 값이면 패스
         if (convs[i].distance < closestConv.distance) {
           closestConv = convs[i]; // 더 작은 distance를 가진 원소로 업데이트
         }
@@ -144,7 +144,9 @@ const KakaoMap = () => {
             {!(v.distance === 0) ? (
               <>
                 <ListContainer>
-                  <Title>o {v.brand_name}</Title>
+                  <Title>
+                    {coloredBalls[idx]} {v.brand_name}
+                  </Title>
                   <ColumnContainer>
                     <RowContainer>
                       <PositionLink
@@ -165,7 +167,7 @@ const KakaoMap = () => {
             ) : (
               <>
                 <ListContainer>
-                  <Title>o {v.brand_name}</Title>
+                  <Title>⚫ {v.brand_name}</Title>
                   <ColumnContainer>값이 없습니다 😥</ColumnContainer>
                 </ListContainer>
                 <Separator />

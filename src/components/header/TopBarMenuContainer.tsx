@@ -13,6 +13,7 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox'
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -132,6 +133,7 @@ const TopBarMenuContainer = () => {
             <S.TopBarLogButton as="li" onClick={() => navigate('/register')} $signIn={true}>
               회원가입
             </S.TopBarLogButton>
+            <Link to={'/map'}>카카오맵</Link>
           </>
         ) : (
           // 로그인 후
