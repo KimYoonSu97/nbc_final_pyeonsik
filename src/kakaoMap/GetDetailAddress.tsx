@@ -1,14 +1,20 @@
-//  상세주소 받아옵니다. 하지만 사용 안하는...
-export const GetDetailAddress = (lat: any, lng: any, callback: (address: string | undefined) => void): void => {
-  const geocoder = new kakao.maps.services.Geocoder();
-  const coord = new kakao.maps.LatLng(lat, lng);
+export const GetDetailAddress = async (lat: any, lng: any): Promise<string | undefined> => {
+  return new Promise<string | undefined>((resolve, reject) => {
+    const geocoder = new kakao.maps.services.Geocoder();
+    const coord = new kakao.maps.LatLng(lat, lng);
 
-  geocoder.coord2Address(coord.getLng(), coord.getLat(), (result: any, status: string) => {
-    if (status === kakao.maps.services.Status.OK) {
-      const address = result[0].address.region_2depth_name; // ex) 현재 위치 ((서울)시)
-      callback(address);
-    } else {
-      callback(undefined); // 에러 처리를 콜백으로 전달
-    }
+    const callback = function (result: any, status: string) {
+      if (status === kakao.maps.services.Status.OK) {
+        const arr = { ...result };
+        const address = arr[0].address.region_2depth_name; // 현재 위치 ((서울)시)
+        console.log(address);
+        resolve(address);
+      } else {
+        // 에러 처리 로직을 추가할 수도 있습니다.
+        reject(new Error('주소 변환 실패'));
+      }
+    };
+
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
   });
 };
