@@ -1,15 +1,18 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 import { getNewProd } from 'src/api/product';
-import { Product } from 'src/types/types';
-import { styled } from 'styled-components';
-import ReviewProduct from './ReviewProduct';
-import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { getSwiperData } from 'src/api/ReviewSwiper';
+import { Product } from 'src/types/types';
 import { LOGO_IMAGE } from 'src/utility/guide';
+// style
+import { styled } from 'styled-components';
+import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { IconBad, IconBadFace, IconGood, IconGoodFace } from 'src/components/icons';
 
 const ReviewList = () => {
+  const userId = useLoginUserId();
+
   const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });
   const { isLoading: lodingSwiper, data: dataSwiper } = useQuery({
     queryKey: ['swiper'],
@@ -17,11 +20,18 @@ const ReviewList = () => {
   });
 
   const produts = dataProd?.data as Product[] | undefined;
-  const swiper = dataSwiper?.data;
+  const swipers = dataSwiper?.data;
+  console.log(swipers);
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
     e.target.src = LOGO_IMAGE;
+  };
+
+  const isRating = (productId: string) => {
+    swipers?.find((swiper) => {
+      swiper.prodId === productId && swiper.userId === userId;
+    });
   };
 
   if (lodingProd || lodingSwiper) {
@@ -39,11 +49,19 @@ const ReviewList = () => {
             <S.ProdImg src={product.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
             <S.TextContainer>
               <S.ProdName>{product.prodName}</S.ProdName>
-              <S.MyText>
-                <S.MyEvaluation>나의 평가 : </S.MyEvaluation>
-                <S.IconFaceBox>{true ? <IconGoodFace /> : <IconBadFace />}</S.IconFaceBox>
-                <S.MyEvaluation>또 사먹을래요!</S.MyEvaluation>
-              </S.MyText>
+              {swipers?.find((swiper) => {
+                swiper.prodId === product.id && swiper.userId === userId;
+              }) && (
+                <S.MyText>
+                  <S.MyEvaluation>나의 평가 : </S.MyEvaluation>
+                  <S.IconFaceBox>
+                    <IconGoodFace />
+
+                    <IconBadFace />
+                  </S.IconFaceBox>
+                  <S.MyEvaluation>또 사먹을래요!</S.MyEvaluation>
+                </S.MyText>
+              )}
             </S.TextContainer>
             <S.AllEvaluation>
               <S.GraphContainer>
@@ -172,7 +190,7 @@ const S = {
 
     width: 312px;
     height: 26px;
-    border-radius: 10.57px;
+    border-radius: 100px;
     background: linear-gradient(109deg, #ffb334 23.92%, #eb4335 76.3%);
   `,
 
@@ -182,7 +200,7 @@ const S = {
 
     width: 312px;
     height: 26px;
-    border-radius: 10.57px;
+    border-radius: 100px;
     background: linear-gradient(to right, transparent 70%, #f2f4f7 70%);
   `,
 
