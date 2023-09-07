@@ -8,7 +8,7 @@ import { ReactComponent as TrashCanIcon } from 'src/components/imageTag/svg/Tras
 import { ReactComponent as AddBtn } from 'src/components/imageTag/svg/AddBtn.svg';
 import { ReactComponent as ArrowIcon } from 'src/components/imageTag/svg/ArrowIcon.svg';
 import { ReactComponent as DotIcon } from 'src/components/imageTag/svg/DotIcon.svg';
-import { ArrowIconWrapper, S } from './StyledAddImageTagComponent';
+import { ArrowIconWrapper, S, DocIconWrapper } from './StyledAddImageTagComponent';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 import { toast } from 'react-toastify';
 
@@ -30,6 +30,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   const [, setContents] = useState<string[]>(body ?? []);
   const [editMode] = useState<boolean>(isEditMode ?? false);
   const [dragging, setDragging] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!editMode) {
@@ -208,6 +209,14 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <S.ButtonThumbnailArea>
@@ -218,30 +227,35 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
             <React.Fragment key={componentUuid}>
               {image[componentUuid] && (
                 <S.ThumbnailImgWrapper>
-                  <S.SmallButton>
+                  <S.SmallButton
+                    draggable
+                    onDragStart={(e) => handleDragStart(index, e)}
+                    onDrop={(e) => handleDrop(index, e)}
+                    onDragOver={(e) => e.preventDefault()}
+                  >
                     {typeof image[componentUuid] === 'string' ? (
                       <S.ThumbnailImg
                         src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${image[componentUuid]}`}
                         alt="이미지"
-                        draggable
-                        onDragStart={(e) => handleDragStart(index, e)}
-                        onDrop={(e) => handleDrop(index, e)}
-                        onDragOver={(e) => e.preventDefault()}
                       />
                     ) : (
-                      <S.ThumbnailImg
-                        src={URL.createObjectURL(image[componentUuid])}
-                        alt="이미지"
-                        draggable
-                        onDragStart={(e) => handleDragStart(index, e)}
-                        onDrop={(e) => handleDrop(index, e)}
-                        onDragOver={(e) => e.preventDefault()}
-                      />
+                      <S.ThumbnailImg src={URL.createObjectURL(image[componentUuid])} alt="이미지" />
                     )}
-                    <div style={{ filter: 'none' }}>
+                    <div>
                       <ArrowIconWrapper>
                         <ArrowIcon />
                       </ArrowIconWrapper>
+
+                      <DocIconWrapper onMouseOver={openModal} onMouseOut={closeModal}>
+                        <DotIcon />
+                        {isModalOpen && (
+                          <S.ModalOverlay>
+                            <S.ModalContainer>
+                              <S.ModalContent>드래그해서 옮기기</S.ModalContent>
+                            </S.ModalContainer>
+                          </S.ModalOverlay>
+                        )}
+                      </DocIconWrapper>
                     </div>
                   </S.SmallButton>
                 </S.ThumbnailImgWrapper>
@@ -255,6 +269,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
           </S.AddBtn>
         </S.SmallButton>
       </S.ButtonThumbnailArea>
+
       {/* 여기는 전체 에디터가 담길 부분임. */}
       <S.ContentArea>
         {imageTagComponents.map((component, index) => {

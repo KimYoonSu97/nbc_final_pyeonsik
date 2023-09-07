@@ -1,15 +1,26 @@
 import styled from 'styled-components';
-import { FlexBox } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 
 export const ArrowIconWrapper = styled.div`
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 70%;
+  left: 0%;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 2;
   pointer-events: none;
+`;
+
+export const DocIconWrapper = styled.div`
+  position: absolute;
+
+  top: 70%;
+  left: -50px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
 `;
 
 export const S = {
@@ -23,7 +34,12 @@ export const S = {
     gap: 8px;
   `,
 
-  SmallButton: styled.div``,
+  SmallButton: styled(FlexBoxCenter)`
+    margin-left: -50px;
+    margin-top: 10px;
+    width: 100px;
+    height: 48px;
+  `,
 
   ThumbnailImg: styled.img`
     border-radius: 20%;
@@ -45,6 +61,9 @@ export const S = {
 
     &:hover {
       ${ArrowIconWrapper} {
+        opacity: 1;
+      }
+      ${DocIconWrapper} {
         opacity: 1;
       }
     }
@@ -72,5 +91,20 @@ export const S = {
     top: 0;
     left: 0;
     z-index: -1;
+  `,
+  ModalOverlay: styled(FlexBoxCenter)`
+    background-color: black;
+    border-radius: 5px;
+    position: absolute;
+    width: 140px;
+    height: 20px;
+    top: 40px;
+    left: -70px;
+  `,
+
+  ModalContainer: styled.div``,
+
+  ModalContent: styled.div`
+    color: gray;
   `
 };
