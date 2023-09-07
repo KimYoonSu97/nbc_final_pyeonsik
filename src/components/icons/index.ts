@@ -12,6 +12,7 @@ export { ReactComponent as IconBadgeSmall } from './IconBadgeSmall.svg';
 export { ReactComponent as IconProfile } from './IconProfile.svg';
 export { ReactComponent as IconMyPostBox } from './IconMyPostBox.svg';
 export { ReactComponent as IconCamera } from './IconCamera.svg';
+export { ReactComponent as IconCameraSmall } from './IconCameraSmall.svg';
 
 // post
 export { ReactComponent as IconAdd } from './post/IconAdd.svg';
@@ -51,6 +52,5 @@ export { ReactComponent as CU } from './brand/CU.svg';
 
 // review
 export { ReactComponent as IconBad } from './IconBad.svg';
-export { ReactComponent as  IconBadBig} from './IconBadBig.svg';
-export { ReactComponent as  IconGoodFace} from './IconGoodFace.svg';
-
+export { ReactComponent as IconBadBig } from './IconBadBig.svg';
+export { ReactComponent as IconGoodFace } from './IconGoodFace.svg';
