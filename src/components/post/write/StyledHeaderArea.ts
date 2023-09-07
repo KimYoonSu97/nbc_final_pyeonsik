@@ -1,3 +1,4 @@
+import { styleFont } from 'src/styles/styleFont';
 import styled from 'styled-components';
 
 export const S = {
@@ -25,11 +26,7 @@ export const S = {
 
   BackButton: styled.button`
     color: var(--neutral-400, var(--neutral-400, #98a2b3));
-
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px; /* 150% */
+    ${styleFont.buttonMedium}
   `,
 
   LogoContainer: styled.div`
@@ -56,10 +53,7 @@ export const S = {
 
     color: var(--white, #fff);
 
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px; /* 150% */
+    ${styleFont.buttonMedium}
   `,
 
   AddIcon: styled.div`

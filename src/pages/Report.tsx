@@ -99,7 +99,7 @@ const Report = () => {
   };
 
   return (
-    <ReportWrap>
+    <ReportWrap id="container">
       {step === 1 && (
         <ReportInner>
           <div>

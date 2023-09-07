@@ -97,7 +97,17 @@ const TopBarMenuContainer = () => {
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
-        <S.QuickPostButton onClick={() => navigate('/write')}>나만의 편식조합 공유하기</S.QuickPostButton>
+        <S.QuickPostButton
+          onClick={() => {
+            if (!userId) {
+              toast('로그인 후 이용 가능합니다.');
+              return;
+            }
+            navigate('/write');
+          }}
+        >
+          나만의 편식조합 공유하기
+        </S.QuickPostButton>
         <S.QuickPostButton
           onClick={() => {
             toast('서비스 준비중입니다.');
@@ -130,7 +140,6 @@ const TopBarMenuContainer = () => {
               <IconBell />
             </S.Icon>
             <UserLevel level={data?.data?.level} />
-            <button onClick={() => navigate('/map')}>kakao Map</button>
             <S.ProfileImg
               $url={data?.data?.profileImg}
               onClick={() => {
