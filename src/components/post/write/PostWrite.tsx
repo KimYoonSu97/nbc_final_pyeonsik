@@ -9,7 +9,7 @@ import OrgPostCard from '../detail/OrgPostCard';
 import { S } from 'src/components/post/write/StyledPostWrite';
 import supabase from 'src/lib/supabaseClient';
 import { useAtom } from 'jotai';
-import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
+import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../imageTag/AddImageTagComponent';
 import { levelChecker } from './userLevelUp';
 import useUserMutate from 'src/hooks/useUserMutate';
 import Confirm from 'src/components/popUp/Confirm';
