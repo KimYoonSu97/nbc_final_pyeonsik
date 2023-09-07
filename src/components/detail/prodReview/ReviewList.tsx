@@ -4,9 +4,10 @@ import { getNewProd } from 'src/api/product';
 import { Product } from 'src/types/types';
 import { styled } from 'styled-components';
 import ReviewProduct from './ReviewProduct';
-import { FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
+import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColumn } from 'src/styles/styleBox';
 import { getSwiperData } from 'src/api/ReviewSwiper';
 import { LOGO_IMAGE } from 'src/utility/guide';
+import { IconBad, IconBadFace, IconGood, IconGoodFace } from 'src/components/icons';
 
 const ReviewList = () => {
   const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });
@@ -40,18 +41,36 @@ const ReviewList = () => {
               <S.ProdName>{product.prodName}</S.ProdName>
               <S.MyText>
                 <S.MyEvaluation>나의 평가 : </S.MyEvaluation>
-                <>😎</>
+                <S.IconFaceBox>{true ? <IconGoodFace /> : <IconBadFace />}</S.IconFaceBox>
                 <S.MyEvaluation>또 사먹을래요!</S.MyEvaluation>
               </S.MyText>
             </S.TextContainer>
-            <div>
-              <S.IsGoodText>또 사먹을래요!</S.IsGoodText>
-              <div>graph</div>
-              <div>percent</div>
-              <S.IsGoodText>그만 먹을래요!</S.IsGoodText>
-              <div>graph</div>
-              <div>percent</div>
-            </div>
+            <S.AllEvaluation>
+              <S.GraphContainer>
+                <S.IsGoodText>또 사먹을래요!</S.IsGoodText>
+                <div>
+                  <S.GraphBack />
+                  <S.GraphFront>
+                    <S.IconGoodBox>
+                      <IconGood />
+                    </S.IconGoodBox>
+                    <S.Percent>%</S.Percent>
+                  </S.GraphFront>
+                </div>
+              </S.GraphContainer>
+              <S.GraphContainer>
+                <S.IsGoodText>그만 먹을래요!</S.IsGoodText>
+                <div>
+                  <S.GraphBack />
+                  <S.GraphFront>
+                    <S.IconGoodBox>
+                      <IconBad />
+                    </S.IconGoodBox>
+                    <S.Percent>%</S.Percent>
+                  </S.GraphFront>
+                </div>
+              </S.GraphContainer>
+            </S.AllEvaluation>
           </S.ReviewBox>
         );
       })}
@@ -66,7 +85,7 @@ const S = {
     gap: 20px;
   `,
 
-  ReviewBox: styled.div`
+  ReviewBox: styled(FlexBoxAlignCenter)`
     background: #fff;
 
     width: 890px;
@@ -76,10 +95,11 @@ const S = {
   `,
 
   ProdImg: styled.img`
-    width: 111.862px;
-    height: 117.678px;
-
     object-fit: contain;
+    display: flex;
+    width: 126px;
+    height: 126px;
+    margin: 16px 18px 16px 16px;
   `,
 
   TextContainer: styled.div`
@@ -87,6 +107,7 @@ const S = {
     flex-direction: column;
     align-items: flex-start;
 
+    margin-right: 88px;
     gap: 4px;
   `,
 
@@ -111,7 +132,26 @@ const S = {
     line-height: 24px; /* 150% */
   `,
 
+  IconFaceBox: styled.div`
+    width: 16px;
+    height: 16px;
+  `,
+
   MyText: styled(FlexBoxAlignCenter)`
+    gap: 4px;
+  `,
+
+  AllEvaluation: styled.div`
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  `,
+
+  GraphContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 4px;
   `,
 
@@ -126,13 +166,39 @@ const S = {
     line-height: 16px; /* 114.286% */
   `,
 
-  t: styled.div``,
+  GraphBack: styled.div`
+    position: absolute;
 
-  r: styled.div``,
+    width: 312px;
+    height: 26px;
+    border-radius: 10.57px;
+    background: linear-gradient(109deg, #ffb334 23.92%, #eb4335 76.3%);
+  `,
 
-  e: styled.div``,
+  GraphFront: styled(FlexBoxAlignCenter)`
+    position: relative;
+    justify-content: flex-end;
 
-  w: styled.div``,
+    width: 312px;
+    height: 26px;
+    border-radius: 10.57px;
+    background: linear-gradient(to right, transparent 70%, #f2f4f7 70%);
+  `,
 
-  q: styled.div``
+  Percent: styled.div`
+    margin-right: 9px;
+
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 114.286% */
+  `,
+
+  IconGoodBox: styled(FlexBoxCenter)`
+    margin-right: 4px;
+  `,
+
+  p: styled.div``
 };
