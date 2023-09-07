@@ -5,8 +5,6 @@ import TopBarMenuContainer from './TopBarMenuContainer';
 import BoardSearchContainer from './BoardSearchContainer';
 import { IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
-import Confirm from '../popUp/Confirm';
-import UserDeleteAlert from '../popUp/UserDeleteAlert';
 
 const Header = () => {
   const navigate = useNavigate();

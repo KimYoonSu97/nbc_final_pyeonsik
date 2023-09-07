@@ -10,7 +10,6 @@ import { FlexBoxCenter } from 'src/styles/styleBox';
 import { deleteUser } from 'src/api/userLogin';
 import Confirm from '../popUp/Confirm';
 import { toast } from 'react-toastify';
-import UserDeleteAlert from '../popUp/UserDeleteAlert';
 
 const UserDelete = () => {
   const navigate = useNavigate();
@@ -31,16 +30,15 @@ const UserDelete = () => {
         return;
       }
       setUserLogin(null);
-      if (await UserDeleteAlert('type')) {
-        navigate('/');
-        if (location.pathname.split('/')[1] === 'mypage') {
-          window.location.reload();
-        }
-        localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
-        localStorage.removeItem('social');
-        queryClient.removeQueries(['loginUser']);
-        queryClient.resetQueries(['loginUser']);
+      navigate('/');
+      if (location.pathname.split('/')[1] === 'mypage') {
+        window.location.reload();
       }
+      localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
+      localStorage.removeItem('social');
+      queryClient.removeQueries(['loginUser']);
+      queryClient.resetQueries(['loginUser']);
+      alert('회원탈퇴 완료!');
     }
   };
 
