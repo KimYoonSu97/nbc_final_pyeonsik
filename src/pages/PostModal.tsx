@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-// import Comment from 'src/components/detail/comments/Comment';
+import Comment from 'src/components/detail/comments/Comment';
 import PostDetail from 'src/components/post/detail/PostDetail';
 import { useNavigate } from 'react-router';
 
