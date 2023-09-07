@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import supabase from 'src/lib/supabaseClient';
 
 export const levelChecker = async (userId: string): Promise<{ isNeedUpdate: boolean; userLevel: string | null }> => {
@@ -21,28 +22,28 @@ export const levelChecker = async (userId: string): Promise<{ isNeedUpdate: bool
       return { isNeedUpdate: false, userLevel: null };
     }
 
-    alert('레시피를 50개이상 작성하셔서 점장님이 되었습니다. 이쯤되면 입사하세요.');
+    toast('레시피를 50개이상 작성하셔서 점장님이 되었습니다. 이쯤되면 입사하세요.');
     userLevel = '점장';
   } else if (count! === 30) {
     //이미 부점장이라면?
     if (data?.level === '부점장') {
       return { isNeedUpdate: false, userLevel: null };
     }
-    alert('레시피를 30개이상 작성하셔서 부점장로 레벨업하였습니다. 50개를 작성하시면 점장으로 승진할 수 있습니다.');
+    toast('레시피를 30개이상 작성하셔서 부점장로 레벨업하였습니다. 50개를 작성하시면 점장으로 승진할 수 있습니다.');
     userLevel = '부점장';
   } else if (count! === 15) {
     //이미 매니저라면?
     if (data?.level === '매니저') {
       return { isNeedUpdate: false, userLevel: null };
     }
-    alert('레시피를 15개이상 작성하셔서 매니저로 레벨업하였습니다. 30개를 작성하시면 부점장으로 승진할 수 있습니다.');
+    toast('레시피를 15개이상 작성하셔서 매니저로 레벨업하였습니다. 30개를 작성하시면 부점장으로 승진할 수 있습니다.');
     userLevel = '매니저';
   } else if (count! === 8) {
     //이미 알바이라면?
     if (data?.level === '알바') {
       return { isNeedUpdate: false, userLevel: null };
     }
-    alert('레시피를 8개 이상 작성하셔서 알바로 레벨업하였습니다. 15개를 작성하시면 매니저로 승진할 수 있습니다.');
+    toast('레시피를 8개 이상 작성하셔서 알바로 레벨업하였습니다. 15개를 작성하시면 매니저로 승진할 수 있습니다.');
     userLevel = '알바';
   }
   // 위에 조건식에서 걸려서 userLevel이 세팅되었다면?

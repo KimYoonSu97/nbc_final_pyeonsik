@@ -12,6 +12,7 @@ export { ReactComponent as IconBadgeSmall } from './IconBadgeSmall.svg';
 export { ReactComponent as IconProfile } from './IconProfile.svg';
 export { ReactComponent as IconMyPostBox } from './IconMyPostBox.svg';
 export { ReactComponent as IconCamera } from './IconCamera.svg';
+export { ReactComponent as IconCameraSmall } from './IconCameraSmall.svg';
 
 // post
 export { ReactComponent as IconAdd } from './post/IconAdd.svg';
