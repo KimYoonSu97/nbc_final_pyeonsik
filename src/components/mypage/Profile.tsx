@@ -5,7 +5,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { IconCamera } from '../icons';
-import { FlexBox, FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import useUserMutate from 'src/hooks/useUserMutate';
 // 탈퇴
@@ -139,7 +139,7 @@ interface ProfileImgProps {
 }
 
 const S = {
-  Container: styled(FlexBoxColumn)`
+  Container: styled(FlexBoxCenter)`
     width: 100%;
     height: 75vh;
     flex-direction: column;
@@ -150,7 +150,7 @@ const S = {
   ProfileChange: styled.input`
     visibility: hidden;
   `,
-  ProfileChangeButton: styled(FlexBoxColumn)`
+  ProfileChangeButton: styled(FlexBoxCenter)`
     width: 42px;
     height: 42px;
     background: #fff;
@@ -166,7 +166,7 @@ const S = {
     margin-bottom: 30px;
     position: relative;
   `,
-  ProfileImgArea: styled(FlexBoxColumn)<ProfileImgProps>`
+  ProfileImgArea: styled(FlexBoxCenter)<ProfileImgProps>`
     width: 130px;
     height: 130px;
     border-radius: 100px;

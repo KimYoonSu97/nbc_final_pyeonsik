@@ -20,7 +20,7 @@ export const FlexBox = styled.div`
   display: flex;
 `;
 
-export const FlexBoxColumn = styled.div`
+export const FlexBoxColum = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

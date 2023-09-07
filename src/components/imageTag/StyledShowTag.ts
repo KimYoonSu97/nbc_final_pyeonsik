@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexBox, FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
 export const S = {
   ImageContainer: styled.div`
@@ -41,7 +41,7 @@ export const S = {
     width: 80px;
     height: 80px;
   `,
-  TagIconContainer: styled(FlexBoxColumn)`
+  TagIconContainer: styled(FlexBoxCenter)`
     width: 40px;
     height: 40px;
     background-color: white;
@@ -81,7 +81,7 @@ export const S = {
     position: relative;
     flex-direction: row;
   `,
-  ProdDataOverlay: styled(FlexBoxColumn)`
+  ProdDataOverlay: styled(FlexBoxCenter)`
     position: absolute;
     top: 0;
     left: 0;

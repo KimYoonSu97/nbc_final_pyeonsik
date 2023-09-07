@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
-import { FlexBoxAlignCenter, FlexBoxColumn } from 'src/styles/styleBox';
+import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
 const WriteHeader = () => {
   //여기에 작성(생성)하는 함수
@@ -26,7 +26,7 @@ const S = {
     position: absolute;
     right: 16px;
   `,
-  AddButton: styled(FlexBoxColumn)`
+  AddButton: styled(FlexBoxCenter)`
     background: #d9d9d9;
 
     width: 110px;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexBox, FlexBoxColumn } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 
 export const S = {
   //김윤수 추가 2
@@ -11,7 +11,7 @@ export const S = {
     left: 962px;
     bottom: 20px;
   `,
-  UpDownButton: styled(FlexBoxColumn)`
+  UpDownButton: styled(FlexBoxCenter)`
     border-radius: 10px;
 
     width: 48px;

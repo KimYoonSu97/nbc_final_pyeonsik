@@ -11,7 +11,7 @@ import { getReCommentDataByCommentId } from 'src/api/ReComment';
 import { useQuery } from '@tanstack/react-query';
 import CommentUserInfo from './CommentUserInfo';
 import CreatedAt from 'src/utility/CreatedAt';
-import { FlexBox, FlexBoxAlignCenter, FlexBoxColumn, FlexBoxJustifyCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 
 interface CommentDataType {
@@ -182,7 +182,7 @@ const S = {
 
     ${styleFont.bodyMedium}
   `,
-  ReCommentAddButton: styled(FlexBoxColumn)`
+  ReCommentAddButton: styled(FlexBoxCenter)`
     margin-top: auto;
     width: 20px;
     height: 20px;

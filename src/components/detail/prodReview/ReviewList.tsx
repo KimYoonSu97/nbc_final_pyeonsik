@@ -1,18 +1,17 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import useLoginUserId from 'src/hooks/useLoginUserId';
 import { getNewProd } from 'src/api/product';
 import { getSwiperData } from 'src/api/ReviewSwiper';
-import { Product } from 'src/types/types';
+import { Product, Swiper } from 'src/types/types';
 import { LOGO_IMAGE } from 'src/utility/guide';
 // style
 import { styled } from 'styled-components';
-import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColumn } from 'src/styles/styleBox';
-import { IconBad, IconBadFace, IconGood, IconGoodFace } from 'src/components/icons';
+import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
+import { IconBad } from 'src/components/icons';
+import MyEvaluation from './MyEvaluation';
+import EvaluationGraph from './EvaluationGraph';
 
 const ReviewList = () => {
-  const userId = useLoginUserId();
-
   const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });
   const { isLoading: lodingSwiper, data: dataSwiper } = useQuery({
     queryKey: ['swiper'],
@@ -20,18 +19,11 @@ const ReviewList = () => {
   });
 
   const produts = dataProd?.data as Product[] | undefined;
-  const swipers = dataSwiper?.data;
-  console.log(swipers);
+  const swipers = dataSwiper?.data as Swiper[];
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
     e.target.src = LOGO_IMAGE;
-  };
-
-  const isRating = (productId: string) => {
-    swipers?.find((swiper) => {
-      swiper.prodId === productId && swiper.userId === userId;
-    });
   };
 
   if (lodingProd || lodingSwiper) {
@@ -43,39 +35,16 @@ const ReviewList = () => {
 
   return (
     <S.ReviewContainer>
-      {produts?.map((product) => {
+      {produts?.map((prod) => {
         return (
-          <S.ReviewBox key={product.id}>
-            <S.ProdImg src={product.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
+          <S.ReviewBox key={prod.id}>
+            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
             <S.TextContainer>
-              <S.ProdName>{product.prodName}</S.ProdName>
-              {swipers?.find((swiper) => {
-                swiper.prodId === product.id && swiper.userId === userId;
-              }) && (
-                <S.MyText>
-                  <S.MyEvaluation>나의 평가 : </S.MyEvaluation>
-                  <S.IconFaceBox>
-                    <IconGoodFace />
-
-                    <IconBadFace />
-                  </S.IconFaceBox>
-                  <S.MyEvaluation>또 사먹을래요!</S.MyEvaluation>
-                </S.MyText>
-              )}
+              <S.ProdName>{prod.prodName}</S.ProdName>
+              <MyEvaluation swipers={swipers} prodId={prod.id} />
             </S.TextContainer>
             <S.AllEvaluation>
-              <S.GraphContainer>
-                <S.IsGoodText>또 사먹을래요!</S.IsGoodText>
-                <div>
-                  <S.GraphBack />
-                  <S.GraphFront>
-                    <S.IconGoodBox>
-                      <IconGood />
-                    </S.IconGoodBox>
-                    <S.Percent>%</S.Percent>
-                  </S.GraphFront>
-                </div>
-              </S.GraphContainer>
+              <EvaluationGraph swipers={swipers} prodId={prod.id} />
               <S.GraphContainer>
                 <S.IsGoodText>그만 먹을래요!</S.IsGoodText>
                 <div>
@@ -99,7 +68,7 @@ const ReviewList = () => {
 export default ReviewList;
 
 const S = {
-  ReviewContainer: styled(FlexBoxColumn)`
+  ReviewContainer: styled(FlexBoxColum)`
     gap: 20px;
   `,
 
@@ -138,26 +107,6 @@ const S = {
     font-size: 22px;
     font-weight: 700;
     line-height: 30px; /* 136.364% */
-  `,
-
-  MyEvaluation: styled.div`
-    color: var(--neutral-500, #667085);
-
-    /* body-large */
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 150% */
-  `,
-
-  IconFaceBox: styled.div`
-    width: 16px;
-    height: 16px;
-  `,
-
-  MyText: styled(FlexBoxAlignCenter)`
-    gap: 4px;
   `,
 
   AllEvaluation: styled.div`

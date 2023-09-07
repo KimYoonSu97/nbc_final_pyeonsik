@@ -1,6 +1,6 @@
 import React from 'react';
 import UserLevel from 'src/components/header/UserLevel';
-import { FlexBox, FlexBoxAlignCenter, FlexBoxColumn, FlexBoxJustifyCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import styled from 'styled-components';
 
 interface Props {
@@ -103,7 +103,7 @@ const S = {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
   `,
-  ReCommentAddButton: styled(FlexBoxColumn)`
+  ReCommentAddButton: styled(FlexBoxCenter)`
     margin-top: auto;
     width: 20px;
     height: 20px;

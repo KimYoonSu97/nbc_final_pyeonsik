@@ -6,7 +6,7 @@ import { userAtom } from 'src/globalState/jotai';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import { FlexBoxColumn } from 'src/styles/styleBox';
+import { FlexBoxCenter } from 'src/styles/styleBox';
 import { deleteUser } from 'src/api/userLogin';
 import Confirm from '../popUp/Confirm';
 import { toast } from 'react-toastify';
@@ -50,7 +50,7 @@ const UserDelete = () => {
 export default UserDelete;
 
 const S = {
-  WithdrawButton: styled(FlexBoxColumn)`
+  WithdrawButton: styled(FlexBoxCenter)`
     cursor: pointer;
     width: 350px;
     height: 50px;
