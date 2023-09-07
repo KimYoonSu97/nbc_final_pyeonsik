@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 import { styleFont } from 'src/styles/styleFont';
+import { updateFirstCommentBadge } from 'src/api/badge';
 import { toast } from 'react-toastify';
 
 interface Props {
@@ -58,6 +59,7 @@ const ReCommentInput = ({
     const parent_commentId = commentId;
     writeReCommentButton(userId, postId!, reComment, parent_commentId!);
     setReComment('');
+    updateFirstCommentBadge(userId);
     setIsOpenReCommentInput!(false);
   };
 

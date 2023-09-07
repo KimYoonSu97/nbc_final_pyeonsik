@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
 import { SearchProps } from 'src/types/types';
-import { ReactComponent as SearchIcon } from 'src/components/ImageTag/svg/SearchIcon.svg';
+import { ReactComponent as SearchIcon } from 'src/components/imageTag/svg/SearchIcon.svg';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {

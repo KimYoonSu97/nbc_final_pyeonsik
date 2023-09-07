@@ -5,8 +5,8 @@ import { ImageTagProps } from 'src/types/types';
 import ImageUploader from './ImageUploader';
 import Search from './Search';
 import PostWriteBodyInput from '../post/write/PostWriteBodyInput';
-import { ReactComponent as TagIcon } from 'src/components/ImageTag/svg/TagIcon.svg';
-import { ReactComponent as DeleteIcon } from 'src/components/ImageTag/svg/DeleteIcon.svg';
+import { ReactComponent as TagIcon } from 'src/components/imageTag/svg/TagIcon.svg';
+import { ReactComponent as DeleteIcon } from 'src/components/imageTag/svg/DeleteIcon.svg';
 import { IconPlusTag } from '../icons';
 import { S } from './StyledImageTag';
 

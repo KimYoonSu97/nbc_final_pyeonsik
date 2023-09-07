@@ -4,7 +4,7 @@ import { atom, useAtom, useSetAtom } from 'jotai';
 
 import ImageTag from './ImageTag';
 import { Tag, AddImageTagProps } from 'src/types/types';
-import { ReactComponent as TrashCanIcon } from 'src/components/ImageTag/svg/TrashCanIcon.svg';
+import { ReactComponent as TrashCanIcon } from 'src/components/imageTag/svg/TrashCanIcon.svg';
 import { S } from './StyledAddImageTagComponent';
 import { NON_MEMBER } from 'src/utility/alertMessage';
 import { toast } from 'react-toastify';
