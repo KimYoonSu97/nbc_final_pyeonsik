@@ -2,12 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from 'src/components/icons';
 import { S } from './StyledHeaderArea';
+import Confirm from 'src/components/popUp/Confirm';
 
 const HeaderArea = () => {
   const navigate = useNavigate();
 
-  const clickCancle = () => {
-    if (window.confirm('작성 중이던 내용이 저장되지 않습니다. 뒤로 가기를 하시겠습니까?')) {
+  const clickCancle = async () => {
+    if (await Confirm('writePage')) {
+      return;
+    } else {
       navigate(-1);
     }
   };

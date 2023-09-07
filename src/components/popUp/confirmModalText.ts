@@ -28,7 +28,7 @@ export const confirmModalText = (type: string): ConfirmModalTextResult => {
   let result: ConfirmModalTextResult;
   if (type === 'postDelete') {
     result = postDelete;
-  } else if (type === 'writerPage') {
+  } else if (type === 'writePage') {
     result = writePage;
   } else if (type === 'userDelete') {
     result = userDelete;
