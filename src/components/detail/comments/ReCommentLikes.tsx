@@ -56,8 +56,7 @@ const ReCommentLikes = ({ commentId }: Props) => {
       setLikeNum(likeNum! - 1);
       setIsLike(!isLike);
     } else {
-      await supabase.from('replay_comment_likes').insert({ commentId, userId, postId });
-
+      const response = await supabase.from('replay_comment_likes').insert({ commentId, userId, postId }).select();
       setLikeNum(likeNum! + 1);
       setIsLike(!isLike);
     }

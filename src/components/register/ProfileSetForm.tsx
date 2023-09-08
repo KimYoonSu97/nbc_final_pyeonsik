@@ -21,7 +21,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
-  const [baseImg] = useState('./baseprofile.jpeg');
+  const [baseImg] = useState('./baseprofile.png');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [_, setLoginUser] = useAtom(userAtom);
@@ -37,6 +37,11 @@ const ProfileSetForm = ({ userEmail }: Props) => {
 
   // Blob 형태를 string으로 변환
   const encodeFileTobase64 = (fileBlob: Blob) => {
+    if (fileBlob.size > 3 * 1024 * 1024) {
+      toast('3MB 이하의 jpg,jpeg,png 확장자만 가능합니다.');
+      return;
+    }
+
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise(() => {
@@ -115,19 +120,21 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       return;
     }
 
+    let profileImg = profileImgSrc.length !== 0 ? profileImgSrc : baseImg;
+
     const newUser = {
       email: userEmail,
       nickname,
-      profileImg: profileImgSrc
+      profileImg: profileImg
     };
     if (!nickname) {
       toast('닉네임을 입력해주세요');
       return;
     }
-    if (profileImgSrc === '') {
-      toast('사진을 등록해주세요');
-      return;
-    }
+    // if (profileImgSrc === '') {
+    //   toast('사진을 등록해주세요');
+    //   return;
+    // }
 
     const { data, error } = await supabase.from('users').insert(newUser).select().single();
 
@@ -221,6 +228,7 @@ const S = {
     height: 80px;
     border-radius: 100px;
     border: 1px solid #fff;
+    object-fit: cover;
   `,
   ProfileInput: styled.input`
     display: none;

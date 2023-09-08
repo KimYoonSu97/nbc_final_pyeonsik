@@ -1,11 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { getCommentDataByPostId } from 'src/api/comment';
-import { useQuery } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import CommentForMap from './CommentForMap';
 import CommentInput from './CommentInput';
 import { FlexBox } from 'src/styles/styleBox';
+import { getUserData } from 'src/api/userLogin';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 interface CommentDataType {
   id: string;
@@ -21,15 +23,33 @@ interface CommentDataType {
 }
 
 const Comment = () => {
+  const userId = useLoginUserId();
   const { id: postId } = useParams<string>();
 
-  //포스트 아이디와 같은 댓글만을 위한 쿼리 데이터
-  const { data: commentData, isLoading: commentIsLoading } = useQuery({
-    queryKey: ['comment', postId],
-    queryFn: () => getCommentDataByPostId(postId!),
-    enabled: postId ? true : false,
-    refetchOnWindowFocus: false
+  const [
+    { data: userData, isLoading: userIsLoading, isError: userIsError },
+    { data: commentData, isLoading: commentIsLoading }
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ['loginUser'],
+        queryFn: () => getUserData(userId),
+        enabled: userId ? true : false,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        staleTime: Infinity
+      },
+      {
+        queryKey: ['comment', postId],
+        queryFn: () => getCommentDataByPostId(postId!),
+        enabled: postId ? true : false,
+        refetchOnWindowFocus: false
+      }
+    ]
   });
+
+  //포스트 아이디와 같은 댓글만을 위한 쿼리 데이터
+  // const { data: commentData, isLoading: commentIsLoading } = useQuery();
 
   if (commentIsLoading) {
     return <div>Loading</div>;
@@ -37,10 +57,12 @@ const Comment = () => {
 
   return (
     <S.CommentArea>
-      <S.CommentInputArea>
-        <S.CommentInPutProfile></S.CommentInPutProfile>
-        <CommentInput type={'post'}></CommentInput>
-      </S.CommentInputArea>
+      {userId && (
+        <S.CommentInputArea>
+          <S.CommentInPutProfile src={userData?.data?.profileImg}></S.CommentInPutProfile>
+          <CommentInput type={'post'}></CommentInput>
+        </S.CommentInputArea>
+      )}
       <S.CommentRenderArea>
         {commentData?.map((comment) => {
           return <CommentForMap key={comment.id} comment={comment as CommentDataType} />;
@@ -62,11 +84,12 @@ const S = {
     gap: 8px;
     margin-bottom: 30px;
   `,
-  CommentInPutProfile: styled.div`
+  CommentInPutProfile: styled.img`
     width: 36px;
     height: 36px;
     border-radius: 100px;
     background: lightgray;
+    object-fit: cover;
   `,
   CommentInput: styled.input`
     width: 100%;

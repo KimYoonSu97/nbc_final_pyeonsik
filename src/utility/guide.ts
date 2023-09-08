@@ -1,4 +1,4 @@
-export const VERCEL_URL = 'nbc-final-pyeonsik.vercel.app/';
+export const VERCEL_URL = 'pyeonsik.vercel.app/';
 
 export const LOGO_IMAGE = 'https://wwkfivwrtwucsiwsnisz.supabase.co/storage/v1/object/public/photos/logo/logo.png';
 export const EMPTY_IMAGE = 'https://wwkfivwrtwucsiwsnisz.supabase.co/storage/v1/object/public/photos/image/empty.png';
