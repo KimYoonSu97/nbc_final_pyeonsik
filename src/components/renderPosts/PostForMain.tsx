@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Post } from 'src/types/types';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import WriterContainer from './reactionSource/WriterContainer';
 import ContentBox from './reactionSource/ContentBox';
@@ -16,6 +16,7 @@ interface Props {
 
 const PostForMain = ({ item: postData }: Props) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const userId = useLoginUserId();
   const post = useMemo(() => postData, [postData]);
   const writer = post?.userId;
@@ -28,7 +29,11 @@ const PostForMain = ({ item: postData }: Props) => {
           <WriterContainer post={post} writer={writer} />
         </S.Head>
         {/* 여기를 클릭하면 링크로 넘어감 */}
-        <S.ContentAreaForClickEvent to={`/detail/${postData.id}`} state={{ backgroundLocation: location }}>
+        <S.ContentAreaForClickEvent
+          onClick={() => navigate(`/detail/${postData.id}`, { state: { backgroundLocation: location } })}
+          // to={`/detail/${postData.id}`}
+          // state={{ backgroundLocation: location }}
+        >
           {/* 게시글 데이터 */}
           <S.ContentArea>
             <S.ContentBox>
@@ -100,8 +105,9 @@ const S = {
     display: flex;
     position: relative;
   `,
-  ContentAreaForClickEvent: styled(Link)`
+  ContentAreaForClickEvent: styled.div`
     text-decoration: none;
+    cursor: pointer;
   `,
   ContentArea: styled.div`
     pointer-events: none;

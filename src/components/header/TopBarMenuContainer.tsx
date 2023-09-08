@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userAtom } from 'src/globalState/jotai';
+import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
@@ -25,6 +25,7 @@ interface User {
 const TopBarMenuContainer = () => {
   const location = useLocation();
   const [userLogin, setUserLogin] = useAtom(userAtom);
+  const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
@@ -103,6 +104,7 @@ const TopBarMenuContainer = () => {
               toast('로그인 후 이용 가능합니다.');
               return;
             }
+            setWriteCategory('recipe');
             navigate('/write');
           }}
         >
