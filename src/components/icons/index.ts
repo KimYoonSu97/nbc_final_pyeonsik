@@ -51,9 +51,10 @@ export { ReactComponent as Emart24 } from './brand/Emart24.svg';
 export { ReactComponent as CU } from './brand/CU.svg';
 
 // review
+export { ReactComponent as IconGood } from './review/IconGood.svg';
 export { ReactComponent as IconBad } from './IconBad.svg';
-export { ReactComponent as IconBadBig } from './IconBadBig.svg';
 export { ReactComponent as IconGoodFace } from './IconGoodFace.svg';
+export { ReactComponent as IconBadFace } from './IconBadFace.svg';
 
 export { ReactComponent as IconNoSearchResult } from './search/IconNoSearchResult.svg';
 

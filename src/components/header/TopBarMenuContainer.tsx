@@ -84,8 +84,6 @@ const TopBarMenuContainer = () => {
     }
   };
 
-  console.log(data);
-
   //소셜로그인
   useEffect(() => {
     if (localStorage.getItem('social') && !data) {

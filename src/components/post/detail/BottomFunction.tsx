@@ -8,7 +8,7 @@ import { getCommentCountDataByPostId } from 'src/api/comment';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
-import { NON_MEMBER } from '../../../utility/alertMessage';
+import { NON_MEMBER } from '../../../utility/guide';
 import BottomShare from './BottomShare';
 import { S } from 'src/components/post/detail/StyledBottomFunction';
 import { updateBookmarkBadge } from 'src/api/badge';
@@ -109,7 +109,14 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
         </S.FunctionButton>
         <S.FunctionCount $location={pathname}>{postBookmarkList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
-      {id && <BottomShare />}
+      {id && (
+        <BottomShare
+          title={post.title}
+          likeCount={postLikeList?.length}
+          commentCount={commentCountData}
+          sharedCount={postQuotationList?.length}
+        />
+      )}
     </>
   );
 };
