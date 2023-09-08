@@ -47,7 +47,7 @@ const AchievementModal = (type: string): AchievementType => {
     result = commentKing;
   } else if (type === 'bug') {
     result = bug;
-  } else if (type === 'bookmark') {
+  } else if (type === 'bookMark') {
     result = bookmark;
   } else if (type === 'ourEmployee') {
     result = ourEmployee;

@@ -55,3 +55,7 @@ export { ReactComponent as IconGood } from './review/IconGood.svg';
 export { ReactComponent as IconBad } from './IconBad.svg';
 export { ReactComponent as IconGoodFace } from './IconGoodFace.svg';
 export { ReactComponent as IconBadFace } from './IconBadFace.svg';
+
+export { ReactComponent as IconNoSearchResult } from './search/IconNoSearchResult.svg';
+
+export { ReactComponent as IconReport } from './report/IconReport.svg';

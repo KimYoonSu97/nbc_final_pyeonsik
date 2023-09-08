@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { confirmAlert, ReactConfirmAlertProps } from 'react-confirm-alert';
-import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
-import { confirmModalText } from './confirmModalText';
+import AchievementModal from '../mypage/AchievementModal';
 
-const Confirm = (type: string) => {
-  const text = confirmModalText(type);
+const UserDeleteAlert = (type: string) => {
   return new Promise<boolean>((resolve, reject) => {
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -14,20 +13,13 @@ const Confirm = (type: string) => {
           <>
             <S.Container>
               <S.ConfirmBox>
-                <S.Title>{text.title}</S.Title>
-                <S.Caption>{text.caption}</S.Caption>
+                <S.Title>탈퇴가 완료되었습니다.</S.Title>
+                {/* <S.Caption></S.Caption> */}
+                <S.Description>
+                  {'그동안 이용해주셔서 감사합니다.\n언제든지 다시 와서 \n맛있는 편식 조합에 대해 알려주세요!'}
+                </S.Description>
                 <S.ButtonArea>
-                  <S.FalseButton
-                    as="button"
-                    $type={type}
-                    onClick={() => {
-                      resolve(false);
-                      onClose();
-                    }}
-                  >
-                    {text.false}
-                  </S.FalseButton>
-                  <S.TrueButton
+                  <S.Button
                     as="button"
                     $type={type}
                     onClick={() => {
@@ -35,14 +27,14 @@ const Confirm = (type: string) => {
                       onClose();
                     }}
                   >
-                    {text.true}
-                  </S.TrueButton>
+                    홈으로 돌아가기
+                  </S.Button>
                 </S.ButtonArea>
               </S.ConfirmBox>
             </S.Container>
             <S.Background
               onClick={() => {
-                resolve(false);
+                resolve(true);
                 onClose();
               }}
             />
@@ -55,7 +47,8 @@ const Confirm = (type: string) => {
   });
 };
 
-export default Confirm;
+export default UserDeleteAlert;
+
 const ButtonBasic = styled(FlexBoxCenter)`
   width: 122px;
   height: 36px;
@@ -65,6 +58,7 @@ const ButtonBasic = styled(FlexBoxCenter)`
 interface ButtonProps {
   $type: string;
 }
+
 const S = {
   Container: styled.div`
     position: fixed;
@@ -82,13 +76,18 @@ const S = {
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
     z-index: 101;
+    padding: 30px;
   `,
   ConfirmBox: styled(FlexBoxCenter)`
     width: 400px;
-    height: 274px;
+    height: 300px;
     border-radius: 10px;
     background: #fff;
+
     padding: 30px;
+    /* padding: 90px 0 30px; */
+    /* padding-top: 90px; */
+
     position: fixed;
     top: calc((100vh - 274px) / 2);
     right: calc((100vw - 400px) / 2);
@@ -102,24 +101,38 @@ const S = {
     font-style: normal;
     font-weight: 700;
     line-height: 28px; /* 127.273% */
+    margin-bottom: 30px;
   `,
   Caption: styled.p`
     color: var(--font-black, var(--Black, #242424));
     text-align: center;
-    margin: 30px 0 42px;
     white-space: pre-line;
     ${styleFont.bodyLarge};
+    font-weight: 700;
   `,
-  ButtonArea: styled(FlexBox)``,
-  TrueButton: styled(ButtonBasic)<ButtonProps>`
-    background: var(--main, #f02826);
-    color: #fff;
-    cursor: pointer;
-    ${styleFont.buttonSmall}
-  `,
-  FalseButton: styled(ButtonBasic)<ButtonProps>`
+
+  Description: styled.p`
     color: var(--font-black, var(--Black, #242424));
+    text-align: center;
+    white-space: pre-line;
+    margin-bottom: 26px;
+
+    ${styleFont.bodyLarge};
+  `,
+  ButtonArea: styled(FlexBox)`
     cursor: pointer;
+  `,
+  Button: styled(ButtonBasic)<ButtonProps>`
+    background: var(--Black, #242424);
+    color: #fff;
     ${styleFont.buttonSmall}
+    cursor: pointer;
+  `,
+  Badge: styled(FlexBoxCenter)`
+    width: 140px;
+    height: 140px;
+    /* background-color: royalblue; */
+    position: absolute;
+    top: -70px;
   `
 };
