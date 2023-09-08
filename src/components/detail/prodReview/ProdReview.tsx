@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
-import ProdItem from './ProdItem';
-import ReviewLike from './ReviewLike';
-import ReviewDisLike from './ReviewDisLike';
+import TinderCard from 'react-tinder-card';
 
 const ProdReview = () => {
-  const [review, setReview] = useState(0);
+  const [review, setReview] = React.useState(0);
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = React.useState(0);
   const showPage = 5;
   const userId = useLoginUserId();
 
@@ -26,9 +22,6 @@ const ProdReview = () => {
   };
 
   const { data: prodData } = useQuery(['products'], getProdData);
-  console.log(prodData);
-
-  const [products, setProducts] = useState();
 
   const getSwiperData = async () => {
     const { data } = await supabase.from('swiper').select('*');
@@ -37,24 +30,15 @@ const ProdReview = () => {
 
   const { data: swiperData } = useQuery(['swiper'], getSwiperData);
 
-  const prodId = prodData?.filter((prod) => {
+  const filterprodData = prodData?.filter((prod) => {
     return !swiperData?.some((swiperProd) => {
       return prod.id === swiperProd.prodId && swiperProd.userId === userId;
     });
   });
+  console.log(filterprodData);
 
-  console.log('아이디', prodId);
-
-  const prodNext = () => {
-    setStep((prevStep) => prevStep + 1);
-  };
-  const handleMoveItem = (draggedIndex: number, targetIndex: number) => {
-    if (!prodId) return;
-
-    const updatedProdId: any = [...prodId];
-    const [draggedItem] = updatedProdId.splice(draggedIndex, 1);
-    updatedProdId.splice(targetIndex, 0, draggedItem);
-  };
+  // const [currentIndex, setCurrentIndex] = useState(filterprodData!.length - 1);
+  // console.log(currentIndex);
 
   const onDropToLike = async (id: string) => {
     const plusReview = swiperData?.find((prod) => {
@@ -79,6 +63,7 @@ const ProdReview = () => {
   };
 
   const onDropToDisLike = async (id: string) => {
+    console.log(id);
     const plusReview = swiperData?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
@@ -87,40 +72,108 @@ const ProdReview = () => {
         ...plusReview,
         isGood: false
       };
-      await supabase.from('swiper').upsert([updateReview]);
-      prodNext();
+      const { error } = await supabase.from('swiper').upsert([updateReview]);
+      if (error) {
+        console.error(error);
+      } else {
+        prodNext();
+      }
     } else {
       const addReview = {
         prodId: id,
         isGood: false,
         userId: userId
       };
-      await supabase.from('swiper').insert([addReview]);
-      prodNext();
+      const { error } = await supabase.from('swiper').insert([addReview]);
+      if (error) {
+        console.error('Supabase 삽입 오류:', error);
+      } else {
+        prodNext();
+      }
+    }
+  };
+  const onSwipe = (direction: any, prod: any) => {
+    // 스와이프 완료 시 처리 로직
+    // if (direction === 'right') {
+    //   return onDropToLike(prod);
+    // } else {
+    //   return onDropToDisLike(prod);
+    // }
+  };
+
+  const onCardLeftScreen = (direction: string, prod: string) => {
+    if (direction === 'right') {
+      return onDropToLike(prod);
+    } else {
+      return onDropToDisLike(prod);
     }
   };
 
+  const prodNext = () => {
+    setStep((prevStep) => prevStep + 1);
+  };
+
+  const swipe = () => {
+    prodNext();
+  };
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <S.containerWrap>
-        {step === prodId?.length ? (
-          <p>신제품 리뷰 다함</p>
+    <S.containerWrap>
+      <S.ProdReviewWrap>
+        <S.ReviewDisLike>
+          <div>
+            <img src="/images/ReviewLike.png" />
+            <h1>또 먹을래요!</h1>
+          </div>
+        </S.ReviewDisLike>
+        {step === filterprodData?.length ? (
+          <S.ReviewEndWrap>
+            <div>
+              <p>
+                앗! 더이상 남은<span>신제품 카드가 없어요!</span>
+              </p>
+              <button>리뷰 보러가기</button>
+            </div>
+          </S.ReviewEndWrap>
         ) : (
-          <S.ProdReviewWrap>
-            <ReviewLike onDropToLike={onDropToLike} />
-            {prodId?.map((prod, index) => {
-              if (step === index)
-                return (
-                  <S.ReviewProducts>
-                    <ProdItem key={prod.id} id={prod.id} prodName={prod.prodName} prodImg={prod.prodImg} />
-                  </S.ReviewProducts>
-                );
-            })}
-            <ReviewDisLike onDropToDisLike={onDropToDisLike} />
-          </S.ProdReviewWrap>
+          <S.ReviewProducts>
+            <div className="tinderCards">
+              <div className="tinderCards__cardContainer">
+                {filterprodData?.map((prod, index) => (
+                  <div key={index}>
+                    {index === step && (
+                      <TinderCard
+                        className="swipe"
+                        key={index}
+                        preventSwipe={['up', 'down']} // 스와이프 방향 설정
+                        onSwipe={(dir) => onSwipe(dir, prod.id)}
+                        onCardLeftScreen={(dir) => onCardLeftScreen(dir, prod.id)}
+                      >
+                        <S.ProductsWrap>
+                          <div>
+                            <img src={prod.prodImg} draggable="false" />
+                            <h3>{prod.prodName}</h3>
+                          </div>
+                        </S.ProductsWrap>
+                      </TinderCard>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </S.ReviewProducts>
         )}
-      </S.containerWrap>
-    </DndProvider>
+        <S.ReviewDisLike>
+          <div>
+            <img src="/images/ReviewLike.png" />
+            <h1>그만 먹을래요!</h1>
+          </div>
+        </S.ReviewDisLike>
+      </S.ProdReviewWrap>
+      <S.SkipButtonWrap>
+        <S.SkipButton onClick={swipe}>SKIP!</S.SkipButton>
+      </S.SkipButtonWrap>
+    </S.containerWrap>
   );
 };
 
@@ -128,35 +181,53 @@ export default ProdReview;
 
 const S = {
   containerWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+    padding: 100px 0px;
+    overflow: hidden;
     background-color: #fff;
+    height: 700px;
   `,
+
   ProdReviewWrap: styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 40px;
+    margin-bottom: 28px;
   `,
-  ReviewLike: styled.div`
+
+  ProductsWrap: styled.div`
     display: flex;
-    align-items: center;
     justify-content: center;
-    width: 160px;
-    height: 160px;
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
-  `,
-  ReviewProducts: styled.div`
-    /* background-color: red; */
-    /* padding: 20px;
+    align-items: center;
+    text-align: center;
+    width: 356px;
+    height: 464px;
+    background-color: #fff;
     border-radius: 10px;
-    border: 2px solid;
-    border-radius: 20px;
-    background-image: linear-gradient(#fff, #fff), 
-    linear-gradient(to right, red 0%,  orange 100%);
+    border: 2px solid transparent;
+    background-image: linear-gradient(#fff, #fff), linear-gradient(to right, red 0%, orange 100%);
     background-origin: border-box;
     background-clip: content-box, border-box;
-    margin: 10px; */
+
+    div {
+      /* padding: 40px 28px 140px 28px; */
+
+      img {
+        width: 300px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+      h3 {
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 28px;
+      }
+    }
   `,
   ReviewDisLike: styled.div`
     display: flex;
@@ -167,5 +238,94 @@ const S = {
     background: #fff;
     border-radius: 50%;
     box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: -1.5px;
+    }
+  `,
+  ProdItemWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0px;
+    background-color: #fff;
+  `,
+
+  ReviewProducts: styled.div`
+    .tinderCards__cardContainer {
+      width: 356px;
+      height: 464px;
+      position: relative;
+      left: 0;
+      top: 0;
+    }
+    .swipe {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      div {
+      }
+    }
+  `,
+
+  ReviewEndWrap: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: dotted 1px #111;
+    border-radius: 10px;
+    width: 356px;
+    height: 464px;
+    box-shadow: inset 0px 0px 25px 10px #f6f6f6;
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    p {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 32px;
+      text-align: center;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+      span {
+        display: block;
+      }
+    }
+
+    button {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      padding: 8px 26px;
+      border-radius: 100px;
+      background-color: #e4e7ec;
+    }
+  `,
+  SkipButtonWrap: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  `,
+  SkipButton: styled.button`
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: bold;
+    background-color: #f9fafb;
+    border-radius: 100px;
+    padding: 8px 57px;
   `
 };
