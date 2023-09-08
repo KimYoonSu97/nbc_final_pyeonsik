@@ -27,7 +27,7 @@ const Header = () => {
         </S.LogoContainer>
         <TopBarMenuContainer />
       </S.UpperContainer>
-      {path === 'detail' || path === 'report' ? (
+      {path === 'detail' || path === 'report' || path === 'write' ? (
         <></>
       ) : (
         <S.LowerContainer>
@@ -53,6 +53,8 @@ const S = {
           return '56px';
         case 'report':
           return '56px';
+        case 'write':
+          return '56px';
         default:
           return '106px';
       }
@@ -75,6 +77,8 @@ const S = {
     position: relative;
   `,
   LogoContainer: styled.div`
+    cursor: pointer;
+
     color: white;
     width: 80px;
     height: 22px;

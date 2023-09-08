@@ -1,10 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { IconBadBig, IconGoodFace } from 'src/components/icons';
 import styled from 'styled-components';
 import ProdItem from './ProdItem';
 import ReviewLike from './ReviewLike';

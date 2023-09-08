@@ -5,10 +5,13 @@ import { IconWriteButton } from 'src/components/icons';
 import styled from 'styled-components';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { writeCategorySelect } from 'src/globalState/jotai';
 
 const Main = () => {
   const navigate = useNavigate();
   const userId = useLoginUserId();
+  const [_, setWriteCategory] = useAtom(writeCategorySelect);
 
   return (
     <>
@@ -19,6 +22,7 @@ const Main = () => {
               toast('로그인 후 이용 가능합니다.');
               return;
             }
+            setWriteCategory('');
             navigate('/write');
           }}
         >
