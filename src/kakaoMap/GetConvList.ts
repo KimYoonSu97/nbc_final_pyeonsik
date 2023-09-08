@@ -34,7 +34,6 @@ export const GetConvList = async (lat: number, lng: number): Promise<ConvsInform
     for (let i = 0; i < Math.min(MAX_RESULTS, result.length); i++) {
       const data = result[i];
       const splitedPlace = data.place_name.split(' ');
-      console.log(splitedPlace);
       const [brand_name, position_name] = [splitedPlace[0], splitedPlace[1]];
 
       const newConv: ConvsInform = {

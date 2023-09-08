@@ -30,8 +30,6 @@ const KakaoMap = () => {
         setMyLat(lat);
         setMyLng(lng);
       });
-
-      console.log('위치 수정 완료');
     } else {
       // 현재위치를 알 수 없는 경우, 기본 값을 설정합니다.
       setMyLat(37); // 서울 위도

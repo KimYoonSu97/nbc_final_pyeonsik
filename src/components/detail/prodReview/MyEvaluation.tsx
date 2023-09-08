@@ -19,22 +19,9 @@ const MyEvaluation = ({ swipers, prodId }: MyeEvaluationProps) => {
     <>
       {isRate && (
         <S.MyEvaluationArea>
-          <S.MyText>나의 평가 : </S.MyText>
-          {isRate.isGood ? (
-            <>
-              <S.IconFaceBox>
-                <IconGoodFace />
-              </S.IconFaceBox>
-              <S.MyText>또 사 먹을래요!</S.MyText>
-            </>
-          ) : (
-            <>
-              <S.IconFaceBox>
-                <IconBadFace />
-              </S.IconFaceBox>
-              <S.MyText>그만 먹을래요!</S.MyText>
-            </>
-          )}
+          <S.MyText>나의 평가: </S.MyText>
+          <S.IconFaceBox>{isRate.isGood ? <IconGoodFace /> : <IconBadFace />}</S.IconFaceBox>
+          <S.MyText>{isRate.isGood ? '또 사 먹을래요!' : '그만 먹을래요!'}</S.MyText>
         </S.MyEvaluationArea>
       )}
     </>

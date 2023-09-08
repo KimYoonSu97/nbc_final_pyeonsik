@@ -75,18 +75,6 @@ const S = {
     line-height: 16px; /* 114.286% */
   `,
 
-  Percent: styled.div`
-    /* margin-right: 9px;
-
-    color: var(--font-black, var(--Black, #242424));
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 16px; */
-    /* 114.286% */
-  `,
-
   IconGoodBox: styled(FlexBoxCenter)`
     margin-right: 4px;
 

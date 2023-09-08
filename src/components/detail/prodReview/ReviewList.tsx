@@ -32,8 +32,6 @@ const ReviewList = () => {
     return <p>error</p>;
   }
 
-  console.log('여기', swipers);
-
   return (
     <S.ReviewContainer>
       {produts?.map((prod) => {
