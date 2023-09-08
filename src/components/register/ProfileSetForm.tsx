@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
-import baseImage from '../../images/baseprofile.jpeg';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import { toast } from 'react-toastify';
@@ -22,7 +21,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
-  const [baseImg] = useState(baseImage);
+  const [baseImg] = useState('./baseprofile.jpeg');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [_, setLoginUser] = useAtom(userAtom);
