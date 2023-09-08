@@ -5,8 +5,8 @@ import ReviewList from 'src/components/detail/prodReview/ReviewList';
 const Review = () => {
   return (
     <div>
-      {/* <ProdReview /> */}
-      <ReviewList />
+      <ProdReview />
+      {/* <ReviewList /> */}
     </div>
   );
 };

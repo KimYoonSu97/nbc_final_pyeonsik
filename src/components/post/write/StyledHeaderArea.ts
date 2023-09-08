@@ -22,6 +22,7 @@ export const S = {
     padding: 11px 16px;
     display: flex;
     align-items: center;
+    justify-content: center;
   `,
 
   BackButton: styled.button`
@@ -34,7 +35,7 @@ export const S = {
     width: 80px;
     height: 22px;
     /* position: absolute; */
-    left: 16px;
+    /* left: 16px; */
   `,
 
   AddButton: styled.button`
