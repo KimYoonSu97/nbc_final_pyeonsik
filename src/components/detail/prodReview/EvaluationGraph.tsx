@@ -7,7 +7,7 @@ import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 const EvaluationGraph = ({ swipers, prodId, isGood }: MyeEvaluationProps) => {
   const prodRate = swipers.filter((swiper) => swiper.prodId === prodId);
   const rateGood = prodRate.filter((rate) => rate.isGood === isGood).length;
-  const percentGood = Math.round(rateGood / prodRate.length) * 100;
+  const percentGood = Math.round((rateGood / prodRate.length) * 1000) / 10;
 
   const backgroundBack =
     percentGood >= 50 ? 'linear-gradient(278deg, #FFB334 4.72%, #EB4335 92.67%)' : 'var(--neutral-300, #D0D5DD)';
