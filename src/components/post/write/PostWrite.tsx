@@ -99,6 +99,11 @@ const PostWrite = () => {
       addPostMutate.mutate(newPost);
       updateCommonPostBadge(userId);
     } else if (category === 'recipe') {
+      if (imageUrls.length === 0) {
+        toast('이미지를 첨부해 주세요!.');
+        return;
+      }
+
       const newPost = {
         postCategory: category,
         hasOrgPost: !!orgPost,
