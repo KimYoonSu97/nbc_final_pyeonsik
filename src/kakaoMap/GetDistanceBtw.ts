@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * 두 지점간의 거리 계산 함수
  *

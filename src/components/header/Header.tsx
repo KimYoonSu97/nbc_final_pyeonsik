@@ -27,7 +27,7 @@ const Header = () => {
         </S.LogoContainer>
         <TopBarMenuContainer />
       </S.UpperContainer>
-      {path === 'detail' || path === 'report' ? (
+      {path === 'detail' || path === 'report' || path === 'write' ? (
         <></>
       ) : (
         <S.LowerContainer>
@@ -52,6 +52,8 @@ const S = {
         case 'detail':
           return '56px';
         case 'report':
+          return '56px';
+        case 'write':
           return '56px';
         default:
           return '106px';

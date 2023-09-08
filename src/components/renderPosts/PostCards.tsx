@@ -12,8 +12,6 @@ interface PostListProps {
 
 const PostCards = ({ posts }: PostListProps) => {
   const location = useLocation();
-  console.log(location);
-  console.log(posts);
 
   if (location.pathname !== '/mypage/mypost' && posts?.length === 0) {
     return <NoSearchResult />;
