@@ -41,7 +41,7 @@ const Router = () => {
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/map" element={<KakaoMap />} />
-          <Route path="/prodReview" element={<ProdReview />} />
+          <Route path="/review" element={<ProdReview />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
