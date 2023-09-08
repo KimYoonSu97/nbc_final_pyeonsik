@@ -9,6 +9,7 @@ const HeaderArea = () => {
 
   const clickCancle = async () => {
     if (await Confirm('writePage')) {
+      
       return;
     } else {
       navigate(-1);

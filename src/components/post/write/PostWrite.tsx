@@ -15,13 +15,15 @@ import useUserMutate from 'src/hooks/useUserMutate';
 import { updateFirstRecipeBadge, updateCommonPostBadge } from 'src/api/badge';
 import Confirm from 'src/components/popUp/Confirm';
 import { toast } from 'react-toastify';
+import { writeCategorySelect } from 'src/globalState/jotai';
 
 const PostWrite = () => {
   const navigate = useNavigate();
   const { state: orgPost } = useLocation();
   const userId: string | undefined = useLoginUserId();
 
-  const [category, setCategory] = useState<string>('recipe');
+  // const [category, setCategory] = useState<string>('');
+  const [category, setCategory] = useAtom(writeCategorySelect);
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [allContents, setContentsAtom] = useAtom(contentsAtom);
@@ -34,17 +36,15 @@ const PostWrite = () => {
   const [isIn] = useState(true);
 
   const handleBeforeUnload = async (e: BeforeUnloadEvent) => {
-    if (await Confirm('writePage')) {
-      e.preventDefault();
-    }
-  };
-
-  const eventListen = async () => {
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    e.preventDefault();
+    e.returnValue = '';
+    // if (await Confirm('writePage')) {
+    // } else {
+    // }
   };
 
   useEffect(() => {
-    eventListen();
+    window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
       setContentsAtom({});
       setTagsDataAtom({});

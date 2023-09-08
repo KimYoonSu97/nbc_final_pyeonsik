@@ -4,6 +4,7 @@ import { confirmAlert, ReactConfirmAlertProps } from 'react-confirm-alert';
 import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import { confirmModalText } from './confirmModalText';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Confirm = (type: string) => {
   const text = confirmModalText(type);
@@ -12,40 +13,46 @@ const Confirm = (type: string) => {
       customUI: ({ onClose }) => {
         return (
           <>
-            <S.Container>
-              <S.ConfirmBox>
-                <S.Title>{text.title}</S.Title>
-                <S.Caption>{text.caption}</S.Caption>
-                <S.ButtonArea>
-                  <S.FalseButton
-                    as="button"
-                    $type={type}
-                    onClick={() => {
-                      resolve(false);
-                      onClose();
-                    }}
-                  >
-                    {text.false}
-                  </S.FalseButton>
-                  <S.TrueButton
-                    as="button"
-                    $type={type}
-                    onClick={() => {
-                      resolve(true);
-                      onClose();
-                    }}
-                  >
-                    {text.true}
-                  </S.TrueButton>
-                </S.ButtonArea>
-              </S.ConfirmBox>
-            </S.Container>
-            <S.Background
-              onClick={() => {
-                resolve(false);
-                onClose();
-              }}
-            />
+            <AnimatePresence>
+              <S.Container key={type} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <S.ConfirmBox>
+                  <S.Title>{text.title}</S.Title>
+                  <S.Caption>{text.caption}</S.Caption>
+                  <S.ButtonArea>
+                    <S.FalseButton
+                      as="button"
+                      $type={type}
+                      onClick={() => {
+                        resolve(false);
+                        onClose();
+                      }}
+                    >
+                      {text.false}
+                    </S.FalseButton>
+                    <S.TrueButton
+                      as="button"
+                      $type={type}
+                      onClick={() => {
+                        resolve(true);
+                        onClose();
+                      }}
+                    >
+                      {text.true}
+                    </S.TrueButton>
+                  </S.ButtonArea>
+                </S.ConfirmBox>
+              </S.Container>
+
+              <S.Background
+                key={`${type}Back`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={() => {
+                  resolve(false);
+                  onClose();
+                }}
+              />
+            </AnimatePresence>
           </>
         );
       },
@@ -66,14 +73,17 @@ interface ButtonProps {
   $type: string;
 }
 const S = {
-  Container: styled.div`
+  Container: styled(motion.div)`
     position: fixed;
     top: 0;
     right: 0;
     z-index: 102;
     overflow: hidden;
   `,
-  Background: styled(FlexBoxCenter)`
+  Background: styled(motion.div)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 0;
     right: 0;
@@ -120,6 +130,7 @@ const S = {
   FalseButton: styled(ButtonBasic)<ButtonProps>`
     color: var(--font-black, var(--Black, #242424));
     cursor: pointer;
+
     ${styleFont.buttonSmall}
   `
 };
