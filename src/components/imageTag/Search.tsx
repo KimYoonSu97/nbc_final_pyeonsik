@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
 import { SearchProps } from 'src/types/types';
 import { ReactComponent as SearchIcon } from 'src/components/imageTag/svg/SearchIcon.svg';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
+import debounce from 'lodash/debounce';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Data[]>([]);
 
-  const performSearch = async () => {
-    if (!searchKeyword) return;
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      debouncedSearch(searchKeyword);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchKeyword]);
+
+  const debouncedSearch = debounce(async (keyword: string) => {
+    if (!keyword) return;
 
     const { data: filteredResults, error } = await supabase
       .from('products')
       .select('*')
-      .filter('prodName', 'ilike', `%${searchKeyword}%`);
+      .filter('prodName', 'ilike', `%${keyword}%`);
 
     if (error) {
       console.error('검색오류!', error);
       return;
     }
-
     setSearchResults(filteredResults);
-  };
+  }, 300);
 
   const handleSearchTextChange = (SearchKeyword: string) => {
     setSearchKeyword(SearchKeyword);
@@ -36,16 +44,16 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
     setSearchResults([]);
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      performSearch();
-    }
-  };
+  // const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (event.key === 'Enter') {
+  //     debouncedSearch(searchKeyword);
+  //   }
+  // };
 
   return (
     <S.SearchContainer>
       <S.SearchInputArea>
-        <S.SearchButton onClick={performSearch}>
+        <S.SearchButton onClick={() => debouncedSearch(searchKeyword)}>
           <SearchIcon />
         </S.SearchButton>
         <S.SearchInput
@@ -53,7 +61,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
           type="text"
           value={searchKeyword}
           onChange={(event) => handleSearchTextChange(event.target.value)}
-          onKeyPress={handleKeyPress}
+          // onKeyPress={handleKeyPress}
           placeholder="제품명을 검색해주세요."
           autoFocus
         />
