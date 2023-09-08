@@ -87,14 +87,18 @@ const CommentForMap = ({ comment }: Props) => {
           </S.UserArea>
         </S.UpWrapper>
         <S.LowWrapper>
-          <S.ReCommentAddButton
-            onClick={() => {
-              setIsOpenReCommentInput(!isOpenReCommentInput);
-              setIsOpenReComment(true);
-            }}
-          >
-            <IconAddReComment />
-          </S.ReCommentAddButton>
+          {userId ? (
+            <S.ReCommentAddButton
+              onClick={() => {
+                setIsOpenReCommentInput(!isOpenReCommentInput);
+                setIsOpenReComment(true);
+              }}
+            >
+              <IconAddReComment />
+            </S.ReCommentAddButton>
+          ) : (
+            <S.ReCommentAddButtonEmpty></S.ReCommentAddButtonEmpty>
+          )}
 
           {/* 수정 컴포넌트 */}
           {isEditComment ? (
@@ -197,6 +201,14 @@ const S = {
     border-radius: 125px;
     border: 0.625px solid var(--neutral-500, #667085);
     background: var(--neutral-100, #f2f4f7);
+  `,
+  ReCommentAddButtonEmpty: styled(FlexBoxCenter)`
+    margin-top: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 125px;
+    /* border: 0.625px solid var(--neutral-500, #667085); */
+    /* background: var(--neutral-100, #f2f4f7); */
   `,
   EditButtonArea: styled(FlexBoxAlignCenter)`
     justify-content: flex-end;
