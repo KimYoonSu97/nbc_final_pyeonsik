@@ -4,7 +4,8 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox'
 export const S = {
   ImageTagContainer: styled(FlexBox)`
     position: relative;
-    gap: 12px;
+    /* gap: 12px; */
+    margin-right: 12px;
     padding-bottom: 20px;
     margin-bottom: 20px;
   `,
@@ -43,6 +44,7 @@ export const S = {
   ImageContainer: styled.div`
     position: relative;
     border-radius: 10px;
+    margin-right: 12px;
   `,
   // 이미지 태그 사이즈 고정....
 

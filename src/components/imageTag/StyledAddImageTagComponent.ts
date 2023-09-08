@@ -8,19 +8,16 @@ export const ArrowIconWrapper = styled.div`
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
-  z-index: 2;
   pointer-events: none;
 `;
 
 export const DocIconWrapper = styled.div`
   position: absolute;
-
   top: 70%;
   left: -50px;
   transform: translateY(-50%);
   opacity: 0;
   transition: opacity 0.3s ease;
-  z-index: 2;
 `;
 
 export const S = {
@@ -29,14 +26,14 @@ export const S = {
     width: 48px;
     position: fixed;
     left: calc((100vw - 1280px) / 2 + 93px);
-    z-index: 999;
+    z-index: 1;
     flex-direction: column;
     gap: 8px;
   `,
 
   SmallButton: styled(FlexBoxCenter)`
     margin-left: -50px;
-    margin-top: 10px;
+    margin-top: 11px;
     width: 100px;
     height: 48px;
   `,
@@ -81,8 +78,9 @@ export const S = {
   `,
 
   AddBtn: styled.button`
-    margin-left: -6px;
+    margin-left: 0px;
   `,
+
   BackGroundColor: styled.div`
     width: 100vw;
     height: 100vh;
@@ -92,6 +90,7 @@ export const S = {
     left: 0;
     z-index: -1;
   `,
+
   ModalOverlay: styled(FlexBoxCenter)`
     background-color: #242424;
     border-radius: 5px;
@@ -106,7 +105,7 @@ export const S = {
 
   ModalContent: styled.div`
     color: #ffffff;
-    font-family: 'Pretendard';
+    font-family: Pretendard;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
