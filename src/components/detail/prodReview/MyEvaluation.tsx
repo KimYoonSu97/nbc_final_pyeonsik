@@ -8,11 +8,11 @@ import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 export interface MyeEvaluationProps {
   swipers: Swiper[];
   prodId: string;
+  isGood?: boolean;
 }
 
 const MyEvaluation = ({ swipers, prodId }: MyeEvaluationProps) => {
   const userId = useLoginUserId();
-
   const isRate = swipers?.find((swiper) => swiper.prodId === prodId && swiper.userId === userId);
 
   return (

@@ -3,18 +3,17 @@ import { useQuery } from '@tanstack/react-query';
 import { getNewProd } from 'src/api/product';
 import { getSwiperData } from 'src/api/ReviewSwiper';
 import { Product, Swiper } from 'src/types/types';
-import { LOGO_IMAGE } from 'src/utility/guide';
+import { EMPTY_IMAGE } from 'src/utility/guide';
 // style
 import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
-import { IconBad } from 'src/components/icons';
 import MyEvaluation from './MyEvaluation';
 import EvaluationGraph from './EvaluationGraph';
 
 const ReviewList = () => {
   const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });
   const { isLoading: lodingSwiper, data: dataSwiper } = useQuery({
-    queryKey: ['swiper'],
+    queryKey: ['swiper_list'],
     queryFn: () => getSwiperData()
   });
 
@@ -23,7 +22,7 @@ const ReviewList = () => {
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
-    e.target.src = LOGO_IMAGE;
+    e.target.src = EMPTY_IMAGE;
   };
 
   if (lodingProd || lodingSwiper) {
@@ -32,6 +31,8 @@ const ReviewList = () => {
   if (dataProd?.error || dataSwiper?.error) {
     return <p>error</p>;
   }
+
+  console.log('여기', swipers);
 
   return (
     <S.ReviewContainer>
@@ -44,19 +45,8 @@ const ReviewList = () => {
               <MyEvaluation swipers={swipers} prodId={prod.id} />
             </S.TextContainer>
             <S.AllEvaluation>
-              <EvaluationGraph swipers={swipers} prodId={prod.id} />
-              <S.GraphContainer>
-                <S.IsGoodText>그만 먹을래요!</S.IsGoodText>
-                <div>
-                  <S.GraphBack />
-                  <S.GraphFront>
-                    <S.IconGoodBox>
-                      <IconBad />
-                    </S.IconGoodBox>
-                    <S.Percent>%</S.Percent>
-                  </S.GraphFront>
-                </div>
-              </S.GraphContainer>
+              <EvaluationGraph swipers={swipers} prodId={prod.id} isGood={true} />
+              <EvaluationGraph swipers={swipers} prodId={prod.id} isGood={false} />
             </S.AllEvaluation>
           </S.ReviewBox>
         );

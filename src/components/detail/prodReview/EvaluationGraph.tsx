@@ -4,27 +4,22 @@ import { IconBad, IconGood } from 'src/components/icons';
 import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
-const EvaluationGraph = ({ swipers, prodId }: MyeEvaluationProps) => {
+const EvaluationGraph = ({ swipers, prodId, isGood }: MyeEvaluationProps) => {
   const prodRate = swipers.filter((swiper) => swiper.prodId === prodId);
+  const rateGood = prodRate.filter((rate) => rate.isGood === isGood).length;
+  const percentGood = Math.round(rateGood / prodRate.length) * 100;
 
-  const rateGood = prodRate.filter((rate) => rate.isGood).length;
-  //   const rateBad = prodRate.filter((rate) => !rate.isGood).length;
-  const percentGood = 94;
-  //   (rateGood / prodRate.length) * 100;
-  //   const percentBad = (rateBad / prodRate.length) * 100;
-  console.log('여기', prodRate);
-
-  const background = `linear-gradient(to right, transparent ${percentGood}%, #f2f4f7 ${percentGood}%)`;
+  const backgroundBack =
+    percentGood >= 50 ? 'linear-gradient(278deg, #FFB334 4.72%, #EB4335 92.67%)' : 'var(--neutral-300, #D0D5DD)';
+  const backgroundFront = `linear-gradient(to right, transparent ${percentGood}%, #f2f4f7 ${percentGood}%)`;
 
   return (
     <S.GraphContainer>
-      <S.IsGoodText>또 사먹을래요!</S.IsGoodText>
+      <S.IsGoodText>{isGood ? '또 사먹을래요!' : '그만 먹을래요!'}</S.IsGoodText>
       <div>
-        <S.GraphBack background={true} />
-        <S.GraphFront color={percentGood >= 95} background={background}>
-          <S.IconGoodBox color={percentGood >= 95}>
-            <IconGood />
-          </S.IconGoodBox>
+        <S.GraphBack background={backgroundBack} />
+        <S.GraphFront background={backgroundFront}>
+          <S.IconGoodBox>{isGood ? <IconGood /> : <IconBad />}</S.IconGoodBox>
           {prodRate.length ? percentGood : 0}%
         </S.GraphFront>
       </div>
@@ -33,11 +28,6 @@ const EvaluationGraph = ({ swipers, prodId }: MyeEvaluationProps) => {
 };
 
 export default EvaluationGraph;
-
-interface GraphProps {
-  color: boolean;
-  background?: string;
-}
 
 const S = {
   GraphContainer: styled.div`
@@ -58,17 +48,16 @@ const S = {
     line-height: 16px; /* 114.286% */
   `,
 
-  GraphBack: styled.div<{ background: boolean }>`
+  GraphBack: styled.div<{ background: string }>`
     position: absolute;
 
     width: 312px;
     height: 26px;
     border-radius: 100px;
-    background: ${(props) =>
-      props.background ? 'linear-gradient(109deg, #ffb334 23.92%, #eb4335 76.3%)' : 'var(--neutral-300, #D0D5DD)'};
+    background: ${(props) => props.background};
   `,
 
-  GraphFront: styled(FlexBoxAlignCenter)<GraphProps>`
+  GraphFront: styled(FlexBoxAlignCenter)<{ background: string }>`
     position: relative;
     justify-content: flex-end;
 
@@ -78,7 +67,7 @@ const S = {
     background: ${(props) => props.background};
 
     padding-right: 9px;
-    color: ${(props) => (props.color ? 'var(--white, #FFF)' : 'var(--font-black, var(--Black, #242424))')};
+    color: var(--font-black, var(--Black, #242424));
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
@@ -98,11 +87,11 @@ const S = {
     /* 114.286% */
   `,
 
-  IconGoodBox: styled(FlexBoxCenter)<GraphProps>`
+  IconGoodBox: styled(FlexBoxCenter)`
     margin-right: 4px;
 
     svg {
-      fill: ${(props) => (props.color ? 'var(--white, #FFF)' : 'var(--font-black, var(--Black, #242424))')};
+      fill: var(--font-black, var(--Black, #242424));
     }
   `
 };
