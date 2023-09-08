@@ -22,7 +22,7 @@ const BottomShare = ({ title, likeCount, commentCount, sharedCount }: BottomShar
 
   const clickTwitter = () => {
     const shareText = title;
-    window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`);
+    window.open(`http://twitter.com/share?url=${shareUrl}&text=${shareText}`);
   };
 
   const clickKakao = () => {
