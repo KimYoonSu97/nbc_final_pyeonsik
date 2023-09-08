@@ -92,14 +92,7 @@ const ProdReview = () => {
       }
     }
   };
-  const onSwipe = (direction: any, prod: any) => {
-    // 스와이프 완료 시 처리 로직
-    // if (direction === 'right') {
-    //   return onDropToLike(prod);
-    // } else {
-    //   return onDropToDisLike(prod);
-    // }
-  };
+  const onSwipe = (direction: any, prod: any) => {};
 
   const onCardLeftScreen = (direction: string, prod: string) => {
     if (direction === 'right') {
