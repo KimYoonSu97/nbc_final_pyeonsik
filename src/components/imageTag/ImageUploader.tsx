@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { ReactComponent as CameraIcon } from 'src/components/imageTag/svg/CameraIcon.svg';
-import { ReactComponent as SelectedFileIcon } from 'src/components/imageTag/svg/SelectedFileIcon.svg';
 
+import { CameraIcon, SelectedFileIcon } from '../icons/index';
 import { ImageUploaderProps } from 'src/types/types';
 import { FlexBoxCenter } from 'src/styles/styleBox';
 
@@ -61,6 +60,7 @@ const S = {
     position: ${(props) => (props.imageselected === 'true' ? 'absolute' : 'initial')};
     margin-left: ${(props) => (props.imageselected === 'true' ? '220px' : '0')};
     margin-top: ${(props) => (props.imageselected === 'true' ? '0' : '0')};
+    margin-right: ${(props) => (props.imageselected === 'true' ? '0' : '12px')};
 
     z-index: 1;
   `,
