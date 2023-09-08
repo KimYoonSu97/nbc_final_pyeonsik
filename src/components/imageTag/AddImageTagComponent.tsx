@@ -4,10 +4,7 @@ import { atom, useAtom, useSetAtom } from 'jotai';
 
 import ImageTag from './ImageTag';
 import { Tag, AddImageTagProps } from 'src/types/types';
-import { ReactComponent as TrashCanIcon } from 'src/components/imageTag/svg/TrashCanIcon.svg';
-import { ReactComponent as AddBtn } from 'src/components/imageTag/svg/AddBtn.svg';
-import { ReactComponent as ArrowIcon } from 'src/components/imageTag/svg/ArrowIcon.svg';
-import { ReactComponent as DotIcon } from 'src/components/imageTag/svg/DotIcon.svg';
+import { AddBtn, TrashCanIcon, ArrowIcon, DotIcon } from '../icons/index';
 import { ArrowIconWrapper, S, DocIconWrapper } from './StyledAddImageTagComponent';
 import { toast } from 'react-toastify';
 
@@ -31,6 +28,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   const [dragging, setDragging] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  //수정 페이지 접근 시 원래 값 담기위해 사용
   useEffect(() => {
     if (!editMode) {
       addImageTagComponent();
@@ -40,7 +38,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     setContents(body ?? []);
   }, [imageData, tagData, body]);
 
-  // 수정 페이지에서 접근 시 필요합니다
+  // 수정 페이지에서 접근 시 필요합니다 컴포넌트 생성
   useEffect(() => {
     if (imageData && imageData.length > 0) {
       const newComponents = imageData.map((image, index) => {
@@ -84,10 +82,8 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   const addImageTagComponent = () => {
     const componentUuid = uuidv4();
 
-    if (imageTagComponents.length >= 10) {
+    if (imageTagComponents.length === 9) {
       toast('이미지는 10개까지 첨부 가능합니다.');
-      // alert('이미지는 10개까지 첨부 가능합니다.');
-      return;
     }
 
     const newImageTagComponent = (
@@ -262,11 +258,13 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
             </React.Fragment>
           );
         })}
-        <S.SmallButton>
-          <S.AddBtn type="button" onClick={addImageTagComponent}>
-            <AddBtn />
-          </S.AddBtn>
-        </S.SmallButton>
+        {imageTagComponents.length < 10 && (
+          <S.SmallButton>
+            <S.AddBtn type="button" onClick={addImageTagComponent}>
+              <AddBtn />
+            </S.AddBtn>
+          </S.SmallButton>
+        )}
       </S.ButtonThumbnailArea>
 
       {/* 여기는 전체 에디터가 담길 부분임. */}

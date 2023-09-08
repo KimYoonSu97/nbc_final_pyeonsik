@@ -93,7 +93,6 @@ const TopBarMenuContainer = () => {
     }
   }, [localStorage.getItem('social')]);
 
-  // console.log(data);
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>

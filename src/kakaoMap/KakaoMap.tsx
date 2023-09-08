@@ -32,8 +32,6 @@ const KakaoMap = () => {
         setMyLat(lat);
         setMyLng(lng);
       });
-
-      console.log('위치 수정 완료');
     } else {
       setMyLat(37); // 서울 위도
       setMyLng(127); // 서울 경도

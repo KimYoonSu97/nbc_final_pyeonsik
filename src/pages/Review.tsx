@@ -6,7 +6,7 @@ const Review = () => {
   return (
     <div>
       <ProdReview />
-      {/* <ReviewList /> */}
+      <ReviewList />
     </div>
   );
 };
