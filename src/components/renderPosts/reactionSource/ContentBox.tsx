@@ -11,6 +11,7 @@ interface ContentBoxProps {
 
 const ContentBox = ({ post }: ContentBoxProps) => {
   const { pathname } = useLocation();
+  console.log(pathname);
 
   return (
     <>
@@ -170,7 +171,7 @@ export const S = {
     padding-top: 30px;
     min-height: ${(props) => {
       if (props.$location !== '/') {
-        return '40vh';
+        return '10vh';
       } else {
         return '10vh';
       }

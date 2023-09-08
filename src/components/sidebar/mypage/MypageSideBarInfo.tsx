@@ -59,7 +59,8 @@ const MypageSideBarInfo = () => {
         queryFn: () => getUserData(userId),
         enabled: userId ? true : false,
         refetchOnWindowFocus: false,
-        refetchOnMount: false
+        refetchOnMount: false,
+        staleTime: Infinity
       },
       {
         queryKey: ['MyPost'],
