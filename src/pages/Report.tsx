@@ -51,31 +51,24 @@ const Report = () => {
 
   const handleOptionClick = (option: string) => {
     setSelectedInquiry1(option);
-    console.log(option);
   };
   const handleOption2Click = (option: string) => {
     setSelectedInquiry2(option);
   };
-
   const handleNext = () => {
-    if (selectedInquiry1 === '유저 신고' && email.trim() !== '') {
-      if(!isValidEmail(email)){
-        toast('올바른 이메일 형식이 아닙니다.')
-      }else{
+    if (selectedInquiry1 === '유저 신고' && email.trim() === '') {
+      if ((selectedInquiry1 === '유저 신고' && email.trim() !== '', !isValidEmail(email))) {
+        toast('올바른 이메일 형식이 아닙니다.');
+      } else {
         setStep(2);
-      } 
+      }
     } else if (selectedInquiry1 === '오류 제보' || selectedInquiry1 === '기타') {
       setStep(3);
-    }else{
-      toast('항목을 선택해 주세요.')
+    } else if (userId && selectedInquiry1 === '유저 신고') {
+      setStep(2);
+    } else {
+      toast('항목을 선택해 주세요.');
     }
-    // if(selectedInquiry1 === ''){
-    //   toast('항목을 선택해 주세요.')
-    //   return;
-    // }else if(email.trim() === ''){
-    //   toast('이메일을 입력해 주세요.')
-    //   return;
-    // }
   };
   const handleNext2 = () => {
     if (selectedInquiry2) {
@@ -119,15 +112,14 @@ const Report = () => {
   const handleEmailBlur = () => {
     if (email.trim() !== '' && !isValidEmail(email)) {
       toast('올바른 이메일 형식이 아닙니다.');
-      return
+      return;
     }
   };
 
-  const isValidEmail = (email:string) => {
+  const isValidEmail = (email: string) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
   };
-
 
   return (
     <ReportWrap id="container">
@@ -165,7 +157,9 @@ const Report = () => {
                 </p>
               ))}
             </div>
-            <button onClick={handleNext} className={isStep1Complete ? 'complete' : ''}>선택 완료</button>
+            <button onClick={handleNext} className={isStep1Complete ? 'complete' : ''}>
+              선택 완료
+            </button>
           </div>
         </ReportInner>
       )}
@@ -185,7 +179,9 @@ const Report = () => {
               );
             })}
           </div>
-          <button onClick={handleNext2}  className={isStep2Complete ? 'complete' : ''}>선택 완료</button>
+          <button onClick={handleNext2} className={isStep2Complete ? 'complete' : ''}>
+            선택 완료
+          </button>
         </ReportInner>
       )}
       {step === 3 && (
@@ -214,12 +210,14 @@ const Report = () => {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
           ></input>
-          <button onClick={handleSubmitButton}  className={isStep3Complete ? 'complete' : ''}>제출하기</button>
+          <button onClick={handleSubmitButton} className={isStep3Complete ? 'complete' : ''}>
+            제출하기
+          </button>
         </ReportInner>
       )}
       {step === 4 && (
         <ReportInner>
-          <h3 className='reportEnd'>
+          <h3 className="reportEnd">
             제보에 도움을 주셔서 감사합니다.
             <br />
             빠른 시일 내에 문제를 해결하겠습니다.
@@ -243,7 +241,7 @@ export default Report;
 const ReportWrap = styled.div``;
 
 const ReportInner = styled.div`
-margin-top: 70px;
+  margin-top: 70px;
   h1 {
     font-size: 32px;
     font-weight: bold;
@@ -288,7 +286,7 @@ margin-top: 70px;
         font-style: normal;
         font-weight: 600;
         line-height: 24px;
-        color: #98A2B3;
+        color: #98a2b3;
       }
     }
   }
@@ -365,14 +363,14 @@ margin-top: 70px;
   .message {
     padding-bottom: 140px;
   }
-  .reportEnd{
+  .reportEnd {
     margin-bottom: 40px;
   }
   .goHome {
     background-color: #f02826;
     letter-spacing: -1px;
   }
-  .complete{
+  .complete {
     background-color: #f02826;
   }
 `;
