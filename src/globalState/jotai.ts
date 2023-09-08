@@ -29,3 +29,5 @@ interface LoginModalProps {
 }
 
 export const loginModalAtom = atom<LoginModalProps>({ state: false, location: null });
+
+export const writeCategorySelect = atom<string>('');

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQueries } from '@tanstack/react-query';
 import { getMyPostsById } from 'src/api/posts';
@@ -7,9 +7,47 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import { IconBadge, IconCommon, IconRecipe } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from 'src/components/header/UserLevel';
+import supabase from 'src/lib/supabaseClient';
+import { FlexBox } from 'src/styles/styleBox';
+
+const getUserIdBadgeCount = async (userId: string) => {
+  const { data, error } = await supabase.from('badge').select('*').eq('user_id', userId);
+
+  if (error) {
+    console.error('데이터를 가져올 수 없습니다.');
+    return 0;
+  }
+
+  let trueBadgeCount = 0;
+
+  if (data && data.length > 0) {
+    for (const badge of data) {
+      for (const key in badge) {
+        if (badge[key] === true) {
+          trueBadgeCount++;
+        }
+      }
+    }
+  }
+  return trueBadgeCount;
+};
 
 const MypageSideBarInfo = () => {
   const userId = useLoginUserId();
+  const [badgeCount, setBadgeCount] = useState(0);
+
+  console.log(badgeCount);
+
+  useEffect(() => {
+    const fetchBadgeCount = async () => {
+      const count = await getUserIdBadgeCount(userId);
+      setBadgeCount(count);
+    };
+
+    if (userId) {
+      fetchBadgeCount();
+    }
+  }, [userId]);
 
   const [
     { data: userData, isLoading: userIsLoading, isError: userIsError },
@@ -83,7 +121,7 @@ const MypageSideBarInfo = () => {
             <IconBadge />
           </S.IconArea>
           <S.Caption>뱃지 개수</S.Caption>
-          <S.CaptionCount>15개</S.CaptionCount>
+          <S.CaptionCount>{badgeCount}개</S.CaptionCount>
         </S.SummaryButton>
       </S.ButtonArea>
     </>
@@ -115,7 +153,10 @@ const S = {
     background-position: center;
   `,
 
-  DetailArea: styled.div``,
+  DetailArea: styled(FlexBox)`
+    flex-direction: column;
+    align-items: flex-start;
+  `,
 
   NickName: styled.div`
     color: var(--font-black, var(--black, #242424));

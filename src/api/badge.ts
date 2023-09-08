@@ -1,77 +1,85 @@
+import BadgeAlert from 'src/components/popUp/BadgeAlert';
 import supabase from 'src/lib/supabaseClient';
-
-//북마크 눌렀을 때 업데이트 하는 함수
-const updateBadge = async (user_id: string, badgeField: string) => {
-  const { data, error } = await supabase.from('badge').select(badgeField).eq('user_id', user_id);
-
-  if (error) {
-    console.error('데이터를 가져올 수 없습니다.');
-    return;
-  }
-
-  if (data && data.length > 0 && !data[0][badgeField as keyof (typeof data)[0]]) {
-    const updatedData = { [badgeField]: true };
-    const { error: updateError } = await supabase.from('badge').update(updatedData).eq('user_id', user_id);
-    alert('업적 달성! 찾았다 인생 조합! ');
-    if (updateError) {
-      console.error('데이터를 업데이트할 수 없습니다.');
-      return;
-    }
-  } else {
-    console.error('데이터가 false입니다.');
-    return;
-  }
-};
-
-//레시피 글 작성시 업적 업데이트 되는 함수
-const updateFirstRecipeBadge = async (userId: string) => {
-  // 해당 사용자의 업적 데이터 조회
-  const { data: badgeData, error: badgeError } = await supabase
-    .from('badge')
-    .select('recipeMania')
-    .eq('user_id', userId);
+// 업적을 업데이트하는 함수
+const updateBadge = async (userId: string, badgeField: string) => {
+  const { data: badgeData, error: badgeError } = await supabase.from('badge').select(badgeField).eq('user_id', userId);
 
   if (badgeError) {
     console.error('업적 데이터를 가져올 수 없습니다.');
     return;
   }
 
-  // 이미 recipeMania 업적을 달성한 경우, 업데이트하지 않음
-  if (badgeData && badgeData.length > 0 && badgeData[0].recipeMania === true) {
-    console.log('이미 업적을 달성한 사용자입니다.');
-    return;
+  if (badgeData && badgeData.length > 0 && !badgeData[0][badgeField as keyof (typeof badgeData)[0]]) {
+    const updatedData = { [badgeField]: true };
+    const { error: updateError } = await supabase.from('badge').update(updatedData).eq('user_id', userId);
+    await BadgeAlert(badgeField);
+    if (updateError) {
+      console.error('데이터를 업데이트할 수 없습니다.');
+    }
+  } else {
+    console.error('이미 달성한 유저입니다.');
   }
+};
 
+// 게시글 수를 가져오는 함수
+const getPostCount = async (userId: string, postCategory: string) => {
   const { data: postsData, error: postsError } = await supabase
     .from('posts')
     .select('*')
-    .eq('postCategory', 'recipe')
+    .eq('postCategory', postCategory)
     .eq('userId', userId);
 
   if (postsError) {
     console.error('게시글 데이터를 가져올 수 없습니다.');
-    return;
+    return 0;
   }
 
-  const postCount = postsData ? postsData.length : 0;
+  return postsData ? postsData.length : 0;
+};
+
+// 다양한 업적 업데이트 함수
+const updateFirstRecipeBadge = async (userId: string) => {
+  const postCount = await getPostCount(userId, 'recipe');
 
   if (postCount === 1) {
-    const { error: updateError } = await supabase.from('badge').update({ firstRecipe: true }).eq('user_id', userId);
-    alert('업적 달성! 나만의 첫 레시피! ');
-    if (updateError) {
-      console.error('데이터를 업데이트할 수 없습니다.');
-      return;
-    }
+    await updateBadge(userId, 'firstRecipe');
   }
 
   if (postCount >= 10) {
-    const { error: updateError } = await supabase.from('badge').update({ recipeMania: true }).eq('user_id', userId);
-    alert('업적 달성! 레시피 마니아! ');
-    if (updateError) {
-      console.error('데이터를 업데이트할 수 없습니다.');
-      return;
-    }
+    await updateBadge(userId, 'recipeMania');
   }
 };
 
-export { updateBadge, updateFirstRecipeBadge };
+const updateCommonPostBadge = async (userId: string) => {
+  const postCount = await getPostCount(userId, 'common');
+
+  if (postCount === 1) {
+    await updateBadge(userId, 'soilChair');
+  }
+};
+
+const updateFirstCommentBadge = async (userId: string) => {
+  await updateBadge(userId, 'firstComment');
+};
+
+const updateBugBadge = async (userId: string) => {
+  await updateBadge(userId, 'bug');
+};
+
+const updateSheriffBadge = async (userId: string) => {
+  await updateBadge(userId, 'sheriff');
+};
+
+const updateBookmarkBadge = async (userId: string) => {
+  await updateBadge(userId, 'bookMark');
+};
+
+export {
+  updateBadge,
+  updateFirstRecipeBadge,
+  updateCommonPostBadge,
+  updateFirstCommentBadge,
+  updateBugBadge,
+  updateSheriffBadge,
+  updateBookmarkBadge
+};

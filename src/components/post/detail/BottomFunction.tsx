@@ -8,10 +8,10 @@ import { getCommentCountDataByPostId } from 'src/api/comment';
 import usePostLikes from 'src/hooks/usePostLikes';
 import usePostBookmark from 'src/hooks/usePostBookmark';
 import { BottomFunctionProps } from 'src/types/types';
-import { NON_MEMBER } from '../../../utility/alertMessage';
+import { NON_MEMBER } from '../../../utility/guide';
 import BottomShare from './BottomShare';
 import { S } from 'src/components/post/detail/StyledBottomFunction';
-import { updateBadge } from 'src/api/badge';
+import { updateBookmarkBadge } from 'src/api/badge';
 import {
   IconBookmark,
   IconComment,
@@ -24,6 +24,7 @@ import {
 import { toast } from 'react-toastify';
 
 const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   // id로 main과 detail 구분 (main => 댓글 수, detail => link 복사)
@@ -56,6 +57,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const clickFunction = (type: string) => {
     if (!userId) {
       toast(NON_MEMBER);
+      navigate('/login', { state: { backgroundLocation: location } });
       return;
     } else {
       const payload = {
@@ -70,7 +72,7 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
           postBookmark ? deletePostBookmarkMutate.mutate(postBookmark.id) : addPostBookmarkMutate.mutate(payload);
 
           //요기서 업적 업데이트가 호출됩니다! -원유길-
-          updateBadge(userId, 'bookMark');
+          updateBookmarkBadge(userId);
           break;
         case 'quotation':
           navigate('/write', { state: post });
@@ -107,7 +109,14 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
         </S.FunctionButton>
         <S.FunctionCount $location={pathname}>{postBookmarkList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
-      {id && <BottomShare />}
+      {id && (
+        <BottomShare
+          title={post.title}
+          likeCount={postLikeList?.length}
+          commentCount={commentCountData}
+          sharedCount={postQuotationList?.length}
+        />
+      )}
     </>
   );
 };

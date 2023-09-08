@@ -2,12 +2,24 @@ import React from 'react';
 import { Post } from 'src/types/types';
 import { styled } from 'styled-components';
 import PostForMain from './PostForMain';
+import { useLocation } from 'react-router';
+import NoSearchResult from '../search/NoSearchResult';
+import NoPost from '../mypage/NoPost';
 
 interface PostListProps {
   posts: Post[];
 }
 
 const PostCards = ({ posts }: PostListProps) => {
+  const location = useLocation();
+
+  if (location.pathname !== '/mypage/mypost' && posts?.length === 0) {
+    return <NoSearchResult />;
+  }
+  if (location.pathname === '/mypage/mypost' && posts?.length === 0) {
+    return <NoPost />;
+  }
+
   return (
     <S.Area>
       {posts &&

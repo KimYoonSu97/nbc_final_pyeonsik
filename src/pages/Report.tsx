@@ -4,6 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { updateBugBadge, updateSheriffBadge } from 'src/api/badge';
 import { toast } from 'react-toastify';
 
 const options1 = ['유저 신고', '오류 제보', '기타'];
@@ -110,6 +111,9 @@ const Report = () => {
 
     await supabase.from('reports').insert([reportData]);
     nextStep();
+    if (selectedInquiry1 === '유저 신고') {
+      updateSheriffBadge(userId);
+    } else updateBugBadge(userId);
   };
 
   const handleEmailBlur = () => {
@@ -126,7 +130,7 @@ const Report = () => {
 
 
   return (
-    <ReportWrap>
+    <ReportWrap id="container">
       {step === 1 && (
         <ReportInner>
           <div>

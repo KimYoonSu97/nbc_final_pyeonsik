@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userAtom } from 'src/globalState/jotai';
+import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox'
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -25,6 +26,7 @@ interface User {
 const TopBarMenuContainer = () => {
   const location = useLocation();
   const [userLogin, setUserLogin] = useAtom(userAtom);
+  const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
@@ -84,8 +86,6 @@ const TopBarMenuContainer = () => {
     }
   };
 
-  console.log(data);
-
   //소셜로그인
   useEffect(() => {
     if (localStorage.getItem('social') && !data) {
@@ -93,11 +93,21 @@ const TopBarMenuContainer = () => {
     }
   }, [localStorage.getItem('social')]);
 
-  // console.log(data);
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
-        <S.QuickPostButton onClick={() => navigate('/write')}>나만의 편식조합 공유하기</S.QuickPostButton>
+        <S.QuickPostButton
+          onClick={() => {
+            if (!userId) {
+              toast('로그인 후 이용 가능합니다.');
+              return;
+            }
+            setWriteCategory('recipe');
+            navigate('/write');
+          }}
+        >
+          나만의 편식조합 공유하기
+        </S.QuickPostButton>
         <S.QuickPostButton
           onClick={() => {
             toast('서비스 준비중입니다.');
@@ -122,6 +132,7 @@ const TopBarMenuContainer = () => {
             <S.TopBarLogButton as="li" onClick={() => navigate('/register')} $signIn={true}>
               회원가입
             </S.TopBarLogButton>
+            <Link to={'/map'}>카카오맵</Link>
           </>
         ) : (
           // 로그인 후
@@ -130,7 +141,6 @@ const TopBarMenuContainer = () => {
               <IconBell />
             </S.Icon>
             <UserLevel level={data?.data?.level} />
-            <button onClick={() => navigate('/map')}>kakao Map</button>
             <S.ProfileImg
               $url={data?.data?.profileImg}
               onClick={() => {

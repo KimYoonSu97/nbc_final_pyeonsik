@@ -5,6 +5,8 @@ import TopBarMenuContainer from './TopBarMenuContainer';
 import BoardSearchContainer from './BoardSearchContainer';
 import { IconLogoSymbolH22, IconWaterMarkH22 } from '../icons';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
+import Confirm from '../popUp/Confirm';
+import UserDeleteAlert from '../popUp/UserDeleteAlert';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,13 +16,18 @@ const Header = () => {
   return (
     <S.Area $path={path}>
       <S.UpperContainer>
-        <S.LogoContainer onClick={() => navigate('/')}>
+        <S.LogoContainer
+          onClick={() => {
+            navigate('/');
+            window.location.reload();
+          }}
+        >
           <IconLogoSymbolH22 />
           <IconWaterMarkH22 />
         </S.LogoContainer>
         <TopBarMenuContainer />
       </S.UpperContainer>
-      {path === 'detail' || path === 'report' ? (
+      {path === 'detail' || path === 'report' || path === 'write' ? (
         <></>
       ) : (
         <S.LowerContainer>
@@ -46,6 +53,8 @@ const S = {
           return '56px';
         case 'report':
           return '56px';
+        case 'write':
+          return '56px';
         default:
           return '106px';
       }
@@ -68,6 +77,8 @@ const S = {
     position: relative;
   `,
   LogoContainer: styled.div`
+    cursor: pointer;
+
     color: white;
     width: 80px;
     height: 22px;

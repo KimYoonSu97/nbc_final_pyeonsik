@@ -9,19 +9,21 @@ import OrgPostCard from '../detail/OrgPostCard';
 import { S } from 'src/components/post/write/StyledPostWrite';
 import supabase from 'src/lib/supabaseClient';
 import { useAtom } from 'jotai';
-import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../ImageTag/AddImageTagComponent';
+import AddImageTagComponent, { contentsAtom, tagsDataAtom, imagesAtom } from '../../imageTag/AddImageTagComponent';
 import { levelChecker } from './userLevelUp';
 import useUserMutate from 'src/hooks/useUserMutate';
+import { updateFirstRecipeBadge, updateCommonPostBadge } from 'src/api/badge';
 import Confirm from 'src/components/popUp/Confirm';
 import { toast } from 'react-toastify';
-import { updateFirstRecipeBadge } from 'src/api/badge';
+import { writeCategorySelect } from 'src/globalState/jotai';
 
 const PostWrite = () => {
   const navigate = useNavigate();
   const { state: orgPost } = useLocation();
   const userId: string | undefined = useLoginUserId();
 
-  const [category, setCategory] = useState<string>('common');
+  // const [category, setCategory] = useState<string>('');
+  const [category, setCategory] = useAtom(writeCategorySelect);
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [allContents, setContentsAtom] = useAtom(contentsAtom);
@@ -33,23 +35,23 @@ const PostWrite = () => {
 
   const [isIn] = useState(true);
 
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  //     if (isIn) {
-  //       e.preventDefault();
-  //       e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
-  //     }
-  //   };
+  const handleBeforeUnload = async (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = '';
+    // if (await Confirm('writePage')) {
+    // } else {
+    // }
+  };
 
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   return () => {
-  //     setContentsAtom({});
-  //     setTagsDataAtom({});
-  //     setImagesDataAtom({});
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, [isIn]);
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      setContentsAtom({});
+      setTagsDataAtom({});
+      setImagesDataAtom({});
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isIn]);
 
   // const beforeUnload =async () => {
   //   if( await Confirm('writePage') ){
@@ -59,12 +61,6 @@ const PostWrite = () => {
   //   }
 
   // }
-
-  //   useEffect(()=>{
-  // return async ()=>{
-
-  // }
-  //   },[])
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -101,6 +97,7 @@ const PostWrite = () => {
         userId
       };
       addPostMutate.mutate(newPost);
+      updateCommonPostBadge(userId);
     } else if (category === 'recipe') {
       const newPost = {
         postCategory: category,

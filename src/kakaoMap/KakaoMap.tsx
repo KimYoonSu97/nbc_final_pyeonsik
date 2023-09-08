@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import 'react-kakao-maps-sdk';
-import { useGeoLocation } from './useGeoLocation';
-import { GetDistanceBtw } from './GetDistanceBtw';
-import { GetDetailAddress } from './GetDetailAddress';
-import { LocInform } from 'src/types/types';
+import { ConvsInform } from 'src/types/types';
+import { GetConvList } from './GetConvList';
+import styled from 'styled-components';
+import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
 
 declare global {
   interface Window {
@@ -12,102 +12,272 @@ declare global {
 }
 
 const KakaoMap = () => {
-  const { location, error } = useGeoLocation();
+  const [convs, setConvs] = useState<ConvsInform[]>([]);
+  const [myLat, setMyLat] = useState<number | null>(null); // 위도 상태 변수
+  const [myLng, setMyLng] = useState<number | null>(null); // 경도 상태 변수
 
-  const [convs, setConvs] = useState<LocInform[]>([]);
-  const [curLoc, setCurLoc] = useState<string>();
+  const [nearConv, setNearConv] = useState<ConvsInform>();
+  const [Logo, setLogo] = useState<React.FunctionComponent<React.SVGProps<SVGSVGElement>> | null>(null);
+  const coloredBalls = ['🟢', '🟣', '🔵', '🟡', '🟠'];
 
-  if (error) {
-    console.log(error);
-  }
-
-  const ps = new kakao.maps.services.Places();
-  // 카테고리로 편의점을 검색합니다
+  // 현재 자신의 위치 좌표를 지정해줍니다.
+  const setMyPosition = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        setMyLat(lat);
+        setMyLng(lng);
+      });
+    } else {
+      // 현재위치를 알 수 없는 경우, 기본 값을 설정합니다.
+      setMyLat(37); // 서울 위도
+      setMyLng(127); // 서울 경도
+    }
+  };
 
   useEffect(() => {
-    if (location) {
-      ps.categorySearch(
-        'CS2',
-        (data, status, _pagination) => {
-          if (status === kakao.maps.services.Status.OK) {
-            // let markers = [];
+    setMyPosition();
+  }, []);
 
-            for (var i = 0; i < 3; i++) {
-              // 새로운 데이터를 생성
-              const newConv: LocInform = {
-                position: {
-                  lat: data[i].y,
-                  lng: data[i].x
-                },
-                content: data[i].place_name
-              };
-
-              // 이전 convs 배열에 새로운 데이터를 추가
-              setConvs((prevConvs) => [...prevConvs, newConv]);
-            }
-          }
-        },
-        {
-          location: new kakao.maps.LatLng(location?.position.lat as number, location?.position.lng as number),
-          // useMapCenter: true,
-          size: 15,
-          radius: 5000,
-          sort: kakao.maps.services.SortBy.DISTANCE
-          // 왜냐
-        }
-      );
-      // 시 주소를 받아옵니다.
-      // GetDetailAddress 함수를 호출하는 함수
-      async function getAddressAndUse() {
-        const latitude = 37.123456; // 위도
-        const longitude = 127.654321; // 경도
-
+  // 위치가 변경될 때마다 주변 편의점 리스트를 가져옵니다.
+  useEffect(() => {
+    if (myLat !== null && myLng !== null) {
+      const fetchData = async () => {
         try {
-          const address = await GetDetailAddress(latitude, longitude); // 여기에 원하는 위경도
-          if (address) {
-            console.log('주소:', address);
-            // 여기에서 주소 값을 사용하면 됩니다.
-          } else {
-            console.log('주소를 찾을 수 없습니다.');
-          }
+          const convList = await GetConvList(myLat, myLng);
+          setConvs(convList);
+
+          // console.log(convList);
         } catch (error) {
-          console.error('에러 발생:', error);
+          console.error('편의점 리스트 가져오기 오류:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [myLat, myLng]);
+
+  // 편의점 리스트 중 가장 가까운 편의점을 찾습니다.
+  const findClosest = () => {
+    if (convs.length === 0) {
+      console.log('배열이 비어있습니다.');
+    } else {
+      let closestConv = convs.find((v) => v.distance > 0); // 초기값으로 값이 있는 원소
+      if (!closestConv) closestConv = convs[0];
+
+      for (let i = 0; i < convs.length; i++) {
+        if (convs[i].distance <= 0) continue; // 빈 값이면 패스
+        if (convs[i].distance < closestConv.distance) {
+          closestConv = convs[i]; // 더 작은 distance를 가진 원소로 업데이트
         }
       }
-      getAddressAndUse();
+      setNearConv(closestConv);
+      setLogoFn(closestConv.brand_name);
+      console.log('가장 가까운 conv:', closestConv);
     }
-  }, [location]);
+  };
+  useEffect(() => {
+    findClosest();
+  }, [convs]);
+
+  // 브랜드명에 따라 로고를 지정해줍니다.
+  const setLogoFn = (brandName: string) => {
+    switch (brandName) {
+      case 'CU': {
+        setLogo(CU);
+        break;
+      }
+
+      case '이마트24': {
+        setLogo(Emart24);
+        break;
+      }
+
+      case 'GS25': {
+        setLogo(GS25);
+        break;
+      }
+
+      case '세븐일레븐': {
+        setLogo(SevenEleven);
+        break;
+      }
+
+      default:
+        // 예외 처리: 알 수 없는 브랜드명일 경우
+        setLogo(null);
+    }
+  };
 
   return (
     <>
-      <div>위도:{location?.position.lat}</div>
-      <div>경도:{location?.position.lng}</div>
-      <br />
-      <div>{curLoc}</div>
-      <br />
+      <S.Container>
+        <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
 
-      <div className="conv-container" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {convs.map((conv, index) => (
-          <div key={index} className="conv-item">
-            <div>위도: {conv.position.lat}</div>
-            <div>경도: {conv.position.lng}</div>
-            <div>내용: {conv.content}</div>
-            <div>
-              거리차이:{' '}
-              {GetDistanceBtw(
-                location?.position.lat as number,
-                location?.position.lng as number,
-                conv.position.lat as number,
-                conv.position.lng as number,
-                'kilometer'
-              ).toFixed(2)}
-            </div>
+        <S.ContentContainer>
+          {nearConv && (
+            <>
+              <S.ColumnContainer>
+                {Logo && <Logo />}
+                <S.RowContainer>
+                  <S.Content>{nearConv.position_name}</S.Content>
+                  <S.DetailContent>
+                    {Math.floor(nearConv.distance) === nearConv.distance
+                      ? nearConv.distance + 'm'
+                      : nearConv.distance + 'km'}
+                  </S.DetailContent>
+                </S.RowContainer>
+              </S.ColumnContainer>
+            </>
+          )}
+        </S.ContentContainer>
+        <S.HugeButton href={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`} target="_blank">
+          위치보기
+        </S.HugeButton>
+      </S.Container>
+
+      <S.ListsContainer>
+        {convs.map((v, idx) => (
+          <div key={idx}>
+            {!(v.distance === 0) ? (
+              <>
+                <S.ListContainer>
+                  <S.Title>
+                    {coloredBalls[idx]} {v.brand_name}
+                  </S.Title>
+                  <S.ColumnContainer>
+                    <S.RowContainer>
+                      <S.PositionLink
+                        href={`https://map.kakao.com/link/map/${v.full_name},${v.position.lat},${v.position.lng}`}
+                        target="_blank"
+                      >
+                        <span className="material-symbols-outlined">arrow_outward</span>위치보기
+                      </S.PositionLink>
+                      <S.DetailContent>
+                        {Math.floor(v.distance) === v.distance ? v.distance + 'm' : v.distance + 'km'}
+                      </S.DetailContent>
+                    </S.RowContainer>
+                    <S.Content>{v.position_name}</S.Content>
+                  </S.ColumnContainer>
+                </S.ListContainer>
+                <S.Separator />
+              </>
+            ) : (
+              <>
+                <S.ListContainer>
+                  <S.Title>⚫ {v.brand_name}</S.Title>
+                  <S.ColumnContainer>값이 없습니다 😥</S.ColumnContainer>
+                </S.ListContainer>
+                <S.Separator />
+              </>
+            )}
           </div>
         ))}
-      </div>
-      {/* <button>위치보기</button> */}
+      </S.ListsContainer>
     </>
   );
 };
 
 export default KakaoMap;
+
+const S = {
+  Container: styled.div`
+    display: flex;
+    flex-direction: column;
+
+    width: 500px;
+    margin: 0 auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  `,
+  ListsContainer: styled.div`
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  `,
+  ListContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  `,
+  RowContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  `,
+  ColumnContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  `,
+  ContentContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 450px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #d2d2d2;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  `,
+
+  Title: styled.div`
+    font-weight: bolder;
+    font-size: 24px; /* 큰 텍스트 크기 */
+    text-align: center; /* 가운데 정렬 */
+    margin: 10px 0px;
+  `,
+
+  Content: styled.div`
+    font-size: 18px;
+    text-align: center; /* 가운데 정렬 */
+    font-weight: bolder;
+  `,
+  DetailContent: styled.div`
+    font-size: 13px;
+    text-align: center; /* 가운데 정렬 */
+    color: #919191;
+    margin: 0px 5px;
+  `,
+  HugeButton: styled.a`
+    padding: 12px 20px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: center; /* 가운데 정렬 */
+    border-radius: 15px;
+    font-weight: bolder;
+    text-decoration: none;
+    height: 45px;
+    margin: 0px 10px;
+  `,
+  PositionLink: styled.a`
+    padding: 2px 5px;
+    background-color: #707070;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: center; /* 가운데 정렬 */
+    border-radius: 15px;
+    font-weight: bolder;
+    text-decoration: none;
+  `,
+
+  Separator: styled.hr`
+    border-top: 3px solid #434343;
+    margin: 10px 0;
+  `
+};
