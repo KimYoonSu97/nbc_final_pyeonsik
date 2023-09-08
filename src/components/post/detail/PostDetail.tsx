@@ -7,8 +7,9 @@ import WriterContainer from 'src/components/renderPosts/reactionSource/WriterCon
 import ContentBox from 'src/components/renderPosts/reactionSource/ContentBox';
 import OrgPostCard from './OrgPostCard';
 import BottomFunction from './BottomFunction';
-import Comment from 'src/components/detail/comments/Comment';
+// import Comment from 'src/components/detail/comments/Comment';
 import { S } from './StyledPostDetail';
+// import Comment from 'src/components/detail/comments/Comment';
 
 interface Props {
   isModal?: boolean;
@@ -44,7 +45,7 @@ const PostDetail = ({ isModal }: Props) => {
         <S.FunctionBox>
           <BottomFunction userId={userId} post={post} />
         </S.FunctionBox>
-        <Comment />
+        {/* <Comment /> */}
       </S.ContentsBox>
     </S.DtailArea>
   );
