@@ -24,14 +24,23 @@ const userDelete = {
   false: '취소하기'
 };
 
+const postWrite = {
+  title: '게시글을 작성하시겠습니까?',
+  caption: '현재까지 작성하신 내용이 게시됩니다',
+  true: '작성하기',
+  false: '취소하기'
+};
+
 export const confirmModalText = (type: string): ConfirmModalTextResult => {
   let result: ConfirmModalTextResult;
   if (type === 'postDelete') {
     result = postDelete;
-  } else if (type === 'writerPage') {
+  } else if (type === 'writePage') {
     result = writePage;
   } else if (type === 'userDelete') {
     result = userDelete;
+  } else if (type === 'postWrite') {
+    result = postWrite;
   }
   return result!;
 };

@@ -10,6 +10,7 @@ import { FlexBoxCenter } from 'src/styles/styleBox';
 import { deleteUser } from 'src/api/userLogin';
 import Confirm from '../popUp/Confirm';
 import { toast } from 'react-toastify';
+import UserDeleteAlert from '../popUp/UserDeleteAlert';
 
 const UserDelete = () => {
   const navigate = useNavigate();
@@ -18,27 +19,29 @@ const UserDelete = () => {
   const userId = useLoginUserId();
 
   const [_, setUserLogin] = useAtom(userAtom);
-  // const { deleteUserMutate } = useUserMutate();
 
   const clickWithdraw = async () => {
     if (await Confirm('userDelete')) {
       const { error: deleteError } = await supabase.auth.admin.deleteUser(userId);
       await deleteUser(userId);
+
+      // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
         toast('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
         return;
       }
       setUserLogin(null);
-      navigate('/');
-      if (location.pathname.split('/')[1] === 'mypage') {
-        window.location.reload();
+      if (await UserDeleteAlert('type')) {
+        navigate('/');
+        if (location.pathname.split('/')[1] === 'mypage') {
+          window.location.reload();
+        }
+        localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
+        localStorage.removeItem('social');
+        queryClient.removeQueries(['loginUser']);
+        queryClient.resetQueries(['loginUser']);
       }
-      localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
-      localStorage.removeItem('social');
-      queryClient.removeQueries(['loginUser']);
-      queryClient.resetQueries(['loginUser']);
-      alert('회원탈퇴 완료!');
     }
   };
 

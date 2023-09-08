@@ -64,6 +64,7 @@ const Profile = () => {
     }
 
     nicknameMutation.mutate({ nickname, id: userId });
+    toast('닉네임이 변경되었습니다.');
   };
 
   if (isLoading) {

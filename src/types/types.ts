@@ -1,3 +1,5 @@
+import { Stringifier } from 'styled-components/dist/types';
+
 // input custom hook
 export interface InputProps {
   type: string;
@@ -244,7 +246,6 @@ export interface AddImageTagProps {
   body?: string[] | null;
   isEditMode?: boolean;
 }
-
 // 카카오맵
 export interface ConvsInform {
   brand_name: string;
@@ -260,4 +261,12 @@ export interface ConvsInform {
 export interface Badge {
   name: string;
   yourBooleanProp: boolean;
+}
+
+// swiper
+export interface Swiper {
+  id: string;
+  userId: string;
+  prodId: String;
+  isGood: boolean;
 }

@@ -2,9 +2,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import 'react-kakao-maps-sdk';
 import { ConvsInform } from 'src/types/types';
 import { GetConvList } from './GetConvList';
-import { GetDetailAddress } from './GetDetailAddress';
 import styled from 'styled-components';
 import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
+import { styleFont } from 'src/styles/styleFont';
+import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import NearByBox from 'src/components/sidebar/event/NearByBox';
+import { Link } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -13,7 +16,6 @@ declare global {
 }
 
 const KakaoMap = () => {
-  const [curLocation, setCurLocation] = useState<string>();
   const [convs, setConvs] = useState<ConvsInform[]>([]);
   const [myLat, setMyLat] = useState<number | null>(null); // 위도 상태 변수
   const [myLng, setMyLng] = useState<number | null>(null); // 경도 상태 변수
@@ -30,10 +32,7 @@ const KakaoMap = () => {
         setMyLat(lat);
         setMyLng(lng);
       });
-
-      console.log('위치 수정 완료');
     } else {
-      // 현재위치를 알 수 없는 경우, 기본 값을 설정합니다.
       setMyLat(37); // 서울 위도
       setMyLng(127); // 서울 경도
     }
@@ -65,10 +64,11 @@ const KakaoMap = () => {
     if (convs.length === 0) {
       console.log('배열이 비어있습니다.');
     } else {
-      let closestConv = convs[0]; // 초기값으로 첫 번째 원소를 선택
+      let closestConv = convs.find((v) => v.distance > 0); // 초기값으로 값이 있는 원소
+      if (!closestConv) closestConv = convs[0];
 
-      for (let i = 1; i < convs.length; i++) {
-        if (convs[i].distance === 0) continue;
+      for (let i = 0; i < convs.length; i++) {
+        if (convs[i].distance <= 0) continue; // 빈 값이면 패스
         if (convs[i].distance < closestConv.distance) {
           closestConv = convs[i]; // 더 작은 distance를 가진 원소로 업데이트
         }
@@ -89,22 +89,18 @@ const KakaoMap = () => {
         setLogo(CU);
         break;
       }
-
       case '이마트24': {
         setLogo(Emart24);
         break;
       }
-
       case 'GS25': {
         setLogo(GS25);
         break;
       }
-
       case '세븐일레븐': {
         setLogo(SevenEleven);
         break;
       }
-
       default:
         // 예외 처리: 알 수 없는 브랜드명일 경우
         setLogo(null);
@@ -113,169 +109,221 @@ const KakaoMap = () => {
 
   return (
     <>
-      <Container>
-        <Title>지금 나랑 가장 가까운 편의점은?</Title>
-
-        <ContentContainer>
-          {nearConv && (
-            <>
-              <ColumnContainer>
-                {Logo && <Logo />}
-                <RowContainer>
-                  <Content>{nearConv.position_name}</Content>
-                  <DetailContent>
-                    {Math.floor(nearConv.distance) === nearConv.distance
-                      ? nearConv.distance + 'm'
-                      : nearConv.distance + 'km'}
-                  </DetailContent>
-                </RowContainer>
-              </ColumnContainer>
-            </>
-          )}
-        </ContentContainer>
-        <HugeButton href={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`} target="_blank">
-          위치보기
-        </HugeButton>
-      </Container>
-
-      <ListsContainer>
-        {convs.map((v, idx) => (
-          <div key={idx}>
-            {!(v.distance === 0) ? (
+      <S.Container>
+        {nearConv && (
+          <>
+            <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
+            {nearConv.distance ? (
               <>
-                <ListContainer>
-                  <Title>o {v.brand_name}</Title>
-                  <ColumnContainer>
-                    <RowContainer>
-                      <PositionLink
-                        href={`https://map.kakao.com/link/map/${v.full_name},${v.position.lat},${v.position.lng}`}
-                        target="_blank"
-                      >
-                        <span className="material-symbols-outlined">arrow_outward</span>위치보기
-                      </PositionLink>
-                      <DetailContent>
-                        {Math.floor(v.distance) === v.distance ? v.distance + 'm' : v.distance + 'km'}
-                      </DetailContent>
-                    </RowContainer>
-                    <Content>{v.position_name}</Content>
-                  </ColumnContainer>
-                </ListContainer>
-                <Separator />
+                <S.LocationButton to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}>
+                  위치보기
+                </S.LocationButton>
+                <S.NearByStore>
+                  <S.NearByLogo> {Logo && <Logo />}</S.NearByLogo>
+                  <S.StoreInfo>
+                    <S.StoreName>{nearConv.position_name}</S.StoreName>
+                    <S.Distance>
+                      {Math.floor(nearConv.distance) === nearConv.distance
+                        ? nearConv.distance + 'm'
+                        : nearConv.distance + 'km'}
+                    </S.Distance>
+                  </S.StoreInfo>
+                </S.NearByStore>
               </>
             ) : (
-              <>
-                <ListContainer>
-                  <Title>o {v.brand_name}</Title>
-                  <ColumnContainer>값이 없습니다 😥</ColumnContainer>
-                </ListContainer>
-                <Separator />
-              </>
+              <S.NearByStore>
+                <S.NoStore>{'반경 5km 내\n가까운 편의점이 없습니다.'}</S.NoStore>
+              </S.NearByStore>
             )}
-          </div>
-        ))}
-      </ListsContainer>
+          </>
+        )}
+        <S.NearByBrand>
+          {convs
+            .filter((item) => {
+              return item.brand_name !== nearConv?.brand_name;
+            })
+            .map((item, index) => {
+              return <NearByBox key={index} brand={item} />;
+            })}
+        </S.NearByBrand>
+      </S.Container>
     </>
   );
 };
 
 export default KakaoMap;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+const S = {
+  Container: styled(FlexBoxCenter)`
+    padding: 16px 8px 0 8px;
+    /* background-color: royalblue; */
+    flex-direction: column;
+  `,
+  Title: styled.p`
+    color: var(--font-black, var(--Black, #242424));
+    ${styleFont.titleSmall}
+    margin-bottom: 8px;
+  `,
+  LocationButton: styled(Link)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-decoration: none;
+    width: 280px;
+    /* height: 30px; */
+    padding: 7px 0;
+    background: var(--main, #f02826);
+    color: #fff;
+    margin-bottom: 15px;
+    ${styleFont.buttonSmall}
+  `,
+  NearByStore: styled(FlexBoxCenter)`
+    width: 280px;
+    height: 76px;
+    background: var(--neutral-100, #f2f4f7);
+    border-radius: 10px;
+    flex-direction: column;
+  `,
+  NearByLogo: styled.div`
+    margin-bottom: 11px;
+    height: 20px;
+  `,
+  StoreInfo: styled(FlexBoxAlignCenter)``,
+  StoreName: styled.p`
+    color: var(--font-black, var(--Black, #242424));
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+  `,
+  Distance: styled.p`
+    margin-left: 4px;
+    color: var(--neutral-400, #98a2b3);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 145.455% */
+  `,
+  NearByBrand: styled(FlexBoxAlignCenter)`
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+  `,
+  NoStore: styled.div`
+    color: var(--font-black, var(--Black, #242424));
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+    white-space: pre-line;
+  `
+};
 
-  width: 500px;
-  margin: 0 auto;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-`;
-const ListsContainer = styled.div`
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-`;
-const ListContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-`;
-const RowContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-`;
-const ColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-`;
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 450px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #d2d2d2;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-`;
+// const S = {
+//   Container: styled.div`
+//     display: flex;
+//     flex-direction: column;
 
-const Title = styled.div`
-  font-weight: bolder;
-  font-size: 24px; /* 큰 텍스트 크기 */
-  text-align: center; /* 가운데 정렬 */
-  margin: 10px 0px;
-`;
+//     width: 500px;
+//     margin: 0 auto;
+//     padding: 15px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//   `,
+//   ListsContainer: styled.div`
+//     margin-top: 30px;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   ListContainer: styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   RowContainer: styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   ColumnContainer: styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   ContentContainer: styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     width: 450px;
+//     margin: 0 auto;
+//     padding: 20px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     background-color: #d2d2d2;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
 
-const Content = styled.div`
-  font-size: 18px;
-  text-align: center; /* 가운데 정렬 */
-  font-weight: bolder;
-`;
-const DetailContent = styled.div`
-  font-size: 13px;
-  text-align: center; /* 가운데 정렬 */
-  color: #919191;
-  margin: 0px 5px;
-`;
-const HugeButton = styled.a`
-  padding: 12px 20px;
-  background-color: black;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  text-align: center; /* 가운데 정렬 */
-  border-radius: 15px;
-  font-weight: bolder;
-  text-decoration: none;
-  height: 45px;
-  margin: 0px 10px;
-`;
-const PositionLink = styled.a`
-  padding: 2px 5px;
-  background-color: #707070;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  text-align: center; /* 가운데 정렬 */
-  border-radius: 15px;
-  font-weight: bolder;
-  text-decoration: none;
-`;
+//   Title: styled.div`
+//     font-weight: bolder;
+//     font-size: 24px; /* 큰 텍스트 크기 */
+//     text-align: center; /* 가운데 정렬 */
+//     margin: 10px 0px;
+//   `,
 
-const Separator = styled.hr`
-  border-top: 3px solid #434343;
-  margin: 10px 0;
-`;
+//   Content: styled.div`
+//     font-size: 18px;
+//     text-align: center; /* 가운데 정렬 */
+//     font-weight: bolder;
+//   `,
+//   DetailContent: styled.div`
+//     font-size: 13px;
+//     text-align: center; /* 가운데 정렬 */
+//     color: #919191;
+//     margin: 0px 5px;
+//   `,
+//   HugeButton: styled.a`
+//     padding: 12px 20px;
+//     background-color: black;
+//     color: #fff;
+//     border: none;
+//     cursor: pointer;
+//     text-align: center; /* 가운데 정렬 */
+//     border-radius: 15px;
+//     font-weight: bolder;
+//     text-decoration: none;
+//     height: 45px;
+//     margin: 0px 10px;
+//   `,
+//   PositionLink: styled.a`
+//     padding: 2px 5px;
+//     background-color: #707070;
+//     color: #fff;
+//     border: none;
+//     cursor: pointer;
+//     text-align: center; /* 가운데 정렬 */
+//     border-radius: 15px;
+//     font-weight: bolder;
+//     text-decoration: none;
+//   `,
+
+//   Separator: styled.hr`
+//     border-top: 3px solid #434343;
+//     margin: 10px 0;
+//   `
+// };

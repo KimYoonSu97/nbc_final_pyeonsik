@@ -15,13 +15,15 @@ import useUserMutate from 'src/hooks/useUserMutate';
 import { updateFirstRecipeBadge, updateCommonPostBadge } from 'src/api/badge';
 import Confirm from 'src/components/popUp/Confirm';
 import { toast } from 'react-toastify';
+import { writeCategorySelect } from 'src/globalState/jotai';
 
 const PostWrite = () => {
   const navigate = useNavigate();
   const { state: orgPost } = useLocation();
   const userId: string | undefined = useLoginUserId();
 
-  const [category, setCategory] = useState<string>('common');
+  // const [category, setCategory] = useState<string>('');
+  const [category, setCategory] = useAtom(writeCategorySelect);
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [allContents, setContentsAtom] = useAtom(contentsAtom);
@@ -33,23 +35,23 @@ const PostWrite = () => {
 
   const [isIn] = useState(true);
 
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-  //     if (isIn) {
-  //       e.preventDefault();
-  //       e.returnValue = '작성 중인 내용이 사라집니다. 페이지를 떠나시겠습니까?';
-  //     }
-  //   };
+  const handleBeforeUnload = async (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = '';
+    // if (await Confirm('writePage')) {
+    // } else {
+    // }
+  };
 
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   return () => {
-  //     setContentsAtom({});
-  //     setTagsDataAtom({});
-  //     setImagesDataAtom({});
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, [isIn]);
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      setContentsAtom({});
+      setTagsDataAtom({});
+      setImagesDataAtom({});
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isIn]);
 
   // const beforeUnload =async () => {
   //   if( await Confirm('writePage') ){
@@ -59,12 +61,6 @@ const PostWrite = () => {
   //   }
 
   // }
-
-  //   useEffect(()=>{
-  // return async ()=>{
-
-  // }
-  //   },[])
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,6 +99,11 @@ const PostWrite = () => {
       addPostMutate.mutate(newPost);
       updateCommonPostBadge(userId);
     } else if (category === 'recipe') {
+      if (imageUrls.length === 0) {
+        toast('이미지를 첨부해 주세요!.');
+        return;
+      }
+
       const newPost = {
         postCategory: category,
         hasOrgPost: !!orgPost,

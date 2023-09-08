@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * 두 지점간의 거리 계산 함수
  *
@@ -13,7 +11,7 @@ import React from 'react';
 
 export const GetDistanceBtw = (lat1: number, lon1: number, lat2: number, lon2: number, unit: string): number => {
   /**
-   * 1000미만이면 소수점 없앤 정수 반환, 이상이면 km 소수점 1로 소수 반환 
+   * 1000미만이면 소수점 없앤 정수 반환, 이상이면 km 소수점 1로 소수 반환
    * @param m 미터를 기준
    * @returns 정수(--)m, 소수(--.-)km number타입으로 반환
    */
