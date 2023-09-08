@@ -28,6 +28,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   const [dragging, setDragging] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  //수정 페이지 접근 시 원래 값 담기위해 사용
   useEffect(() => {
     if (!editMode) {
       addImageTagComponent();
@@ -37,7 +38,7 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     setContents(body ?? []);
   }, [imageData, tagData, body]);
 
-  // 수정 페이지에서 접근 시 필요합니다
+  // 수정 페이지에서 접근 시 필요합니다 컴포넌트 생성
   useEffect(() => {
     if (imageData && imageData.length > 0) {
       const newComponents = imageData.map((image, index) => {
