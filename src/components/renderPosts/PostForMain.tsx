@@ -20,6 +20,7 @@ const PostForMain = ({ item: postData }: Props) => {
   const userId = useLoginUserId();
   const post = useMemo(() => postData, [postData]);
   const writer = post?.userId;
+  console.log(writer);
 
   return (
     <AnimatePresence>

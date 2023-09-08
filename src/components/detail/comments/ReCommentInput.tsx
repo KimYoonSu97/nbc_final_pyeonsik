@@ -8,6 +8,8 @@ import { NON_MEMBER } from 'src/utility/guide';
 import { styleFont } from 'src/styles/styleFont';
 import { updateFirstCommentBadge } from 'src/api/badge';
 import { toast } from 'react-toastify';
+import { getUserData } from 'src/api/userLogin';
+import { useQueries } from '@tanstack/react-query';
 
 interface Props {
   type: string;
@@ -31,6 +33,19 @@ const ReCommentInput = ({
   const navigate = useNavigate();
   const location = useLocation();
   const userId = useLoginUserId();
+
+  const [{ data: userData, isLoading: userIsLoading, isError: userIsError }] = useQueries({
+    queries: [
+      {
+        queryKey: ['loginUser'],
+        queryFn: () => getUserData(userId),
+        enabled: userId ? true : false,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        staleTime: Infinity
+      }
+    ]
+  });
 
   const { writeReCommentButton, updateReCommentButton } = useReCommentMutate(commentId!);
 
@@ -71,7 +86,7 @@ const ReCommentInput = ({
 
   return (
     <S.Container>
-      <S.CommentInPutProfile></S.CommentInPutProfile>
+      <S.CommentInPutProfile src={userData?.data?.profileImg}></S.CommentInPutProfile>{' '}
       <S.CommentInputForm onSubmit={functionChanger}>
         <S.CommentInput
           placeholder="댓글을 남겨보세요!"
@@ -96,9 +111,10 @@ const S = {
     align-items: center;
     /* margin: 16px 0 50px 0; */
   `,
-  CommentInPutProfile: styled.div`
+  CommentInPutProfile: styled.img`
     width: 36px;
     height: 36px;
+    object-fit: cover;
     border-radius: 100px;
     background: lightgray;
   `,

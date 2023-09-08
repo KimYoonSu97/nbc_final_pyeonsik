@@ -6,19 +6,22 @@ import styled from 'styled-components';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { toast } from 'react-toastify';
 import { useAtom } from 'jotai';
-import { writeCategorySelect } from 'src/globalState/jotai';
+import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
 
 const Main = () => {
   const navigate = useNavigate();
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
+  const [userLogin, __] = useAtom(userAtom);
+  console.log(userId);
+  console.log(userLogin);
 
   return (
     <>
       <S.FixedContainer>
         <S.WriteButton
           onClick={() => {
-            if (!userId) {
+            if (!userId && !userLogin) {
               toast('로그인 후 이용 가능합니다.');
               return;
             }

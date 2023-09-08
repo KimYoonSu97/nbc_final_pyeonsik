@@ -24,6 +24,13 @@ const userDelete = {
   false: '취소하기'
 };
 
+const postWrite = {
+  title: '게시글을 공유하시겠어요?',
+  caption: '현재까지 입력한 내용이 올라가요!',
+  true: '공유하기',
+  false: '취소하기'
+};
+
 export const confirmModalText = (type: string): ConfirmModalTextResult => {
   let result: ConfirmModalTextResult;
   if (type === 'postDelete') {
@@ -32,6 +39,8 @@ export const confirmModalText = (type: string): ConfirmModalTextResult => {
     result = writePage;
   } else if (type === 'userDelete') {
     result = userDelete;
+  } else if (type === 'postWrite') {
+    result = postWrite;
   }
   return result!;
 };

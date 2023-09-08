@@ -2,7 +2,7 @@ import React from 'react';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import CreatedAt from 'src/utility/CreatedAt';
 import styled, { css } from 'styled-components';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import usePost from 'src/hooks/usePost';
 import { CANCLE, DELETE } from 'src/utility/guide';
 import { styleFont } from 'src/styles/styleFont';
@@ -20,6 +20,7 @@ interface WriterContainerProps {
 const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
   const userId = useLoginUserId();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { deletePostMutate } = usePost();
 
@@ -60,7 +61,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
           </S.PostDate>
         </div>
         <S.FunctionBox>
-          {userId === writer.id && (
+          {userId === writer.id && pathname !== '/' && (
             <S.WriterFunction $isModal={isModal}>
               <S.WriterButton $isModal={isModal} onClick={clickEdit}>
                 수정

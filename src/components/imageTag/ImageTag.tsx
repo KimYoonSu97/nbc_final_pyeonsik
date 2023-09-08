@@ -248,8 +248,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
           </S.ImageContainer>
         )}
 
-        {/* <div style={{ width: '12px' }}></div> */}
-
         <PostWriteBodyInput
           ref={postRef}
           type="text"
