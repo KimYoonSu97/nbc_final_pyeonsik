@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Location, Route, Routes, useLocation } from 'react-router-dom';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { GlobalFont } from 'src/styles/GlobalFont';
@@ -30,6 +30,7 @@ const Router = () => {
     <>
       <GlobalStyle />
       <GlobalFont />
+
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
@@ -41,7 +42,9 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
+
           <Route path="/map" element={<KakaoMap />} />
+
           <Route path="/review" element={<Review />} />
 
           <Route element={<PrivateRoute />}>

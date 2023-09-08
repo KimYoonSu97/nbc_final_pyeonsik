@@ -5,8 +5,7 @@ import { ImageTagProps } from 'src/types/types';
 import ImageUploader from './ImageUploader';
 import Search from './Search';
 import PostWriteBodyInput from '../post/write/PostWriteBodyInput';
-import { ReactComponent as TagIcon } from 'src/components/imageTag/svg/TagIcon.svg';
-import { ReactComponent as DeleteIcon } from 'src/components/imageTag/svg/DeleteIcon.svg';
+import { TagIcon, DeleteIcon } from '../icons/index';
 import { IconPlusTag } from '../icons';
 import { S } from './StyledImageTag';
 
@@ -248,6 +247,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
             ))}
           </S.ImageContainer>
         )}
+
+        {/* <div style={{ width: '12px' }}></div> */}
 
         <PostWriteBodyInput
           ref={postRef}
