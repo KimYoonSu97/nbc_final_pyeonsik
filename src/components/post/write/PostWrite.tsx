@@ -21,7 +21,7 @@ const PostWrite = () => {
   const { state: orgPost } = useLocation();
   const userId: string | undefined = useLoginUserId();
 
-  const [category, setCategory] = useState<string>('common');
+  const [category, setCategory] = useState<string>('recipe');
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [allContents, setContentsAtom] = useAtom(contentsAtom);

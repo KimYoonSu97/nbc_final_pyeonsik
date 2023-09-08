@@ -49,8 +49,6 @@ const KakaoMap = () => {
         try {
           const convList = await GetConvList(myLat, myLng);
           setConvs(convList);
-
-          // console.log(convList);
         } catch (error) {
           console.error('편의점 리스트 가져오기 오류:', error);
         }
@@ -75,7 +73,6 @@ const KakaoMap = () => {
       }
       setNearConv(closestConv);
       setLogoFn(closestConv.brand_name);
-      console.log('가장 가까운 conv:', closestConv);
     }
   };
   useEffect(() => {
@@ -141,6 +138,7 @@ const KakaoMap = () => {
       <S.ListsContainer>
         {convs.map((v, idx) => (
           <div key={idx}>
+            {/* 해당 브랜드의 편의점이 있을 시 */}
             {!(v.distance === 0) ? (
               <>
                 <S.ListContainer>
@@ -166,6 +164,7 @@ const KakaoMap = () => {
               </>
             ) : (
               <>
+                {/* 해당 브랜드 편의점이 없을 시 */}
                 <S.ListContainer>
                   <S.Title>⚫ {v.brand_name}</S.Title>
                   <S.ColumnContainer>값이 없습니다 😥</S.ColumnContainer>

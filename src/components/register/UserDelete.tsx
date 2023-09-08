@@ -19,12 +19,13 @@ const UserDelete = () => {
   const userId = useLoginUserId();
 
   const [_, setUserLogin] = useAtom(userAtom);
-  // const { deleteUserMutate } = useUserMutate();
 
   const clickWithdraw = async () => {
     if (await Confirm('userDelete')) {
       const { error: deleteError } = await supabase.auth.admin.deleteUser(userId);
       await deleteUser(userId);
+
+      // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
         toast('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
