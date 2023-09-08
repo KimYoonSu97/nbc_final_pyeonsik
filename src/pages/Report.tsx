@@ -55,8 +55,9 @@ const Report = () => {
   const handleOption2Click = (option: string) => {
     setSelectedInquiry2(option);
   };
+
   const handleNext = () => {
-    if (selectedInquiry1 === '유저 신고' && email.trim() === '') {
+    if (selectedInquiry1 === '유저 신고' && email.trim() !== '') {
       if ((selectedInquiry1 === '유저 신고' && email.trim() !== '', !isValidEmail(email))) {
         toast('올바른 이메일 형식이 아닙니다.');
       } else {
@@ -126,15 +127,15 @@ const Report = () => {
       {step === 1 && (
         <ReportInner>
           <div>
-            <h1>식신 고객센터</h1>
+            <h1>편식 고객센터</h1>
             <h2>
-              안녕하세요! 식신 고객센터입니다.
-              <span>식신을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
+              안녕하세요! 편식 고객센터입니다.
+              <span>편식을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
             </h2>
           </div>
           {userId ? null : (
             <div className="emailWrap">
-              <h3>이메일 입력</h3>
+              <h3>편식 가입 이메일</h3>
               <input
                 className="emailInput"
                 value={email}
