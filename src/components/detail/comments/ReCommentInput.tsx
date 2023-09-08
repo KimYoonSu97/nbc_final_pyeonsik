@@ -4,7 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/utility/alertMessage';
+import { NON_MEMBER } from 'src/utility/guide';
 import { styleFont } from 'src/styles/styleFont';
 import { updateFirstCommentBadge } from 'src/api/badge';
 import { toast } from 'react-toastify';

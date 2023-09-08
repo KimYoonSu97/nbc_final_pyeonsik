@@ -66,9 +66,19 @@ const getSearchProd = async (pageParam: number = 0, keyword: string) => {
   pageCount = count;
 
   //리턴을 위한 총 페이지 수는?
-
   const total_pages = Math.floor(pageCount! / 100);
+
   return { products: data!, page: pageParam, total_pages, total_results: pageCount! };
 };
 
-export { getEventProd, getSearchProd };
+// new products
+const getNewProd = async () => {
+  const response = await supabase
+    .from('products')
+    .select('*')
+    .eq('new', 'TRUE')
+    .order('created_at', { ascending: false });
+  return response;
+};
+
+export { getEventProd, getSearchProd, getNewProd };

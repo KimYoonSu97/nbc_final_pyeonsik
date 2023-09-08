@@ -9,7 +9,6 @@ import { ReactComponent as AddBtn } from 'src/components/imageTag/svg/AddBtn.svg
 import { ReactComponent as ArrowIcon } from 'src/components/imageTag/svg/ArrowIcon.svg';
 import { ReactComponent as DotIcon } from 'src/components/imageTag/svg/DotIcon.svg';
 import { ArrowIconWrapper, S, DocIconWrapper } from './StyledAddImageTagComponent';
-import { NON_MEMBER } from 'src/utility/alertMessage';
 import { toast } from 'react-toastify';
 
 //Jotai atom을 이용 데이터 전역관리
