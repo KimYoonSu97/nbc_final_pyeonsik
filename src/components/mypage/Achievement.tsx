@@ -64,8 +64,6 @@ const Achievement = () => {
     }
   }, [id]);
 
-  console.log('postsNeededForNextLevel', postsNeededForNextLevel);
-
   return (
     <S.AchievementContainer>
       <S.NickNameContainer>
