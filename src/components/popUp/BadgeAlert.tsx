@@ -35,7 +35,7 @@ const BadgeAlert = (type: string) => {
                       onClose();
                     }}
                   >
-                    확인버튼
+                    확인
                   </S.Button>
                 </S.ButtonArea>
               </S.ConfirmBox>

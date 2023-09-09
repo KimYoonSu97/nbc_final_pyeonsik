@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { IconGoogle, IconKakao } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
+import { styleFont } from 'src/styles/styleFont';
 
 type Provider = 'google' | 'kakao' | 'github';
 
@@ -63,5 +64,8 @@ const S = {
     border: 1px solid #efefef;
     padding-right: 35px;
     cursor: pointer;
+    color: #6a6a6a;
+
+    ${styleFont.bodyMedium}
   `
 };
