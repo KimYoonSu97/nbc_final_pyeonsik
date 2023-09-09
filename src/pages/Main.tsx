@@ -60,7 +60,7 @@ const S = {
     padding: 20px 0 10px;
     top: 106px;
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
-    z-index: 1;
+    z-index: 2;
     background: #f6f7f9;
   `,
   FixedBox: styled.div`
@@ -70,7 +70,7 @@ const S = {
     top: 156px;
     background: linear-gradient(0deg, transparent 0%, #f6f7f9 50%, #f6f7f9 100%);
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
-    z-index: 1;
+    z-index: 2;
   `,
   WriteButton: styled.div`
     gap: 2px;

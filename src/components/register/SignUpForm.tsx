@@ -6,8 +6,9 @@ import TermsAndConditions from './TermsAndConditions';
 import { useAtom } from 'jotai';
 import { toast } from 'react-toastify';
 import { styleFont } from 'src/styles/styleFont';
-import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import OAuthLogin from '../OAuthLogin';
+import { IconWarning } from '../icons';
 
 interface Props {
   setNextStep: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,7 +40,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       return;
     }
     if (password !== checkPassword) {
-      toast('비밀번호가 일치하지 않습니다!');
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
       setPassword('');
       setCheckPassword('');
       return;
@@ -81,14 +82,14 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       <S.Container>
         <S.Title>회원가입</S.Title>
         <S.InputArea>
-          <S.Input maxLength={30} type="text" placeholder="이메일을 입력하세요" value={email} onChange={emailHandler} />
+          <S.Input maxLength={30} type="text" placeholder="이메일 입력" value={email} onChange={emailHandler} />
         </S.InputArea>
 
         <S.InputArea style={{ marginTop: '16px' }}>
           <S.Input
             maxLength={15}
             type="password"
-            placeholder="패스워드을 입력하세요"
+            placeholder="비밀번호 입력"
             value={password}
             onChange={passwordHandler}
           />
@@ -97,12 +98,15 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
           <S.Input
             maxLength={15}
             type="password"
-            placeholder="패스워드을 다시 입력하세요"
+            placeholder="비밀번호 확인"
             value={checkPassword}
             onChange={checkPasswordHandler}
           />
         </S.InputArea>
-        <S.Error>{errorMessage}</S.Error>
+        <S.Error>
+          <IconWarning />
+          {errorMessage}
+        </S.Error>
         <TermsAndConditions
           terms1Agreed={terms1Agreed}
           setTerms1Agreed={setTerms1Agreed}
@@ -136,7 +140,7 @@ const S = {
     border-radius: 10px;
     border: 1px solid #efefef;
     margin: 0 auto;
-    padding: 30px;
+    padding: 30px 98px;
     flex-direction: column;
   `,
   Title: styled.div`
@@ -144,23 +148,24 @@ const S = {
     margin-bottom: 30px;
     ${styleFont.titleLarge}
   `,
-  InputArea: styled(FlexBoxAlignCenter)`
+  InputArea: styled(FlexBoxAlignCenter)``,
+  Input: styled.input`
+    outline: none;
     width: 294px;
     height: 42px;
     border-radius: 6px;
-    border: 1px solid #ced4da;
     background: #fff;
     padding: 12px 11px;
     margin-bottom: 8px;
-  `,
-  Input: styled.input`
-    width: 100%;
-    outline: none;
     color: var(--font-black, var(--Black, #242424));
-    border: none;
+    border: 1px solid #ced4da;
+
     ${styleFont.bodyMedium}
     &::placeholder {
       color: var(--neutral-400, var(--neutral-400, #98a2b3));
+    }
+    &:focus {
+      border: 1px solid var(--neutral-500, #667085);
     }
   `,
   SubmitDisable: styled(FlexBoxCenter)`
@@ -218,9 +223,11 @@ const S = {
     margin-top: 10px;
     ${styleFont.bodyMedium}
   `,
-  Error: styled.div`
+  Error: styled(FlexBox)`
+    margin-right: auto;
     color: #ff7474;
 
+    gap: 4px;
     ${styleFont.bodySmall}
   `
 };
