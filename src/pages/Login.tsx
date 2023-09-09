@@ -233,7 +233,6 @@ const S = {
     font-style: normal;
     font-weight: 700;
     line-height: 16px; /* 114.286% */
-    cursor: pointer;
   `,
   LinkToArea: styled.div`
     display: flex;

@@ -43,7 +43,7 @@ const Main = () => {
           <S.FilterButton $isSelected={false}>최신글</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
-      <S.FixedBox></S.FixedBox>
+      <S.FixedBox />
       <PostList />
     </>
   );

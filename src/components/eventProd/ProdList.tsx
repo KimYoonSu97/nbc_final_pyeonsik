@@ -58,7 +58,7 @@ const ProdList = () => {
           return <ProdCard key={item.id} data={item} />;
         })}
       </S.Container>
-      <S.EmptyBox ref={ref}></S.EmptyBox>
+      <S.EmptyBox ref={ref} />
     </>
   );
 };

@@ -96,7 +96,7 @@ const CommentForMap = ({ comment }: Props) => {
               <IconAddReComment />
             </S.ReCommentAddButton>
           ) : (
-            <S.ReCommentAddButtonEmpty></S.ReCommentAddButtonEmpty>
+            <S.ReCommentAddButtonEmpty />
           )}
 
           {/* 수정 컴포넌트 */}

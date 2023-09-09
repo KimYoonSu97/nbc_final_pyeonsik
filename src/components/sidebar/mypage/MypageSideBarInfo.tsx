@@ -82,7 +82,7 @@ const MypageSideBarInfo = () => {
   return (
     <>
       <S.ProfileArea>
-        <S.ProfileImg $url={userData?.data?.profileImg}></S.ProfileImg>
+        <S.ProfileImg $url={userData?.data?.profileImg} />
         <S.DetailArea>
           <UserLevel level={userData?.data?.level} />
           <S.NickName>{userData?.data?.nickname}</S.NickName>

@@ -96,7 +96,7 @@ const Profile = () => {
           >
             <IconCamera />
           </S.ProfileChangeButton>
-          <S.ProfileImgArea $url={data?.data?.profileImg || ''}></S.ProfileImgArea>
+          <S.ProfileImgArea $url={data?.data?.profileImg || ''} />
           <S.ProfileChange
             ref={inputRef}
             type="file"
@@ -105,7 +105,7 @@ const Profile = () => {
             onChange={(e) => {
               encodeFileTobase64(e.target.files![0] as Blob);
             }}
-          ></S.ProfileChange>
+          />
         </S.ProfileBox>
         <S.InputWrapper>
           <S.InfoCaption>닉네임</S.InfoCaption>
@@ -116,7 +116,7 @@ const Profile = () => {
               onChange={(e) => {
                 setNickname(e.target.value);
               }}
-            ></S.InputArea>
+            />
             <S.InfoSubmitButton onClick={updateNickname}>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
