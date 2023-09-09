@@ -64,5 +64,11 @@ const S = {
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
+
+    &:hover {
+      color: white;
+
+      background: var(--main, #f02826);
+    }
   `
 };

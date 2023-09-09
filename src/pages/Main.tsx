@@ -32,7 +32,14 @@ const Main = () => {
           <IconWriteButton /> 글쓰기
         </S.WriteButton>
         <S.FilterArea>
-          <S.FilterButton $isSelected={true}>추천글</S.FilterButton>
+          <S.FilterButton
+            $isSelected={true}
+            onClick={() => {
+              toast('추천글 서비스는 현재 준비중입니다. ');
+            }}
+          >
+            추천글
+          </S.FilterButton>
           <S.FilterButton $isSelected={false}>최신글</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
@@ -80,6 +87,7 @@ const S = {
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+    cursor: pointer;
 
     border-radius: 100px;
     border: 1px solid var(--neutral-300, #d0d5dd);
@@ -101,6 +109,7 @@ const S = {
     width: 46px;
     height: 26px;
     border-radius: 100px;
+    cursor: pointer;
 
     background: ${(props) => {
       if (props.$isSelected) {

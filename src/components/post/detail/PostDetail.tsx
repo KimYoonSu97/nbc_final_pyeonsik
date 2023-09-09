@@ -29,6 +29,7 @@ const PostDetail = ({ isModal }: Props) => {
   if (isLoading) {
     return <p>Loading…</p>;
   }
+
   if (data?.error) {
     return <p>error</p>;
   }
