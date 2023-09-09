@@ -32,7 +32,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
       return;
     }
     setSearchResults(filteredResults);
-  }, 300);
+  }, 100);
 
   const handleSearchTextChange = (SearchKeyword: string) => {
     setSearchKeyword(SearchKeyword);
@@ -44,11 +44,11 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
     setSearchResults([]);
   };
 
-  // const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === 'Enter') {
-  //     debouncedSearch(searchKeyword);
-  //   }
-  // };
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      debouncedSearch(searchKeyword);
+    }
+  };
 
   return (
     <S.SearchContainer>
@@ -61,7 +61,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
           type="text"
           value={searchKeyword}
           onChange={(event) => handleSearchTextChange(event.target.value)}
-          // onKeyPress={handleKeyPress}
+          onKeyPress={handleKeyPress}
           placeholder="제품명을 검색해주세요."
           autoFocus
         />
