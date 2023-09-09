@@ -76,3 +76,5 @@ export { ReactComponent as IconCommonPost } from './write/IconCommon.svg';
 export { ReactComponent as IconRecipePost } from './write/IconRecipe.svg';
 
 export { ReactComponent as IconWarning } from './login/IconWarning.svg';
+
+export { ReactComponent as IconSecret } from './mypage/IconSecret.svg';

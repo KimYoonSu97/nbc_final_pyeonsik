@@ -184,6 +184,7 @@ const S = {
     padding: 3px 18px;
     height: 34px;
     color: var(--font-black, var(--Black, #242424));
+    cursor: pointer;
 
     font-family: Pretendard;
     font-size: 14px;
@@ -200,6 +201,7 @@ const S = {
     padding: 3px 18px;
     height: 34px;
     color: var(--font-black, var(--Black, #242424));
+    cursor: pointer;
 
     font-family: Pretendard;
     font-size: 14px;
@@ -280,6 +282,8 @@ const S = {
   `,
 
   ProfileImg: styled.div<ImageProps>`
+    cursor: pointer;
+
     position: relative;
     z-index: 9999;
     background-image: ${(props) => {

@@ -4,7 +4,7 @@ import { getUserData, updateUserNickname, updateProfileImg } from 'src/api/userL
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import { IconCamera } from '../icons';
+import { IconCamera, IconSecret } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import useUserMutate from 'src/hooks/useUserMutate';
@@ -13,11 +13,11 @@ import UserDelete from '../register/UserDelete';
 import { toast } from 'react-toastify';
 
 const Profile = () => {
-  const queryClient = useQueryClient();
   const userId = useLoginUserId();
   const [nickname, setNickname] = useState('');
   const [profileImg, setProfileImg] = useState('');
   const [currentNickname, setCurrentNickname] = useState('');
+  const [social, setSocial] = useState('');
   const inputRef = useRef<any>(null);
 
   const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
@@ -29,6 +29,14 @@ const Profile = () => {
   const { nicknameMutation, profileImgMutation } = useUserMutate();
 
   useEffect(() => {
+    const socialLogin = localStorage.getItem('social');
+
+    if (socialLogin !== null) {
+      setSocial(socialLogin);
+    } else {
+      setSocial('email');
+    }
+
     setNickname(data?.data?.nickname);
     setCurrentNickname(data?.data?.nickname);
   }, [data]);
@@ -116,14 +124,18 @@ const Profile = () => {
           <S.InfoCaption>이메일</S.InfoCaption>
           <S.InfoInputBox>{data?.data?.email}</S.InfoInputBox>
         </S.InputWrapper>
-        <S.InputWrapper>
-          <S.InfoCaption as="div">로그인 된 소셜 계정</S.InfoCaption>
-          <S.InfoInputBox></S.InfoInputBox>
-        </S.InputWrapper>
+        {social !== 'email' && (
+          <S.InputWrapper>
+            <S.InfoCaption as="div">로그인 된 소셜 계정</S.InfoCaption>
+            <S.InfoInputBox>{`${social}로 로그인 했어요!`}</S.InfoInputBox>
+          </S.InputWrapper>
+        )}
+
         <S.InputWrapper>
           <S.InfoCaption>비밀번호 변경</S.InfoCaption>
           <S.NicknameInputBox>
-            🤫 아무도 모르게 비밀번호 변경하기
+            <IconSecret />
+            아무도 모르게 비밀번호 변경하기
             <S.InfoSubmitButton>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
@@ -225,6 +237,7 @@ const S = {
     padding: 8px 8px 8px 12px;
     border-radius: 10px;
     border: 1px solid var(--neutral-100, #f2f4f7);
+    gap: 4px;
 
     color: var(--font-black, var(--black, #242424));
     font-family: Pretendard;

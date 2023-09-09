@@ -115,22 +115,31 @@ const S = {
     padding: 10px 12px;
     border-radius: 10px;
     text-decoration: none;
-    color: ${(props) => (props.$type === props.$location ? 'black' : 'var(--neutral-500, #667085)')};
-
-    color: var(--font-black, var(--Black, #242424));
+    color: ${(props) =>
+      props.$type === props.$location ? 'var(--font-black, var(--Black, #242424))' : 'var(--neutral-500, #667085)'};
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 16px; /* 114.286% */
 
+    svg {
+      fill: var(--neutral-500, #667085);
+    }
     ${(props) =>
       props.$type === props.$location &&
       css`
-        background-color: #efefef;
+        background-color: var(--neutral-100, #f2f4f7);
+        svg {
+          fill: var(--font-black, var(--Black, #242424));
+        }
       `}
     &:hover {
-      background-color: #efefef;
+      color: var(--font-black, var(--Black, #242424));
+      background-color: var(--neutral-100, #f2f4f7);
+      svg {
+        fill: var(--font-black, var(--Black, #242424));
+      }
     }
   `
 };

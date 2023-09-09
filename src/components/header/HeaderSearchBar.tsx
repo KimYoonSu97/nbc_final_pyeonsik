@@ -10,7 +10,6 @@ const HeaderSearchBar = () => {
 
   const searchSummary = async (e: React.FormEvent) => {
     e.preventDefault();
-    // setKeyword('');
     navigate(`/search/all?=${keyword}`);
   };
 
