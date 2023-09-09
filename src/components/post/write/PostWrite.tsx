@@ -39,9 +39,6 @@ const PostWrite = () => {
   const handleBeforeUnload = async (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = '';
-    // if (await Confirm('writePage')) {
-    // } else {
-    // }
   };
 
   useEffect(() => {
@@ -53,15 +50,6 @@ const PostWrite = () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isIn]);
-
-  // const beforeUnload =async () => {
-  //   if( await Confirm('writePage') ){
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   } else {
-
-  //   }
-
-  // }
 
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
