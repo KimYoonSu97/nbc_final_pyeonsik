@@ -25,9 +25,9 @@ const userDelete = {
 };
 
 const postWrite = {
-  title: '게시글을 작성하시겠습니까?',
-  caption: '현재까지 작성하신 내용이 게시됩니다',
-  true: '작성하기',
+  title: '게시글을 공유하시겠어요?',
+  caption: '현재까지 입력한 내용이 올라가요!',
+  true: '공유하기',
   false: '취소하기'
 };
 

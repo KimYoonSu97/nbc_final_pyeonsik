@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 import { CameraIcon, SelectedFileIcon } from '../icons/index';
 import { ImageUploaderProps } from 'src/types/types';
@@ -9,15 +10,25 @@ import { FlexBoxCenter } from 'src/styles/styleBox';
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
   const [, setImageSelect] = useState(false);
 
+  const FileSizeValid = (file: File, maxSize: number) => {
+    return file.size <= maxSize;
+  };
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const originalFileName = file.name;
-      const fileExtension = originalFileName.split('.').pop();
-      const randomFileName = uuidv4() + '.' + fileExtension;
+      const maxSize = 2 * 1024 * 1024;
 
-      onImageSelect(new File([file], randomFileName));
-      setImageSelect(true);
+      if (FileSizeValid(file, maxSize)) {
+        const originalFileName = file.name;
+        const fileExtension = originalFileName.split('.').pop();
+        const randomFileName = uuidv4() + '.' + fileExtension;
+
+        onImageSelect(new File([file], randomFileName));
+        setImageSelect(true);
+      } else {
+        toast('이미지 크기가 2MB를 초과합니다. 다른 이미지를 선택해주세요.');
+      }
     }
   };
 
