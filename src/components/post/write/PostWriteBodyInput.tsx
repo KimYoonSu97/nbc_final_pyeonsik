@@ -32,7 +32,7 @@ const S = {
   `,
   TextAreaElement: styled.textarea`
     /* max-width: 578px; */
-    width: 464px;
+    width: 578px;
     border-radius: 10px;
 
     min-height: 360px;

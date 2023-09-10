@@ -31,6 +31,13 @@ const postWrite = {
   false: '취소하기'
 };
 
+const deleteComponent = {
+  title: '작성글을 삭제하시겠어요?',
+  caption: '현재까지 입력한 내용이 사라져요!',
+  true: '삭제하기',
+  false: '취소하기'
+};
+
 export const confirmModalText = (type: string): ConfirmModalTextResult => {
   let result: ConfirmModalTextResult;
   if (type === 'postDelete') {
@@ -41,6 +48,8 @@ export const confirmModalText = (type: string): ConfirmModalTextResult => {
     result = userDelete;
   } else if (type === 'postWrite') {
     result = postWrite;
+  } else if (type === 'deleteComponent') {
+    result = deleteComponent;
   }
   return result!;
 };

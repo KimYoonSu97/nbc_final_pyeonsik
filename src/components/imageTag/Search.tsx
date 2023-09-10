@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
@@ -10,6 +10,7 @@ import debounce from 'lodash/debounce';
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Data[]>([]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -50,6 +51,12 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
     }
   };
 
+  const handleClickToFocus = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  };
+
   return (
     <S.SearchContainer>
       <S.SearchInputArea>
@@ -64,6 +71,8 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
           onKeyPress={handleKeyPress}
           placeholder="제품명을 검색해주세요."
           autoFocus
+          ref={searchInputRef}
+          onClick={handleClickToFocus}
         />
       </S.SearchInputArea>
 
@@ -75,7 +84,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
                 <img src={result.prodImg} alt="이미지" />
               </S.ImageContainer>
               <S.TextContainer>
-                <div>{result.prodBrand}</div>
+                <S.ProdContainer>{result.prodBrand}</S.ProdContainer>
                 <div>{result.prodName}</div>
               </S.TextContainer>
             </S.ImageAndTextContainer>
@@ -132,21 +141,40 @@ const S = {
     margin-top: 12px;
     flex-direction: column;
     align-items: center;
+    width: 355px;
     cursor: pointer;
-    /* width: 380px; */
+
     max-height: 400px;
     overflow-y: scroll;
+
+    margin-bottom: 10px;
     &::-webkit-scrollbar {
-      display: none;
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    /* 마우스 오버시 스크롤바 색상 변경 */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
     }
   `,
 
   SearchResultItem: styled(FlexBox)`
     border-radius: 10px;
     cursor: pointer;
-    width: 356px;
+    width: 335px;
     height: 100px;
-    /* margin-bottom: 10px; */
+    /* padding-right: 10px; */
+    margin-right: 10px;
     background-color: white;
     &:hover {
       background: #efefef;
@@ -163,6 +191,8 @@ const S = {
       border-radius: 10px;
       border: 1px solid #ccc;
       margin-left: 10px;
+      object-fit: contain;
+      background-color: white;
     }
   `,
 
@@ -173,11 +203,14 @@ const S = {
     margin-left: 10px;
     color: #000;
 
-    /* label-large */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
+  `,
+
+  ProdContainer: styled.div`
+    color: #98a2b3;
   `
 };
