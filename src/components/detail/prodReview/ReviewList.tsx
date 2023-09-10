@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getNewProd } from 'src/api/product';
 import { getSwiperData } from 'src/api/ReviewSwiper';
 import { Product, Swiper } from 'src/types/types';
-import { EMPTY_IMAGE } from 'src/utility/guide';
+import { IMAGE_EMPTY } from 'src/utility/guide';
 // style
 import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
@@ -22,7 +22,7 @@ const ReviewList = () => {
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
-    e.target.src = EMPTY_IMAGE;
+    e.target.src = IMAGE_EMPTY;
   };
 
   if (lodingProd || lodingSwiper) {

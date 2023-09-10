@@ -19,8 +19,6 @@ import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
 import Report from 'src/pages/Report';
 import Review from 'src/pages/Review';
-// component
-import KakaoMap from 'src/kakaoMap/KakaoMap';
 
 const Router = () => {
   const location = useLocation();

@@ -1,7 +1,7 @@
-import { atom } from 'jotai';
-import { Post } from 'src/types/types';
-import { atomWithHash } from 'jotai-location';
 import { Location } from 'react-router';
+import { atom } from 'jotai';
+import { atomWithHash } from 'jotai-location';
+import { Post } from 'src/types/types';
 
 export const myPagePostAtom = atom<Post[]>([]);
 

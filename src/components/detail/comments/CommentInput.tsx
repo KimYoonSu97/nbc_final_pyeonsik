@@ -5,7 +5,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/utility/guide';
+import { EMAIL_CHECK } from 'src/utility/guide';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import { updateFirstCommentBadge } from 'src/api/badge';
 import { toast } from 'react-toastify';
@@ -44,7 +44,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
   const addComment = () => {
     // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
-      toast(NON_MEMBER);
+      toast(EMAIL_CHECK);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
