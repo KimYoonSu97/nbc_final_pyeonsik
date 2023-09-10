@@ -23,7 +23,7 @@ export const S = {
     position: absolute;
 
     bottom: 32px;
-    left: calc((474px - 180px) / 2);
+    left: calc((360px - 180px) / 2);
 
     /* label-large */
     font-family: Pretendard;
@@ -51,7 +51,8 @@ export const S = {
   // 이미지 태그 사이즈 고정....
 
   Image: styled.img`
-    width: 474px;
+    /* width: 474px; */
+    width: 360px;
     height: 360px;
     object-fit: cover;
     border-radius: 10px;
@@ -104,7 +105,6 @@ export const S = {
     font-size: 14px;
     font-family: Pretendard;
     height: 20px;
-    color: #6a6a6a;
   `,
 
   DeleteButton: styled.button`
