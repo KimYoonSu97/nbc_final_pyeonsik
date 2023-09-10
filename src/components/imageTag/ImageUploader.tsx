@@ -73,10 +73,10 @@ const S = {
     /* width: 474px;
     height: 360px; */
 
-    width: ${(props) => (props.imageselected === 'true' ? '40px' : '474px')};
+    width: ${(props) => (props.imageselected === 'true' ? '40px' : '360px')};
     height: ${(props) => (props.imageselected === 'true' ? '40px' : '360px')};
     position: ${(props) => (props.imageselected === 'true' ? 'absolute' : 'initial')};
-    margin-left: ${(props) => (props.imageselected === 'true' ? '220px' : '0')};
+    margin-left: ${(props) => (props.imageselected === 'true' ? '160px' : '0')};
     margin-top: ${(props) => (props.imageselected === 'true' ? '0' : '0')};
     margin-right: ${(props) => (props.imageselected === 'true' ? '0' : '12px')};
 
