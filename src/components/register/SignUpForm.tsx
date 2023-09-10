@@ -41,8 +41,8 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     }
     if (password !== checkPassword) {
       setErrorMessage('비밀번호가 일치하지 않습니다.');
-      setPassword('');
-      setCheckPassword('');
+      // setPassword('');
+      // setCheckPassword('');
       return;
     }
 
@@ -57,7 +57,8 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     });
 
     if (error) {
-      setErrorMessage(error.message);
+      console.log(error.message);
+      setErrorMessage('6자리 이상으로 입력해 주세요.');
       return;
     }
 
@@ -104,7 +105,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
           />
         </S.InputArea>
         <S.Error>
-          <IconWarning />
+          {errorMessage && <IconWarning />}
           {errorMessage}
         </S.Error>
         <TermsAndConditions

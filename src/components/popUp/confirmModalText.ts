@@ -14,8 +14,8 @@ const postDelete = {
 const writePage = {
   title: '정말로 페이지를 이동할까요?',
   caption: '페이지를 이동하면 \n 작성 중인 내용이 모두 날라가요. \n 그래도 이동할까요?',
-  true: '취소하기',
-  false: '이동하기'
+  true: '이동하기',
+  false: '취소하기'
 };
 const userDelete = {
   title: '정말로 탈퇴할까요?',
