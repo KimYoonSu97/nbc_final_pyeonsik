@@ -91,6 +91,8 @@ export const S = {
 
   ProdContainer: styled.div`
     width: 246px;
+    font-family: Pretendard;
+    font-weight: 600;
     font-size: 16px;
     height: 50px;
   `,
@@ -98,8 +100,11 @@ export const S = {
   ProdBrandContainer: styled.div`
     width: 113px;
     margin-bottom: 5px;
+    font-weight: 400;
     font-size: 14px;
+    font-family: Pretendard;
     height: 20px;
+    color: #6a6a6a;
   `,
 
   DeleteButton: styled.button`
@@ -137,8 +142,12 @@ export const S = {
   `,
 
   DeleteIconContainer: styled(FlexBoxAlignCenter)`
-    width: 34px;
+    width: 40px;
     margin-left: 210px;
+    font-family: pretendard;
+    font-weight: 600;
+    font-size: 11px;
+    color: #98a2b3;
   `,
 
   TagIconContainer: styled(FlexBoxCenter)`
@@ -157,5 +166,20 @@ export const S = {
     position: absolute;
     top: -30px;
     left: -20px;
+  `,
+
+  ModalContainer: styled(FlexBoxCenter)`
+    position: absolute;
+    color: #242424;
+    /* width: 195px;
+    height: 26px; */
+
+    font-size: 10px;
+    font-weight: 600;
+    font-family: Pretendard;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-top: 340px;
+    margin-left: 140px;
   `
 };
