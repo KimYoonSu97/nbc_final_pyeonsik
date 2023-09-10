@@ -17,7 +17,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const maxSize = 2 * 1024 * 1024;
+      const maxSize = 10 * 1024 * 1024;
 
       if (FileSizeValid(file, maxSize)) {
         const originalFileName = file.name;
@@ -27,7 +27,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
         onImageSelect(new File([file], randomFileName));
         setImageSelect(true);
       } else {
-        toast('이미지 크기가 2MB를 초과합니다. 다른 이미지를 선택해주세요.');
+        toast('이미지 크기가 10MB를 초과합니다. 다른 이미지를 선택해주세요.');
       }
     }
   };
