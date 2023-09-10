@@ -24,72 +24,45 @@ const Achievement = () => {
 
   useEffect(() => {
     if (id) {
-      const fetchUserLevel = async () => {
+      const fetchUserData = async () => {
         try {
-          const { data: userData, error } = await supabase.from('users').select('nickname, level').eq('id', id);
-          if (error) {
-            throw error;
-          }
+          const [userDataResponse, userPostsResponse, userBadgeResponse] = await Promise.all([
+            supabase.from('users').select('nickname, level').eq('id', id),
+            supabase.from('posts').select('*').eq('userId', id),
+            supabase.from('badge').select('*').eq('user_id', id)
+          ]);
 
-          const user: UserData = userData && userData.length ? userData[0] : {};
-          setNickname(user.nickname || '');
+          const userData: UserData =
+            userDataResponse.data && userDataResponse.data.length ? userDataResponse.data[0] : {};
+          setNickname(userData.nickname || '');
+          setUserLevel(userData.level || '수습');
 
-          setUserLevel(user.level || '수습');
+          const userPosts = userPostsResponse.data ? userPostsResponse.data : [];
+          const numberOfPosts = userPosts.length;
+          setPostLength(numberOfPosts);
+
+          const userBadgeData =
+            userBadgeResponse.data && userBadgeResponse.data.length ? userBadgeResponse.data[0] : {};
+          setUserData(userBadgeData);
+
+          const userBadgesData = Object.entries(userBadgeData)
+            .filter(([name]) => name !== 'user_id' && name !== 'created_at')
+            .map(([name, yourBooleanProp]) => ({
+              name,
+              yourBooleanProp: yourBooleanProp as boolean
+            }));
+          setUserBadges(userBadgesData);
+
+          const { nextLevel, postsNeededForNextLevel } = calculateUserLevel(userData.level || '수습', numberOfPosts);
+          setPostsNeededForNextLevel(postsNeededForNextLevel);
         } catch (error) {
-          console.error('유저 레벨 정보를 가져오는 중 오류 발생:', error);
+          console.error('데이터를 가져오는 중 오류 발생:', error);
         }
       };
 
-      fetchUserLevel();
+      fetchUserData();
     }
-    const fetchUserPosts = async () => {
-      try {
-        const { data: userPosts, error } = await supabase.from('posts').select('*').eq('userId', id);
-
-        if (error) {
-          throw error;
-        }
-        const numberOfPosts = userPosts ? userPosts.length : 0;
-
-        setPostLength(numberOfPosts);
-        const { nextLevel, postsNeededForNextLevel } = calculateUserLevel(userLevel || '수습', numberOfPosts);
-        console.log('여기야 여기', nextLevel);
-        console.log('userLevel', userLevel);
-        setPostsNeededForNextLevel(postsNeededForNextLevel);
-      } catch (error) {
-        console.error('유저 글을 가져오는 중 오류 발생:', error);
-      }
-    };
-
-    fetchUserPosts();
-    const fetchUserBadges = async () => {
-      try {
-        const { data, error } = await supabase.from('badge').select('*').eq('user_id', id);
-
-        if (error) {
-          throw error;
-        }
-
-        const userBadgeData = data && data.length ? data[0] : {};
-        setUserData(userBadgeData);
-
-        const userBadgesData: Badge[] = Object.entries(userBadgeData)
-          .filter(([name]) => name !== 'user_id' && name !== 'created_at')
-          .map(([name, yourBooleanProp]) => ({
-            name,
-            yourBooleanProp: yourBooleanProp as boolean
-          }));
-
-        setUserBadges(userBadgesData);
-      } catch (error) {
-        console.error('뱃지 정보를 가져오는 중 오류 발생:', error);
-      }
-    };
-
-    fetchUserBadges();
   }, [id]);
-
-  console.log('postsNeededForNextLevel', postsNeededForNextLevel);
 
   return (
     <S.AchievementContainer>
@@ -164,11 +137,11 @@ const S = {
     color: #242424;
   `,
   NextLevelText: styled.div`
-    width: 282px;
+    width: 300px;
     font-size: 14px;
     font-weight: 400;
     font-family: Pretendard;
-    margin-left: 250px;
+    margin-left: 245px;
     margin-bottom: 50px;
   `
 };
