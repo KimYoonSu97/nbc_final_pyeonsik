@@ -171,8 +171,8 @@ export const S = {
   ModalContainer: styled(FlexBoxCenter)`
     position: absolute;
     color: #242424;
-    /* width: 195px;
-    height: 26px; */
+    width: 195px;
+    height: 26px;
 
     font-size: 10px;
     font-weight: 600;
