@@ -240,7 +240,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
                       <ArrowIconWrapper>
                         <ArrowIcon />
                       </ArrowIconWrapper>
-
                       <DocIconWrapper onMouseOver={openModal} onMouseOut={closeModal}>
                         <DotIcon />
                         {isModalOpen && (

@@ -11,7 +11,6 @@ interface ContentBoxProps {
 
 const ContentBox = ({ post }: ContentBoxProps) => {
   const { pathname } = useLocation();
-  console.log(pathname);
 
   return (
     <>

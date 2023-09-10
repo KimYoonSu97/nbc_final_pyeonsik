@@ -14,7 +14,7 @@ export const ArrowIconWrapper = styled.div`
 export const DocIconWrapper = styled.div`
   position: absolute;
   top: 70%;
-  left: -50px;
+  left: -24px;
   transform: translateY(-50%);
   opacity: 0;
   transition: opacity 0.3s ease;

@@ -41,7 +41,6 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/map" element={<KakaoMap />} />
           <Route path="/review" element={<Review />} />
 
           <Route element={<PrivateRoute />}>
