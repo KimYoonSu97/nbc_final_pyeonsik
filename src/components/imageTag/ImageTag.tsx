@@ -177,7 +177,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
     <>
       <S.ImageTagContainer>
         <ImageUploader onImageSelect={handleImageSelect} imageSelected={selectedImage ? 'true' : 'false'} />
-
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
@@ -247,7 +246,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
             ))}
           </S.ImageContainer>
         )}
-
         <PostWriteBodyInput
           ref={postRef}
           type="text"

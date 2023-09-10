@@ -32,7 +32,7 @@ export const S = {
   `,
 
   SmallButton: styled(FlexBoxCenter)`
-    margin-left: -50px;
+    margin-left: -24px;
     margin-top: 11px;
     width: 100px;
     height: 48px;

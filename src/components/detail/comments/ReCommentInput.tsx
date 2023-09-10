@@ -86,7 +86,7 @@ const ReCommentInput = ({
 
   return (
     <S.Container>
-      <S.CommentInPutProfile src={userData?.data?.profileImg}></S.CommentInPutProfile>{' '}
+      <S.CommentInPutProfile src={userData?.data?.profileImg} />
       <S.CommentInputForm onSubmit={functionChanger}>
         <S.CommentInput
           placeholder="댓글을 남겨보세요!"

@@ -87,6 +87,8 @@ const S = {
     fill: red;
   `,
   LogoutButton: styled.div<Props>`
+    cursor: pointer;
+
     display: flex;
     align-items: center;
     padding: 10px 12px;

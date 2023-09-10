@@ -142,7 +142,7 @@ const Report = () => {
                 onBlur={handleEmailBlur}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="이메일을 적어주세요."
-              ></input>
+              />
             </div>
           )}
           <div>
@@ -200,17 +200,13 @@ const Report = () => {
               placeholder="클릭하여 파일을 선택해주세요."
             />
           </div>
-          <input
-            value={urlLink}
-            onChange={(e) => setUrlLink(e.target.value)}
-            placeholder="주소 링크를 입력해주세요."
-          ></input>
+          <input value={urlLink} onChange={(e) => setUrlLink(e.target.value)} placeholder="주소 링크를 입력해주세요." />
           <input
             className="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
-          ></input>
+          />
           <button onClick={handleSubmitButton} className={isStep3Complete ? 'complete' : ''}>
             제출하기
           </button>

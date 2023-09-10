@@ -10,6 +10,8 @@ export const S = {
     margin-bottom: 20px;
   `,
   AddTagButton: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 180px;
     height: 48px;
     gap: 8px;
@@ -143,6 +145,8 @@ export const S = {
     position: relative;
   `,
   TagIconBox: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 40px;
     height: 40px;
 

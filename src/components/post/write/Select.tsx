@@ -60,6 +60,8 @@ const S = {
     -webkit-text-fill-color: transparent;
   `,
   RecipeButton: styled.div`
+    cursor: pointer;
+
     width: 450px;
     height: 120px;
     border-radius: 10px;
@@ -78,6 +80,8 @@ const S = {
     }
   `,
   CommonButton: styled.div`
+    cursor: pointer;
+
     width: 450px;
     height: 120px;
     border-radius: 10px;

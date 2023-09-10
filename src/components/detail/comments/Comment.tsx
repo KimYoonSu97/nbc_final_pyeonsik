@@ -59,8 +59,8 @@ const Comment = () => {
     <S.CommentArea>
       {userId && (
         <S.CommentInputArea>
-          <S.CommentInPutProfile src={userData?.data?.profileImg}></S.CommentInPutProfile>
-          <CommentInput type={'post'}></CommentInput>
+          <S.CommentInPutProfile src={userData?.data?.profileImg} />
+          <CommentInput type={'post'} />
         </S.CommentInputArea>
       )}
       <S.CommentRenderArea>

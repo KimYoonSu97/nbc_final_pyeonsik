@@ -44,9 +44,9 @@ const HeaderSearchBar = () => {
             onChange={(e) => {
               setKeyword(e.target.value);
             }}
-          ></S.SearchArea>
+          />
         </form>
-        {/* {searchResult && <S.SearchResultBox></S.SearchResultBox>} */}
+        {/* {searchResult && <S.SearchResultBox />} */}
       </S.Area>
     </>
   );

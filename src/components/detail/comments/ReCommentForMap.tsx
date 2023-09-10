@@ -179,6 +179,8 @@ const S = {
     line-height: 16px; /* 133.333% */
   `,
   EditButton: styled.div`
+    cursor: pointer;
+
     display: flex;
     width: 28px;
     height: 40px;

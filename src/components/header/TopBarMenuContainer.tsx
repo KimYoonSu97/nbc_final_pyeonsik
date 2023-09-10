@@ -219,6 +219,8 @@ const S = {
   `,
 
   TopBarLogButton: styled(FlexBoxCenter)<Props>`
+    cursor: pointer;
+
     border-radius: 4px;
     height: 30px;
     padding: 5px 15px;
