@@ -30,7 +30,7 @@ const BestComment = ({ postId }: BestCommentProps) => {
   if (!data?.commentId) {
     return (
       <S.NoComment onClick={() => navigate(`/detail/${postId}`, { state: { backgroundLocation: location } })}>
-        베스트 댓글이 없습니다!{' '}
+        베스트 댓글이 없습니다!
       </S.NoComment>
     );
   }

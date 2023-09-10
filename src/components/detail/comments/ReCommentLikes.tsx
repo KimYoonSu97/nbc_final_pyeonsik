@@ -79,7 +79,10 @@ const ReCommentLikes = ({ commentId }: Props) => {
 };
 
 const S = {
-  LikeButton: styled.div``,
+  LikeButton: styled.div`
+    cursor: pointer;
+  `,
+
   LikeNum: styled.div`
     color: var(--neutral-500, #667085);
     text-align: right;

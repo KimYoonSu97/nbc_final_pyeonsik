@@ -115,7 +115,7 @@ const Login = () => {
               <S.LinkTo to={'/password_reset'}>비밀번호 재설정</S.LinkTo>
               <div>|</div>
               <S.LinkTo to={'/register'}>회원가입</S.LinkTo>
-            </S.LinkToArea>{' '}
+            </S.LinkToArea>
           </S.InputArea>
 
           {/* 소셜로그인 영역 */}

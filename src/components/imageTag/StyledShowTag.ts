@@ -42,6 +42,8 @@ export const S = {
     height: 80px;
   `,
   TagIconContainer: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 40px;
     height: 40px;
     background-color: white;

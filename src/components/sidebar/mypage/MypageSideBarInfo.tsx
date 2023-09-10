@@ -36,8 +36,6 @@ const MypageSideBarInfo = () => {
   const userId = useLoginUserId();
   const [badgeCount, setBadgeCount] = useState(0);
 
-  console.log(badgeCount);
-
   useEffect(() => {
     const fetchBadgeCount = async () => {
       const count = await getUserIdBadgeCount(userId);
