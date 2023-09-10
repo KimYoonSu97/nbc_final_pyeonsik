@@ -4,7 +4,7 @@ import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 export const ArrowIconWrapper = styled.div`
   position: absolute;
   top: 70%;
-  left: 0%;
+  left: 25px;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -14,7 +14,7 @@ export const ArrowIconWrapper = styled.div`
 export const DocIconWrapper = styled.div`
   position: absolute;
   top: 70%;
-  left: -50px;
+  left: -20px;
   transform: translateY(-50%);
   opacity: 0;
   transition: opacity 0.3s ease;

@@ -271,13 +271,16 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
       <S.ContentArea>
         {imageTagComponents.map((component, index) => {
           const componentUuid = (component.key as string) || '';
+          const isFirstContainer = index === 0;
           return (
             // 김윤수 추가 S.Contests
             <S.Contents key={componentUuid} style={{ marginTop: '10px' }}>
               {component}
-              <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
-                <TrashCanIcon />
-              </S.RemoveButton>
+              {!isFirstContainer && (
+                <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
+                  <TrashCanIcon />
+                </S.RemoveButton>
+              )}
             </S.Contents>
           );
         })}

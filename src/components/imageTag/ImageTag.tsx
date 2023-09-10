@@ -8,6 +8,7 @@ import PostWriteBodyInput from '../post/write/PostWriteBodyInput';
 import { TagIcon, DeleteIcon } from '../icons/index';
 import { IconPlusTag } from '../icons';
 import { S } from './StyledImageTag';
+import TagModal from './TagModal';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -25,6 +26,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
   const [searchFormHandler, setSearchFormHandler] = useState(false);
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
   const [imageBlobUrl, setImageBlobUrl] = useState<string | null>(null);
+  const [modal, setModal] = useState(false);
 
   const postRef = useRef<HTMLTextAreaElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -173,6 +175,9 @@ const ImageTag: React.FC<ImageTagProps> = ({
     }
   };
 
+  const openModal = () => setModal(true);
+  const closeModal = () => setModal(false);
+
   return (
     <>
       <S.ImageTagContainer>
@@ -180,6 +185,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
+            <S.ModalContainer>{tags.length === 0 && modal && <TagModal isOpen={modal}></TagModal>}</S.ModalContainer>
+
             {typeof selectedImage === 'string' ? (
               <S.Image
                 src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
@@ -187,12 +194,20 @@ const ImageTag: React.FC<ImageTagProps> = ({
                 onClick={handleImageClick}
               />
             ) : (
-              <S.Image src={imageBlobUrl || 'null'} alt="이미지" onClick={handleImageClick} />
+              <S.Image
+                src={imageBlobUrl || 'null'}
+                alt="이미지"
+                onClick={(event) => {
+                  handleImageClick(event);
+                  closeModal();
+                }}
+              />
             )}
             <S.AddTagButton
               onClick={(e) => {
                 e.preventDefault();
                 setAddingTagMode(!addTagMode);
+                openModal();
               }}
             >
               <S.IconBox>
