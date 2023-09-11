@@ -4,7 +4,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import TinderCard from 'react-tinder-card';
-import { IconGoodBig, IconAllReview } from 'src/components/icons';
+import { IconAllReview } from 'src/components/icons';
 import { useLocation, useNavigate } from 'react-router';
 import { debounce } from 'lodash';
 import Swipeable from 'react-swipy';

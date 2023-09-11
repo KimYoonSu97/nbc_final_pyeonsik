@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Product } from 'src/types/types';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import { setBrandName } from 'src/function/setBrandName';
 
 interface Props {
   data: Product;
@@ -12,7 +13,7 @@ const ProdCard = ({ data }: Props) => {
   return (
     <S.ProdBox>
       <S.EventBar $brandName={data.prodBrand}>
-        <S.EventBarBrand>{data.prodBrand}</S.EventBarBrand>
+        <S.EventBarBrand>{setBrandName(data.prodBrand)}</S.EventBarBrand>
         <S.EventDetailMonth>9월 간</S.EventDetailMonth>
         <S.EventDetail>{data.event?.type}</S.EventDetail>
       </S.EventBar>

@@ -9,52 +9,52 @@ import styled from 'styled-components';
 
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import { toast } from 'react-toastify';
-import { LIMIT_5MB } from 'src/utility/guide';
 
 Quill.register('modules/ImageResize', ImageResize);
 
 const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   const QuillRef = useRef<ReactQuill>();
 
-  const imageHandler = () => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
+  // const imageHandler = () => {
+  //   const input = document.createElement('input');
+  //   input.setAttribute('type', 'file');
+  //   input.setAttribute('accept', 'image/*');
+  //   input.click();
 
-    input.addEventListener('change', async () => {
-      const file = input.files?.[0];
-      console.log(file?.size);
-      if (file?.size && file.size > 3 * 1024 * 1024) {
-        toast(LIMIT_5MB);
-        return;
-      }
 
-      // try {
-      //   const res = await imageApi({ img: file });
+  //   input.addEventListener('change', async () => {
+  //     const file = input.files?.[0];
+  //     console.log(file?.size);
+  //     if (file?.size && file.size > 3 * 1024 * 1024) {
+  //       toast(LIMIT_5MB);
+  //       return;
+  //     }
 
-      //   const url = [];
-      //   if (file) {
-      //     const { data, error } = await supabase.storage.from('photos').upload(`editor/${file}`, file);
-      //     if (error) {
-      //       console.error('Error uploading image to Supabase storage:', error);
-      //       toast('이미지 업로드 중 에러가 발생했습니다!');
-      //       return;
-      //     }
-      //     url.push(data.path);
-      //   }
 
-      //   const imgUrl = res.data.imgUrl;
-      //   const editor = quillRef.current.getEditor();
-      //   const range = editor.getSelection();
-      //   editor.insertEmbed(range.index, 'image', imgUrl);
-      //   editor.setSelection(range.index + 1);
-      // } catch (error) {
-      //   console.log(error);
-      // }
-    });
-  };
+  //     // try {
+  //     //   const res = await imageApi({ img: file });
+
+  //     //   const url = [];
+  //     //   if (file) {
+  //     //     const { data, error } = await supabase.storage.from('photos').upload(`editor/${file}`, file);
+  //     //     if (error) {
+  //     //       console.error('Error uploading image to Supabase storage:', error);
+  //     //       toast('이미지 업로드 중 에러가 발생했습니다!');
+  //     //       return;
+  //     //     }
+  //     //     url.push(data.path);
+  //     //   }
+
+  //     //   const imgUrl = res.data.imgUrl;
+  //     //   const editor = quillRef.current.getEditor();
+  //     //   const range = editor.getSelection();
+  //     //   editor.insertEmbed(range.index, 'image', imgUrl);
+  //     //   editor.setSelection(range.index + 1);
+  //     // } catch (error) {
+  //     //   console.log(error);
+  //     // }
+  //   });
+  // };
 
   const modules = useMemo(
     () => ({
@@ -80,19 +80,19 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
           // [{ direction: 'rtl' }],
 
           ['image', 'video', 'clean']
-        ],
-        handlers: {
-          image: imageHandler
-          // handlers object will be merged with default handlers object
-          // link: function (body) {
-          //   if (body) {
-          //     var href = prompt('Enter the URL');
-          //     this.quill.format('link', href);
-          //   } else {
-          //     this.quill.format('link', false);
-          //   }
-          // }
-        }
+        ]
+        // handlers: {
+        //   image: imageHandler
+        // handlers object will be merged with default handlers object
+        // link: function (body) {
+        //   if (body) {
+        //     var href = prompt('Enter the URL');
+        //     this.quill.format('link', href);
+        //   } else {
+        //     this.quill.format('link', false);
+        //   }
+        // }
+        // }
       }
     }),
     []

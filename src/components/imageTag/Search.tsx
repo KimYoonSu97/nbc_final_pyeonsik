@@ -77,19 +77,31 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
       </S.SearchInputArea>
 
       <S.SearchResults>
-        {searchResults.map((result, index) => (
-          <S.SearchResultItem key={index} onClick={() => handleSelectResult(result)}>
-            <S.ImageAndTextContainer>
-              <S.ImageContainer>
-                <img src={result.prodImg} alt="이미지" />
-              </S.ImageContainer>
-              <S.TextContainer>
-                <S.ProdContainer>{result.prodBrand}</S.ProdContainer>
-                <div>{result.prodName}</div>
-              </S.TextContainer>
-            </S.ImageAndTextContainer>
-          </S.SearchResultItem>
-        ))}
+        {searchResults.length === 0 ? (
+          <>
+            <S.NoResultText>
+              앗!
+              <S.ProductKeyWordContainer>
+                "{searchKeyword.length > 5 ? `${searchKeyword.slice(0, 5)}...` : searchKeyword}"
+              </S.ProductKeyWordContainer>
+              에 대한 검색 결과가 없어요!
+            </S.NoResultText>
+          </>
+        ) : (
+          searchResults.map((result, index) => (
+            <S.SearchResultItem key={index} onClick={() => handleSelectResult(result)}>
+              <S.ImageAndTextContainer>
+                <S.ImageContainer>
+                  <img src={result.prodImg} alt="이미지" />
+                </S.ImageContainer>
+                <S.TextContainer>
+                  <S.ProdContainer>{result.prodBrand}</S.ProdContainer>
+                  <div>{result.prodName}</div>
+                </S.TextContainer>
+              </S.ImageAndTextContainer>
+            </S.SearchResultItem>
+          ))
+        )}
       </S.SearchResults>
     </S.SearchContainer>
   );
@@ -142,7 +154,6 @@ const S = {
     flex-direction: column;
     align-items: center;
     width: 355px;
-    cursor: pointer;
 
     max-height: 400px;
     overflow-y: scroll;
@@ -212,5 +223,30 @@ const S = {
 
   ProdContainer: styled.div`
     color: #98a2b3;
+  `,
+  NoResultText: styled.div`
+    display: flex;
+
+    color: #98a2b3;
+    margin-top: 100px;
+    max-width: 340px;
+    margin-left: 40px;
+
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  `,
+  ProductKeyWordContainer: styled.div`
+    color: #242424;
+
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
   `
 };

@@ -1,5 +1,5 @@
 import supabase from 'src/lib/supabaseClient';
-import { InfinityProductList } from 'src/types/types';
+import { InfinityProductList, Product } from 'src/types/types';
 
 const getEventProd = async (pageParam: number = 0, brandParam: string): Promise<InfinityProductList> => {
   //페이지가 어디냐에 따라 다른 쿼리
@@ -71,6 +71,12 @@ const getSearchProd = async (pageParam: number = 0, keyword: string) => {
   return { products: data!, page: pageParam, total_pages, total_results: pageCount! };
 };
 
+const getSearchProdSummary = async (keyword: string) => {
+  const { data } = await supabase.from('products').select('*').filter('prodName', 'ilike', `%${keyword}%`).range(0, 3);
+  const productData = data as Product[];
+  return productData;
+};
+
 // new products
 const getNewProd = async () => {
   const response = await supabase
@@ -81,4 +87,4 @@ const getNewProd = async () => {
   return response;
 };
 
-export { getEventProd, getSearchProd, getNewProd };
+export { getEventProd, getSearchProd, getSearchProdSummary, getNewProd };

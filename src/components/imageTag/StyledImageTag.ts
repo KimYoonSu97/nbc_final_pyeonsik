@@ -134,7 +134,8 @@ export const S = {
     height: 478px;
     border-radius: 10px;
     background-color: white;
-    position: relative;
+    position: absolute;
+    margin-right: 150px;
 
     border-radius: 10px;
     background: #fff;

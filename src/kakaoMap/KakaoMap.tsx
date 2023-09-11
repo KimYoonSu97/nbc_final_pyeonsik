@@ -108,44 +108,46 @@ const KakaoMap = () => {
   };
 
   return (
-    <S.Container>
-      {nearConv && (
-        <>
-          <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
-          {nearConv.distance ? (
-            <>
-              <S.LocationButton to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}>
-                위치보기
-              </S.LocationButton>
+    <>
+      <S.Container>
+        {nearConv && (
+          <>
+            <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
+            {nearConv.distance ? (
+              <>
+                <S.LocationButton to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}>
+                  위치보기
+                </S.LocationButton>
+                <S.NearByStore>
+                  <S.NearByLogo> {Logo && <Logo />}</S.NearByLogo>
+                  <S.StoreInfo>
+                    <S.StoreName>{nearConv.position_name}</S.StoreName>
+                    <S.Distance>
+                      {Math.floor(nearConv.distance) === nearConv.distance
+                        ? nearConv.distance + 'm'
+                        : nearConv.distance + 'km'}
+                    </S.Distance>
+                  </S.StoreInfo>
+                </S.NearByStore>
+              </>
+            ) : (
               <S.NearByStore>
-                <S.NearByLogo> {Logo && <Logo />}</S.NearByLogo>
-                <S.StoreInfo>
-                  <S.StoreName>{nearConv.position_name}</S.StoreName>
-                  <S.Distance>
-                    {Math.floor(nearConv.distance) === nearConv.distance
-                      ? nearConv.distance + 'm'
-                      : nearConv.distance + 'km'}
-                  </S.Distance>
-                </S.StoreInfo>
+                <S.NoStore>{'반경 5km 내\n가까운 편의점이 없습니다.'}</S.NoStore>
               </S.NearByStore>
-            </>
-          ) : (
-            <S.NearByStore>
-              <S.NoStore>{'반경 5km 내\n가까운 편의점이 없습니다.'}</S.NoStore>
-            </S.NearByStore>
-          )}
-        </>
-      )}
-      <S.NearByBrand>
-        {convs
-          .filter((item) => {
-            return item.brand_name !== nearConv?.brand_name;
-          })
-          .map((item, index) => {
-            return <NearByBox key={index} brand={item} />;
-          })}
-      </S.NearByBrand>
-    </S.Container>
+            )}
+          </>
+        )}
+        <S.NearByBrand>
+          {convs
+            .filter((item) => {
+              return item.brand_name !== nearConv?.brand_name;
+            })
+            .map((item, index) => {
+              return <NearByBox key={index} brand={item} />;
+            })}
+        </S.NearByBrand>
+      </S.Container>
+    </>
   );
 };
 
@@ -210,7 +212,7 @@ const S = {
   NearByBrand: styled(FlexBoxAlignCenter)`
     flex-direction: column;
     gap: 8px;
-    margin: 16px 0px 12px 0px;
+    margin-top: 16px;
   `,
   NoStore: styled.div`
     color: var(--font-black, var(--Black, #242424));
