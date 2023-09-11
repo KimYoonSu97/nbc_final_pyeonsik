@@ -26,8 +26,7 @@ export default RankSideBar;
 
 const S = {
   Container: styled.div`
-    /* padding-bottom: 100px; */
-    padding-bottom: 0px;
+    padding-bottom: 100px;
   `,
 
   ContentsBox: styled.div`
