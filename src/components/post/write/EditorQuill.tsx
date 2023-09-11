@@ -9,6 +9,8 @@ import styled from 'styled-components';
 
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
+import { LIMIT_5MB } from 'src/utility/guide';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -23,9 +25,11 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
 
     input.addEventListener('change', async () => {
       const file = input.files?.[0];
-      const fileName = uuidv4() + '.' + file?.name.split('.').pop();
-
-      console.log(fileName);
+      console.log(file?.size);
+      if (file?.size && file.size > 3 * 1024 * 1024) {
+        toast(LIMIT_5MB);
+        return;
+      }
 
       // try {
       //   const res = await imageApi({ img: file });

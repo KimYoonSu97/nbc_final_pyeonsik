@@ -108,6 +108,12 @@ const TopBarMenuContainer = () => {
         </S.QuickPostButton>
         <S.QuickButton
           onClick={() => {
+            if (!userId) {
+              toast('로그인 후 이용 가능합니다.');
+              return;
+            }
+            navigate('/review');
+
             toast(SERVICE_PREPARING);
           }}
         >
