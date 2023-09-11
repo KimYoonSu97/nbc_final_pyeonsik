@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
+import { myPageHover, userAtom, writeCategorySelect } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { css, styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
@@ -29,6 +29,7 @@ const TopBarMenuContainer = () => {
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const userId = useLoginUserId();
   const navigate = useNavigate();
+  const [myPage, setMyPage] = useAtom(myPageHover);
 
   // 로그인 한 유저의 정보를 가져오는 쿼리
   // 아이디가 있어야함...
@@ -143,6 +144,9 @@ const TopBarMenuContainer = () => {
               $url={data?.data?.profileImg}
               onClick={() => {
                 navigate('/mypage/profile');
+              }}
+              onMouseOver={() => {
+                setMyPage(true);
               }}
             />
           </>

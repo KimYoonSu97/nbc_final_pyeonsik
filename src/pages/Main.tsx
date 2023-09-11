@@ -67,7 +67,7 @@ const S = {
 
     /* padding: 20px 0 10px; */
     /* 수정 */
-    padding: 28px 0px 10px 0px;
+    padding: 24px 0px 10px 0px;
 
     top: 106px;
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
@@ -79,7 +79,7 @@ const S = {
 
     /* height: 20px; */
     /* 수정 */
-    height: 17px;
+    height: 7px;
 
     position: fixed;
 
@@ -87,13 +87,13 @@ const S = {
     /* 수정 */
     top: 160px;
 
-    background: linear-gradient(0deg, transparent 0%, #f6f7f9 50%, #f6f7f9 100%);
+    background: linear-gradient(0deg, transparent 0%, #f6f7f9 100%);
 
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
     z-index: 2;
   `,
   WriteButton: styled.div`
-    padding: 0px 15px;
+    padding: 3px 15px;
     margin-right: 12px;
 
     gap: 2px;

@@ -63,8 +63,8 @@ const ReCommentForMap = ({ reComment, parentId }: Props) => {
         </S.LowWrapper>
         {userId === reComment.userId && (
           <S.EditButtonArea>
-            <S.EditButton onClick={() => setIsEditComment(!isEditComment)}>수정</S.EditButton>|
-            <S.EditButton onClick={() => deleteReCommentButton(reComment.id)}>삭제</S.EditButton>
+            <S.EditButton onClick={() => setIsEditComment(!isEditComment)}>수정</S.EditButton>
+            <S.EditButton onClick={() => deleteReCommentButton(reComment.id)}>| 삭제</S.EditButton>
           </S.EditButtonArea>
         )}
       </S.CommentArea>
@@ -170,6 +170,9 @@ const S = {
 
     align-items: center;
     text-align: center;
+
+    height: 20px;
+    padding-top: 3px;
 
     /* body-small */
     font-family: Pretendard;
