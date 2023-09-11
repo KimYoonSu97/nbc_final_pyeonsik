@@ -53,7 +53,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
             <UserLevel level={writer?.level} />
             {writer.nickname}
             <S.WriterSir $isModal={isModal}>님의</S.WriterSir>
-            {post.postCategory === 'common' && '그르륵갉'}
+            {post.postCategory === 'common' && '그르르갉'}
             {post.postCategory === 'recipe' && '편식조합'}
           </S.WriterInfo>
           <S.PostDate $isModal={isModal}>

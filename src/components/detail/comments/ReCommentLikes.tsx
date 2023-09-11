@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
 import { useLocation } from 'react-router';
-import { NON_MEMBER } from 'src/utility/guide';
+import { EMAIL_CHECK } from 'src/utility/guide';
 import { styleFont } from 'src/styles/styleFont';
 import { toast } from 'react-toastify';
 
@@ -46,7 +46,7 @@ const ReCommentLikes = ({ commentId }: Props) => {
   // // 내 좋아요 상태에 따라 다른....작동...
   const clickButton = async () => {
     if (!userId) {
-      toast(NON_MEMBER);
+      toast(EMAIL_CHECK);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
@@ -79,7 +79,10 @@ const ReCommentLikes = ({ commentId }: Props) => {
 };
 
 const S = {
-  LikeButton: styled.div``,
+  LikeButton: styled.div`
+    cursor: pointer;
+  `,
+
   LikeNum: styled.div`
     color: var(--neutral-500, #667085);
     text-align: right;

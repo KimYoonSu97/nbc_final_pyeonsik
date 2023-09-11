@@ -73,7 +73,7 @@ const PostWrite = () => {
           .upload(`tags/${selectedImage.name}`, selectedImage);
         if (error) {
           console.error('Error uploading image to Supabase storage:', error);
-          toast('이미지 업로드 중 에러가 발생했습니다!');
+          toast('이미지 업로드 중 에러가 발생했습니다.');
           return;
         }
         imageUrls.push(data.path);
@@ -92,10 +92,10 @@ const PostWrite = () => {
         addPostMutate.mutate(newPost);
         updateCommonPostBadge(userId);
       } else if (category === 'recipe') {
-        // if (imageUrls.length === 0) {
-        //   toast('이미지를 첨부해 주세요!.');
-        //   return;
-        // }
+        if (imageUrls.length === 0) {
+          toast('이미지를 첨부해 주세요!.');
+          return;
+        }
 
         const newPost = {
           postCategory: category,

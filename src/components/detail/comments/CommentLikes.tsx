@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { IconLiked, IconUnLiked } from 'src/components/icons';
 import supabase from 'src/lib/supabaseClient';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { NON_MEMBER } from 'src/utility/guide';
+import { EMAIL_CHECK } from 'src/utility/guide';
 import { toast } from 'react-toastify';
 
 interface Props {
@@ -40,7 +40,7 @@ const CommentLikes = ({ commentId }: Props) => {
   // 내 좋아요 상태에 따라 다른....작동...
   const clickButton = async () => {
     if (!userId) {
-      toast(NON_MEMBER);
+      toast(EMAIL_CHECK);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
@@ -75,7 +75,10 @@ const CommentLikes = ({ commentId }: Props) => {
 export default CommentLikes;
 
 const S = {
-  LikeButton: styled.div``,
+  LikeButton: styled.div`
+    cursor: pointer;
+  `,
+
   LikeNum: styled.div`
     color: var(--neutral-500, #667085);
     text-align: right;

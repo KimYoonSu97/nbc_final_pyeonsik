@@ -21,7 +21,7 @@ const ProdCard = ({ data }: Props) => {
         <S.ProdPrice>{data.price}</S.ProdPrice>
       </S.ProdInfoBox>
       <S.ProdInnerBox>
-        <S.ProdImg $src={data.prodImg}></S.ProdImg>
+        <S.ProdImg $src={data.prodImg} />
       </S.ProdInnerBox>
     </S.ProdBox>
   );

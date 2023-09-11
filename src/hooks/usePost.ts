@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router';
 import { addPost, deletePost, updatePost, addRecipePost, tagUpdatePost } from 'src/api/posts';
-import supabase from 'src/lib/supabaseClient';
+import { useNavigate } from 'react-router';
 
 const usePost = (prams?: string) => {
   const navigate = useNavigate();

@@ -9,16 +9,12 @@ const HeaderArea = () => {
 
   const clickCancle = async () => {
     if (await Confirm('writePage')) {
-      return;
-    } else {
       navigate(-1);
     }
   };
 
   const clickLogo = async () => {
     if (await Confirm('writePage')) {
-      return;
-    } else {
       navigate('/');
     }
   };

@@ -59,7 +59,7 @@ const SearchResult = () => {
           case 'common':
             return <PostCards posts={common?.data as unknown as Post[]} />;
           default:
-            return <ProdSearch></ProdSearch>;
+            return <ProdSearch />;
         }
       })()}
     </>

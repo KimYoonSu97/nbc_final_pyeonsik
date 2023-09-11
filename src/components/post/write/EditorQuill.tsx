@@ -3,14 +3,54 @@ import { useRef, useMemo } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import { ImageResize } from 'quill-image-resize-module-ts';
 import 'react-quill/dist/quill.snow.css';
-import { CommonBodyProps } from 'src/types/types';
 import 'src/components/post/write/StyledEditorQuill.css';
+import { CommonBodyProps } from 'src/types/types';
 import styled from 'styled-components';
+
+import supabase from 'src/lib/supabaseClient';
+import { v4 as uuidv4 } from 'uuid';
 
 Quill.register('modules/ImageResize', ImageResize);
 
 const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   const QuillRef = useRef<ReactQuill>();
+
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.addEventListener('change', async () => {
+      const file = input.files?.[0];
+      const fileName = uuidv4() + '.' + file?.name.split('.').pop();
+
+      console.log(fileName);
+
+      // try {
+      //   const res = await imageApi({ img: file });
+
+      //   const url = [];
+      //   if (file) {
+      //     const { data, error } = await supabase.storage.from('photos').upload(`editor/${file}`, file);
+      //     if (error) {
+      //       console.error('Error uploading image to Supabase storage:', error);
+      //       toast('이미지 업로드 중 에러가 발생했습니다!');
+      //       return;
+      //     }
+      //     url.push(data.path);
+      //   }
+
+      //   const imgUrl = res.data.imgUrl;
+      //   const editor = quillRef.current.getEditor();
+      //   const range = editor.getSelection();
+      //   editor.insertEmbed(range.index, 'image', imgUrl);
+      //   editor.setSelection(range.index + 1);
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    });
+  };
 
   const modules = useMemo(
     () => ({
@@ -36,20 +76,20 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
           // [{ direction: 'rtl' }],
 
           ['image', 'video', 'clean']
-        ]
+        ],
+        handlers: {
+          image: imageHandler
+          // handlers object will be merged with default handlers object
+          // link: function (body) {
+          //   if (body) {
+          //     var href = prompt('Enter the URL');
+          //     this.quill.format('link', href);
+          //   } else {
+          //     this.quill.format('link', false);
+          //   }
+          // }
+        }
       }
-
-      // handlers: {
-      //   // handlers object will be merged with default handlers object
-      //   link: function (body) {
-      //     if (body) {
-      //       var href = prompt('Enter the URL');
-      //       this.quill.format('link', href);
-      //     } else {
-      //       this.quill.format('link', false);
-      //     }
-      //   }
-      // }
     }),
     []
   );
