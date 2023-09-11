@@ -1,15 +1,19 @@
+import { useAtom } from 'jotai';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { searchBar, searchKeyWord } from 'src/globalState/jotai';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 import styled, { css } from 'styled-components';
 
 const HeaderSearchBar = () => {
-  const [search, setSearch] = useState(false);
-  const [keyword, setKeyword] = useState('');
+  // const [search, setSearch] = useState(false);
+  const [search, setSearch] = useAtom(searchBar);
+  const [keyword, setKeyword] = useAtom(searchKeyWord);
   const navigate = useNavigate();
 
   const searchSummary = async (e: React.FormEvent) => {
     e.preventDefault();
+
     navigate(`/search/all?=${keyword}`);
   };
 

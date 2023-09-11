@@ -97,7 +97,7 @@ const TopBarMenuContainer = () => {
       <S.QuickButtonArea>
         <S.QuickPostButton
           onClick={() => {
-            if (!userId) {
+            if (!userId && !userLogin) {
               toast('로그인 후 이용 가능합니다.');
               return;
             }
