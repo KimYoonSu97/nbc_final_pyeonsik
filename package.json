@@ -22,6 +22,7 @@
     "@types/uuid": "^9.0.2",
     "bad-words": "^3.0.4",
     "badwords-ko": "^1.0.3",
+    "dayjs": "^1.11.9",
     "force": "^0.0.3",
     "framer-motion": "^10.16.4",
     "jotai": "^2.3.1",

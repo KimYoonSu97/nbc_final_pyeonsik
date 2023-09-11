@@ -7,6 +7,7 @@ import { Tag, AddImageTagProps } from 'src/types/types';
 import { AddBtn, TrashCanIcon, ArrowIcon, DotIcon } from '../icons/index';
 import { ArrowIconWrapper, S, DocIconWrapper } from './StyledAddImageTagComponent';
 import { toast } from 'react-toastify';
+import Confirm from 'src/components/popUp/Confirm';
 
 //Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
@@ -120,10 +121,10 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   };
 
   //컴포넌트 삭제 처리 함수
-  const removeImageTagComponent = (uuid: string) => {
-    const Message = window.confirm('작성하신 내용을 삭제하시겠습니까?');
+  const removeImageTagComponent = async (uuid: string) => {
+    const confirm = await Confirm('deleteComponent');
 
-    if (Message) {
+    if (confirm) {
       const index = imageTagComponents.findIndex((component) => {
         const componentUuid = (component.key as string) || '';
         return componentUuid === uuid;
@@ -271,13 +272,16 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
       <S.ContentArea>
         {imageTagComponents.map((component, index) => {
           const componentUuid = (component.key as string) || '';
+          const isFirstContainer = index === 0;
           return (
             // 김윤수 추가 S.Contests
             <S.Contents key={componentUuid} style={{ marginTop: '10px' }}>
               {component}
-              <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
-                <TrashCanIcon />
-              </S.RemoveButton>
+              {!isFirstContainer && (
+                <S.RemoveButton type="button" onClick={() => removeImageTagComponent(componentUuid)}>
+                  <TrashCanIcon />
+                </S.RemoveButton>
+              )}
             </S.Contents>
           );
         })}

@@ -13,6 +13,10 @@ import CommentUserInfo from './CommentUserInfo';
 import CreatedAt from 'src/utility/CreatedAt';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+
+dayjs.locale('ko');
 
 interface CommentDataType {
   comment: string;
@@ -51,6 +55,9 @@ const CommentForMap = ({ comment }: Props) => {
     refetchOnWindowFocus: false
   });
 
+  const month = dayjs(comment.created_at).add(1, 'month').get('M');
+  const date = dayjs(comment.created_at).get('D');
+
   if (reCommentIsLoading) {
     return <>로딩중</>;
   }
@@ -64,7 +71,7 @@ const CommentForMap = ({ comment }: Props) => {
             <CommentUserInfo users={comment.users} />
             <S.Time>·</S.Time>
             <S.Time>
-              <CreatedAt createdAt={comment.created_at} />
+              {month}월 {date}일
             </S.Time>
             <S.ButtonArea>
               {reCommentData!.count !== 0 && (
@@ -89,7 +96,7 @@ const CommentForMap = ({ comment }: Props) => {
               <IconAddReComment />
             </S.ReCommentAddButton>
           ) : (
-            <S.ReCommentAddButtonEmpty></S.ReCommentAddButtonEmpty>
+            <S.ReCommentAddButtonEmpty />
           )}
 
           {/* 수정 컴포넌트 */}
@@ -163,6 +170,8 @@ const S = {
     ${styleFont.bodySmall}
   `,
   ReCommentToggle: styled.div`
+    cursor: pointer;
+
     margin-right: 12px;
     color: var(--neutral-500, #667085);
 
@@ -187,6 +196,8 @@ const S = {
     ${styleFont.bodyMedium}
   `,
   ReCommentAddButton: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     margin-top: auto;
     width: 20px;
     height: 20px;
@@ -210,6 +221,8 @@ const S = {
     ${styleFont.bodySmall}
   `,
   EditButton: styled(FlexBoxJustifyCenter)`
+    cursor: pointer;
+
     width: 28px;
     height: 40px;
     flex-direction: column;

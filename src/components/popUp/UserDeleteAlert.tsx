@@ -14,7 +14,7 @@ const UserDeleteAlert = (type: string) => {
             <S.Container>
               <S.ConfirmBox>
                 <S.Title>탈퇴가 완료되었습니다.</S.Title>
-                {/* <S.Caption></S.Caption> */}
+                {/* <S.Caption /> */}
                 <S.Description>
                   {'그동안 이용해주셔서 감사합니다.\n언제든지 다시 와서 \n맛있는 편식 조합에 대해 알려주세요!'}
                 </S.Description>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -13,7 +13,6 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox'
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -108,14 +107,14 @@ const TopBarMenuContainer = () => {
         >
           나만의 편식조합 공유하기
         </S.QuickPostButton>
-        <S.QuickPostButton
+        <S.QuickButton
           onClick={() => {
             toast('서비스 준비중입니다.');
           }}
         >
           신제품 리뷰하기
-        </S.QuickPostButton>
-        <S.QuickPostButton onClick={() => navigate('/event')}>행사 제품</S.QuickPostButton>
+        </S.QuickButton>
+        <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton>
       </S.QuickButtonArea>
       <S.TopBarLogContainer as="ul" $logged={data ? true : false}>
         {/* 공통 */}
@@ -163,10 +162,6 @@ interface ImageProps {
   $url?: string;
 }
 
-const Afont = styled.div`
-  color: black;
-`;
-
 const S = {
   TopBarMenuContainer: styled(FlexBoxAlignCenter)`
     gap: 24px;
@@ -183,24 +178,49 @@ const S = {
     gap: 8px;
   `,
 
-  QuickPostButton: styled(FlexBoxAlignCenter)`
+  QuickButton: styled(FlexBoxAlignCenter)`
     border-radius: 100px;
     border: 1px solid var(--neutral-200, #e4e7ec);
     padding: 3px 18px;
     height: 34px;
     color: var(--font-black, var(--Black, #242424));
+    cursor: pointer;
 
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
     line-height: 16px; /* 114.286% */
+    &:hover {
+      border: 1px solid var(--main, #f02826);
+    }
+  `,
+  QuickPostButton: styled(FlexBoxAlignCenter)`
+    border-radius: 100px;
+    border: 1px solid var(--neutral-200, #e4e7ec);
+    padding: 3px 18px;
+    height: 34px;
+    color: var(--font-black, var(--Black, #242424));
+    cursor: pointer;
+
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 114.286% */
+    &:hover {
+      box-shadow: 0px 0px 6px 0px rgba(255, 116, 116, 0.5);
+
+      border: 1px solid var(--main, #f02826);
+    }
   `,
   TopBarLogContainer: styled(FlexBoxAlignCenter)<{ $logged: boolean }>`
     gap: ${(props) => (props.$logged ? '0px' : '12px')};
   `,
 
   TopBarLogButton: styled(FlexBoxCenter)<Props>`
+    cursor: pointer;
+
     border-radius: 4px;
     height: 30px;
     padding: 5px 15px;
@@ -220,6 +240,23 @@ const S = {
         return 'var(--main, #F02826);';
       } else {
         return 'var(--neutral-200, #e4e7ec)';
+      }
+    }};
+
+    ${(props) => {
+      if (props.$signIn) {
+        return css`
+          &:hover {
+            box-shadow: 0px 0px 6px 0px #ff7474;
+          }
+        `;
+      } else {
+        return css`
+          border: 1px solid var(--font-black, #e4e7ec);
+          &:hover {
+            border: 1px solid var(--font-black, #242424);
+          }
+        `;
       }
     }};
   `,
@@ -247,6 +284,8 @@ const S = {
   `,
 
   ProfileImg: styled.div<ImageProps>`
+    cursor: pointer;
+
     position: relative;
     z-index: 9999;
     background-image: ${(props) => {

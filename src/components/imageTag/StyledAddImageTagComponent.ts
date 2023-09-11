@@ -4,7 +4,7 @@ import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 export const ArrowIconWrapper = styled.div`
   position: absolute;
   top: 70%;
-  left: 0%;
+  left: 24px;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -14,7 +14,7 @@ export const ArrowIconWrapper = styled.div`
 export const DocIconWrapper = styled.div`
   position: absolute;
   top: 70%;
-  left: -50px;
+  left: -24px;
   transform: translateY(-50%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -32,7 +32,7 @@ export const S = {
   `,
 
   SmallButton: styled(FlexBoxCenter)`
-    margin-left: -50px;
+    margin-left: -24px;
     margin-top: 11px;
     width: 100px;
     height: 48px;

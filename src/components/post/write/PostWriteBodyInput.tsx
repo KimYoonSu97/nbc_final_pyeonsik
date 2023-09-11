@@ -6,7 +6,14 @@ const PostWriteBodyInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
   ({ name, id = name, title, value, onChange, autoFocus }, ref) => {
     return (
       <S.InputContainer>
-        <S.TextAreaElement ref={ref} name={name} value={value} onChange={onChange} autoFocus={autoFocus} />
+        <S.TextAreaElement
+          placeholder="어떤 제품으로 만든 레시피인가요?&#13;&#10;사진 추가 후 상품을 검색하고 해당 제품을 태그해 보세요."
+          ref={ref}
+          name={name}
+          value={value}
+          onChange={onChange}
+          autoFocus={autoFocus}
+        />
       </S.InputContainer>
     );
   }
@@ -25,11 +32,11 @@ const S = {
   `,
   TextAreaElement: styled.textarea`
     /* max-width: 578px; */
-    width: 464px;
+    width: 578px;
     border-radius: 10px;
 
     min-height: 360px;
-    border: 1px solid #ccc;
+    border: none;
 
     resize: none;
     padding: 24px 22px;

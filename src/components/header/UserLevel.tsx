@@ -26,6 +26,7 @@ const S = {
     background-clip: content-box, border-box;
 
     height: 20px;
+    pointer-events: none;
   `,
   Leveltext: styled.div`
     width: 100%;
@@ -37,5 +38,6 @@ const S = {
     font-style: normal;
     font-weight: 700;
     line-height: 16px; /* 133.333% */
+    pointer-events: none;
   `
 };

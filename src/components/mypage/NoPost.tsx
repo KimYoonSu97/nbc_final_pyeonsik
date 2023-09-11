@@ -13,14 +13,14 @@ const NoPost = () => {
       <S.Logo>
         <IconNoSearchResult />
       </S.Logo>
-      <S.Caption>앗! 게시글이 없어요!</S.Caption>
-      <S.NavigateButton
+      <S.Caption>앗! 보관된 글이 없어요!</S.Caption>
+      {/* <S.NavigateButton
         onClick={() => {
           navigate('/write');
         }}
       >
         글 작성하기
-      </S.NavigateButton>
+      </S.NavigateButton> */}
     </S.Container>
   );
 };

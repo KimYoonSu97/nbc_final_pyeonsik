@@ -8,7 +8,7 @@ const Footer = () => {
       <SideFotter>팀원 소개 · 이용약관 · 개인정보처리방침 </SideFotter>
       {/* 아래 스타일에서  marginBottom: '20px' 제거 */}
       <FooterCopyRight style={{ fontSize: '10px', marginBottom: '20px' }}>
-        © 2023. SE7EN DAYS all rights reserved.{' '}
+        © 2023. SE7EN DAYS all rights reserved.
       </FooterCopyRight>
     </FotterContainer>
   );
