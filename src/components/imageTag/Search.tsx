@@ -78,7 +78,15 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
 
       <S.SearchResults>
         {searchResults.length === 0 ? (
-          <S.NoResultText>앗! 제품에 대한 검색 결과가 없어요!</S.NoResultText>
+          <>
+            <S.NoResultText>
+              앗!
+              <S.ProductKeyWordContainer>
+                "{searchKeyword.length > 5 ? `${searchKeyword.slice(0, 5)}...` : searchKeyword}"
+              </S.ProductKeyWordContainer>
+              에 대한 검색 결과가 없어요!
+            </S.NoResultText>
+          </>
         ) : (
           searchResults.map((result, index) => (
             <S.SearchResultItem key={index} onClick={() => handleSelectResult(result)}>
@@ -221,8 +229,8 @@ const S = {
 
     color: #98a2b3;
     margin-top: 100px;
-    max-width: 300px;
-    margin-left: 60px;
+    max-width: 340px;
+    margin-left: 40px;
 
     font-family: Pretendard;
     font-size: 16px;
@@ -232,7 +240,6 @@ const S = {
   `,
   ProductKeyWordContainer: styled.div`
     color: #242424;
-    cursor: not-allowed;
 
     font-family: Pretendard;
     font-size: 16px;
