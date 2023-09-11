@@ -5,7 +5,6 @@ import { ImageResize } from 'quill-image-resize-module-ts';
 import 'react-quill/dist/quill.snow.css';
 import 'src/components/post/write/StyledEditorQuill.css';
 import { CommonBodyProps } from 'src/types/types';
-import styled from 'styled-components';
 
 import { toast } from 'react-toastify';
 import { LIMIT_3MB } from 'src/utility/guide';
@@ -15,7 +14,7 @@ Quill.register('modules/ImageResize', ImageResize);
 const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   const QuillRef = useRef<ReactQuill>();
 
-  const imageHandler = () => {
+  const handlerImage = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
@@ -44,6 +43,23 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
     };
   };
 
+  // const handlerLink = (body: string) => {
+  //   if (body) {
+  //     const href = prompt('Enter the URL');
+  //     this?.quill.format('link', href);
+  //   } else {
+  //     this?.quill.format('link', false);
+  //   }
+  // };
+
+  var bold = Quill.import('formats/bold');
+  bold.tagName = 'b';
+  Quill.register(bold, true);
+
+  var italic = Quill.import('formats/italic');
+  italic.tagName = 'i';
+  Quill.register(italic, true);
+
   const modules = useMemo(
     () => ({
       ImageResize: {
@@ -52,37 +68,21 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
       },
       toolbar: {
         container: [
-          [{ size: ['small', false, 'large', 'huge'] }, { font: [] }],
-
-          // [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
+          [{ size: ['small', false, 'large'] }],
           [{ align: [] }],
           ['bold', 'italic', 'underline', 'strike'],
+
           [{ color: [] }, { background: [] }],
 
-          // ['blockquote', 'code-block'],
-          // [{ header: 1 }, { header: 2 }],
-
           [{ list: 'ordered' }, { list: 'bullet' }],
+
           ['clean'],
-
-          // [{ script: 'sub' }, { script: 'super' }],
-          // [{ indent: '-1' }, { indent: '+1' }],
-          // [{ direction: 'rtl' }],
-
-          ['image', 'video']
+          ['image', 'video', 'link']
         ],
         handlers: {
-          image: imageHandler
+          image: handlerImage
           // handlers object will be merged with default handlers object
-          // link: function (body) {
-          //   if (body) {
-          //     var href = prompt('Enter the URL');
-          //     this.quill.format('link', href);
-          //   } else {
-          //     this.quill.format('link', false);
-          //   }
-          // }
+          // link:
         }
       }
     }),
@@ -90,23 +90,19 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
   );
 
   return (
-    <Container>
-      <ReactQuill
-        ref={(element) => {
-          if (element !== null) {
-            QuillRef.current = element;
-          }
-        }}
-        modules={modules}
-        value={body}
-        onChange={setBody}
-        theme="snow"
-        placeholder="그르르…갉 편의점 의자에서 나누는 대화처럼 재밌는 이야기를 공유해 주세요."
-      />
-    </Container>
+    <ReactQuill
+      ref={(element) => {
+        if (element !== null) {
+          QuillRef.current = element;
+        }
+      }}
+      modules={modules}
+      value={body}
+      onChange={setBody}
+      theme="snow"
+      placeholder="그르르…갉 편의점 의자에서 나누는 대화처럼 재밌는 이야기를 공유해 주세요."
+    />
   );
 };
 
 export default EditorQuill;
-
-const Container = styled.div``;

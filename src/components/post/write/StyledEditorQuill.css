@@ -15,22 +15,28 @@
   background: #fff;
   flex-grow: 1;
   width: 950px;
-  padding-bottom: 0px;
+  padding: 6px 14px 14px 14px;
   border-radius: 0px 0px 10px 10px;
 
   display: flex;
   min-height: 50vh;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 42px;
 }
 
 .ql-editor {
-  color: var(--font-black, var(--Black, #242424));
-
-  /* body-large */
-  font-family: Pretendard;
+  color: var(--Black, #242424);
+  font-family: 'Pretendard';
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
+  line-height: 28px;
+}
+
+.ql-editor b {
+  font-weight: bold;
+}
+
+.ql-editor i {
+  font-style: italic;
 }
