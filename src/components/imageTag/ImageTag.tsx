@@ -68,18 +68,16 @@ const ImageTag: React.FC<ImageTagProps> = ({
     if (addTagMode || selectedTagIndex !== index) {
       setSelectedTagIndex(index);
 
-      if (!isDragging) {
-        if (!tags[index].prodData) {
-          // 클릭한 태그가 빈 값이면 검색창을 띄웁니다.
-          setselectedTagVisible(true);
-          setSearchFormHandler(true);
-        } else {
-          setselectedTagVisible(!selectedTagVisible);
-          setSearchFormHandler(false);
-        }
+      if (!tags[index].prodData) {
+        // 클릭한 태그가 빈 값이면 검색창을 띄웁니다.
+        setselectedTagVisible(true);
+        setSearchFormHandler(true);
       } else {
         setselectedTagVisible(!selectedTagVisible);
+        setSearchFormHandler(false);
       }
+    } else {
+      setselectedTagVisible(!selectedTagVisible);
     }
   };
 
@@ -153,7 +151,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
 
     if (selectedTag.prodData && addTagMode) {
       setSelectedTagIndex(index);
-      // setselectedTagVisible(!selectedTagVisible);
+      // setselectedTagVisible(false);
       setSearchFormHandler(false);
 
       const imageContainer = imageContainerRef.current;
@@ -177,10 +175,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
         };
 
         const handleMouseUp = () => {
-          setTimeout(() => {
-            setIsDragging(false);
-          }, 1000);
-
           window.removeEventListener('mousemove', handleMouseMove);
           window.removeEventListener('mouseup', handleMouseUp);
         };
