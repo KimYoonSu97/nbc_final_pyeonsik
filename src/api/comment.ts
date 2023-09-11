@@ -17,13 +17,24 @@ const getCommentDataByPostId = async (postId: string) => {
   return data;
 };
 
-// 포스트 아이디에 해당하는 댓글 개수
+// 포스트 아이디에 해당하는 댓글 + 대댓글 개수
 const getCommentCountDataByPostId = async (postId: string) => {
   const { count } = await supabase
     .from('detail_comments')
     .select('id', { count: 'exact', head: true })
     .eq('postId', postId);
-  return count;
+
+  const { count: recomment } = await supabase
+    .from('replay_comments')
+    .select('id', { count: 'exact', head: true })
+    .eq('postId', postId);
+
+  console.log(count);
+  console.log(recomment);
+
+  const response = recomment! + count!;
+
+  return response;
 };
 
 //댓글 작성하기
