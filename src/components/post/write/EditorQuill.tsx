@@ -21,29 +21,27 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
     input.setAttribute('accept', 'image/*');
     input.click();
 
-    input.addEventListener('change', async () => {
+    input.onchange = () => {
       const file = input.files![0];
-      console.log(file.size);
       if (file !== null && file.size > 0.1 * 1024 * 1024) {
         toast(LIMIT_3MB);
         return;
       }
 
-      let quill = QuillRef.current?.getEditor();
-      const range = QuillRef.current?.getEditor().getSelection()?.index;
-
+      const editor = QuillRef.current?.getEditor();
+      const range = editor?.getSelection()?.index;
       if (range !== null && range !== undefined) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         return new Promise(() => {
           reader.onload = () => {
-            quill?.setSelection(range, 1);
-            quill?.insertEmbed(range, 'image', reader.result);
+            editor?.setSelection(range, 1);
+            editor?.insertEmbed(range, 'image', reader.result);
           };
           return;
         });
       }
-    });
+    };
   };
 
   const modules = useMemo(
