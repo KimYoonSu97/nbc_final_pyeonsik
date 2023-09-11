@@ -18,7 +18,7 @@ import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
 import Report from 'src/pages/Report';
-import Review from 'src/pages/Review';
+import ReviewList from 'src/pages/Review';
 // component
 import KakaoMap from 'src/kakaoMap/KakaoMap';
 import ReviewSwiper from 'src/pages/ReviewSwiper';
@@ -43,9 +43,8 @@ const Router = () => {
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/map" element={<KakaoMap />} />
-          <Route path="/all_review" element={<Review />} />
-          <Route path="/reviewSwiper" element={<ReviewSwiper />} />
-
+          <Route path="/review_list" element={<ReviewList />} />
+          <Route path="/review_swiper" element={<ReviewSwiper />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />

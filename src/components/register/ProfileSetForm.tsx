@@ -159,46 +159,38 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   };
 
   return (
-    <>
-      <S.Container>
-        <S.Title>프로필 설정</S.Title>
-        <S.ProfileBox>
-          <S.ProfileChangeButton
-            onClick={() => {
-              inputRef.current.click();
-            }}
-          >
-            <IconCameraSmall />
-          </S.ProfileChangeButton>
-          <S.ProfileImg src={profileImgSrc || baseImg} alt="프로필 이미지" />
-          <S.ProfileInput
-            ref={inputRef}
-            src={baseImg}
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              encodeFileTobase64(e.target.files![0] as Blob);
-            }}
-          />
-        </S.ProfileBox>
-        <S.InputArea>
-          <S.Input
-            maxLength={15}
-            type="text"
-            value={nickname}
-            placeholder={NICKNAME_INPUT}
-            onChange={nickNameHandler}
-          />
-        </S.InputArea>
-        {!isError && <S.SuccessMessage>{successMessage}</S.SuccessMessage>}
-        {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
-        {isError ? (
-          <S.SubmitDisable>편식 시작하기</S.SubmitDisable>
-        ) : (
-          <S.Submit onClick={setProfile}>편식 시작하기</S.Submit>
-        )}
-      </S.Container>
-    </>
+    <S.Container>
+      <S.Title>프로필 설정</S.Title>
+      <S.ProfileBox>
+        <S.ProfileChangeButton
+          onClick={() => {
+            inputRef.current.click();
+          }}
+        >
+          <IconCameraSmall />
+        </S.ProfileChangeButton>
+        <S.ProfileImg src={profileImgSrc || baseImg} alt="프로필 이미지" />
+        <S.ProfileInput
+          ref={inputRef}
+          src={baseImg}
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            encodeFileTobase64(e.target.files![0] as Blob);
+          }}
+        />
+      </S.ProfileBox>
+      <S.InputArea>
+        <S.Input maxLength={15} type="text" value={nickname} placeholder={NICKNAME_INPUT} onChange={nickNameHandler} />
+      </S.InputArea>
+      {!isError && <S.SuccessMessage>{successMessage}</S.SuccessMessage>}
+      {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+      {isError ? (
+        <S.SubmitDisable>편식 시작하기</S.SubmitDisable>
+      ) : (
+        <S.Submit onClick={setProfile}>편식 시작하기</S.Submit>
+      )}
+    </S.Container>
   );
 };
 

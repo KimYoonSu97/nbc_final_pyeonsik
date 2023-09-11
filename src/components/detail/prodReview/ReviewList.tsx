@@ -10,7 +10,7 @@ import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styl
 import MyEvaluation from './MyEvaluation';
 import EvaluationGraph from './EvaluationGraph';
 
-const ReviewList = () => {
+const ProdReviewList = () => {
   const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });
   const { isLoading: lodingSwiper, data: dataSwiper } = useQuery({
     queryKey: ['swiper_list'],
@@ -53,7 +53,7 @@ const ReviewList = () => {
   );
 };
 
-export default ReviewList;
+export default ProdReviewList;
 
 const S = {
   ReviewContainer: styled(FlexBoxColum)`

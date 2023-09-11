@@ -1,12 +1,12 @@
 import React from 'react';
-import ReviewList from 'src/components/detail/prodReview/ReviewList';
+import ProdReviewList from 'src/components/detail/prodReview/ReviewList';
 
-const Review = () => {
+const ReviewList = () => {
   return (
     <div>
-      <ReviewList />
+      <ProdReviewList />
     </div>
   );
 };
 
-export default Review;
+export default ReviewList;

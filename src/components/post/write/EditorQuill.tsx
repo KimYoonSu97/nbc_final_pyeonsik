@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
-import { LIMIT_5MB } from 'src/utility/guide';
+import { LIMIT_3MB, LIMIT_5MB } from 'src/utility/guide';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -24,16 +24,23 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
     input.click();
 
     input.addEventListener('change', async () => {
-      const file = input.files?.[0];
-      console.log(file?.size);
-      if (file?.size && file.size > 3 * 1024 * 1024) {
-        toast(LIMIT_5MB);
+      const file = input.files![0];
+      console.log(file.size);
+      if (file.size && file.size > 3 * 1024 * 1024) {
+        toast(LIMIT_3MB);
         return;
       }
 
+      // const reader = new FileReader();
+      // reader.readAsDataURL(file);
+      // return new Promise(() => {
+      //   reader.onload = () => {
+      //     setProfileImgSrc(reader.result as string);
+      //   };
+      // });
+
       // try {
       //   const res = await imageApi({ img: file });
-
       //   const url = [];
       //   if (file) {
       //     const { data, error } = await supabase.storage.from('photos').upload(`editor/${file}`, file);
@@ -44,8 +51,8 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
       //     }
       //     url.push(data.path);
       //   }
-
       //   const imgUrl = res.data.imgUrl;
+
       //   const editor = quillRef.current.getEditor();
       //   const range = editor.getSelection();
       //   editor.insertEmbed(range.index, 'image', imgUrl);
