@@ -28,7 +28,7 @@ const UserDelete = () => {
       // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
-        toast('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
+        toast('죄송합니다. 고객센터로 문의 주시기 바랍니다.');
         return;
       }
       setUserLogin(null);
@@ -55,14 +55,23 @@ const S = {
     cursor: pointer;
     width: 350px;
     height: 50px;
+    margin: 60px 0px 30px 0px;
     padding: 13px 0px;
     border-radius: 10px;
     background: var(--neutral-300, #d0d5dd);
 
     color: var(--font-black, var(--Black, #242424));
+    /* button-medium */
+    font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 24px; /* 150% */
+
+    &:hover {
+      color: white;
+
+      background: var(--main, #f02826);
+    }
   `
 };

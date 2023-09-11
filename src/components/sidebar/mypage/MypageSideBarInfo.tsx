@@ -36,8 +36,6 @@ const MypageSideBarInfo = () => {
   const userId = useLoginUserId();
   const [badgeCount, setBadgeCount] = useState(0);
 
-  console.log(badgeCount);
-
   useEffect(() => {
     const fetchBadgeCount = async () => {
       const count = await getUserIdBadgeCount(userId);
@@ -59,7 +57,8 @@ const MypageSideBarInfo = () => {
         queryFn: () => getUserData(userId),
         enabled: userId ? true : false,
         refetchOnWindowFocus: false,
-        refetchOnMount: false
+        refetchOnMount: false,
+        staleTime: Infinity
       },
       {
         queryKey: ['MyPost'],
@@ -81,7 +80,7 @@ const MypageSideBarInfo = () => {
   return (
     <>
       <S.ProfileArea>
-        <S.ProfileImg $url={userData?.data?.profileImg}></S.ProfileImg>
+        <S.ProfileImg $url={userData?.data?.profileImg} />
         <S.DetailArea>
           <UserLevel level={userData?.data?.level} />
           <S.NickName>{userData?.data?.nickname}</S.NickName>

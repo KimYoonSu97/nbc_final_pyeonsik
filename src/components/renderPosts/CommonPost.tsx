@@ -19,15 +19,15 @@ const CommonPost = ({ item: postItem }: Props) => {
     <S.Area>
       <S.Container key={id} to={`/detail/${item.id}`} state={{ backgroundLocation: location }}>
         <S.UserArea>
-          <S.ProfileImg $url={profileImg}></S.ProfileImg>
+          <S.ProfileImg $url={profileImg} />
           <S.Level>Lv.점장</S.Level>
           <S.Nickname_Category>{nickname}</S.Nickname_Category>
           <S.Caption>님의</S.Caption>
           <S.Nickname_Category>{postCategory === 'common' ? '그르르갉' : '편식조합'}</S.Nickname_Category>
         </S.UserArea>
         <S.PostBox>
-          <S.GradientArea></S.GradientArea>
-          <S.BottomArea></S.BottomArea>
+          <S.GradientArea />
+          <S.BottomArea />
           <S.TitleArea>{title}</S.TitleArea>
           {/* editor 내용 변환 */}
           <S.BodyArea dangerouslySetInnerHTML={{ __html: recipeBody ? recipeBody[0] : body }} />

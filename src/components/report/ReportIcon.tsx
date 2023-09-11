@@ -25,6 +25,8 @@ export default ReportIcon;
 
 const S = {
   Container: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 74px;
     height: 74px;
     flex-direction: column;

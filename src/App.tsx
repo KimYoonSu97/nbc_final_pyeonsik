@@ -7,6 +7,7 @@ import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './';
 import ReportIcon from './components/report/ReportIcon';
+import SearchSummary from './components/search/SearchSummary';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,8 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
+        <SearchSummary />
+
         <ReportIcon />
         <Router />
         <ToastContainer

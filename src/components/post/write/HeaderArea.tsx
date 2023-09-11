@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22 } from 'src/components/icons';
+import { IconAdd, IconLogoSymbolH22, IconWaterMarkH22, IconBackSpace } from 'src/components/icons';
 import { S } from './StyledHeaderArea';
 import Confirm from 'src/components/popUp/Confirm';
 
@@ -9,22 +9,22 @@ const HeaderArea = () => {
 
   const clickCancle = async () => {
     if (await Confirm('writePage')) {
-      
-      return;
-    } else {
       navigate(-1);
     }
   };
 
-  const clickLogo = () => {
-    navigate(`/`);
+  const clickLogo = async () => {
+    if (await Confirm('writePage')) {
+      navigate('/');
+    }
   };
 
   return (
     <S.WriteHeader>
       <S.WriteHeaderBox>
         <S.BackButton type="button" onClick={clickCancle}>
-          뒤로 가기
+          <IconBackSpace />
+          뒤로가기
         </S.BackButton>
         <S.LogoContainer onClick={clickLogo}>
           <IconLogoSymbolH22 />

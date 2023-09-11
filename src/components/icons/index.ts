@@ -13,6 +13,7 @@ export { ReactComponent as IconProfile } from './IconProfile.svg';
 export { ReactComponent as IconMyPostBox } from './IconMyPostBox.svg';
 export { ReactComponent as IconCamera } from './IconCamera.svg';
 export { ReactComponent as IconCameraSmall } from './IconCameraSmall.svg';
+export { ReactComponent as IconBackSpace } from './IconBackSpace.svg';
 
 // post
 export { ReactComponent as IconAdd } from './post/IconAdd.svg';
@@ -34,6 +35,17 @@ export { ReactComponent as IconLinkCopy } from './post/IconLinkCopy.svg';
 export { ReactComponent as IconClose } from './post/IconClose.svg';
 
 export { ReactComponent as IconBestComment } from './IconBestComment.svg';
+
+// recipe
+export { ReactComponent as AddBtn } from './post/recipe/AddBtn.svg';
+export { ReactComponent as ArrowIcon } from './post/recipe/ArrowIcon.svg';
+export { ReactComponent as CameraIcon } from './post/recipe/CameraIcon.svg';
+export { ReactComponent as DeleteIcon } from './post/recipe/DeleteIcon.svg';
+export { ReactComponent as DotIcon } from './post/recipe/DotIcon.svg';
+export { ReactComponent as SearchIcon } from './post/recipe/SearchIcon.svg';
+export { ReactComponent as SelectedFileIcon } from './post/recipe/SelectedFileIcon.svg';
+export { ReactComponent as TagIcon } from './post/recipe/TagIcon.svg';
+export { ReactComponent as TrashCanIcon } from './post/recipe/TrashCanIcon.svg';
 
 // comment
 export { ReactComponent as IconCommentInput } from './IconCommentInput.svg';
@@ -57,6 +69,9 @@ export { ReactComponent as IconGoodFace } from './IconGoodFace.svg';
 export { ReactComponent as IconBadFace } from './IconBadFace.svg';
 export { ReactComponent as IconGoodBig } from './IconGoodBig.svg';
 
+// my page
+export { ReactComponent as IconLogOut } from './mypage/IconLogOut.svg';
+
 export { ReactComponent as IconNoSearchResult } from './search/IconNoSearchResult.svg';
 
 export { ReactComponent as IconReport } from './report/IconReport.svg';
@@ -64,5 +79,11 @@ export { ReactComponent as IconReport } from './report/IconReport.svg';
 export { ReactComponent as IconCommonPost } from './write/IconCommon.svg';
 export { ReactComponent as IconRecipePost } from './write/IconRecipe.svg';
 
+
 export { ReactComponent as IconAllReview } from './IconAllReview.svg';
+
+
+export { ReactComponent as IconWarning } from './login/IconWarning.svg';
+
+export { ReactComponent as IconSecret } from './mypage/IconSecret.svg';
 

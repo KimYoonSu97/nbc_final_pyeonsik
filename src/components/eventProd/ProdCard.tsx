@@ -13,7 +13,7 @@ const ProdCard = ({ data }: Props) => {
     <S.ProdBox>
       <S.EventBar $brandName={data.prodBrand}>
         <S.EventBarBrand>{data.prodBrand}</S.EventBarBrand>
-        <S.EventDetailMonth>8월 간</S.EventDetailMonth>
+        <S.EventDetailMonth>9월 간</S.EventDetailMonth>
         <S.EventDetail>{data.event?.type}</S.EventDetail>
       </S.EventBar>
       <S.ProdInfoBox>
@@ -21,7 +21,7 @@ const ProdCard = ({ data }: Props) => {
         <S.ProdPrice>{data.price}</S.ProdPrice>
       </S.ProdInfoBox>
       <S.ProdInnerBox>
-        <S.ProdImg $src={data.prodImg}></S.ProdImg>
+        <S.ProdImg $src={data.prodImg} />
       </S.ProdInnerBox>
     </S.ProdBox>
   );

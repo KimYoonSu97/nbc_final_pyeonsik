@@ -30,7 +30,7 @@ const BestComment = ({ postId }: BestCommentProps) => {
   if (!data?.commentId) {
     return (
       <S.NoComment onClick={() => navigate(`/detail/${postId}`, { state: { backgroundLocation: location } })}>
-        베스트 댓글이 없습니다!{' '}
+        아직 베스트 댓글이 없습니다.
       </S.NoComment>
     );
   }
@@ -60,9 +60,13 @@ const S = {
     display: flex;
     /* align-items: center; */
     /* justify-content: center; */
+    margin-left: 50px;
+    /* margin-right: 30px; */
+    width: 550px;
+    /* border-right: 1px solid #d9d9d9; */
 
     /* height: 100%; */
-    width: 100%;
+    /* width: 100%; */
     position: relative;
     cursor: pointer;
   `,
@@ -117,6 +121,7 @@ const S = {
   `,
 
   NoComment: styled.div`
+    margin-left: 50px;
     ${styleFont.bodyMedium}
   `
 };

@@ -170,7 +170,7 @@ export const S = {
     padding-top: 30px;
     min-height: ${(props) => {
       if (props.$location !== '/') {
-        return '40vh';
+        return '10vh';
       } else {
         return '10vh';
       }

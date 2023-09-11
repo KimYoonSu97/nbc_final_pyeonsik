@@ -41,3 +41,31 @@ export { ReactComponent as SevenBlock } from '../icons/achievement/block/SevenBl
 export { ReactComponent as SheriffBlock } from '../icons/achievement/block/SheriffBlock.svg';
 export { ReactComponent as SilverChairBlock } from '../icons/achievement/block/SilverChairBlock.svg';
 export { ReactComponent as SoilChairBlock } from '../icons/achievement/block/SoilChairBlock.svg';
+
+export const calculateUserLevel = (currentLevel: string, postLength: number) => {
+  let requiredPostsForNextLevel = 0;
+  let nextLevel = '';
+
+  switch (currentLevel) {
+    case '수습':
+      requiredPostsForNextLevel = 8;
+      nextLevel = '알바';
+      break;
+    case '알바':
+      requiredPostsForNextLevel = 15;
+      nextLevel = '매니저';
+      break;
+    case '매니저':
+      requiredPostsForNextLevel = 30;
+      nextLevel = '부점장';
+      break;
+    case '부점장':
+      requiredPostsForNextLevel = 50;
+      nextLevel = '점장';
+      break;
+    default:
+      nextLevel = '점장';
+  }
+
+  return { nextLevel, postsNeededForNextLevel: requiredPostsForNextLevel - postLength };
+};

@@ -1,7 +1,7 @@
-import { atom } from 'jotai';
-import { Post } from 'src/types/types';
-import { atomWithHash } from 'jotai-location';
 import { Location } from 'react-router';
+import { atom } from 'jotai';
+import { atomWithHash } from 'jotai-location';
+import { Post } from 'src/types/types';
 
 export const myPagePostAtom = atom<Post[]>([]);
 
@@ -31,3 +31,7 @@ interface LoginModalProps {
 export const loginModalAtom = atom<LoginModalProps>({ state: false, location: null });
 
 export const writeCategorySelect = atom<string>('');
+
+export const searchBar = atom<boolean>(false);
+
+export const searchKeyWord = atom<string>('');

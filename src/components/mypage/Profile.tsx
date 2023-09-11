@@ -4,20 +4,21 @@ import { getUserData, updateUserNickname, updateProfileImg } from 'src/api/userL
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { styled } from 'styled-components';
-import { IconCamera } from '../icons';
+import { IconCamera, IconSecret } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import useUserMutate from 'src/hooks/useUserMutate';
 // 탈퇴
 import UserDelete from '../register/UserDelete';
 import { toast } from 'react-toastify';
+import { NICKNAME_ALREADY, SERVICE_PREPARING } from 'src/utility/guide';
 
 const Profile = () => {
-  const queryClient = useQueryClient();
   const userId = useLoginUserId();
   const [nickname, setNickname] = useState('');
   const [profileImg, setProfileImg] = useState('');
   const [currentNickname, setCurrentNickname] = useState('');
+  const [social, setSocial] = useState('');
   const inputRef = useRef<any>(null);
 
   const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
@@ -29,6 +30,14 @@ const Profile = () => {
   const { nicknameMutation, profileImgMutation } = useUserMutate();
 
   useEffect(() => {
+    const socialLogin = localStorage.getItem('social');
+
+    if (socialLogin !== null) {
+      setSocial(socialLogin);
+    } else {
+      setSocial('email');
+    }
+
     setNickname(data?.data?.nickname);
     setCurrentNickname(data?.data?.nickname);
   }, [data]);
@@ -59,7 +68,7 @@ const Profile = () => {
       .eq('nickname', nickname);
 
     if (allNickname?.length !== 0) {
-      toast('이미 있는 닉네임 입니다ㅠㅠ');
+      toast(NICKNAME_ALREADY);
       return;
     }
 
@@ -88,7 +97,7 @@ const Profile = () => {
           >
             <IconCamera />
           </S.ProfileChangeButton>
-          <S.ProfileImgArea $url={data?.data?.profileImg || ''}></S.ProfileImgArea>
+          <S.ProfileImgArea $url={data?.data?.profileImg || ''} />
           <S.ProfileChange
             ref={inputRef}
             type="file"
@@ -97,7 +106,7 @@ const Profile = () => {
             onChange={(e) => {
               encodeFileTobase64(e.target.files![0] as Blob);
             }}
-          ></S.ProfileChange>
+          />
         </S.ProfileBox>
         <S.InputWrapper>
           <S.InfoCaption>닉네임</S.InfoCaption>
@@ -108,7 +117,7 @@ const Profile = () => {
               onChange={(e) => {
                 setNickname(e.target.value);
               }}
-            ></S.InputArea>
+            />
             <S.InfoSubmitButton onClick={updateNickname}>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
@@ -116,14 +125,19 @@ const Profile = () => {
           <S.InfoCaption>이메일</S.InfoCaption>
           <S.InfoInputBox>{data?.data?.email}</S.InfoInputBox>
         </S.InputWrapper>
-        <S.InputWrapper>
-          <S.InfoCaption as="div">로그인 된 소셜 계정</S.InfoCaption>
-          <S.InfoInputBox></S.InfoInputBox>
-        </S.InputWrapper>
+        {social !== 'email' && (
+          <S.InputWrapper>
+            <S.InfoCaption as="div">로그인된 소셜 계정</S.InfoCaption>
+            <S.InfoInputBox>{`${social}로 로그인했어요!`}</S.InfoInputBox>
+          </S.InputWrapper>
+        )}
+
         <S.InputWrapper>
           <S.InfoCaption>비밀번호 변경</S.InfoCaption>
           <S.NicknameInputBox>
-            🤫 아무도 모르게 비밀번호 변경하기
+            <IconSecret />
+            {/* 아무도 모르게 비밀번호 변경하기 */}
+            {SERVICE_PREPARING}
             <S.InfoSubmitButton>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
@@ -142,7 +156,7 @@ interface ProfileImgProps {
 const S = {
   Container: styled(FlexBoxCenter)`
     width: 100%;
-    height: 75vh;
+    height: 660px;
     flex-direction: column;
     background: #fff;
     border-radius: 10px;
@@ -152,6 +166,8 @@ const S = {
     visibility: hidden;
   `,
   ProfileChangeButton: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 42px;
     height: 42px;
     background: #fff;
@@ -164,7 +180,7 @@ const S = {
   ProfileBox: styled.div`
     width: 130px;
     height: 130px;
-    margin-bottom: 30px;
+    margin-bottom: 6px;
     position: relative;
   `,
   ProfileImgArea: styled(FlexBoxCenter)<ProfileImgProps>`
@@ -181,7 +197,7 @@ const S = {
     ${styleFont.labelSmall}
   `,
   InfoInputBox: styled(FlexBoxAlignCenter)`
-    width: 330px;
+    width: 350px;
     margin-top: 4px;
     padding: 8px 8px 8px 12px;
     height: 36px;
@@ -204,6 +220,8 @@ const S = {
     border: none;
   `,
   InfoSubmitButton: styled(FlexBox)`
+    cursor: pointer;
+
     margin-left: auto;
     border-radius: 10px;
     height: 20px;
@@ -220,11 +238,12 @@ const S = {
     line-height: 16px; /* 145.455% */
   `,
   NicknameInputBox: styled(FlexBoxAlignCenter)`
-    width: 330px;
+    width: 350px;
     margin-top: 4px;
     padding: 8px 8px 8px 12px;
     border-radius: 10px;
     border: 1px solid var(--neutral-100, #f2f4f7);
+    gap: 4px;
 
     color: var(--font-black, var(--black, #242424));
     font-family: Pretendard;

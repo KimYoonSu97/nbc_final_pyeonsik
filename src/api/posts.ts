@@ -44,9 +44,11 @@ const tagUpdatePost = async (post: TagEditPost) => {
 const getMyPostsById = async (id: string) => {
   const response = await supabase
     .from('posts')
-    .select('*,userId(nickname,profileImg,level)')
+    .select('*,userId(id,nickname,profileImg,level)')
     .eq('userId', id)
     .order('created_at', { ascending: false });
+  console.log(response.data);
+  console.log(response.error);
   return response;
 };
 

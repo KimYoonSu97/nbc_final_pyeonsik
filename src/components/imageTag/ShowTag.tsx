@@ -27,7 +27,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
           <S.TagContainer
             key={tagIndex}
             style={{
-              left: tag.x * 1.6667,
+              left: tag.x * 2.1944,
               top: tag.y * 1.6667
             }}
             onClick={() => handleTagClick(tag)}

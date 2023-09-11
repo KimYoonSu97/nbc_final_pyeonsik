@@ -4,10 +4,12 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/utility/guide';
+import { EMAIL_CHECK } from 'src/utility/guide';
 import { styleFont } from 'src/styles/styleFont';
 import { updateFirstCommentBadge } from 'src/api/badge';
 import { toast } from 'react-toastify';
+import { getUserData } from 'src/api/userLogin';
+import { useQueries } from '@tanstack/react-query';
 
 interface Props {
   type: string;
@@ -32,6 +34,19 @@ const ReCommentInput = ({
   const location = useLocation();
   const userId = useLoginUserId();
 
+  const [{ data: userData, isLoading: userIsLoading, isError: userIsError }] = useQueries({
+    queries: [
+      {
+        queryKey: ['loginUser'],
+        queryFn: () => getUserData(userId),
+        enabled: userId ? true : false,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        staleTime: Infinity
+      }
+    ]
+  });
+
   const { writeReCommentButton, updateReCommentButton } = useReCommentMutate(commentId!);
 
   const functionChanger = (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +67,7 @@ const ReCommentInput = ({
   const addReComment = () => {
     // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
-      toast(NON_MEMBER);
+      toast(EMAIL_CHECK);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
@@ -71,7 +86,7 @@ const ReCommentInput = ({
 
   return (
     <S.Container>
-      <S.CommentInPutProfile></S.CommentInPutProfile>
+      <S.CommentInPutProfile src={userData?.data?.profileImg} />
       <S.CommentInputForm onSubmit={functionChanger}>
         <S.CommentInput
           placeholder="댓글을 남겨보세요!"
@@ -96,9 +111,10 @@ const S = {
     align-items: center;
     /* margin: 16px 0 50px 0; */
   `,
-  CommentInPutProfile: styled.div`
+  CommentInPutProfile: styled.img`
     width: 36px;
     height: 36px;
+    object-fit: cover;
     border-radius: 100px;
     background: lightgray;
   `,
