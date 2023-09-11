@@ -69,20 +69,17 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
       toolbar: {
         container: [
           [{ size: ['small', false, 'large'] }],
-          [{ align: [] }],
+          [],
           ['bold', 'italic', 'underline', 'strike'],
-
           [{ color: [] }, { background: [] }],
-
           [{ list: 'ordered' }, { list: 'bullet' }],
-
+          [{ align: [] }],
           ['clean'],
+          [],
           ['image', 'video', 'link']
         ],
         handlers: {
           image: handlerImage
-          // handlers object will be merged with default handlers object
-          // link:
         }
       }
     }),

@@ -19,46 +19,37 @@ const OrgPostCard = ({ orgPost }: OrgPostCardProps) => {
   };
 
   return (
-    <S.OrgArea>
-      <S.OrgContainer>
-        <S.OrgTextBox>
-          <S.OrgIcon>
-            <IconOrgPost />
-          </S.OrgIcon>
-          <S.OrgText>인용 게시글</S.OrgText>
-        </S.OrgTextBox>
-        <S.OrgContentsBox onClick={clickOrgPost}>
-          {orgPost ? (
-            <>
-              <S.OrgTitle>{orgPost.title ? orgPost.title : '제목 없는 게시물'}</S.OrgTitle>
-              <S.OrgInfoBox>
-                {orgPost.userId.nickname}
-                <div>·</div>
-                <CreatedAt createdAt={orgPost.created_at} />
-              </S.OrgInfoBox>
-            </>
-          ) : (
-            <div>해당 게시글이 삭제되었습니다.</div>
-          )}
-        </S.OrgContentsBox>
-      </S.OrgContainer>
-    </S.OrgArea>
+    <S.OrgContainer>
+      <S.OrgTextBox>
+        <S.OrgIcon>
+          <IconOrgPost />
+        </S.OrgIcon>
+        <S.OrgText>인용 게시글</S.OrgText>
+      </S.OrgTextBox>
+      <S.OrgContentsBox onClick={clickOrgPost}>
+        {orgPost ? (
+          <>
+            <S.OrgTitle>{orgPost.title ? orgPost.title : '제목 없는 게시물'}</S.OrgTitle>
+            <S.OrgInfoBox>
+              {orgPost.userId.nickname}
+              <div>·</div>
+              <CreatedAt createdAt={orgPost.created_at} />
+            </S.OrgInfoBox>
+          </>
+        ) : (
+          <div>해당 게시글이 삭제되었습니다.</div>
+        )}
+      </S.OrgContentsBox>
+    </S.OrgContainer>
   );
 };
 
 export default OrgPostCard;
 
 export const S = {
-  OrgArea: styled.div`
-    margin: 20px 0 108px;
-
-    width: 100%;
-    /* margin: 20px 50px; */
-  `,
   OrgContainer: styled.div`
-    margin: 20px 108px;
     max-width: 950px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 16px 22px;
 
     background: #fff;
