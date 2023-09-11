@@ -15,8 +15,7 @@ const MyPost = () => {
   const { search } = useLocation();
 
   const [filterHandler, setFilterHandler] = useState(search);
-  console.log(filterHandler);
-  console.log(id);
+
   const [
     { isLoading: bookmarkLoading, data: bookmark },
     { isLoading: likeLoading, data: like },

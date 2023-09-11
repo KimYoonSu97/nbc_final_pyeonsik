@@ -27,8 +27,9 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
           <S.TagContainer
             key={tagIndex}
             style={{
+              //사진 비율 변경된 만큼 곱해주세요 790 / 360 = 2.1944 예시 600 / 360
               left: tag.x * 2.1944,
-              top: tag.y * 1.6667
+              top: tag.y * 2.1944
             }}
             onClick={() => handleTagClick(tag)}
           >
