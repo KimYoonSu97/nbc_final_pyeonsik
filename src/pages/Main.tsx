@@ -13,8 +13,8 @@ const Main = () => {
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const [userLogin, __] = useAtom(userAtom);
-  console.log(userId);
-  console.log(userLogin);
+  console.log('여기야 userID', userId);
+  console.log('여기야 userLogin', userLogin);
 
   return (
     <>

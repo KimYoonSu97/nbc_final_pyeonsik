@@ -24,7 +24,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const [baseImg] = useState('./images/profile.png');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [_, setLoginUser] = useAtom(userAtom);
+  const [loginUser, setLoginUser] = useAtom(userAtom);
 
   const correctNickNameMessages = [
     '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
@@ -139,6 +139,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     const { data, error } = await supabase.from('users').insert(newUser).select().single();
 
     setLoginUser(data);
+    console.log('여기야!', loginUser);
     toast('회원가입 완료!');
     navigate('/');
   };
