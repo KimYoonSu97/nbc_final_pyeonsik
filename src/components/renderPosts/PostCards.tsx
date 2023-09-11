@@ -6,26 +6,12 @@ import { useLocation } from 'react-router';
 import NoSearchResult from '../search/NoSearchResult';
 import NoPost from '../mypage/NoPost';
 
-import { useAtom } from 'jotai';
-import { isLoadingAtom } from 'src/pages/Main';
-import { useEffect } from 'react';
-
 interface PostListProps {
   posts: Post[];
 }
 
 const PostCards = ({ posts }: PostListProps) => {
-  const [_, setIsLoading] = useAtom(isLoadingAtom);
   const location = useLocation();
-
-  // 데이터 유무에 따른 전역 상태 관리(Main.tsx- skeleton UI)
-  useEffect(() => {
-    if (posts) setIsLoading(false);
-  }, [posts]);
-
-  useEffect(() => {
-    if (!posts) setIsLoading(true);
-  }, [posts]);
 
   if (location.pathname !== '/mypage/mypost' && posts?.length === 0) {
     return <NoSearchResult />;
