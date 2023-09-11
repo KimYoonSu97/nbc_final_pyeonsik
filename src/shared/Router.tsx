@@ -25,6 +25,7 @@ import ReviewSwiper from 'src/pages/ReviewSwiper';
 
 const Router = () => {
   const location = useLocation();
+  console.log(location)
   let state = location.state as { backgroundLocation?: Location };
 
   return (
@@ -44,7 +45,7 @@ const Router = () => {
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/map" element={<KakaoMap />} />
           <Route path="/all_review" element={<Review />} />
-          <Route path="/reviewSwiper" element={<ReviewSwiper />} />
+          <Route path="/reviewswiper" element={<ReviewSwiper />} />
 
 
           <Route element={<PrivateRoute />}>

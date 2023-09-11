@@ -63,7 +63,6 @@ const Report = () => {
       if ((selectedInquiry1 === '유저 신고' && email.trim() !== '', !isValidEmail(email))) {
         toast(EMAIL_CHECK);
       } else {
-
         setStep(2);
       }
     } else if (selectedInquiry1 === '오류 제보' || selectedInquiry1 === '기타') {
@@ -140,7 +139,7 @@ const Report = () => {
           </div>
           {userId ? null : (
             <div className="emailWrap">
-              <h3>편식 가입 이메일</h3>
+              <h3>이메일</h3>
               <input
                 className="emailInput"
                 value={email}
