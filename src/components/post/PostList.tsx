@@ -40,9 +40,10 @@ const PostList = () => {
       })
       .flat();
   }, [posts]);
+  console.log(posts);
 
   const { ref } = useInView({
-    threshold: 0.5,
+    threshold: 0,
     onChange: (inView) => {
       if (!inView || !hasNextPage || isFetchingNextPage) return;
       fetchNextPage();
@@ -61,6 +62,7 @@ export default PostList;
 
 export const S = {
   LoadingBox: styled.div`
+    background-color: yellow;
     width: 200px;
     height: 200px;
   `

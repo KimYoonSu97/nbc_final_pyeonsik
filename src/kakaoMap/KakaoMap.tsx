@@ -62,7 +62,6 @@ const KakaoMap = () => {
   // 편의점 리스트 중 가장 가까운 편의점을 찾습니다.
   const findClosest = () => {
     if (convs.length === 0) {
-      console.log('배열이 비어있습니다.');
     } else {
       let closestConv = convs.find((v) => v.distance > 0); // 초기값으로 값이 있는 원소
       if (!closestConv) closestConv = convs[0];
@@ -75,7 +74,6 @@ const KakaoMap = () => {
       }
       setNearConv(closestConv);
       setLogoFn(closestConv.brand_name);
-      console.log('가장 가까운 conv:', closestConv);
     }
   };
   useEffect(() => {
