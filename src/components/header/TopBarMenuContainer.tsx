@@ -96,7 +96,7 @@ const TopBarMenuContainer = () => {
       <S.QuickButtonArea>
         <S.QuickPostButton
           onClick={() => {
-            if (!userId) {
+            if (!userId && !userLogin) {
               toast(EMAIL_CHECK);
               return;
             }
