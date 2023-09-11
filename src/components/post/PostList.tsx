@@ -52,7 +52,6 @@ const PostList = () => {
   return (
     <>
       <PostCards posts={postList as Post[]} />
-
       <S.LoadingBox ref={ref} />
     </>
   );

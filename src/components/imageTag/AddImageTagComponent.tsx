@@ -241,14 +241,11 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
                       <ArrowIconWrapper>
                         <ArrowIcon />
                       </ArrowIconWrapper>
-
                       <DocIconWrapper onMouseOver={openModal} onMouseOut={closeModal}>
                         <DotIcon />
                         {isModalOpen && (
                           <S.ModalOverlay>
-                            <S.ModalContainer>
-                              <S.ModalContent>드래그해서 옮기기</S.ModalContent>
-                            </S.ModalContainer>
+                            <S.ModalContent>드래그해서 옮기기</S.ModalContent>
                           </S.ModalOverlay>
                         )}
                       </DocIconWrapper>

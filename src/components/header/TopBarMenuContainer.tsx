@@ -13,6 +13,7 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox'
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
 import { toast } from 'react-toastify';
+import { EMAIL_CHECK, SERVICE_PREPARING } from 'src/utility/guide';
 
 interface User {
   id: string;
@@ -28,8 +29,6 @@ const TopBarMenuContainer = () => {
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const userId = useLoginUserId();
   const navigate = useNavigate();
-
-  // 욕을 합니다 ***
 
   // 로그인 한 유저의 정보를 가져오는 쿼리
   // 아이디가 있어야함...
@@ -98,7 +97,7 @@ const TopBarMenuContainer = () => {
         <S.QuickPostButton
           onClick={() => {
             if (!userId) {
-              toast('로그인 후 이용 가능합니다.');
+              toast(EMAIL_CHECK);
               return;
             }
             setWriteCategory('recipe');
@@ -109,7 +108,7 @@ const TopBarMenuContainer = () => {
         </S.QuickPostButton>
         <S.QuickButton
           onClick={() => {
-            toast('서비스 준비중입니다.');
+            toast(SERVICE_PREPARING);
           }}
         >
           신제품 리뷰하기

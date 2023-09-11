@@ -1,9 +1,9 @@
 import { useAtom } from 'jotai';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { toast } from 'react-toastify';
 import { userAtom } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 const PasswordChange: React.FC = () => {
@@ -16,7 +16,6 @@ const PasswordChange: React.FC = () => {
 
   const handleResetPassword = async () => {
     // 유효성 검사
-
     // 빈 값이 있을 시
     if (!password || !checkPassword) {
       setErrorMessage('빈 값이 존재합니다.');
@@ -56,7 +55,7 @@ const PasswordChange: React.FC = () => {
   return (
     <ResetFormContainer>
       <ResetTitle>비밀번호 재설정</ResetTitle>
-      <AskMessage>새로운 비밀번호를 입력해주세요.</AskMessage>
+      <AskMessage>새로운 비밀번호를 입력해 주세요.</AskMessage>
       <Input
         type="password"
         placeholder="새로운 비밀번호 입력"

@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import Comment from 'src/components/detail/comments/Comment';
 import PostDetail from 'src/components/post/detail/PostDetail';
 import { useNavigate } from 'react-router';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const PostModal = () => {
   const postBoxRef = useRef<any>(null);
@@ -12,7 +11,6 @@ const PostModal = () => {
   return (
     <>
       {/* 컨텐츠 박스 영역 */}
-
       <S.PostContainer id="postbox">
         <S.PostArea ref={postBoxRef}>
           <S.PostBox>
