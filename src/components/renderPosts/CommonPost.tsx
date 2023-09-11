@@ -22,7 +22,6 @@ const CommonPost = ({ item: postItem }: Props) => {
           <S.ProfileImg $url={profileImg} />
           <S.Level>Lv.점장</S.Level>
           <S.Nickname_Category>{nickname}</S.Nickname_Category>
-
           <S.Caption>님의</S.Caption>
           <S.Nickname_Category>{postCategory === 'common' ? '그르르갉' : '편식조합'}</S.Nickname_Category>
         </S.UserArea>

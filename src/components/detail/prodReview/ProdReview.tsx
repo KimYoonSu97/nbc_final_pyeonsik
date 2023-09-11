@@ -1,37 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import TinderCard from 'react-tinder-card';
-import { IconGoodBig, IconAllReview } from 'src/components/icons';
-import { useLocation, useNavigate } from 'react-router';
-import { debounce } from 'lodash';
 
-const ProdReviewSwiper = () => {
-  const [step, setStep] = useState(0);
+const ProdReview = () => {
+  const [review, setReview] = React.useState(0);
+
+  const [step, setStep] = React.useState(0);
+  const showPage = 5;
   const userId = useLoginUserId();
-  const navigate = useNavigate();
 
-  useEffect(()=>{
-    setStep(0)
-  },[])
+  useEffect(() => {
+    getSwiperData();
+  }, []);
 
   const getProdData = async () => {
-    const { data } = await supabase
-      .from('show_products')
-      .select('id,prodName,prodImg')
-      .order('created_at', { ascending: false })
-      .limit(5)
+    const { data } = await supabase.from('show_products').select('id,prodName,prodImg');
     return data;
   };
+
+  const { data: prodData } = useQuery(['products'], getProdData);
 
   const getSwiperData = async () => {
     const { data } = await supabase.from('swiper').select('*');
     return data;
   };
-
-  const { data: prodData } = useQuery(['products'], getProdData);
 
   const { data: swiperData } = useQuery(['swiper'], getSwiperData);
 
@@ -40,56 +35,78 @@ const ProdReviewSwiper = () => {
       return prod.id === swiperProd.prodId && swiperProd.userId === userId;
     });
   });
+  console.log(filterprodData);
+
+  // const [currentIndex, setCurrentIndex] = useState(filterprodData!.length - 1);
+  // console.log(currentIndex);
 
   const onDropToLike = async (id: string) => {
-    console.log(id);
     const plusReview = swiperData?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
-    if (!plusReview) {
-
+    if (plusReview) {
+      const updateReview = {
+        ...plusReview,
+        isGood: true
+      };
+      await supabase.from('swiper').upsert([updateReview]);
+      prodNext();
+    } else {
       const addReview = {
         prodId: id,
         isGood: true,
         userId: userId
       };
       await supabase.from('swiper').insert([addReview]);
-      return;
+      prodNext();
     }
   };
 
   const onDropToDisLike = async (id: string) => {
+    console.log(id);
     const plusReview = swiperData?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
-    if (!plusReview) {
-
+    if (plusReview) {
+      const updateReview = {
+        ...plusReview,
+        isGood: false
+      };
+      const { error } = await supabase.from('swiper').upsert([updateReview]);
+      if (error) {
+        console.error(error);
+      } else {
+        prodNext();
+      }
+    } else {
       const addReview = {
         prodId: id,
         isGood: false,
         userId: userId
       };
+      const { error } = await supabase.from('swiper').insert([addReview]);
+      if (error) {
+        console.error('Supabase 삽입 오류:', error);
+      } else {
+        prodNext();
+      }
+    }
+  };
+  const onSwipe = (direction: any, prod: any) => {};
 
-      await supabase.from('swiper').insert([addReview]);
-      return;
-    }}
+  const onCardLeftScreen = (direction: string, prod: string) => {
+    if (direction === 'right') {
+      return onDropToLike(prod);
+    } else {
+      return onDropToDisLike(prod);
+    }
+  };
 
   const prodNext = () => {
     setStep((prevStep) => prevStep + 1);
   };
 
-  const onCardLeftScreen = (direction: string, prod: string) => {
-    if (direction === 'left') {
-      onDropToLike(prod);
-      prodNext();
-    } else if (direction === 'right') {
-      onDropToDisLike(prod);
-      prodNext();
-    }
-  };
-  console.log(step);
-
-  const skip = () => {
+  const swipe = () => {
     prodNext();
   };
 
@@ -102,64 +119,58 @@ const ProdReviewSwiper = () => {
             <h1>또 먹을래요!</h1>
           </div>
         </S.ReviewDisLike>
-        {step !== filterprodData?.length ? (
-          <S.ReviewProducts>
-
-            <div className="tinderCards">
-              <div className="tinderCards__cardContainer">
-                  {filterprodData?.map((prod, index) => (
-                    <div key={prod.id}>
-                      {index === step && (
-                        <TinderCard
-                          className="swipe"
-                          key={prod.id}
-                          preventSwipe={['up', 'down']}
-                          onCardLeftScreen={(dir) => onCardLeftScreen(dir, prod.id)}
-                        >
-                          <div>
-                            <img src={prod.prodImg} draggable="false" />
-                            <h3>{prod.prodName}</h3>
-                          </div>
-                        </TinderCard>
-                      )}
-                    </div>
-                  ))}
-                
-              </div>
-            </div>
-            <S.SkipButtonWrap>
-              <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
-            </S.SkipButtonWrap>
-          </S.ReviewProducts>
-        ) : (
+        {step === filterprodData?.length ? (
           <S.ReviewEndWrap>
             <div>
               <p>
                 앗! 더이상 남은<span>신제품 카드가 없어요!</span>
               </p>
-              <button onClick={() => navigate('/all_review')}>리뷰 보러가기</button>
+              <button>리뷰 보러가기</button>
             </div>
           </S.ReviewEndWrap>
+        ) : (
+          <S.ReviewProducts>
+            <div className="tinderCards">
+              <div className="tinderCards__cardContainer">
+                {filterprodData?.map((prod, index) => (
+                  <div key={index}>
+                    {index === step && (
+                      <TinderCard
+                        className="swipe"
+                        key={index}
+                        preventSwipe={['up', 'down']} // 스와이프 방향 설정
+                        onSwipe={(dir) => onSwipe(dir, prod.id)}
+                        onCardLeftScreen={(dir) => onCardLeftScreen(dir, prod.id)}
+                      >
+                        <S.ProductsWrap>
+                          <div>
+                            <img src={prod.prodImg} draggable="false" />
+                            <h3>{prod.prodName}</h3>
+                          </div>
+                        </S.ProductsWrap>
+                      </TinderCard>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </S.ReviewProducts>
         )}
         <S.ReviewDisLike>
           <div>
-            <img src="/images/ReviewDisLike.png" />
+            <img src="/images/ReviewLike.png" />
             <h1>그만 먹을래요!</h1>
           </div>
         </S.ReviewDisLike>
       </S.ProdReviewWrap>
-
-      <S.AllReviewsWrap onClick={() => navigate('/all_review')}>
-        <p>
-          <IconAllReview />
-          <span>신제품 리뷰 보기</span>
-        </p>
-      </S.AllReviewsWrap>
+      <S.SkipButtonWrap>
+        <S.SkipButton onClick={swipe}>SKIP!</S.SkipButton>
+      </S.SkipButtonWrap>
     </S.containerWrap>
   );
 };
 
-export default ProdReviewSwiper;
+export default ProdReview;
 
 const S = {
   containerWrap: styled.div`
@@ -171,19 +182,6 @@ const S = {
     overflow: hidden;
     background-color: #fff;
     height: 700px;
-    ::before {
-      display: block;
-      content: '';
-      position: absolute;
-      left: 0;
-      top: -10px;
-      width: 353px;
-      height: 470px;
-      border-radius: 10px;
-      border: 1px solid var(--neutral-200, #e4e7ec);
-      background: var(--neutral-050, #f9fafb);
-      z-index: -1;
-    }
   `,
 
   ProdReviewWrap: styled.div`
@@ -207,15 +205,12 @@ const S = {
     background-image: linear-gradient(#fff, #fff), linear-gradient(to right, red 0%, orange 100%);
     background-origin: border-box;
     background-clip: content-box, border-box;
+
     div {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      /* padding: 40px 28px 140px 28px; */
+
       img {
-        width: auto;
-        max-width: 300px;
+        width: 300px;
         height: auto;
         margin-bottom: 20px;
       }
@@ -224,7 +219,6 @@ const S = {
         font-style: normal;
         font-weight: 700;
         line-height: 28px;
-        user-select: none;
       }
     }
   `,
@@ -259,10 +253,6 @@ const S = {
   `,
 
   ReviewProducts: styled.div`
-    position: relative;
-    left: 0;
-    top: 0;
-
     .tinderCards__cardContainer {
       width: 356px;
       height: 464px;
@@ -294,9 +284,6 @@ const S = {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      button {
-        letter-spacing: -2px;
-      }
     }
     p {
       font-size: 24px;
@@ -330,27 +317,8 @@ const S = {
     font-size: 24px;
     line-height: 32px;
     font-weight: bold;
-    letter-spacing: -2px;
     background-color: #f9fafb;
     border-radius: 100px;
     padding: 8px 57px;
-    margin-bottom: 16px;
-  `,
-  AllReviewsWrap: styled.button`
-    display: block;
-    margin: 0 auto;
-    p {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      span {
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 16px;
-        color: #667085;
-        letter-spacing: -1px;
-      }
-    }
   `
 };

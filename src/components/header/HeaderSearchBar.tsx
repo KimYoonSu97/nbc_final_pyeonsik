@@ -28,7 +28,7 @@ const HeaderSearchBar = () => {
   };
 
   const delaySearch = useCallback(
-    debounce((q) => fetchData(q), 500),
+    debounce((keyword) => fetchData(keyword), 500),
     []
   );
 
