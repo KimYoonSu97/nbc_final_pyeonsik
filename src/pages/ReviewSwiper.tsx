@@ -1,9 +1,9 @@
 import React from 'react'
-import ProdReview from 'src/components/detail/prodReview/ProdReview';
+import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper'
 
 const ReviewSwiper = () => {
   return (
-    <ProdReview />
+    <ProdReviewSwiper />
   )
 }
 
