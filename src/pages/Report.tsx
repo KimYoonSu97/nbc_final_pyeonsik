@@ -58,7 +58,7 @@ const Report = () => {
   };
 
   const handleNext = () => {
-    if (selectedInquiry1 === '유저 신고' && email.trim() !== '') {
+    if (selectedInquiry1 === '유저 신고') {
       if(!isValidEmail(email)){
         toast('올바른 이메일 형식이 아닙니다.')
       }else{
@@ -66,16 +66,10 @@ const Report = () => {
       } 
     } else if (selectedInquiry1 === '오류 제보' || selectedInquiry1 === '기타') {
       setStep(3);
+    }else if(email.trim() !== ''){
     }else{
       toast('항목을 선택해 주세요.')
     }
-    // if(selectedInquiry1 === ''){
-    //   toast('항목을 선택해 주세요.')
-    //   return;
-    // }else if(email.trim() === ''){
-    //   toast('이메일을 입력해 주세요.')
-    //   return;
-    // }
   };
   const handleNext2 = () => {
     if (selectedInquiry2) {

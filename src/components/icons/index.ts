@@ -55,6 +55,7 @@ export { ReactComponent as IconGood } from './review/IconGood.svg';
 export { ReactComponent as IconBad } from './IconBad.svg';
 export { ReactComponent as IconGoodFace } from './IconGoodFace.svg';
 export { ReactComponent as IconBadFace } from './IconBadFace.svg';
+export { ReactComponent as IconGoodBig } from './IconGoodBig.svg';
 
 export { ReactComponent as IconNoSearchResult } from './search/IconNoSearchResult.svg';
 
@@ -62,3 +63,6 @@ export { ReactComponent as IconReport } from './report/IconReport.svg';
 
 export { ReactComponent as IconCommonPost } from './write/IconCommon.svg';
 export { ReactComponent as IconRecipePost } from './write/IconRecipe.svg';
+
+export { ReactComponent as IconAllReview } from './IconAllReview.svg';
+
