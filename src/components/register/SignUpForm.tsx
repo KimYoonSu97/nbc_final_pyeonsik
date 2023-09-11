@@ -9,6 +9,7 @@ import { styleFont } from 'src/styles/styleFont';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import OAuthLogin from '../OAuthLogin';
 import { IconWarning } from '../icons';
+import { ERROR_AUTH } from 'src/utility/guide';
 
 interface Props {
   setNextStep: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,7 +21,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [terms1Agreed, setTerms1Agreed] = useState(false);
   const [terms2Agreed, setTerms2Agreed] = useState(false);
 
@@ -30,24 +31,24 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const handleSignUp = async () => {
     //유효성 검사
     if (!email || !password || !checkPassword) {
-      toast('빈 값이 있습니다!');
+      toast('모두 입력해 주세요.');
       return;
     }
     // 이메일 검사
     if (!emailPattern.test(email)) {
-      toast('올바른 이메일 형식으로 입력해주세요!');
-      setEmail('');
+      setErrorMessage('이메일을 확인해 주세요.');
+      // setEmail('');
       return;
     }
     if (password !== checkPassword) {
-      setErrorMessage('비밀번호가 일치하지 않습니다.');
+      setErrorMessage('비밀번호가 일치하지 않아요.');
       // setPassword('');
       // setCheckPassword('');
       return;
     }
 
     if (!terms1Agreed || !terms2Agreed) {
-      toast('이용약관에 동의해야 합니다.');
+      toast('이용약관에 동의해 주세요.');
       return;
     }
 
@@ -57,8 +58,9 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     });
 
     if (error) {
-      console.log(error.message);
-      setErrorMessage('6자리 이상으로 입력해 주세요.');
+      error.message === 'User already registered' && setErrorMessage('이미 사용 중인 이메일이에요.');
+      error.message === 'Password should be at least 6 characters' &&
+        setErrorMessage('비밀번호는 6자리 이상으로 입력해 주세요.');
       return;
     }
 
@@ -85,7 +87,6 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
         <S.InputArea>
           <S.Input maxLength={30} type="text" placeholder="이메일 입력" value={email} onChange={emailHandler} />
         </S.InputArea>
-
         <S.InputArea style={{ marginTop: '16px' }}>
           <S.Input
             maxLength={15}
@@ -119,7 +120,6 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
         ) : (
           <S.Submit onClick={handleSignUp}>가입하기</S.Submit>
         )}
-
         <S.AskMessage>이미 편식 계정이 있으신가요?</S.AskMessage>
         <S.BackToLogin to={'/login'}>기존 계정으로 로그인하기</S.BackToLogin>
       </S.Container>

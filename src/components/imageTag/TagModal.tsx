@@ -9,7 +9,7 @@ const TagModal: React.FC<TagModalProps> = ({ isOpen }) => {
   return (
     <div className="modal">
       <div className="modal-content">
-        <p>버튼을 누르고 원하는 위치에 클릭해주세요.</p>
+        <p>버튼을 누르고 원하는 위치에 클릭해 주세요.</p>
       </div>
     </div>
   );

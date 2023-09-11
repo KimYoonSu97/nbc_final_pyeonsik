@@ -28,7 +28,7 @@ const UserDelete = () => {
       // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
-        toast('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
+        toast('죄송합니다. 고객센터로 문의 주시기 바랍니다.');
         return;
       }
       setUserLogin(null);

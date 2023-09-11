@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { CameraIcon, SelectedFileIcon } from '../icons/index';
 import { ImageUploaderProps } from 'src/types/types';
 import { FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
+import { LIMIT_5MB } from 'src/utility/guide';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
   const [, setImageSelect] = useState(false);
@@ -27,7 +28,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
         onImageSelect(new File([file], randomFileName));
         setImageSelect(true);
       } else {
-        toast('이미지 크기가 10MB를 초과합니다. 다른 이미지를 선택해주세요.');
+        toast(LIMIT_5MB);
       }
     }
   };

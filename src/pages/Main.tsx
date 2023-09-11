@@ -5,45 +5,58 @@ import { IconWriteButton } from 'src/components/icons';
 import styled from 'styled-components';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { toast } from 'react-toastify';
-import { useAtom } from 'jotai';
+import { atom, useAtom } from 'jotai';
 import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
+import { EMAIL_CHECK, SERVICE_PREPARING } from 'src/utility/guide';
+import PostSkeleton from 'src/components/skeleton/PostSkeleton';
 
+export const isLoadingAtom = atom<Boolean>(true);
 const Main = () => {
+  const [isLoading] = useAtom(isLoadingAtom);
   const navigate = useNavigate();
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const [userLogin, __] = useAtom(userAtom);
-  console.log(userId);
-  console.log(userLogin);
 
   return (
     <>
+      {/* 데이터 불러올때 스켈레톤 UI */}
+      {isLoading && (
+        <>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <PostSkeleton key={index} />
+          ))}
+        </>
+      )}
       <S.FixedContainer>
         <S.WriteButton
           onClick={() => {
             if (!userId && !userLogin) {
-              toast('로그인 후 이용 가능합니다.');
+              toast(EMAIL_CHECK);
               return;
             }
             setWriteCategory('');
             navigate('/write');
           }}
         >
-          <IconWriteButton /> 글쓰기
+          <IconWriteButton />
+          작성하기
         </S.WriteButton>
         <S.FilterArea>
           <S.FilterButton
             $isSelected={true}
             onClick={() => {
-              toast('추천글 서비스는 현재 준비중입니다. ');
+              toast(SERVICE_PREPARING);
             }}
           >
-            추천글
+            추천순
           </S.FilterButton>
-          <S.FilterButton $isSelected={false}>최신글</S.FilterButton>
+          <S.FilterButton $isSelected={false}>최신순</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
+
       <S.FixedBox />
+
       <PostList />
     </>
   );
@@ -64,7 +77,11 @@ const S = {
 
     position: fixed;
     /* top: 137px; */
-    padding: 20px 0 10px;
+
+    /* padding: 20px 0 10px; */
+    /* 수정 */
+    padding: 28px 0px 10px 0px;
+
     top: 106px;
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
     z-index: 2;
@@ -72,17 +89,29 @@ const S = {
   `,
   FixedBox: styled.div`
     width: 100%;
-    height: 20px;
+
+    /* height: 20px; */
+    /* 수정 */
+    height: 17px;
+
     position: fixed;
-    top: 156px;
+
+    /* top: 156px; */
+    /* 수정 */
+    top: 160px;
+
     background: linear-gradient(0deg, transparent 0%, #f6f7f9 50%, #f6f7f9 100%);
+
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
     z-index: 2;
   `,
   WriteButton: styled.div`
+    padding: 0px 15px;
+    margin-right: 12px;
+
     gap: 2px;
     display: flex;
-    width: 80px;
+    /* width: 80px; */
     height: 26px;
     justify-content: center;
     align-items: center;

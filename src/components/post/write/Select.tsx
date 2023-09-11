@@ -13,13 +13,13 @@ const Select = () => {
     <>
       <Header />
       <S.Container>
-        <S.TitleArea>카테고리를 선택해주세요.</S.TitleArea>
+        <S.TitleArea>작성할 카테고리를 선택해 주세요.</S.TitleArea>
         <S.RecipeButton
           onClick={() => {
             setWriteCategorySelect('recipe');
           }}
         >
-          <S.Title>편식조합 공유하기</S.Title>
+          <S.Title>편식 조합 만들기</S.Title>
           <IconRecipePost />
         </S.RecipeButton>
         <S.CommonButton
@@ -27,7 +27,7 @@ const Select = () => {
             setWriteCategorySelect('common');
           }}
         >
-          <S.Title>그르르갉 글쓰기</S.Title>
+          <S.Title>그르르갉 글 쓰기</S.Title>
           <IconCommonPost />
         </S.CommonButton>
       </S.Container>

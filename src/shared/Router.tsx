@@ -21,6 +21,7 @@ import Report from 'src/pages/Report';
 import Review from 'src/pages/Review';
 // component
 import KakaoMap from 'src/kakaoMap/KakaoMap';
+import ReviewSwiper from 'src/pages/ReviewSwiper';
 
 const Router = () => {
   const location = useLocation();
@@ -44,8 +45,9 @@ const Router = () => {
           <Route path="/detail/:id" element={<Detail />} />
 
           <Route path="/map" element={<KakaoMap />} />
+          <Route path="/all_review" element={<Review />} />
+          <Route path="/reviewSwiper" element={<ReviewSwiper />} />
 
-          <Route path="/review" element={<Review />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
