@@ -23,7 +23,7 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
 
     input.onchange = () => {
       const file = input.files![0];
-      if (file !== null && file.size > 0.1 * 1024 * 1024) {
+      if (file !== null && file.size > 3 * 1024 * 1024) {
         toast(LIMIT_3MB);
         return;
       }
@@ -52,22 +52,25 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
       },
       toolbar: {
         container: [
-          [{ size: ['small', false, 'large', 'huge'] }],
-          [{ font: [] }],
+          [{ size: ['small', false, 'large', 'huge'] }, { font: [] }],
+
           // [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ align: [] }],
           ['bold', 'italic', 'underline', 'strike'],
           [{ color: [] }, { background: [] }],
-          // ['blockquote', 'code-block'],
 
+          // ['blockquote', 'code-block'],
           // [{ header: 1 }, { header: 2 }],
+
           [{ list: 'ordered' }, { list: 'bullet' }],
-          [{ align: [] }],
+          ['clean'],
 
           // [{ script: 'sub' }, { script: 'super' }],
           // [{ indent: '-1' }, { indent: '+1' }],
           // [{ direction: 'rtl' }],
 
-          ['image', 'video', 'clean']
+          ['image', 'video']
         ],
         handlers: {
           image: imageHandler
