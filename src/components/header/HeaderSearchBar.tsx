@@ -1,20 +1,40 @@
 import { useAtom } from 'jotai';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { searchBar, searchKeyWord } from 'src/globalState/jotai';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
+import { debounce } from 'lodash';
+import _ from 'lodash';
 import styled, { css } from 'styled-components';
+import { getPostByKeywordSummary } from 'src/api/posts';
+import { getSearchProdSummary } from 'src/api/product';
 
 const HeaderSearchBar = () => {
-  // const [search, setSearch] = useState(false);
+  const [searchKeyView, setSearchKeyView] = useState('');
   const [search, setSearch] = useAtom(searchBar);
-  const [keyword, setKeyword] = useAtom(searchKeyWord);
+  const [_, setSearchData] = useAtom(searchKeyWord);
   const navigate = useNavigate();
 
   const searchSummary = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSearch(false);
+    navigate(`/search/all?=${searchKeyView}`);
+  };
 
-    navigate(`/search/all?=${keyword}`);
+  const fetchData = async (keyword: string) => {
+    const postData = await getPostByKeywordSummary(keyword);
+    const productData = await getSearchProdSummary(keyword);
+    setSearchData({ postData, productData, searchKey: keyword });
+  };
+
+  const delaySearch = useCallback(
+    debounce((q) => fetchData(q), 500),
+    []
+  );
+
+  const onChangeSearchBar = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyView(e.target.value);
+    delaySearch(e.target.value);
   };
 
   return (
@@ -40,14 +60,15 @@ const HeaderSearchBar = () => {
               setSearch(true);
             }}
             onBlur={() => {
-              setSearch(false);
+              setTimeout(() => {
+                // setSearchKeyView('');
+                setSearch(false);
+              }, 200);
             }}
             placeholder="지금 뜨는 조합은?"
             type="text"
-            value={keyword}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-            }}
+            value={searchKeyView}
+            onChange={onChangeSearchBar}
           />
         </form>
         {/* {searchResult && <S.SearchResultBox />} */}
