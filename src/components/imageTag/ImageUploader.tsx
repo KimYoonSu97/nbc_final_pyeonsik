@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { CameraIcon, SelectedFileIcon } from '../icons/index';
 import { ImageUploaderProps } from 'src/types/types';
 import { FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
-import { LIMIT_5MB } from 'src/utility/guide';
+import { LIMIT_10MB } from 'src/utility/guide';
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
   const [, setImageSelect] = useState(false);
@@ -18,7 +18,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const maxSize = 10 * 1024 * 1024;
+      const maxSize = 5 * 1024 * 1024;
 
       if (FileSizeValid(file, maxSize)) {
         const originalFileName = file.name;
@@ -28,7 +28,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
         onImageSelect(new File([file], randomFileName));
         setImageSelect(true);
       } else {
-        toast(LIMIT_5MB);
+        toast(LIMIT_10MB);
       }
     }
   };

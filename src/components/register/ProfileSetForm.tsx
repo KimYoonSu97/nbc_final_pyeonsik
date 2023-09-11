@@ -34,7 +34,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   );
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [_, setLoginUser] = useAtom(userAtom);
+  const [loginUser, setLoginUser] = useAtom(userAtom);
 
   const correctNickNameMessages = [
     '아무도 생각하지 못한 멋진 닉네임이에요. 😎',
