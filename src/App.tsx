@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './';
 import ReportIcon from './components/report/ReportIcon';
 import SearchSummary from './components/search/SearchSummary';
+import { useAtom } from 'jotai';
+import { searchKeyWord } from './globalState/jotai';
 
 const queryClient = new QueryClient();
 
@@ -19,11 +21,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const App = () => {
+  const [search, _] = useAtom(searchKeyWord);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
-        <SearchSummary />
+        {search && <SearchSummary />}
 
         <ReportIcon />
         <Router />
