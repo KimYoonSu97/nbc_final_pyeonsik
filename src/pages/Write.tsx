@@ -1,8 +1,8 @@
+import React from 'react';
 import { useAtom } from 'jotai';
-import React, { useState } from 'react';
+import { writeCategorySelect } from 'src/globalState/jotai';
 import PostWrite from 'src/components/post/write/PostWrite';
 import Select from 'src/components/post/write/Select';
-import { writeCategorySelect } from 'src/globalState/jotai';
 import styled from 'styled-components';
 
 const Write = () => {

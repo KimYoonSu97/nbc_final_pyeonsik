@@ -148,7 +148,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
 
     if (selectedTag.prodData && addTagMode) {
       setSelectedTagIndex(index);
-      setselectedTagVisible(true);
+      // setselectedTagVisible(true);
       setSearchFormHandler(false);
 
       const imageContainer = imageContainerRef.current;
@@ -192,8 +192,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
+            {/* 이혜영 수정 사항 */}
             {/* <S.ModalContainer>{tags.length === 0 && modal && <TagModal isOpen={modal}></TagModal>}</S.ModalContainer> */}
-
             {typeof selectedImage === 'string' ? (
               <S.Image
                 src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}

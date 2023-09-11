@@ -134,7 +134,8 @@ export const S = {
     height: 478px;
     border-radius: 10px;
     background-color: white;
-    position: relative;
+    position: absolute;
+    margin-right: 150px;
 
     border-radius: 10px;
     background: #fff;
@@ -171,8 +172,8 @@ export const S = {
   ModalContainer: styled(FlexBoxCenter)`
     position: absolute;
     color: #242424;
-    /* width: 195px;
-    height: 26px; */
+    width: 195px;
+    height: 26px;
 
     font-size: 10px;
     font-weight: 600;

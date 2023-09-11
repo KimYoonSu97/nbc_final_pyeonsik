@@ -11,6 +11,7 @@ import useUserMutate from 'src/hooks/useUserMutate';
 // 탈퇴
 import UserDelete from '../register/UserDelete';
 import { toast } from 'react-toastify';
+import { NICKNAME_ALREADY, SERVICE_PREPARING } from 'src/utility/guide';
 
 const Profile = () => {
   const userId = useLoginUserId();
@@ -67,7 +68,7 @@ const Profile = () => {
       .eq('nickname', nickname);
 
     if (allNickname?.length !== 0) {
-      toast('이미 있는 닉네임 입니다ㅠㅠ');
+      toast(NICKNAME_ALREADY);
       return;
     }
 
@@ -126,8 +127,8 @@ const Profile = () => {
         </S.InputWrapper>
         {social !== 'email' && (
           <S.InputWrapper>
-            <S.InfoCaption as="div">로그인 된 소셜 계정</S.InfoCaption>
-            <S.InfoInputBox>{`${social}로 로그인 했어요!`}</S.InfoInputBox>
+            <S.InfoCaption as="div">로그인된 소셜 계정</S.InfoCaption>
+            <S.InfoInputBox>{`${social}로 로그인했어요!`}</S.InfoInputBox>
           </S.InputWrapper>
         )}
 
@@ -136,7 +137,8 @@ const Profile = () => {
           <S.NicknameInputBox>
             <IconSecret />
             {/* 아무도 모르게 비밀번호 변경하기 */}
-            서비스 준비 중입니다.<S.InfoSubmitButton>변경</S.InfoSubmitButton>
+            {SERVICE_PREPARING}
+            <S.InfoSubmitButton>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
         <UserDelete />

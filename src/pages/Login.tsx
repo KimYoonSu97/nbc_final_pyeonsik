@@ -5,7 +5,7 @@ import { userAtom } from 'src/globalState/jotai';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import OAuthLogin from '../components/OAuthLogin';
-import { IconGoogle, IconKakao, IconLogoSymbolH32, IconWarning, IconWaterMarkH32 } from 'src/components/icons';
+import { IconLogoSymbolH32, IconWarning, IconWaterMarkH32 } from 'src/components/icons';
 import { toast } from 'react-toastify';
 import { FlexBox } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
@@ -101,7 +101,7 @@ const Login = () => {
             {errorMessage.length !== 0 && (
               <S.ErrorMessage>
                 <IconWarning />
-                아이디 또는 비밀번호를 확인해주세요.
+                아이디 또는 비밀번호를 확인해 주세요.
               </S.ErrorMessage>
             )}
             {/* 입력상태에 따른 버튼 색상변경을위한 분기 */}
