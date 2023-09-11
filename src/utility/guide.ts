@@ -19,7 +19,7 @@ export const CANCLE = '취소되었습니다.';
 
 // file
 export const LIMIT_3MB = '3MB 이하의 .jpg, .jpeg, .png 파일을 선택해 주세요.';
-export const LIMIT_10MB = '이미지 크기가 10MB를 초과합니다. 다른 이미지를 선택해 주세요.';
+export const LIMIT_5MB = '이미지 크기가 5MB를 초과합니다. 다른 이미지를 선택해 주세요.';
 
 export const ERROR_AUTH = {
   'User already registered': '이미 사용 중인 이메일이에요.',
