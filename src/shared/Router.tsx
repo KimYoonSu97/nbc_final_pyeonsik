@@ -18,10 +18,7 @@ import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
 import Report from 'src/pages/Report';
-import ReviewList from 'src/pages/Review';
-// component
-import KakaoMap from 'src/kakaoMap/KakaoMap';
-import ReviewSwiper from 'src/pages/ReviewSwiper';
+import ReviewList from 'src/pages/ReviewList';
 
 const Router = () => {
   const location = useLocation();
@@ -42,9 +39,8 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/map" element={<KakaoMap />} />
           <Route path="/review_list" element={<ReviewList />} />
-          <Route path="/review_swiper" element={<ReviewSwiper />} />
+          {/* <Route path="/review_swiper" element={<ReviewSwiper />} /> */}
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />

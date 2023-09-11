@@ -58,22 +58,18 @@ const Report = () => {
   };
 
   const handleNext = () => {
-
     if (selectedInquiry1 === '유저 신고' && email.trim() !== '') {
       if ((selectedInquiry1 === '유저 신고' && email.trim() !== '', !isValidEmail(email))) {
         toast(EMAIL_CHECK);
       } else {
-
         setStep(2);
       }
     } else if (selectedInquiry1 === '오류 제보' || selectedInquiry1 === '기타') {
       setStep(3);
-
     } else if (userId && selectedInquiry1 === '유저 신고') {
       setStep(2);
     } else {
       toast('항목을 선택해 주세요.');
-
     }
   };
   const handleNext2 = () => {
