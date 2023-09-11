@@ -10,6 +10,8 @@ export const S = {
     margin-bottom: 20px;
   `,
   AddTagButton: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 180px;
     height: 48px;
     gap: 8px;
@@ -21,7 +23,7 @@ export const S = {
     position: absolute;
 
     bottom: 32px;
-    left: calc((474px - 180px) / 2);
+    left: calc((360px - 180px) / 2);
 
     /* label-large */
     font-family: Pretendard;
@@ -49,7 +51,8 @@ export const S = {
   // 이미지 태그 사이즈 고정....
 
   Image: styled.img`
-    width: 474px;
+    /* width: 474px; */
+    width: 360px;
     height: 360px;
     object-fit: cover;
     border-radius: 10px;
@@ -89,6 +92,8 @@ export const S = {
 
   ProdContainer: styled.div`
     width: 246px;
+    font-family: Pretendard;
+    font-weight: 600;
     font-size: 16px;
     height: 50px;
   `,
@@ -96,7 +101,9 @@ export const S = {
   ProdBrandContainer: styled.div`
     width: 113px;
     margin-bottom: 5px;
+    font-weight: 400;
     font-size: 14px;
+    font-family: Pretendard;
     height: 20px;
   `,
 
@@ -135,14 +142,20 @@ export const S = {
   `,
 
   DeleteIconContainer: styled(FlexBoxAlignCenter)`
-    width: 34px;
+    width: 40px;
     margin-left: 210px;
+    font-family: pretendard;
+    font-weight: 600;
+    font-size: 11px;
+    color: #98a2b3;
   `,
 
   TagIconContainer: styled(FlexBoxCenter)`
     position: relative;
   `,
   TagIconBox: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 40px;
     height: 40px;
 
@@ -153,5 +166,20 @@ export const S = {
     position: absolute;
     top: -30px;
     left: -20px;
+  `,
+
+  ModalContainer: styled(FlexBoxCenter)`
+    position: absolute;
+    color: #242424;
+    width: 195px;
+    height: 26px;
+
+    font-size: 10px;
+    font-weight: 600;
+    font-family: Pretendard;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-top: 340px;
+    margin-left: 140px;
   `
 };

@@ -8,6 +8,7 @@ import PostWriteBodyInput from '../post/write/PostWriteBodyInput';
 import { TagIcon, DeleteIcon } from '../icons/index';
 import { IconPlusTag } from '../icons';
 import { S } from './StyledImageTag';
+import TagModal from './TagModal';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -25,6 +26,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
   const [searchFormHandler, setSearchFormHandler] = useState(false);
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
   const [imageBlobUrl, setImageBlobUrl] = useState<string | null>(null);
+  const [modal, setModal] = useState(false);
 
   const postRef = useRef<HTMLTextAreaElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -44,8 +46,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
       const updatedTags = [...tags];
 
       // 값이 없는 태그가 있고, 그 태그가 마지막에 추가한 태그라면 삭제 처리
-      if (lastEmptyTagIndex !== -1 && tags.length - lastEmptyTagIndex - 1 === selectedTagIndex) {
-        updatedTags.splice(tags.length - 1 - lastEmptyTagIndex, 1);
+      if (lastEmptyTagIndex !== -1) {
+        updatedTags.splice(lastEmptyTagIndex, 1);
       }
 
       //태그 안에 담을 데이터를 가진 newTag변수
@@ -60,12 +62,19 @@ const ImageTag: React.FC<ImageTagProps> = ({
     }
   };
 
-  //태그를 클릭 시 실행되는 함수 모달 내용 보였다 안보였다
+  // 태그를 클릭 시 실행되는 함수 모달 내용 보였다 안보였다
   const handleTagClick = (index: number) => {
     if (addTagMode || selectedTagIndex !== index) {
       setSelectedTagIndex(index);
-      setselectedTagVisible(!selectedTagVisible);
-      setSearchFormHandler(false);
+
+      // 클릭한 태그가 빈 값이면 검색창을 띄웁니다.
+      if (!tags[index].prodData) {
+        setselectedTagVisible(true);
+        setSearchFormHandler(true);
+      } else {
+        setselectedTagVisible(!selectedTagVisible);
+        setSearchFormHandler(false);
+      }
     } else {
       setselectedTagVisible(!selectedTagVisible);
     }
@@ -173,27 +182,41 @@ const ImageTag: React.FC<ImageTagProps> = ({
     }
   };
 
+  const openModal = () => setModal(true);
+  const closeModal = () => setModal(false);
+
   return (
     <>
       <S.ImageTagContainer>
         <ImageUploader onImageSelect={handleImageSelect} imageSelected={selectedImage ? 'true' : 'false'} />
-
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
+            {/* 이혜영 수정 사항 */}
+            {/* <S.ModalContainer>{tags.length === 0 && modal && <TagModal isOpen={modal}></TagModal>}</S.ModalContainer> */}
             {typeof selectedImage === 'string' ? (
               <S.Image
                 src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
                 alt="이미지"
                 onClick={handleImageClick}
+                style={addTagMode ? { cursor: 'pointer' } : {}}
               />
             ) : (
-              <S.Image src={imageBlobUrl || 'null'} alt="이미지" onClick={handleImageClick} />
+              <S.Image
+                src={imageBlobUrl || 'null'}
+                alt="이미지"
+                onClick={(event) => {
+                  handleImageClick(event);
+                  closeModal();
+                }}
+                style={addTagMode ? { cursor: 'pointer' } : {}}
+              />
             )}
             <S.AddTagButton
               onClick={(e) => {
                 e.preventDefault();
                 setAddingTagMode(!addTagMode);
+                openModal();
               }}
             >
               <S.IconBox>
@@ -247,7 +270,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
             ))}
           </S.ImageContainer>
         )}
-
         <PostWriteBodyInput
           ref={postRef}
           type="text"

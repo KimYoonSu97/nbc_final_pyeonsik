@@ -32,7 +32,7 @@ const NearByBox = ({ brand }: Props) => {
         </S.RightBox>
       ) : (
         <S.RightBox>
-          <S.NoStore>가까운 지점이 없습니다</S.NoStore>
+          <S.NoStore>가까운 지점을 찾을 수 없어요.</S.NoStore>
         </S.RightBox>
       )}
     </S.StoreContainer>

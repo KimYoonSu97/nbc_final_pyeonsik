@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 import { WriteCommentData, deleteCommentData, updateCommentData } from 'src/api/comment';
+import { toast } from 'react-toastify';
+
 interface Props {
   postId?: string;
 }
+
 const useCommentMutate = (postId?: string) => {
   const queryclient = useQueryClient();
 

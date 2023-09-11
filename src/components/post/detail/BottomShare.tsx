@@ -29,15 +29,16 @@ const BottomShare = ({ title, likeCount, commentCount, sharedCount }: BottomShar
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: '편식, 까탈스러운 편식쟁이들의 놀이터',
-        description: '나만 아는 꿀조합, 인기 많은 편스토랑 메뉴와 이번 달의 편의점 행사 상품까지 한 번에!',
+        title,
+        // '편식, 까탈스러운 편식쟁이들의 놀이터',
+        // description: '나만 아는 꿀조합, 인기 많은 편스토랑 메뉴와 이번 달의 편의점 행사 상품까지 한 번에!',
         imageUrl: LOGO_IMAGE,
         link: {
           webUrl: shareUrl
         }
       },
       itemContent: {
-        // profileText: '편식, 까탈스러운 편식쟁이들의 놀이터'
+        profileText: '편식, 까탈스러운 편식쟁이들의 놀이터'
       },
       social: {
         likeCount,

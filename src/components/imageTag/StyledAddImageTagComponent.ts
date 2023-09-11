@@ -1,20 +1,22 @@
 import styled from 'styled-components';
 import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 
-export const ArrowIconWrapper = styled.div`
+export const ArrowIconWrapper = styled(FlexBoxCenter)`
   position: absolute;
   top: 70%;
-  left: 0%;
+  left: 26.3px;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
+
+  margin-top: 1.6px;
 `;
 
-export const DocIconWrapper = styled.div`
+export const DocIconWrapper = styled(FlexBoxCenter)`
   position: absolute;
   top: 70%;
-  left: -50px;
+  left: -24px;
   transform: translateY(-50%);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -32,7 +34,7 @@ export const S = {
   `,
 
   SmallButton: styled(FlexBoxCenter)`
-    margin-left: -50px;
+    margin-left: -24px;
     margin-top: 11px;
     width: 100px;
     height: 48px;
@@ -95,15 +97,17 @@ export const S = {
     background-color: #242424;
     border-radius: 5px;
     position: absolute;
-    width: 140px;
-    height: 20px;
-    top: 40px;
-    left: -70px;
+
+    /* 드래글 설명 부분 수정 (혜영) */
+    width: 115px;
+    height: 24px;
+    top: -30px;
+    left: -45px;
   `,
 
   ModalContainer: styled.div``,
 
-  ModalContent: styled.div`
+  ModalContent: styled(FlexBoxCenter)`
     color: #ffffff;
     font-family: Pretendard;
     font-style: normal;

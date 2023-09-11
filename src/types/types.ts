@@ -1,5 +1,3 @@
-import { Stringifier } from 'styled-components/dist/types';
-
 // input custom hook
 export interface InputProps {
   type: string;

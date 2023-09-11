@@ -10,10 +10,7 @@ const PasswordReset: React.FC = () => {
   const [password, setPassword] = useState('');
 
   // TODO: 아무것도 안보내짐..
-
-  /**
-   * 작성한 이메일로 비밀번호 변경 링크 발송
-   */
+  // 작성한 이메일로 비밀번호 변경 링크 발송
   const handleResetPassword = async () => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
 
@@ -29,7 +26,7 @@ const PasswordReset: React.FC = () => {
       if (event === 'PASSWORD_RECOVERY') {
         const newPassword = prompt('What would you like your new password to be?');
         if (newPassword === null) {
-          toast('비밀번호가 공백입니다!');
+          toast('비밀번호가 공백입니다.');
           return;
         }
         setPassword(newPassword);
@@ -44,7 +41,7 @@ const PasswordReset: React.FC = () => {
   return (
     <ResetFormContainer>
       <ResetTitle>비밀번호 재설정</ResetTitle>
-      <AskMessage>비밀번호 재설정을 위해서 가입하신 이메일을 입력해주세요.</AskMessage>
+      <AskMessage>비밀번호 재설정을 위해서 가입하신 이메일을 입력해 주세요.</AskMessage>
       <Input type="email" placeholder="이메일 입력" value={email} onChange={(e) => setEmail(e.target.value)} />
       <SuccessMessage>{successMessage}</SuccessMessage>
       <ErrorMessage>
@@ -55,7 +52,7 @@ const PasswordReset: React.FC = () => {
           </div>
         )}
       </ErrorMessage>
-      <Button onClick={handleResetPassword}>인증메일 발송</Button>
+      <Button onClick={handleResetPassword}>인증 메일 발송</Button>
     </ResetFormContainer>
   );
 };

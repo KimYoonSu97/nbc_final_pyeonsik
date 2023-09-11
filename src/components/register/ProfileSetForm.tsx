@@ -9,6 +9,14 @@ import { toast } from 'react-toastify';
 import { FlexBoxCenter, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import { IconCameraSmall } from '../icons';
+import {
+  LIMIT_3MB,
+  NICKNAME_ALREADY,
+  NICKNAME_DIGITS,
+  NICKNAME_FORM,
+  NICKNAME_INPUT,
+  NICKNAME_SLANG
+} from 'src/utility/guide';
 
 interface Props {
   userEmail: string;
@@ -21,16 +29,18 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [profileImgSrc, setProfileImgSrc] = useState<string>('');
-  const [baseImg] = useState('./baseprofile.png');
+  const [baseImg] = useState(
+    'https://wwkfivwrtwucsiwsnisz.supabase.co/storage/v1/object/public/photos/image/profile.png'
+  );
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [_, setLoginUser] = useAtom(userAtom);
 
   const correctNickNameMessages = [
-    '아무도 생각하지 못한 멋진 닉네임이에요! 😎',
-    '이런 창의적인 생각은 어떻게 하나요? 👏',
-    '이 세상에 하나뿐인 닉네임일지도 몰라요! 🥳',
-    '누구나 부러워할 최고의 닉네임이에요! 🤘'
+    '아무도 생각하지 못한 멋진 닉네임이에요. 😎',
+    '이런 창의적인 생각은 어떻게 하시나요. 👏',
+    '이 세상에 하나뿐인 닉네임일지도 몰라요. 🥳',
+    '누구나 부러워할 최고의 닉네임이에요. 🤘'
   ];
 
   const [isError, setIsError] = useState(false);
@@ -38,7 +48,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
   // Blob 형태를 string으로 변환
   const encodeFileTobase64 = (fileBlob: Blob) => {
     if (fileBlob.size > 3 * 1024 * 1024) {
-      toast('3MB 이하의 jpg,jpeg,png 확장자만 가능합니다.');
+      toast(LIMIT_3MB);
       return;
     }
 
@@ -55,21 +65,26 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
 
-    // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
+    if (nickname === '') {
+      setIsError(false);
+      setSuccessMessage('편식에서만의 닉네임을 사용해 보세요!');
+      return;
+    }
+    // 한글, 영어,숫자, _ , - 만 가능
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
     if (!nicknamePattern.test(nickname) && nickname) {
       setIsError(true);
-      setErrorMessage('올바른 닉네임 형식이 아닙니다.');
+      setErrorMessage(NICKNAME_FORM);
       return;
     }
-    if (nickname.length === 1) {
+    if (nickname.length < 2) {
       setIsError(true);
-      setErrorMessage('2글자 이상 이어야 합니다.');
+      setErrorMessage(NICKNAME_DIGITS);
       return;
     }
     if (filterdNickName.includes('*')) {
       setIsError(true);
-      setErrorMessage('비속어는 사용할 수 없어요. 🤬');
+      setErrorMessage(NICKNAME_SLANG);
       return;
     }
 
@@ -84,7 +99,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     if (nickname) {
       if (existingUsers) {
         setIsError(true);
-        setErrorMessage('이런! 누군가 먼저 선점한 닉네임이에요! 😥');
+        setErrorMessage(NICKNAME_ALREADY);
       } else {
         setIsError(false);
         const randomIndex = Math.floor(Math.random() * correctNickNameMessages.length);
@@ -105,18 +120,18 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
 
-    // 한글, 영어,숫자, _ , - 만 가능하게끔 설정
+    // 대소문자, 숫자, 한글, _, -만 가능
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
     if (!nicknamePattern.test(nickname)) {
-      toast('올바른 닉네임 형식이 아닙니다.');
+      toast(NICKNAME_FORM);
       return;
     }
     if (nickname.length < 2) {
-      toast('2글자 이상 이어야 합니다.');
+      toast(NICKNAME_DIGITS);
       return;
     }
     if (filterdNickName.includes('*')) {
-      toast('비속어는 사용할 수 없어요. 🤬');
+      toast(NICKNAME_SLANG);
       return;
     }
 
@@ -128,18 +143,18 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       profileImg: profileImg
     };
     if (!nickname) {
-      toast('닉네임을 입력해주세요');
+      toast(NICKNAME_INPUT);
       return;
     }
     // if (profileImgSrc === '') {
-    //   toast('사진을 등록해주세요');
+    //   toast('사진을 등록해 주세요');
     //   return;
     // }
 
     const { data, error } = await supabase.from('users').insert(newUser).select().single();
 
     setLoginUser(data);
-    toast('회원가입 완료!');
+    toast('회원가입이 완료되었어요!');
     navigate('/');
   };
 
@@ -171,7 +186,7 @@ const ProfileSetForm = ({ userEmail }: Props) => {
             maxLength={15}
             type="text"
             value={nickname}
-            placeholder="닉네임을 입력해주세요."
+            placeholder={NICKNAME_INPUT}
             onChange={nickNameHandler}
           />
         </S.InputArea>
@@ -253,18 +268,17 @@ const S = {
     }
   `,
   ErrorMessage: styled.div`
-    margin-top: 10px;
     width: 294px;
-    height: 44px;
-    color: red;
+    height: 20px;
+    margin: 4px 0px 24px 0px;
+    color: #ff7474;
     ${styleFont.bodyMedium}
   `,
   SuccessMessage: styled.div`
     width: 294px;
-    height: 44px;
-    padding: 0 10px;
-    margin-top: 10px;
-    color: blue;
+    height: 20px;
+    margin: 4px 0px 24px 0px;
+    color: #4285f4;
     ${styleFont.bodyMedium}
   `,
   SubmitDisable: styled(FlexBoxCenter)`

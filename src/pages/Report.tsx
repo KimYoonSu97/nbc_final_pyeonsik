@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { updateBugBadge, updateSheriffBadge } from 'src/api/badge';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
-import { updateBugBadge, updateSheriffBadge } from 'src/api/badge';
+import { EMAIL_CHECK } from 'src/utility/guide';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 const options1 = ['유저 신고', '오류 제보', '기타'];
 const options2 = [
@@ -59,7 +60,7 @@ const Report = () => {
   const handleNext = () => {
     if (selectedInquiry1 === '유저 신고' && email.trim() !== '') {
       if ((selectedInquiry1 === '유저 신고' && email.trim() !== '', !isValidEmail(email))) {
-        toast('올바른 이메일 형식이 아닙니다.');
+        toast(EMAIL_CHECK);
       } else {
         setStep(2);
       }
@@ -85,7 +86,7 @@ const Report = () => {
       const { data, error } = await supabase.storage.from('photos').upload(`report/${imageName}`, image);
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
-        toast('이미지 업로드 중 에러가 발생했습니다!');
+        toast('이미지 업로드 중 에러가 발생했습니다.');
         return;
       }
       url.push(data.path);
@@ -112,7 +113,7 @@ const Report = () => {
 
   const handleEmailBlur = () => {
     if (email.trim() !== '' && !isValidEmail(email)) {
-      toast('올바른 이메일 형식이 아닙니다.');
+      toast(EMAIL_CHECK);
       return;
     }
   };
@@ -142,7 +143,7 @@ const Report = () => {
                 onBlur={handleEmailBlur}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="이메일을 적어주세요."
-              ></input>
+              />
             </div>
           )}
           <div>
@@ -188,29 +189,25 @@ const Report = () => {
       {step === 3 && (
         <ReportInner>
           <h3 className="last_h3">
-            해당 내용에 대해 확인 할 수 있는<span>사진, 파일, 링크를 업로드 해주세요.</span>
+            해당 내용을 확인 할 수 있는<span>사진이나 파일, 링크를 첨부해 주세요.</span>
           </h3>
           <div>
-            <label htmlFor="fileupload">{imageName ? imageName : '클릭하여 파일을 선택해주세요.'}</label>
+            <label htmlFor="fileupload">{imageName ? imageName : '클릭하여 파일을 선택해 주세요.'}</label>
             <input
               type="file"
               style={{ display: 'none' }}
               onChange={reportImage}
               id="fileupload"
-              placeholder="클릭하여 파일을 선택해주세요."
+              placeholder="클릭하여 파일을 선택해 주세요."
             />
           </div>
-          <input
-            value={urlLink}
-            onChange={(e) => setUrlLink(e.target.value)}
-            placeholder="주소 링크를 입력해주세요."
-          ></input>
+          <input value={urlLink} onChange={(e) => setUrlLink(e.target.value)} placeholder="링크를 입력해 주세요." />
           <input
             className="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
-          ></input>
+            placeholder="사진이나 파일, 링크에 대해 편식 운영자가 이해할 수 있는 추가 설명을 해주세요."
+          />
           <button onClick={handleSubmitButton} className={isStep3Complete ? 'complete' : ''}>
             제출하기
           </button>
@@ -219,7 +216,7 @@ const Report = () => {
       {step === 4 && (
         <ReportInner>
           <h3 className="reportEnd">
-            제보에 도움을 주셔서 감사합니다.
+            제보해 주셔서 감사합니다.
             <br />
             빠른 시일 내에 문제를 해결하겠습니다.
           </h3>
