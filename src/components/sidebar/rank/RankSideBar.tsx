@@ -13,10 +13,10 @@ const RankSideBar = () => {
         <FetchPosts />
         <RealTimeCombo />
       </S.ContentsBox>
-      {/* <S.TitleArea>편의점 신제품 리뷰</S.TitleArea> */}
+      <S.TitleArea>편의점 신제품 리뷰</S.TitleArea>
       <S.ContentsBox>
-        {/* <NewReview /> */}
-        <KakaoMap />
+        <NewReview />
+        {/* <KakaoMap /> */}
       </S.ContentsBox>
     </S.Container>
   );
