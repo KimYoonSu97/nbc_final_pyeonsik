@@ -62,26 +62,24 @@ const ProdReviewList = () => {
   }
 
   return (
-    <>
-      <S.ReviewContainer>
-        {products?.map((prod) => {
-          return (
-            <S.ReviewBox key={prod.id}>
-              <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
-              <S.TextContainer>
-                <S.ProdName>{prod.prodName}</S.ProdName>
-                <MyEvaluation swipers={swipers} prodId={prod.id} />
-              </S.TextContainer>
-              <S.AllEvaluation>
-                <EvaluationGraph swipers={swipers} prodId={prod.id} isGood={true} />
-                <EvaluationGraph swipers={swipers} prodId={prod.id} isGood={false} />
-              </S.AllEvaluation>
-            </S.ReviewBox>
-          );
-        })}
-        <S.LoadingBox ref={ref} />
-      </S.ReviewContainer>
-    </>
+    <S.ReviewContainer>
+      {products?.map((prod) => {
+        return (
+          <S.ReviewBox key={prod.id}>
+            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
+            <S.TextContainer>
+              <S.ProdName>{prod.prodName}</S.ProdName>
+              <MyEvaluation swipers={swipers} prodId={prod.id} />
+            </S.TextContainer>
+            <S.AllEvaluation>
+              <EvaluationGraph swipers={swipers} prodId={prod.id} isGood={true} />
+              <EvaluationGraph swipers={swipers} prodId={prod.id} isGood={false} />
+            </S.AllEvaluation>
+          </S.ReviewBox>
+        );
+      })}
+      <S.LoadingBox ref={ref} />
+    </S.ReviewContainer>
   );
 };
 
@@ -89,9 +87,8 @@ export default ProdReviewList;
 
 const S = {
   LoadingBox: styled.div`
-    background-color: yellow;
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
   `,
 
   ReviewContainer: styled(FlexBoxColum)`

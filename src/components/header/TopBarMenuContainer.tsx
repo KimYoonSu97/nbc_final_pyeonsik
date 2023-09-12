@@ -91,6 +91,10 @@ const TopBarMenuContainer = () => {
     }
   }, [localStorage.getItem('social')]);
 
+  const clickReview = () => {
+    navigate('/review_swiper');
+  };
+
   return (
     <S.TopBarMenuContainer>
       <S.QuickButtonArea>
@@ -106,13 +110,7 @@ const TopBarMenuContainer = () => {
         >
           나만의 편식조합 공유하기
         </S.QuickPostButton>
-        <S.QuickButton
-          onClick={() => {
-            toast(SERVICE_PREPARING);
-          }}
-        >
-          신제품 리뷰하기
-        </S.QuickButton>
+        <S.QuickButton onClick={clickReview}>신제품 리뷰하기</S.QuickButton>
         <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton>
       </S.QuickButtonArea>
       <S.TopBarLogContainer as="ul" $logged={data ? true : false}>

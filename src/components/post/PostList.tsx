@@ -40,7 +40,6 @@ const PostList = () => {
       })
       .flat();
   }, [posts]);
-  console.log(posts);
 
   const { ref } = useInView({
     threshold: 0,
@@ -62,7 +61,6 @@ export default PostList;
 
 export const S = {
   LoadingBox: styled.div`
-    background-color: yellow;
     width: 200px;
     height: 200px;
   `
