@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Location, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import { IconLogoSymbolH32, IconWarning, IconWaterMarkH32 } from 'src/components
 import { toast } from 'react-toastify';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import Register from './Register';
 
 interface User {
   id: string;
@@ -20,11 +21,12 @@ interface User {
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   //로그인 모달 닫는(뒤로가기) 함수
   const loginModalCloser = () => {
     navigate(-1);
   };
+  // console.log(backgroundLocation);
 
   //이메일 형식검사
   const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
