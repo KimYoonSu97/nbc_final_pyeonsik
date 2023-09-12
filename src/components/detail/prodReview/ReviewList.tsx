@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getNewProd } from 'src/api/product';
+import { getNewProdInfinite } from 'src/api/product';
 import { getSwiperData } from 'src/api/ReviewSwiper';
-import { Product, Swiper } from 'src/types/types';
+import { Swiper } from 'src/types/types';
 import { IMAGE_EMPTY } from 'src/utility/guide';
 import MyEvaluation from './MyEvaluation';
 import EvaluationGraph from './EvaluationGraph';
@@ -20,7 +20,7 @@ const ProdReviewList = () => {
     isFetchingNextPage
   } = useInfiniteQuery<any>({
     queryKey: ['new_prod'],
-    queryFn: ({ pageParam }) => getNewProd(pageParam),
+    queryFn: ({ pageParam }) => getNewProdInfinite(pageParam),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages) {
         return lastPage.page + 1;
@@ -96,7 +96,7 @@ const S = {
   `,
 
   ReviewBox: styled(FlexBoxAlignCenter)`
-    cursor: pointer;
+    /* cursor: pointer; */
     background: #fff;
 
     width: 890px;

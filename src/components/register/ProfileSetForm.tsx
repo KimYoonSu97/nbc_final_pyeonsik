@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
-import { userAtom } from 'src/globalState/jotai';
+import { userAtom, userSettingEmail } from 'src/globalState/jotai';
 import { toast } from 'react-toastify';
 import { FlexBoxCenter, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
@@ -20,14 +20,15 @@ import {
   NICKNAME_SLANG
 } from 'src/utility/guide';
 import { debounce } from 'lodash';
+import { useQueryClient } from '@tanstack/react-query';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
-interface Props {
-  userEmail: string;
-}
-
-const ProfileSetForm = ({ userEmail }: Props) => {
+const ProfileSetForm = () => {
+  const queryClient = useQueryClient();
   const inputRef = useRef<any>(null);
 
+  const userId = useLoginUserId();
+  // const [userEmail, setUserEmail] = useAtom(userSettingEmail);
   const filter = new Filter();
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
@@ -142,7 +143,6 @@ const ProfileSetForm = ({ userEmail }: Props) => {
     let profileImg = profileImgSrc.length !== 0 ? profileImgSrc : baseImg;
 
     const newUser = {
-      email: userEmail,
       nickname,
       profileImg: profileImg
     };
@@ -151,7 +151,9 @@ const ProfileSetForm = ({ userEmail }: Props) => {
       return;
     }
 
-    const { data, error } = await supabase.from('users').insert(newUser).select().single();
+    const { data, error } = await supabase.from('users').update(newUser).eq('id', userId).select().single();
+
+    queryClient.invalidateQueries(['loginUser']);
 
     setLoginUser(data);
     toast('회원가입이 완료되었어요!');

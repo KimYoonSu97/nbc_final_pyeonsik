@@ -19,7 +19,6 @@ const PostCards = ({ posts }: PostListProps) => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location.search);
     if (location.search === '?=common') {
       const checker = localStorage.getItem('boardInfoNever');
       if (checker === null) BoardAlert();
