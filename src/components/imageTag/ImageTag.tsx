@@ -27,7 +27,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
   const [selectedTagVisible, setselectedTagVisible] = useState(false);
   const [imageBlobUrl, setImageBlobUrl] = useState<string | null>(null);
   const [modal, setModal] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
 
   const postRef = useRef<HTMLTextAreaElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -68,8 +67,8 @@ const ImageTag: React.FC<ImageTagProps> = ({
     if (addTagMode || selectedTagIndex !== index) {
       setSelectedTagIndex(index);
 
+      // 클릭한 태그가 빈 값이면 검색창을 띄웁니다.
       if (!tags[index].prodData) {
-        // 클릭한 태그가 빈 값이면 검색창을 띄웁니다.
         setselectedTagVisible(true);
         setSearchFormHandler(true);
       } else {
@@ -145,13 +144,11 @@ const ImageTag: React.FC<ImageTagProps> = ({
     event.preventDefault();
     event.stopPropagation();
 
-    setIsDragging(true);
-
     const selectedTag = tags[index];
 
     if (selectedTag.prodData && addTagMode) {
       setSelectedTagIndex(index);
-      // setselectedTagVisible(false);
+      setselectedTagVisible(true);
       setSearchFormHandler(false);
 
       const imageContainer = imageContainerRef.current;

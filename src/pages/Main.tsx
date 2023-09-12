@@ -5,32 +5,18 @@ import { IconWriteButton } from 'src/components/icons';
 import styled from 'styled-components';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { toast } from 'react-toastify';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
 import { EMAIL_CHECK, SERVICE_PREPARING } from 'src/utility/guide';
-import PostSkeleton from 'src/components/skeleton/PostSkeleton';
-
-export const isLoadingAtom = atom<Boolean>(true);
 
 const Main = () => {
-  const [isLoading] = useAtom(isLoadingAtom);
   const navigate = useNavigate();
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const [userLogin, __] = useAtom(userAtom);
-  // 이걸살려
 
   return (
     <>
-      {' '}
-      {/* 데이터 불러올때 스켈레톤 UI */}
-      {isLoading && (
-        <>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <PostSkeleton key={index} />
-          ))}
-        </>
-      )}
       <S.FixedContainer>
         <S.WriteButton
           onClick={() => {
@@ -42,7 +28,8 @@ const Main = () => {
             navigate('/write');
           }}
         >
-          <IconWriteButton />글 쓰기
+          <IconWriteButton />
+          작성하기
         </S.WriteButton>
         <S.FilterArea>
           <S.FilterButton
@@ -51,9 +38,9 @@ const Main = () => {
               toast(SERVICE_PREPARING);
             }}
           >
-            최신순
+            추천순
           </S.FilterButton>
-          <S.FilterButton $isSelected={false}>추천순</S.FilterButton>
+          <S.FilterButton $isSelected={false}>최신순</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
       <S.FixedBox />
@@ -80,7 +67,7 @@ const S = {
 
     /* padding: 20px 0 10px; */
     /* 수정 */
-    padding: 24px 0px 10px 0px;
+    padding: 28px 0px 10px 0px;
 
     top: 106px;
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
@@ -92,7 +79,7 @@ const S = {
 
     /* height: 20px; */
     /* 수정 */
-    height: 7px;
+    height: 17px;
 
     position: fixed;
 
@@ -100,13 +87,13 @@ const S = {
     /* 수정 */
     top: 160px;
 
-    background: linear-gradient(0deg, transparent 0%, #f6f7f9 100%);
+    background: linear-gradient(0deg, transparent 0%, #f6f7f9 50%, #f6f7f9 100%);
 
     right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
     z-index: 2;
   `,
   WriteButton: styled.div`
-    padding: 3px 15px;
+    padding: 0px 15px;
     margin-right: 12px;
 
     gap: 2px;

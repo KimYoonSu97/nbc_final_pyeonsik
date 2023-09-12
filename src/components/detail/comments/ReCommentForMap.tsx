@@ -5,11 +5,8 @@ import CommentUserInfo from './CommentUserInfo';
 import ReCommentLikes from './ReCommentLikes';
 import ReCommentInput from './ReCommentInput';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
+import CreatedAt from 'src/utility/CreatedAt';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
-
-dayjs.locale('ko');
 
 interface CommentDataType {
   comment: string;
@@ -35,9 +32,6 @@ const ReCommentForMap = ({ reComment, parentId }: Props) => {
 
   const { deleteReCommentButton } = useReCommentMutate(parentId);
 
-  const month = dayjs(reComment.created_at).add(1, 'month').get('M');
-  const date = dayjs(reComment.created_at).get('D');
-
   return (
     <>
       <S.CommentArea>
@@ -47,7 +41,7 @@ const ReCommentForMap = ({ reComment, parentId }: Props) => {
             <CommentUserInfo users={reComment.users} />
             <S.Time>·</S.Time>
             <S.Time>
-              {month}월 {date}일
+              <CreatedAt createdAt={reComment.created_at} />
             </S.Time>
             <S.ButtonArea>
               <ReCommentLikes commentId={reComment.id} />
@@ -69,8 +63,8 @@ const ReCommentForMap = ({ reComment, parentId }: Props) => {
         </S.LowWrapper>
         {userId === reComment.userId && (
           <S.EditButtonArea>
-            <S.EditButton onClick={() => setIsEditComment(!isEditComment)}>수정</S.EditButton>
-            <S.EditButton onClick={() => deleteReCommentButton(reComment.id)}>| 삭제</S.EditButton>
+            <S.EditButton onClick={() => setIsEditComment(!isEditComment)}>수정</S.EditButton>|
+            <S.EditButton onClick={() => deleteReCommentButton(reComment.id)}>삭제</S.EditButton>
           </S.EditButtonArea>
         )}
       </S.CommentArea>
@@ -176,9 +170,6 @@ const S = {
 
     align-items: center;
     text-align: center;
-
-    height: 20px;
-    padding-top: 3px;
 
     /* body-small */
     font-family: Pretendard;

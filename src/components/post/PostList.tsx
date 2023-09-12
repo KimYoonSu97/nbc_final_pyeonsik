@@ -42,7 +42,7 @@ const PostList = () => {
   }, [posts]);
 
   const { ref } = useInView({
-    threshold: 0,
+    threshold: 0.5,
     onChange: (inView) => {
       if (!inView || !hasNextPage || isFetchingNextPage) return;
       fetchNextPage();

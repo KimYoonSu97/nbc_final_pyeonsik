@@ -38,7 +38,6 @@ const S = {
   Container: styled.div`
     position: fixed;
     right: calc(((100vw - 1280px) / 2) + 16px);
-    top: 130px;
   `,
 
   FixedContainer: styled.div`

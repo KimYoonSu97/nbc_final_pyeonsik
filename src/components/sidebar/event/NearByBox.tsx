@@ -4,7 +4,6 @@ import { FlexBoxCenter, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import { ConvsInform } from 'src/types/types';
 import { Link } from 'react-router-dom';
-import { IconAdd, IconLocation, IconMap, IconOrgPost, IconQuotation } from 'src/components/icons';
 
 interface Props {
   brand: ConvsInform;
@@ -23,10 +22,7 @@ const NearByBox = ({ brand }: Props) => {
             <S.StoreLocation
               to={`https://map.kakao.com/link/map/${brand.full_name},${brand.position.lat},${brand.position.lng}`}
             >
-              <S.IconBox>
-                <IconLocation />
-              </S.IconBox>
-              위치 보기
+              위치보기
             </S.StoreLocation>
             <S.StoreDistance>
               약 {Math.floor(brand.distance) === brand.distance ? brand.distance + 'm' : brand.distance + 'km'}
@@ -36,7 +32,7 @@ const NearByBox = ({ brand }: Props) => {
         </S.RightBox>
       ) : (
         <S.RightBox>
-          <S.NoStore>가까운 지점이 없어요.</S.NoStore>
+          <S.NoStore>가까운 지점을 찾을 수 없어요.</S.NoStore>
         </S.RightBox>
       )}
     </S.StoreContainer>
@@ -85,31 +81,20 @@ const S = {
     position: absolute;
     left: 130px;
   `,
-  StoreLocationDistanceBox: styled(FlexBoxCenter)``,
-
+  StoreLocationDistanceBox: styled(FlexBoxAlignCenter)``,
   StoreLocation: styled(Link)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     text-decoration: none;
-
     height: 16px;
-    padding: 0px 5px 0px 4px;
-    margin-right: 4px;
-
-    border-radius: 100px;
-    background: var(--neutral-400, #98a2b3);
-
+    padding: 0 5px;
     color: #fff;
-    font-family: 'Pretendard';
+    font-family: Pretendard;
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
     line-height: 16px; /* 160% */
-  `,
-  IconBox: styled(FlexBoxCenter)`
-    margin-right: 2px;
+    border-radius: 100px;
+    background: var(--neutral-400, #98a2b3);
+    margin-right: 4px;
   `,
   StoreDistance: styled.div`
     color: var(--neutral-500, #667085);
