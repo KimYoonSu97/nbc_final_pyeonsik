@@ -19,11 +19,10 @@ const BoardAlert = () => {
           <>
             <S.Container>
               <S.ConfirmBox>
-                <S.Title>그르르갉이란?</S.Title>
-
+                <S.Title>'그르르갉'이란?</S.Title>
                 <S.Description>
                   {
-                    '편의점 앞에 플라스틱 의자를 끌 때 나는 소리에요 \n .그르르갉에서 편하게 가벼운 이야기부터 \n 무거운 고민까지,다양한 얘기를 나눠보세요!'
+                    '편의점 플라스틱 의자를 끌 때 나는 소리예요.\n그르르갉에서 편하게 가벼운 소재부터\n무거운 고민까지, 다양한 얘기를 나눠보세요!'
                   }
                 </S.Description>
                 <S.ButtonArea>
@@ -127,7 +126,7 @@ const S = {
     white-space: pre-line;
     margin-bottom: 24px;
 
-    ${styleFont.bodyLarge};
+    ${styleFont.labelLarge};
     color: var(--neutral-400, #98a2b3);
   `,
   ButtonArea: styled(FlexBox)`

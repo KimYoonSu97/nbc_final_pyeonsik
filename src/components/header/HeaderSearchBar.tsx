@@ -8,6 +8,7 @@ import _ from 'lodash';
 import styled, { css } from 'styled-components';
 import { getPostByKeywordSummary } from 'src/api/posts';
 import { getSearchProdSummary } from 'src/api/product';
+import { styleFont } from 'src/styles/styleFont';
 
 const HeaderSearchBar = () => {
   const [searchKeyView, setSearchKeyView] = useState('');
@@ -38,42 +39,40 @@ const HeaderSearchBar = () => {
   };
 
   return (
-    <>
-      <S.Area $focus={search}>
+    <S.Area $focus={search}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <rect width="100%" height="100%" fill="none" />
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect width="100%" height="100%" fill="none" />
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="7" stroke="#818087" strokeWidth="2" />
-            <path
-              d="M17.2929 19.7071C17.6834 20.0976 18.3166 20.0976 18.7071 19.7071C19.0976 19.3166 19.0976 18.6834 18.7071 18.2929L17.2929 19.7071ZM14.2929 16.7071L17.2929 19.7071L18.7071 18.2929L15.7071 15.2929L14.2929 16.7071Z"
-              fill="#818087"
-            />
-          </svg>
-        </svg>
-        <form
-          onSubmit={(e) => {
-            searchSummary(e);
-          }}
-        >
-          <S.SearchArea
-            onFocus={() => {
-              setSearch(true);
-            }}
-            onBlur={() => {
-              setTimeout(() => {
-                // setSearchKeyView('');
-                setSearch(false);
-              }, 200);
-            }}
-            placeholder="지금 뜨는 조합은?"
-            type="text"
-            value={searchKeyView}
-            onChange={onChangeSearchBar}
+          <circle cx="10" cy="10" r="7" stroke="#818087" strokeWidth="2" />
+          <path
+            d="M17.2929 19.7071C17.6834 20.0976 18.3166 20.0976 18.7071 19.7071C19.0976 19.3166 19.0976 18.6834 18.7071 18.2929L17.2929 19.7071ZM14.2929 16.7071L17.2929 19.7071L18.7071 18.2929L15.7071 15.2929L14.2929 16.7071Z"
+            fill="#818087"
           />
-        </form>
-        {/* {searchResult && <S.SearchResultBox />} */}
-      </S.Area>
-    </>
+        </svg>
+      </svg>
+      <form
+        onSubmit={(e) => {
+          searchSummary(e);
+        }}
+      >
+        <S.SearchArea
+          onFocus={() => {
+            setSearch(true);
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              // setSearchKeyView('');
+              setSearch(false);
+            }, 200);
+          }}
+          placeholder="지금 뜨는 조합은?"
+          type="text"
+          value={searchKeyView}
+          onChange={onChangeSearchBar}
+        />
+      </form>
+      {/* {searchResult && <S.SearchResultBox />} */}
+    </S.Area>
   );
 };
 
@@ -109,20 +108,19 @@ const S = {
 
     outline: none;
     border: none;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
     margin-left: 8px;
     transition: 0.5s;
 
     width: 300px;
-
     border-radius: 8px;
 
     &:focus {
       transition: 0.5s;
       width: 589px;
     }
+
+    color: var(--neutral-500, #667085);
+    ${styleFont.bodyMedium}
   `,
   SearchResultBox: styled.div`
     top: 50px;
