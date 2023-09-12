@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
+
 import styled from 'styled-components';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSearchProd } from 'src/api/product';
 import { useInView } from 'react-intersection-observer';
-import { InfinityProductList, Product } from 'src/types/types';
+import { InfinityProductList } from 'src/types/types';
 import ProdCard from '../eventProd/ProdCard';
+
 import { FlexBoxCenter } from 'src/styles/styleBox';
 import { brands } from '../sidebar/event/BrandSelector';
 import { setBrandName } from 'src/function/setBrandName';
@@ -56,6 +58,7 @@ const ProdSearch = () => {
     }
   });
 
+
   if (location.pathname !== '/mypage/mypost' && filteredData?.length === 0) {
     return <NoSearchResult />;
   }
@@ -100,6 +103,7 @@ const ProdSearch = () => {
       </S.FixedContainer>
       <S.FixedBox />
 
+
       <S.Container>
         {filteredData?.map((item) => {
           return <ProdCard key={item.id} data={item} />;
@@ -111,6 +115,7 @@ const ProdSearch = () => {
 };
 
 export default ProdSearch;
+
 
 interface FilterProps {
   $isSelected: boolean | string;
@@ -150,9 +155,9 @@ const S = {
     padding: 3px 0;
     margin-right: 4px;
   `,
-  Container: styled.div`
-    margin-top: 30px;
 
+  Container: styled.div`
+    width: 100%;
     display: flex;
     align-items: center;
     align-content: center;
@@ -226,5 +231,6 @@ const S = {
     font-size: 12px;
     font-style: normal;
     line-height: 16px; /* 133.333% */
+
   `
 };

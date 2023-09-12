@@ -5,7 +5,7 @@ import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
-export const brands = [
+const brands = [
   {
     name: 'GS25',
     path: '?=GS25',

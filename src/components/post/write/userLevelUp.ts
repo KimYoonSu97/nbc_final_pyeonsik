@@ -9,8 +9,10 @@ export const levelChecker = async (userId: string): Promise<{ isNeedUpdate: bool
     .eq('postCategory', 'recipe');
 
   //기존의 유저의 레벨을 가져옵니다.
+  console.log(count);
   const { data } = await supabase.from('users').select('level').eq('id', userId).single();
 
+  console.log(data);
   let userLevel: string | null = null;
 
   // 알러트 함수와 업데이트할 유저의 레벨값,

@@ -41,12 +41,11 @@ export const S = {
   `,
 
   ThumbnailImg: styled.img`
-    border-radius: 10px;
+    border-radius: 20%;
     width: 48px;
     height: 48px;
     object-fit: cover;
     cursor: pointer;
-
     transition: filter 0.3s ease, opacity 0.3s ease;
     &:hover {
       filter: brightness(0.6);
