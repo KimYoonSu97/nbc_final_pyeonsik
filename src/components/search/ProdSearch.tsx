@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSearchProd } from 'src/api/product';
@@ -9,10 +9,15 @@ import { FlexBoxCenter } from 'src/styles/styleBox';
 import { brands } from '../sidebar/event/BrandSelector';
 import { setBrandName } from 'src/function/setBrandName';
 import { toast } from 'react-toastify';
+import { ButtonFilter } from './Prodfilter';
+import NoSearchResult from './NoSearchResult';
+import { useLocation } from 'react-router';
 
 const ProdSearch = () => {
+  const location = useLocation();
   const [eventFilter, setEventFilter] = useState(false);
-  const [brandFilter, setBrandFilter] = useState('');
+  const [brandFilter, setBrandFilter] = useState('all');
+  const [filteredData, setFilteredData] = useState<Product[]>();
 
   const keyword: string = decodeURI(window.location.search).slice(2);
   const {
@@ -39,6 +44,10 @@ const ProdSearch = () => {
       .flat();
   }, [productList]);
 
+  useEffect(() => {
+    setFilteredData(ButtonFilter(products!, eventFilter, brandFilter));
+  }, [eventFilter, brandFilter, productList]);
+
   const { ref } = useInView({
     threshold: 1,
     onChange: (inview) => {
@@ -47,49 +56,52 @@ const ProdSearch = () => {
     }
   });
 
-  const ButtonFilter = (list: Product[], eventFilter: boolean, brandfilter: string): Product[] => {
-    let filteredData: Product[];
-
-    // 이벤트 필터가 거짓 이고 브랜드 필터도 전체일때
-    if (!eventFilter && brandFilter === 'all') return list;
-
-    // 이벤트 필터가 참이면?
-    if (eventFilter) {
-      filteredData = list.filter((item) => item.event !== null);
-      // 이벤트 필터가 참인데 브랜드 필터가 전체일때
-      if (brandFilter === 'all') {
-        return filteredData;
-      } else if (brandFilter === 'GS25') {
-        // return
-      }
-    }
-    // else if ( brandFilter === 'CU') {
-    return list;
-    // }else if ( brandFilter === 'emart24') {
-
-    // }else  {
-
-    // }
-  };
-
-  // const filterdProduct = ()
+  if (location.pathname !== '/mypage/mypost' && filteredData?.length === 0) {
+    return <NoSearchResult />;
+  }
 
   return (
     <>
       <S.FixedContainer>
         {brands.map((item) => {
-          return <S.BrandSelect key={item.name}>{setBrandName(item.path.slice(2))}</S.BrandSelect>;
+          return (
+            <S.BrandSelect
+              key={item.name}
+              $isSelected={brandFilter}
+              $brandCode={item.path.slice(2)}
+              $brandColor={item.color}
+              onClick={() => {
+                setBrandFilter(item.path.slice(2));
+              }}
+            >
+              {setBrandName(item.path.slice(2))}
+            </S.BrandSelect>
+          );
         })}
 
         <S.FilterArea>
-          <S.FilterButton $isSelected={eventFilter}>전체제품</S.FilterButton>
-          <S.FilterButton $isSelected={!eventFilter}>행사제품</S.FilterButton>
+          <S.FilterButton
+            $isSelected={eventFilter}
+            onClick={() => {
+              setEventFilter(false);
+            }}
+          >
+            전체제품
+          </S.FilterButton>
+          <S.FilterButton
+            $isSelected={!eventFilter}
+            onClick={() => {
+              setEventFilter(true);
+            }}
+          >
+            행사제품
+          </S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
       <S.FixedBox />
 
       <S.Container>
-        {products?.map((item) => {
+        {filteredData?.map((item) => {
           return <ProdCard key={item.id} data={item} />;
         })}
       </S.Container>
@@ -101,14 +113,24 @@ const ProdSearch = () => {
 export default ProdSearch;
 
 interface FilterProps {
-  $isSelected: boolean;
+  $isSelected: boolean | string;
+  $brandCode?: string;
+  $brandColor?: string;
 }
 
 const S = {
-  BrandSelect: styled(FlexBoxCenter)`
+  BrandSelect: styled(FlexBoxCenter)<FilterProps>`
     cursor: pointer;
     width: 68px;
-    color: var(--font-black, var(--Black, #242424));
+    /* color: var(--font-black, var(--Black, #242424)); */
+    color: ${(props) => {
+      // props.$brandCode === props.$isSelected ? 'white' : "#242424"
+      if (props.$brandCode === props.$isSelected) {
+        return 'white';
+      } else {
+        return '#242424';
+      }
+    }};
     text-align: center;
     font-family: Pretendard;
     font-size: 12px;
@@ -118,7 +140,13 @@ const S = {
     border-radius: 100px;
     border-radius: 100px;
     border: 1px solid var(--neutral-300, #d0d5dd);
-    background: #fff;
+    background: ${(props) => {
+      if (props.$brandCode === props.$isSelected) {
+        return props.$brandColor;
+      } else {
+        return 'white';
+      }
+    }};
     padding: 3px 0;
     margin-right: 4px;
   `,
@@ -147,7 +175,7 @@ const S = {
     top: 106px;
     left: calc((100vw - 1280px) / 2 + 16px);
     z-index: 10;
-    /* background: #f6f7f9; */
+    background: #f6f7f9;
   `,
 
   FixedBox: styled.div`

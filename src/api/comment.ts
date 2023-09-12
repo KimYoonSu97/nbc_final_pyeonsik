@@ -29,9 +29,6 @@ const getCommentCountDataByPostId = async (postId: string) => {
     .select('id', { count: 'exact', head: true })
     .eq('postId', postId);
 
-  console.log(count);
-  console.log(recomment);
-
   const response = recomment! + count!;
 
   return response;

@@ -11,9 +11,7 @@ interface AchievementType {
   description: string;
 }
 
-const BadgeAlert = (type: string) => {
-  const text = AchievementModal(type);
-
+const BoardAlert = () => {
   return new Promise<boolean>((resolve, reject) => {
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -21,21 +19,31 @@ const BadgeAlert = (type: string) => {
           <>
             <S.Container>
               <S.ConfirmBox>
-                <S.Badge>{text.component}</S.Badge>
-                <S.Title>야호! 뱃지를 획득했어요!</S.Title>
-                <S.Caption>{text.name}</S.Caption>
-                <S.Description>{text.description}</S.Description>
+                <S.Title>그르르갉이란?</S.Title>
+
+                <S.Description>
+                  {
+                    '편의점 앞에 플라스틱 의자를 끌 때 나는 소리에요 \n .그르르갉에서 편하게 가벼운 이야기부터 \n 무거운 고민까지,다양한 얘기를 나눠보세요!'
+                  }
+                </S.Description>
                 <S.ButtonArea>
                   <S.Button
                     as="button"
-                    $type={type}
                     onClick={() => {
                       onClose();
                     }}
                   >
-                    확인
+                    시작하기
                   </S.Button>
                 </S.ButtonArea>
+                <S.NeverArea
+                  onClick={() => {
+                    localStorage.setItem('boardInfoNever', 'true');
+                    onClose();
+                  }}
+                >
+                  다시 보지 않기
+                </S.NeverArea>
               </S.ConfirmBox>
             </S.Container>
             <S.Background
@@ -52,7 +60,7 @@ const BadgeAlert = (type: string) => {
   });
 };
 
-export default BadgeAlert;
+export default BoardAlert;
 
 const ButtonBasic = styled(FlexBoxCenter)`
   width: 122px;
@@ -61,7 +69,7 @@ const ButtonBasic = styled(FlexBoxCenter)`
   text-align: center;
 `;
 interface ButtonProps {
-  $type: string;
+  $type?: string;
 }
 
 const S = {
@@ -78,19 +86,18 @@ const S = {
     right: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
+    background: rgba(36, 36, 36, 0.2);
+    /* backdrop-filter: blur(10px);/ */
     z-index: 101;
   `,
   ConfirmBox: styled(FlexBoxAlignCenter)`
     width: 400px;
-    height: 300px;
+    height: 278px;
     border-radius: 10px;
     background: #fff;
 
     /* padding: 90px 0 30px; */
-    padding-top: 90px;
-
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
     position: fixed;
     top: calc((100vh - 274px) / 2);
     right: calc((100vw - 400px) / 2);
@@ -104,10 +111,11 @@ const S = {
     font-style: normal;
     font-weight: 700;
     line-height: 28px; /* 127.273% */
-    margin-bottom: 8px;
+    margin-top: 30px;
+    margin-bottom: 24px;
   `,
   Caption: styled.p`
-    color: var(--font-black, var(--Black, #242424));
+    color: var(--neutral-400, #98a2b3);
     text-align: center;
     white-space: pre-line;
     ${styleFont.bodyLarge};
@@ -115,15 +123,16 @@ const S = {
   `,
 
   Description: styled.p`
-    color: var(--font-black, var(--Black, #242424));
     text-align: center;
     white-space: pre-line;
-    margin-bottom: 26px;
+    margin-bottom: 24px;
 
     ${styleFont.bodyLarge};
+    color: var(--neutral-400, #98a2b3);
   `,
   ButtonArea: styled(FlexBox)`
     cursor: pointer;
+    margin-bottom: 16px;
   `,
   Button: styled(ButtonBasic)<ButtonProps>`
     background: var(--Black, #242424);
@@ -131,11 +140,16 @@ const S = {
     ${styleFont.buttonSmall}
     cursor: pointer;
   `,
-  Badge: styled(FlexBoxCenter)`
-    width: 140px;
-    height: 140px;
-    /* background-color: royalblue; */
-    position: absolute;
-    top: -70px;
+  NeverArea: styled.div`
+    color: var(--neutral-400, #98a2b3);
+    text-align: center;
+
+    cursor: pointer;
+    /* label-small */
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 145.455% */
   `
 };
