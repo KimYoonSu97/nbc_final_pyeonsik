@@ -38,6 +38,7 @@ const ProdList = () => {
   });
 
   const products = useMemo(() => {
+    if (productList) setIsProdLoading(false);
     return productList?.pages
       .map((data) => {
         return data.products;
