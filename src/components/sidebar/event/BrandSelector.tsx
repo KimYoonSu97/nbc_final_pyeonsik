@@ -5,16 +5,16 @@ import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
-const brands = [
-  {
-    name: 'CU',
-    path: '?=CU',
-    logoImg: <CU />
-  },
+export const brands = [
   {
     name: 'GS25',
     path: '?=GS25',
     logoImg: <GS25 />
+  },
+  {
+    name: 'SEVEN ELEVEN',
+    path: '?=7-ELEVEn',
+    logoImg: <SevenEleven />
   },
   {
     name: 'E-MART24',
@@ -22,9 +22,9 @@ const brands = [
     logoImg: <Emart24 />
   },
   {
-    name: 'SEVEN ELEVEN',
-    path: '?=7-ELEVEn',
-    logoImg: <SevenEleven />
+    name: 'CU',
+    path: '?=CU',
+    logoImg: <CU />
   }
 ];
 
@@ -33,7 +33,7 @@ const BrandSelector = () => {
   return (
     <S.Container>
       <S.TapButton to={'event'} $type={''} $location={location.search}>
-        행사 상품 전체 보기
+        행사 상품 전체보기
       </S.TapButton>
       {brands.map((brand) => {
         return (

@@ -1,7 +1,7 @@
 import { Location } from 'react-router';
 import { atom } from 'jotai';
 import { atomWithHash } from 'jotai-location';
-import { Post } from 'src/types/types';
+import { Post, Product } from 'src/types/types';
 
 export const myPagePostAtom = atom<Post[]>([]);
 
@@ -34,4 +34,10 @@ export const writeCategorySelect = atom<string>('');
 
 export const searchBar = atom<boolean>(false);
 
-export const searchKeyWord = atom<string>('');
+export const searchKeyWord = atom<{ postData: Post[] | null; productData: Product[] | null; searchKey: string }>({
+  postData: null,
+  productData: null,
+  searchKey: ''
+});
+
+export const myPageHover = atom<boolean>(false);

@@ -4,25 +4,22 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import TinderCard from 'react-tinder-card';
-import { IconGoodBig, IconAllReview } from 'src/components/icons';
+import { IconAllReview } from 'src/components/icons';
 import { useLocation, useNavigate } from 'react-router';
 import { debounce } from 'lodash';
+import Swipeable from 'react-swipy';
 
 const ProdReviewSwiper = () => {
   const [step, setStep] = useState(0);
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    setStep(0)
-  },[])
-
   const getProdData = async () => {
     const { data } = await supabase
       .from('show_products')
       .select('id,prodName,prodImg')
       .order('created_at', { ascending: false })
-      .limit(5)
+      .limit(10);
     return data;
   };
 
@@ -42,28 +39,27 @@ const ProdReviewSwiper = () => {
   });
 
   const onDropToLike = async (id: string) => {
-    console.log(id);
+    console.log('라이크카드', id);
     const plusReview = swiperData?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
     if (!plusReview) {
-
       const addReview = {
         prodId: id,
         isGood: true,
         userId: userId
       };
       await supabase.from('swiper').insert([addReview]);
-      return;
+      prodNext();
     }
   };
 
   const onDropToDisLike = async (id: string) => {
+    console.log('라이크카드', id);
     const plusReview = swiperData?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
     if (!plusReview) {
-
       const addReview = {
         prodId: id,
         isGood: false,
@@ -71,62 +67,77 @@ const ProdReviewSwiper = () => {
       };
 
       await supabase.from('swiper').insert([addReview]);
-      return;
-    }}
+      prodNext();
+    }
+  };
 
   const prodNext = () => {
     setStep((prevStep) => prevStep + 1);
   };
 
-  const onCardLeftScreen = (direction: string, prod: string) => {
-    if (direction === 'left') {
-      onDropToLike(prod);
-      prodNext();
-    } else if (direction === 'right') {
-      onDropToDisLike(prod);
-      prodNext();
-    }
-  };
-  console.log(step);
-
   const skip = () => {
     prodNext();
   };
 
+  // const remove = () => setCardData(cardData?.slice(1, cardData.length));
+
+  // useEffect(()=>{
+  //   remove()
+  // },[onDropToDisLike,onDropToLike])
+
   return (
     <S.containerWrap>
       <S.ProdReviewWrap>
-        <S.ReviewDisLike>
-          <div>
-            <img src="/images/ReviewLike.png" />
-            <h1>또 먹을래요!</h1>
-          </div>
-        </S.ReviewDisLike>
         {step !== filterprodData?.length ? (
           <S.ReviewProducts>
-
-            <div className="tinderCards">
-              <div className="tinderCards__cardContainer">
-                  {filterprodData?.map((prod, index) => (
-                    <div key={prod.id}>
-                      {index === step && (
-                        <TinderCard
-                          className="swipe"
-                          key={prod.id}
-                          preventSwipe={['up', 'down']}
-                          onCardLeftScreen={(dir) => onCardLeftScreen(dir, prod.id)}
+            {filterprodData?.map((prod, index) => (
+              <S.WrapperStyles key={prod.id}>
+                {index === step && (
+                  <Swipeable
+                    buttons={({ right, left }: any) => (
+                      <S.ButtonWrap>
+                        <S.ReviewLike
+                          onClick={() => {
+                            left();
+                            setTimeout(() => {
+                              onDropToLike(prod.id);
+                            }, 300);
+                          }}
                         >
                           <div>
-                            <img src={prod.prodImg} draggable="false" />
-                            <h3>{prod.prodName}</h3>
+                            <img src="/images/ReviewLike.png" />
+                            <h1>또 먹을래요!</h1>
                           </div>
-                        </TinderCard>
-                      )}
-                    </div>
-                  ))}
-                
-              </div>
-            </div>
+                        </S.ReviewLike>
+                        <S.ReviewDisLike
+                          onClick={() => {
+                            right();
+                            setTimeout(() => {
+                              onDropToDisLike(prod.id);
+                            }, 300);
+                          }}
+                        >
+                          <div>
+                            <img src="/images/ReviewLike.png" />
+                            <h1>그만 먹을래요!</h1>
+                          </div>
+                        </S.ReviewDisLike>
+                      </S.ButtonWrap>
+                    )}
+                    // onAfterSwipe={remove}
+                  >
+                    <S.ProductWrap>
+                      <S.productInner>
+                        <div>
+                          <img src={prod.prodImg} draggable="false" />
+                          <h1>{prod.prodName}</h1>
+                        </div>
+                      </S.productInner>
+                    </S.ProductWrap>
+                  </Swipeable>
+                )}
+              </S.WrapperStyles>
+            ))}
             <S.SkipButtonWrap>
               <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
             </S.SkipButtonWrap>
@@ -137,19 +148,12 @@ const ProdReviewSwiper = () => {
               <p>
                 앗! 더이상 남은<span>신제품 카드가 없어요!</span>
               </p>
-              <button onClick={() => navigate('/all_review')}>리뷰 보러가기</button>
+              <button onClick={() => navigate('/review_list')}>리뷰 보러가기</button>
             </div>
           </S.ReviewEndWrap>
         )}
-        <S.ReviewDisLike>
-          <div>
-            <img src="/images/ReviewDisLike.png" />
-            <h1>그만 먹을래요!</h1>
-          </div>
-        </S.ReviewDisLike>
       </S.ProdReviewWrap>
-
-      <S.AllReviewsWrap onClick={() => navigate('/all_review')}>
+      <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
         <p>
           <IconAllReview />
           <span>신제품 리뷰 보기</span>
@@ -171,7 +175,7 @@ const S = {
     overflow: hidden;
     background-color: #fff;
     height: 700px;
-    ::before {
+    /* ::before {
       display: block;
       content: '';
       position: absolute;
@@ -183,18 +187,85 @@ const S = {
       border: 1px solid var(--neutral-200, #e4e7ec);
       background: var(--neutral-050, #f9fafb);
       z-index: -1;
-    }
+    } */
   `,
 
   ProdReviewWrap: styled.div`
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 40px;
-    margin-bottom: 28px;
+    width: 100%;
+    height: 100%;
+  `,
+  WrapperStyles: styled.div`
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-left: -178px;
+    width: 356px;
+    height: 464px;
+  `,
+  ButtonWrap: styled.div`
+    position: absolute;
+    top: 32.5%;
+    left: -59%;
+    width: 220%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   `,
 
-  ProductsWrap: styled.div`
+  ReviewLike: styled.div`
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 160px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: -1.5px;
+    }
+  `,
+  ReviewDisLike: styled.div`
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 160px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: -1.5px;
+    }
+  `,
+  ProductWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -219,7 +290,7 @@ const S = {
         height: auto;
         margin-bottom: 20px;
       }
-      h3 {
+      h1 {
         font-size: 22px;
         font-style: normal;
         font-weight: 700;
@@ -228,56 +299,13 @@ const S = {
       }
     }
   `,
-  ReviewDisLike: styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 160px;
-    height: 160px;
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    h1 {
-      font-size: 18px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 24px;
-      letter-spacing: -1.5px;
-    }
-  `,
-  ProdItemWrap: styled.div`
-    position: relative;
-    left: 0;
-    top: 0px;
-    background-color: #fff;
-  `,
-
+  productInner: styled.div``,
   ReviewProducts: styled.div`
+    width: 100%;
+    height: 100%;
     position: relative;
     left: 0;
-    top: 0;
-
-    .tinderCards__cardContainer {
-      width: 356px;
-      height: 464px;
-      position: relative;
-      left: 0;
-      top: 0;
-    }
-    .swipe {
-      position: absolute;
-      left: 0;
-      top: 0;
-
-      div {
-      }
-    }
+    bottom: 0;
   `,
 
   ReviewEndWrap: styled.div`
@@ -322,9 +350,10 @@ const S = {
     }
   `,
   SkipButtonWrap: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    position: absolute;
+    left: 50%;
+    margin-left: -84px;
+    bottom: -50px;
   `,
   SkipButton: styled.button`
     font-size: 24px;
@@ -338,7 +367,7 @@ const S = {
   `,
   AllReviewsWrap: styled.button`
     display: block;
-    margin: 0 auto;
+    margin: 50px auto 0px auto;
     p {
       display: flex;
       align-items: center;

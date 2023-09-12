@@ -5,6 +5,10 @@ import { getSearchProd } from 'src/api/product';
 import { useInView } from 'react-intersection-observer';
 import { InfinityProductList } from 'src/types/types';
 import ProdCard from '../eventProd/ProdCard';
+import { FlexBoxCenter } from 'src/styles/styleBox';
+import { brands } from '../sidebar/event/BrandSelector';
+import { setBrandName } from 'src/function/setBrandName';
+import { toast } from 'react-toastify';
 
 const ProdSearch = () => {
   const keyword: string = decodeURI(window.location.search).slice(2);
@@ -42,6 +46,18 @@ const ProdSearch = () => {
 
   return (
     <>
+      <S.FixedContainer>
+        {brands.map((item) => {
+          return <S.BrandSelect key={item.name}>{setBrandName(item.path.slice(2))}</S.BrandSelect>;
+        })}
+
+        <S.FilterArea>
+          <S.FilterButton $isSelected={true}>전체제품</S.FilterButton>
+          <S.FilterButton $isSelected={false}>행사제품</S.FilterButton>
+        </S.FilterArea>
+      </S.FixedContainer>
+      <S.FixedBox />
+
       <S.Container>
         {products?.map((item) => {
           return <ProdCard key={item.id} data={item} />;
@@ -54,8 +70,30 @@ const ProdSearch = () => {
 
 export default ProdSearch;
 
+interface FilterProps {
+  $isSelected: boolean;
+}
+
 const S = {
+  BrandSelect: styled(FlexBoxCenter)`
+    cursor: pointer;
+    width: 68px;
+    color: var(--font-black, var(--Black, #242424));
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 100px;
+    border-radius: 100px;
+    border: 1px solid var(--neutral-300, #d0d5dd);
+    background: #fff;
+    padding: 3px 0;
+  `,
   Container: styled.div`
+    margin-top: 30px;
+
     width: 100%;
     display: flex;
     align-items: center;
@@ -66,5 +104,80 @@ const S = {
   EmptyBox: styled.div`
     width: 200px;
     height: 200px;
+  `,
+  FixedContainer: styled.div`
+    /* width: 100%; */
+
+    display: flex;
+    /* justify-content: flex-end; */
+    /* background-color: red; */
+
+    position: fixed;
+    /* top: 137px; */
+
+    /* padding: 20px 0 10px; */
+    /* 수정 */
+    padding: 24px 0px 10px 0px;
+
+    top: 106px;
+    left: calc((100vw - 1280px) / 2 + 16px);
+    z-index: 10;
+    background: #f6f7f9;
+  `,
+
+  FixedBox: styled.div`
+    width: 100%;
+
+    /* height: 20px; */
+    /* 수정 */
+    height: 7px;
+
+    position: fixed;
+
+    /* top: 156px; */
+    /* 수정 */
+    top: 160px;
+
+    background: linear-gradient(0deg, transparent 0%, #f6f7f9 100%);
+
+    right: calc((100vw - 1280px) / 2 + 16px + 296px + 62px);
+    z-index: 11;
+  `,
+  FilterArea: styled.div`
+    display: flex;
+    gap: 5px;
+    margin-left: 0;
+  `,
+  FilterButton: styled.div<FilterProps>`
+    display: flex;
+    width: 46px;
+    height: 26px;
+    border-radius: 100px;
+    cursor: pointer;
+
+    background: ${(props) => {
+      if (props.$isSelected) {
+        return 'f6f7f9';
+      } else {
+        return '#fff';
+      }
+    }};
+
+    font-weight: ${(props) => {
+      if (props.$isSelected) {
+        return '400';
+      } else {
+        return '700';
+      }
+    }};
+
+    justify-content: center;
+    align-items: center;
+
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 16px; /* 133.333% */
   `
 };
