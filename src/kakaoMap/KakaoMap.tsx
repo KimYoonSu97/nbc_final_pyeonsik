@@ -112,7 +112,11 @@ const KakaoMap = () => {
           <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
           {nearConv.distance ? (
             <>
-              <S.LocationButton to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}>
+            {/* 새창 으로 열기 */}
+              <S.LocationButton
+                to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}
+                target="_blank"
+              >
                 <S.IconBox>
                   <IconMap />
                 </S.IconBox>
