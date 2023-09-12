@@ -1,4 +1,3 @@
-import { FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import styled from 'styled-components';
 
@@ -27,16 +26,9 @@ export const S = {
   `,
 
   BackButton: styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-
     color: var(--neutral-400, var(--neutral-400, #98a2b3));
     ${styleFont.buttonMedium}
   `,
-
-  IconBox: styled(FlexBoxCenter)``,
 
   LogoContainer: styled.div`
     cursor: pointer;

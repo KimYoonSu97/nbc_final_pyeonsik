@@ -20,6 +20,7 @@ const Achievement = () => {
   const [postLength, setPostLength] = useState<number>(0);
   const [postsNeededForNextLevel, setPostsNeededForNextLevel] = useState<number>(0);
   const [, setUserData] = useState<{ [key: string]: boolean }>({});
+  console.log(userLevel);
 
   useEffect(() => {
     if (id) {

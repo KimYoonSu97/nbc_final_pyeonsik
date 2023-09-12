@@ -115,10 +115,8 @@ const CommentForMap = ({ comment }: Props) => {
 
         {userId === comment.userId && (
           <S.EditButtonArea>
-            <S.EditButton onClick={() => setIsEditComment(!isEditComment)}>
-              {isEditComment ? '취소' : '수정'}
-            </S.EditButton>
-            <S.EditButton onClick={() => deleteCommentButton(comment.id)}>| 삭제</S.EditButton>
+            <S.EditButton onClick={() => setIsEditComment(!isEditComment)}>수정</S.EditButton>|
+            <S.EditButton onClick={() => deleteCommentButton(comment.id)}>삭제</S.EditButton>
           </S.EditButtonArea>
         )}
         {isOpenReCommentInput && (
@@ -148,7 +146,6 @@ const S = {
   LowWrapper: styled(FlexBox)`
     gap: 4px;
     margin-left: 25px;
-    align-items: center;
   `,
   ButtonArea: styled(FlexBoxAlignCenter)`
     margin-left: auto;
@@ -227,8 +224,7 @@ const S = {
     cursor: pointer;
 
     width: 28px;
-    height: 20px;
-    padding-top: 3px;
+    height: 40px;
     flex-direction: column;
     flex-shrink: 0;
     color: var(--neutral-400, var(--neutral-400, #98a2b3));

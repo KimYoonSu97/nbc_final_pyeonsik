@@ -78,6 +78,7 @@ const S = {
   `,
   LogoContainer: styled.div`
     cursor: pointer;
+
     color: white;
     width: 80px;
     height: 22px;
