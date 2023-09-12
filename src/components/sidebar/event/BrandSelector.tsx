@@ -9,26 +9,22 @@ const brands = [
   {
     name: 'GS25',
     path: '?=GS25',
-    logoImg: <GS25 />,
-    color: '#2ABADA'
+    logoImg: <GS25 />
   },
   {
     name: 'SEVEN ELEVEN',
     path: '?=7-ELEVEn',
-    logoImg: <SevenEleven />,
-    color: '#008061'
+    logoImg: <SevenEleven />
   },
   {
     name: 'E-MART24',
     path: '?=emart24',
-    logoImg: <Emart24 />,
-    color: '#FFB81C'
+    logoImg: <Emart24 />
   },
   {
     name: 'CU',
     path: '?=CU',
-    logoImg: <CU />,
-    color: '#652F8D'
+    logoImg: <CU />
   }
 ];
 

@@ -14,6 +14,8 @@ interface AchievementType {
 const BadgeAlert = (type: string) => {
   const text = AchievementModal(type);
 
+  console.log(text.component);
+
   return new Promise<boolean>((resolve, reject) => {
     confirmAlert({
       customUI: ({ onClose }) => {
