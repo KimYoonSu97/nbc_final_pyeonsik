@@ -1,160 +1,134 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
-import styled from 'styled-components';
-import TinderCard from 'react-tinder-card';
-import { IconAllReview } from 'src/components/icons';
-import { useLocation, useNavigate } from 'react-router';
-import { debounce } from 'lodash';
 import Swipeable from 'react-swipy';
-import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
+import styled from 'styled-components';
+import { IconAllReview } from 'src/components/icons';
 
-const ProdReviewSwiper = () => {
-  const [step, setStep] = useState(0);
+const ReviewLocation = () => {
   const userId = useLoginUserId();
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const location = useLocation();
-  // const locationId = location.state.id
-
-  console.log(location);
-  // console.log(state)
-
+  const { data: swiperData } = useQuery(['swiper'], getSwiperData);
   const { data: prodData } = useQuery(['products'], getProdData);
 
-  const { data: swiperData } = useQuery(['swiper'], getSwiperData);
-
-  const filterprodData = prodData?.filter((prod) => {
-    return !swiperData?.data?.some((swiperProd) => {
-      return prod.id === swiperProd.prodId && swiperProd.userId === userId;
-    });
+  const product = prodData?.find((data) => {
+    return data.id == id;
   });
 
-  if (filterprodData && filterprodData!.length >= 10) {
-    filterprodData!.length = 10;
-  }
-  console.log(filterprodData);
+  const ReviewedProduct = swiperData?.data?.find((prod) => {
+    return prod.prodId === product.id && prod.userId === userId;
+  });
 
-  const onDropToLike = async (id: string) => {
-    const plusReview = swiperData?.data?.find((prod) => {
-      return prod.prodId === id && prod.userId === userId;
-    });
-    if (!plusReview) {
-      const addReview = {
-        prodId: id,
-        isGood: true,
-        userId: userId
-      };
-      await supabase.from('swiper').insert([addReview]);
-      prodNext();
-    }
-  };
+  console.log('리뷰드프로덕트', ReviewedProduct);
 
-  const onDropToDisLike = async (id: string) => {
-    const plusReview = swiperData?.data?.find((prod) => {
-      return prod.prodId === id && prod.userId === userId;
-    });
-    if (!plusReview) {
-      const addReview = {
-        prodId: id,
-        isGood: false,
-        userId: userId
-      };
+  console.log(id, '파람아이디');
+  console.log(prodData, '솨이이퍼데이타');
+  console.log(product, '여기임');
 
-      await supabase.from('swiper').insert([addReview]);
-      prodNext();
-    }
-  };
+  // const onDropToLike = async (id: string) => {
+  //     const plusReview = prodData?.data?.find((prod) => {
+  //       return prod.prodId === id && prod.userId === userId;
+  //     });
+  //     if (!plusReview) {
+  //       const addReview = {
+  //         prodId: id,
+  //         isGood: true,
+  //         userId: userId
+  //       };
+  //       await supabase.from('swiper').insert([addReview]);
 
-  const prodNext = () => {
-    setStep((prevStep) => prevStep + 1);
-  };
+  //     }
+  //   };
 
-  const skip = () => {
-    prodNext();
-  };
+  //   const onDropToDisLike = async (id: string) => {
+  //     const plusReview = swiperData?.data?.find((prod) => {
+  //       return prod.prodId === id && prod.userId === userId;
+  //     });
+  //     if (!plusReview) {
+  //       const addReview = {
+  //         prodId: id,
+  //         isGood: false,
+  //         userId: userId
+  //       };
 
+  //       await supabase.from('swiper').insert([addReview]);
+  //     }
+  //   };
+
+  const skip = () => {};
   return (
-    <S.containerWrap>
-      <S.ProdReviewWrap>
-        {step !== filterprodData?.length ? (
+    <>
+      <S.containerWrap>
+        <S.ProdReviewWrap>
           <S.ReviewProducts>
-            {filterprodData?.map((prod, index) => (
-              <S.WrapperStyles key={prod.id}>
-                {index === step && (
-                  <Swipeable
-                    buttons={({ right, left }: any) => (
-                      <S.ButtonWrap>
-                        <S.ReviewLike
-                          onClick={() => {
-                            left();
-                            setTimeout(() => {
-                              onDropToLike(prod.id);
-                            }, 300);
-                          }}
-                        >
-                          <div>
-                            <img src="/images/ReviewLike.png" draggable="false" />
-                            <h1>또 먹을래요!</h1>
-                          </div>
-                        </S.ReviewLike>
-                        <S.ReviewDisLike
-                          onClick={() => {
-                            right();
-                            setTimeout(() => {
-                              onDropToDisLike(prod.id);
-                            }, 300);
-                          }}
-                        >
-                          <div>
-                            <img src="/images/ReviewDisLike.png" draggable="false" />
-                            <h1>그만 먹을래요!</h1>
-                          </div>
-                        </S.ReviewDisLike>
-                      </S.ButtonWrap>
-                    )}
-                  >
-                    <S.ProductWrap>
-                      <S.productInner>
-                        <div>
-                          <img src={prod.prodImg} draggable="false" />
-                          <h1>{prod.prodName}</h1>
-                        </div>
-                      </S.productInner>
-                    </S.ProductWrap>
-                  </Swipeable>
+            <S.WrapperStyles>
+              <Swipeable
+                buttons={({ right, left }: any) => (
+                  <S.ButtonWrap>
+                    <S.ReviewLike
+                      className={ReviewedProduct?.isGood === true ? 'selected' : ''}
+                      onClick={() => {
+                        left();
+                        setTimeout(() => {
+                          //   onDropToLike(prod.id);
+                        }, 300);
+                      }}
+                    >
+                      <div>
+                        <img src="/images/ReviewLike.png" draggable="false" />
+                        <h1>또 먹을래요!</h1>
+                      </div>
+                    </S.ReviewLike>
+                    <S.ReviewDisLike
+                      className={ReviewedProduct?.isGood === false ? 'selected' : ''}
+                      onClick={() => {
+                        right();
+                        setTimeout(() => {
+                          //   onDropToDisLike(prod.id);
+                        }, 300);
+                      }}
+                    >
+                      <div>
+                        <img src="/images/ReviewDisLike.png" draggable="false" />
+                        <h1>그만 먹을래요!</h1>
+                      </div>
+                    </S.ReviewDisLike>
+                  </S.ButtonWrap>
                 )}
-              </S.WrapperStyles>
-              
-            ))}
+              >
+                <S.ProductWrap>
+                  <S.productInner>
+                    <div>
+                      <img src={product?.prodImg} draggable="false" />
+                      <h1>{product?.prodName}</h1>
+                    </div>
+                  </S.productInner>
+                </S.ProductWrap>
+              </Swipeable>
+            </S.WrapperStyles>
             <S.SkipButtonWrap>
               <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
             </S.SkipButtonWrap>
           </S.ReviewProducts>
-        ) : (
-          <S.ReviewEndWrap>
-            <div>
-              <p>
-                앗! 더이상 남은<span>신제품 카드가 없어요!</span>
-              </p>
-              <button onClick={() => navigate('/all_review')}>리뷰 보러가기</button>
-            </div>
-          </S.ReviewEndWrap>
-        )}
-      </S.ProdReviewWrap>
-
-      <S.AllReviewsWrap onClick={() => navigate('/all_review')}>
-        <p>
-          <IconAllReview />
-          <span>신제품 리뷰 보기</span>
-        </p>
-      </S.AllReviewsWrap>
-    </S.containerWrap>
+        </S.ProdReviewWrap>
+        <S.AllReviewsWrap onClick={() => navigate('/all_review')}>
+          <p>
+            <IconAllReview />
+            <span>신제품 리뷰 보기</span>
+          </p>
+        </S.AllReviewsWrap>
+      </S.containerWrap>
+    </>
   );
 };
 
-export default ProdReviewSwiper;
+export default ReviewLocation;
 
 const S = {
   containerWrap: styled.div`
@@ -167,18 +141,18 @@ const S = {
     background-color: #fff;
     height: 700px;
     /* ::before {
-      display: block;
-      content: '';
-      position: absolute;
-      left: 0;
-      top: -10px;
-      width: 353px;
-      height: 470px;
-      border-radius: 10px;
-      border: 1px solid var(--neutral-200, #e4e7ec);
-      background: var(--neutral-050, #f9fafb);
-      z-index: -1;
-    } */
+        display: block;
+        content: '';
+        position: absolute;
+        left: 0;
+        top: -10px;
+        width: 353px;
+        height: 470px;
+        border-radius: 10px;
+        border: 1px solid var(--neutral-200, #e4e7ec);
+        background: var(--neutral-050, #f9fafb);
+        z-index: -1;
+      } */
   `,
 
   ProdReviewWrap: styled.div`
@@ -203,6 +177,12 @@ const S = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .selected {
+      border: 2px solid transparent;
+      background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #ffb334 0%, #eb4335 100%);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+    }
   `,
 
   ReviewLike: styled.div`
@@ -266,7 +246,7 @@ const S = {
     background-color: #fff;
     border-radius: 10px;
     border: 2px solid transparent;
-    background-image: linear-gradient(#fff, #fff), linear-gradient(to right, red 0%, orange 100%);
+    background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #ffb334 0%, #eb4335 100%);
     background-origin: border-box;
     background-clip: content-box, border-box;
     box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);

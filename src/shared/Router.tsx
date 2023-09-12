@@ -20,6 +20,7 @@ import PostModal from 'src/pages/PostModal';
 import Report from 'src/pages/Report';
 import Review from 'src/pages/Review';
 import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper';
+import ReviewLocation from 'src/components/detail/prodReview/ReviewLocation';
 
 
 const Router = () => {
@@ -45,6 +46,7 @@ const Router = () => {
 
           <Route path="/all_review" element={<Review />} />
           <Route path="/review_swiper" element={<ProdReviewSwiper />} />
+          <Route path="/review_product/:id" element={<ReviewLocation />} />
 
 
 

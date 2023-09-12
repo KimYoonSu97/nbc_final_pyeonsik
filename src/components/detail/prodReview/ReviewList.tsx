@@ -9,6 +9,7 @@ import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
 import MyEvaluation from './MyEvaluation';
 import EvaluationGraph from './EvaluationGraph';
+import { useLocation, useNavigate } from 'react-router';
 
 const ReviewList = () => {
   const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });
@@ -19,6 +20,9 @@ const ReviewList = () => {
 
   const produts = dataProd?.data as Product[] | undefined;
   const swipers = dataSwiper?.data as Swiper[];
+  const navigate = useNavigate()
+  const location = useLocation()
+  console.log(location)
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
@@ -32,11 +36,15 @@ const ReviewList = () => {
     return <p>error</p>;
   }
 
+  const con = (id:string,index:number) => {
+    navigate(`/review_product/${id}`)
+  }
+
   return (
     <S.ReviewContainer>
-      {produts?.map((prod) => {
+      {produts?.map((prod, index) => {
         return (
-          <S.ReviewBox key={prod.id}>
+          <S.ReviewBox key={prod.id} onClick={()=>con(prod.id,index)}>
             <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
             <S.TextContainer>
               <S.ProdName>{prod.prodName}</S.ProdName>
