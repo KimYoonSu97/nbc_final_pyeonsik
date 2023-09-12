@@ -10,13 +10,16 @@ import { FlexBoxCenter, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import { IconCameraSmall } from '../icons';
 import {
+  CORRECT_NICK_MESSAGES,
   LIMIT_3MB,
+  MAX_NICKNAME_LENGTH,
   NICKNAME_ALREADY,
   NICKNAME_DIGITS,
   NICKNAME_FORM,
   NICKNAME_INPUT,
   NICKNAME_SLANG
 } from 'src/utility/guide';
+import { debounce } from 'lodash';
 import { useQueryClient } from '@tanstack/react-query';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 
@@ -35,14 +38,8 @@ const ProfileSetForm = () => {
   );
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [loginUser, setLoginUser] = useAtom(userAtom);
-
-  const correctNickNameMessages = [
-    '아무도 생각하지 못한 멋진 닉네임이에요. 😎',
-    '이런 창의적인 생각은 어떻게 하시나요. 👏',
-    '이 세상에 하나뿐인 닉네임일지도 몰라요. 🥳',
-    '누구나 부러워할 최고의 닉네임이에요. 🤘'
-  ];
+  const [_, setLoginUser] = useAtom(userAtom);
+  const [nickNameColor, setNickNameColor] = useState<string>('black'); // 초기 색상은 검정색
 
   const [isError, setIsError] = useState(false);
 
@@ -65,6 +62,8 @@ const ProfileSetForm = () => {
   const observeNickName = async () => {
     const filterdNickName = filter.clean(nickname);
     // 유효성 검사
+
+    handleDebounce(nickname);
 
     if (nickname === '') {
       setIsError(false);
@@ -103,8 +102,8 @@ const ProfileSetForm = () => {
         setErrorMessage(NICKNAME_ALREADY);
       } else {
         setIsError(false);
-        const randomIndex = Math.floor(Math.random() * correctNickNameMessages.length);
-        const randomMessage = correctNickNameMessages[randomIndex];
+        const randomIndex = Math.floor(Math.random() * CORRECT_NICK_MESSAGES.length);
+        const randomMessage = CORRECT_NICK_MESSAGES[randomIndex];
         setSuccessMessage(randomMessage);
       }
     }
@@ -115,6 +114,11 @@ const ProfileSetForm = () => {
   };
   useEffect(() => {
     observeNickName();
+
+    // 글자 수별 글자 색 변화
+    if (nickname.length < MAX_NICKNAME_LENGTH) {
+      setNickNameColor('black');
+    } else setNickNameColor('red');
   }, [nickname]);
 
   const setProfile = async () => {
@@ -146,10 +150,6 @@ const ProfileSetForm = () => {
       toast(NICKNAME_INPUT);
       return;
     }
-    // if (profileImgSrc === '') {
-    //   toast('사진을 등록해 주세요');
-    //   return;
-    // }
 
     const { data, error } = await supabase.from('users').update(newUser).eq('id', userId).select().single();
 
@@ -159,6 +159,11 @@ const ProfileSetForm = () => {
     toast('회원가입이 완료되었어요!');
     navigate('/');
   };
+
+  // 자꾸 닉네임 15자 제한해도 16자 써져서 일단 이렇게 해놈..
+  const handleDebounce = debounce((nickname: string) => {
+    if (nickname.length > MAX_NICKNAME_LENGTH) setNickname((prevNickname) => prevNickname.slice(0, -1));
+  }, 10);
 
   return (
     <S.Container>
@@ -183,8 +188,18 @@ const ProfileSetForm = () => {
         />
       </S.ProfileBox>
       <S.InputArea>
-        <S.Input maxLength={15} type="text" value={nickname} placeholder={NICKNAME_INPUT} onChange={nickNameHandler} />
+        <S.Input
+          maxLength={MAX_NICKNAME_LENGTH}
+          type="text"
+          value={nickname}
+          placeholder={NICKNAME_INPUT}
+          onChange={nickNameHandler}
+        />
+        <S.InputLimtArea color={nickNameColor}>
+          {nickname.length}/{MAX_NICKNAME_LENGTH}
+        </S.InputLimtArea>
       </S.InputArea>
+
       {!isError && <S.SuccessMessage>{successMessage}</S.SuccessMessage>}
       {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       {isError ? (
@@ -250,6 +265,12 @@ const S = {
     background: #fff;
     padding: 12px 11px;
     /* margin-bottom: 8px; */
+  `,
+  InputLimtArea: styled.div`
+    color: ${(props) => props.color};
+    padding-right: 1px;
+    margin-right: 0.4px;
+    font-size: 12px;
   `,
   Input: styled.input`
     outline: none;

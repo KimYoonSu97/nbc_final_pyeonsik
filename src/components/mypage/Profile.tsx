@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Filter from 'badwords-ko'; // 비속어 필터링(한글)
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserData, updateUserNickname, updateProfileImg } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -11,7 +12,16 @@ import useUserMutate from 'src/hooks/useUserMutate';
 // 탈퇴
 import UserDelete from '../register/UserDelete';
 import { toast } from 'react-toastify';
-import { NICKNAME_ALREADY, SERVICE_PREPARING } from 'src/utility/guide';
+import {
+  CORRECT_NICK_MESSAGES,
+  MAX_NICKNAME_LENGTH,
+  NICKNAME_ALREADY,
+  NICKNAME_DIGITS,
+  NICKNAME_FORM,
+  NICKNAME_SLANG,
+  SERVICE_PREPARING
+} from 'src/utility/guide';
+import { debounce } from 'lodash';
 
 const Profile = () => {
   const userId = useLoginUserId();
@@ -20,6 +30,13 @@ const Profile = () => {
   const [currentNickname, setCurrentNickname] = useState('');
   const [social, setSocial] = useState('');
   const inputRef = useRef<any>(null);
+  const [nameLimitColor, setNameLimitColor] = useState<string>('black'); // 초기 색상은 검정색
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isNickError, setNickError] = useState(false);
+
+  const filter = new Filter();
 
   const { data, isLoading, isError } = useQuery(['loginUser'], () => getUserData(userId), {
     enabled: userId ? true : false,
@@ -71,10 +88,59 @@ const Profile = () => {
       toast(NICKNAME_ALREADY);
       return;
     }
+    if(isNickError){
+      toast(errorMessage)
+      return;
+    }
 
     nicknameMutation.mutate({ nickname, id: userId });
     toast('닉네임이 변경되었습니다.');
   };
+
+  // 글자 수별 제한 숫자색 변경
+  useEffect(() => {
+    // 디바운싱 함수 호출
+    handleDebounce(nickname);
+    // 닉네임 유효성
+    if (nickname === '') {
+      setNickError(false);
+      setSuccessMessage('편식에서만의 닉네임을 사용해 보세요!');
+      return;
+    } else {
+      const randomIndex = Math.floor(Math.random() * CORRECT_NICK_MESSAGES.length);
+      const randomMessage = CORRECT_NICK_MESSAGES[randomIndex];
+      setSuccessMessage(randomMessage);
+    }
+
+    // 한글, 영어,숫자, _ , - 만 가능
+    const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
+    if (!nicknamePattern.test(nickname) && nickname) {
+      setNickError(true);
+      setErrorMessage(NICKNAME_FORM);
+      return;
+    } else setNickError(false);
+    if (nickname.length < 2) {
+      setNickError(true);
+      setErrorMessage(NICKNAME_DIGITS);
+      return;
+    } else setNickError(false);
+
+    const filterdNickName = filter.clean(nickname);
+
+    if (filterdNickName.includes('*')) {
+      setNickError(true);
+      setErrorMessage(NICKNAME_SLANG);
+      return;
+    }
+
+    if (nickname === currentNickname) {
+      setNameLimitColor('black');
+      return;
+    }
+    if (nickname.length < MAX_NICKNAME_LENGTH) {
+      setNameLimitColor('blue');
+    } else setNameLimitColor('red');
+  }, [nickname]);
 
   if (isLoading) {
     return <p>Loading…</p>;
@@ -85,6 +151,11 @@ const Profile = () => {
   if (data?.data.length === 0) {
     return <p>none</p>;
   }
+
+  // 자꾸 닉네임 15자 제한해도 16자 써져서 일단 이렇게 해놈..
+  const handleDebounce = debounce((nickname: string) => {
+    if (nickname.length > MAX_NICKNAME_LENGTH) setNickname((prevNickname) => prevNickname.slice(0, -1));
+  }, 10);
 
   return (
     <>
@@ -109,15 +180,22 @@ const Profile = () => {
           />
         </S.ProfileBox>
         <S.InputWrapper>
-          <S.InfoCaption>닉네임</S.InfoCaption>
+          <S.InfoCaption>
+            닉네임 {!isNickError && <S.SuccessMessage>{successMessage}</S.SuccessMessage>}
+            {isNickError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+          </S.InfoCaption>
           <S.NicknameInputBox>
             <S.InputArea
               type="text"
+              maxLength={MAX_NICKNAME_LENGTH}
               value={nickname || ''}
               onChange={(e) => {
                 setNickname(e.target.value);
               }}
-            />
+            ></S.InputArea>
+            <S.InputLimtArea color={nameLimitColor}>
+              {nickname.length}/{MAX_NICKNAME_LENGTH}
+            </S.InputLimtArea>
             <S.InfoSubmitButton onClick={updateNickname}>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
         </S.InputWrapper>
@@ -195,6 +273,8 @@ const S = {
   InputWrapper: styled.div``,
   InfoCaption: styled.div`
     ${styleFont.labelSmall}
+    display: flex;
+    flex-direction: row;
   `,
   InfoInputBox: styled(FlexBoxAlignCenter)`
     width: 350px;
@@ -218,6 +298,13 @@ const S = {
     width: 250px;
 
     border: none;
+  `,
+
+  InputLimtArea: styled.div`
+    color: ${(props) => props.color};
+    padding-right: 1px;
+    margin-right: 0.4px;
+    font-size: 12px;
   `,
   InfoSubmitButton: styled(FlexBox)`
     cursor: pointer;
@@ -251,5 +338,20 @@ const S = {
     font-style: normal;
     font-weight: 400;
     line-height: 20px; /* 142.857% */
+  `,
+
+  ErrorMessage: styled.div`
+    width: 294px;
+    height: 20px;
+    text-align: end;
+    color: #ff7474;
+    ${styleFont.labelSmall}
+  `,
+  SuccessMessage: styled.div`
+    width: 294px;
+    height: 20px;
+    text-align: end;
+    color: #4285f4;
+    ${styleFont.labelSmall}
   `
 };
