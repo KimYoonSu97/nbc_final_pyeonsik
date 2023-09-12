@@ -28,8 +28,7 @@ const Main = () => {
             navigate('/write');
           }}
         >
-          <IconWriteButton />
-          작성하기
+          <IconWriteButton />글 쓰기
         </S.WriteButton>
         <S.FilterArea>
           <S.FilterButton

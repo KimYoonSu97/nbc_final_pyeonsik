@@ -82,3 +82,7 @@ export { ReactComponent as IconRecipePost } from './write/IconRecipe.svg';
 export { ReactComponent as IconWarning } from './login/IconWarning.svg';
 
 export { ReactComponent as IconSecret } from './mypage/IconSecret.svg';
+
+// location
+export { ReactComponent as IconMap } from './map/IconMap.svg';
+export { ReactComponent as IconLocation } from './map/IconLocation.svg';

@@ -148,13 +148,12 @@ const ProdReviewSwiper = () => {
               <p>
                 앗! 더이상 남은<span>신제품 카드가 없어요!</span>
               </p>
-              <button onClick={() => navigate('/all_review')}>리뷰 보러가기</button>
+              <button onClick={() => navigate('/review_list')}>리뷰 보러가기</button>
             </div>
           </S.ReviewEndWrap>
         )}
       </S.ProdReviewWrap>
-
-      <S.AllReviewsWrap onClick={() => navigate('/all_review')}>
+      <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
         <p>
           <IconAllReview />
           <span>신제품 리뷰 보기</span>
@@ -216,7 +215,7 @@ const S = {
   `,
 
   ReviewLike: styled.div`
-  cursor: pointer;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,7 +239,7 @@ const S = {
     }
   `,
   ReviewDisLike: styled.div`
-  cursor: pointer;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -18,13 +18,11 @@ import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
 import Report from 'src/pages/Report';
-import Review from 'src/pages/Review';
+import ReviewList from 'src/pages/ReviewList';
 import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper';
-
 
 const Router = () => {
   const location = useLocation();
-  console.log(location)
   let state = location.state as { backgroundLocation?: Location };
 
   return (
@@ -42,11 +40,8 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
-
-          <Route path="/all_review" element={<Review />} />
+          <Route path="/review_list" element={<ReviewList />} />
           <Route path="/review_swiper" element={<ProdReviewSwiper />} />
-
-
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
