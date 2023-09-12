@@ -22,7 +22,6 @@ const Main = () => {
 
   return (
     <>
-      {' '}
       {/* 데이터 불러올때 스켈레톤 UI */}
       {isLoading && (
         <>
@@ -51,9 +50,9 @@ const Main = () => {
               toast(SERVICE_PREPARING);
             }}
           >
-            최신순
+            추천순
           </S.FilterButton>
-          <S.FilterButton $isSelected={false}>추천순</S.FilterButton>
+          <S.FilterButton $isSelected={false}>최신순</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
       <S.FixedBox />
