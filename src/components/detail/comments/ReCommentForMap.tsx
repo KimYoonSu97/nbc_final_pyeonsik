@@ -5,8 +5,11 @@ import CommentUserInfo from './CommentUserInfo';
 import ReCommentLikes from './ReCommentLikes';
 import ReCommentInput from './ReCommentInput';
 import useReCommentMutate from 'src/hooks/useReCommentMutate';
-import CreatedAt from 'src/utility/CreatedAt';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+
+dayjs.locale('ko');
 
 interface CommentDataType {
   comment: string;
@@ -32,6 +35,9 @@ const ReCommentForMap = ({ reComment, parentId }: Props) => {
 
   const { deleteReCommentButton } = useReCommentMutate(parentId);
 
+  const month = dayjs(reComment.created_at).add(1, 'month').get('M');
+  const date = dayjs(reComment.created_at).get('D');
+
   return (
     <>
       <S.CommentArea>
@@ -41,7 +47,7 @@ const ReCommentForMap = ({ reComment, parentId }: Props) => {
             <CommentUserInfo users={reComment.users} />
             <S.Time>·</S.Time>
             <S.Time>
-              <CreatedAt createdAt={reComment.created_at} />
+              {month}월 {date}일
             </S.Time>
             <S.ButtonArea>
               <ReCommentLikes commentId={reComment.id} />

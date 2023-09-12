@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import ProdCard from './ProdCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -7,9 +7,11 @@ import { useLocation } from 'react-router';
 import { useInView } from 'react-intersection-observer';
 import { InfinityProductList } from 'src/types/types';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
+import ProdSkeleton from '../skeleton/ProdSkeleton';
 
 const ProdList = () => {
   const location = useLocation();
+  const [isProdLoading, setIsProdLoading] = useState<Boolean>(true);
 
   let brandParam: string;
   if (location.search === '') {
@@ -53,6 +55,13 @@ const ProdList = () => {
 
   return (
     <>
+      {/* 이것도 */}
+      {/* 제품 불러올때 스켈레톤 UI */}
+      {isProdLoading && (
+        <>
+          <ProdSkeleton />
+        </>
+      )}
       <S.Container>
         {products?.map((item) => {
           return <ProdCard key={item.id} data={item} />;

@@ -67,6 +67,7 @@ export { ReactComponent as IconGood } from './review/IconGood.svg';
 export { ReactComponent as IconBad } from './IconBad.svg';
 export { ReactComponent as IconGoodFace } from './IconGoodFace.svg';
 export { ReactComponent as IconBadFace } from './IconBadFace.svg';
+export { ReactComponent as IconAllReview } from './IconAllReview.svg';
 
 // my page
 export { ReactComponent as IconLogOut } from './mypage/IconLogOut.svg';
@@ -81,3 +82,7 @@ export { ReactComponent as IconRecipePost } from './write/IconRecipe.svg';
 export { ReactComponent as IconWarning } from './login/IconWarning.svg';
 
 export { ReactComponent as IconSecret } from './mypage/IconSecret.svg';
+
+// location
+export { ReactComponent as IconMap } from './map/IconMap.svg';
+export { ReactComponent as IconLocation } from './map/IconLocation.svg';

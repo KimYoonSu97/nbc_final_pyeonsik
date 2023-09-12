@@ -14,6 +14,7 @@ const Main = () => {
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const [userLogin, __] = useAtom(userAtom);
+  // 이걸살려
 
   return (
     <>
@@ -28,8 +29,7 @@ const Main = () => {
             navigate('/write');
           }}
         >
-          <IconWriteButton />
-          작성하기
+          <IconWriteButton />글 쓰기
         </S.WriteButton>
         <S.FilterArea>
           <S.FilterButton
@@ -38,9 +38,9 @@ const Main = () => {
               toast(SERVICE_PREPARING);
             }}
           >
-            추천순
+            최신순
           </S.FilterButton>
-          <S.FilterButton $isSelected={false}>최신순</S.FilterButton>
+          <S.FilterButton $isSelected={false}>추천순</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
       <S.FixedBox />

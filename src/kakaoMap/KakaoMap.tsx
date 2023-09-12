@@ -3,7 +3,7 @@ import 'react-kakao-maps-sdk';
 import { ConvsInform } from 'src/types/types';
 import { GetConvList } from './GetConvList';
 import styled from 'styled-components';
-import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
+import { CU, Emart24, GS25, IconMap, SevenEleven } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import NearByBox from 'src/components/sidebar/event/NearByBox';
@@ -62,7 +62,6 @@ const KakaoMap = () => {
   // 편의점 리스트 중 가장 가까운 편의점을 찾습니다.
   const findClosest = () => {
     if (convs.length === 0) {
-      console.log('배열이 비어있습니다.');
     } else {
       let closestConv = convs.find((v) => v.distance > 0); // 초기값으로 값이 있는 원소
       if (!closestConv) closestConv = convs[0];
@@ -75,7 +74,6 @@ const KakaoMap = () => {
       }
       setNearConv(closestConv);
       setLogoFn(closestConv.brand_name);
-      console.log('가장 가까운 conv:', closestConv);
     }
   };
   useEffect(() => {
@@ -108,46 +106,47 @@ const KakaoMap = () => {
   };
 
   return (
-    <>
-      <S.Container>
-        {nearConv && (
-          <>
-            <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
-            {nearConv.distance ? (
-              <>
-                <S.LocationButton to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}>
-                  위치보기
-                </S.LocationButton>
-                <S.NearByStore>
-                  <S.NearByLogo> {Logo && <Logo />}</S.NearByLogo>
-                  <S.StoreInfo>
-                    <S.StoreName>{nearConv.position_name}</S.StoreName>
-                    <S.Distance>
-                      {Math.floor(nearConv.distance) === nearConv.distance
-                        ? nearConv.distance + 'm'
-                        : nearConv.distance + 'km'}
-                    </S.Distance>
-                  </S.StoreInfo>
-                </S.NearByStore>
-              </>
-            ) : (
+    <S.Container>
+      {nearConv && (
+        <>
+          <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
+          {nearConv.distance ? (
+            <>
+              <S.LocationButton to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}>
+                <S.IconBox>
+                  <IconMap />
+                </S.IconBox>
+                위치 보기
+              </S.LocationButton>
               <S.NearByStore>
-                <S.NoStore>{'반경 5km 내\n가까운 편의점이 없습니다.'}</S.NoStore>
+                <S.NearByLogo> {Logo && <Logo />}</S.NearByLogo>
+                <S.StoreInfo>
+                  <S.StoreName>{nearConv.position_name}</S.StoreName>
+                  <S.Distance>
+                    {Math.floor(nearConv.distance) === nearConv.distance
+                      ? nearConv.distance + 'm'
+                      : nearConv.distance + 'km'}
+                  </S.Distance>
+                </S.StoreInfo>
               </S.NearByStore>
-            )}
-          </>
-        )}
-        <S.NearByBrand>
-          {convs
-            .filter((item) => {
-              return item.brand_name !== nearConv?.brand_name;
-            })
-            .map((item, index) => {
-              return <NearByBox key={index} brand={item} />;
-            })}
-        </S.NearByBrand>
-      </S.Container>
-    </>
+            </>
+          ) : (
+            <S.NearByStore>
+              <S.NoStore>{'반경 5km 내\n가까운 편의점이 없습니다.'}</S.NoStore>
+            </S.NearByStore>
+          )}
+        </>
+      )}
+      <S.NearByBrand>
+        {convs
+          .filter((item) => {
+            return item.brand_name !== nearConv?.brand_name;
+          })
+          .map((item, index) => {
+            return <NearByBox key={index} brand={item} />;
+          })}
+      </S.NearByBrand>
+    </S.Container>
   );
 };
 
@@ -177,6 +176,9 @@ const S = {
     color: #fff;
     margin-bottom: 15px;
     ${styleFont.buttonSmall}
+  `,
+  IconBox: styled(FlexBoxCenter)`
+    margin-right: 2px;
   `,
   NearByStore: styled(FlexBoxCenter)`
     width: 280px;
@@ -212,7 +214,7 @@ const S = {
   NearByBrand: styled(FlexBoxAlignCenter)`
     flex-direction: column;
     gap: 8px;
-    margin-top: 16px;
+    margin: 16px 0px 12px 0px;
   `,
   NoStore: styled.div`
     color: var(--font-black, var(--Black, #242424));
