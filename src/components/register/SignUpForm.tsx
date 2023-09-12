@@ -57,6 +57,14 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       password
     });
 
+    const { data: user } = await supabase.auth.getUser();
+
+    const newUser = {
+      id: user.user?.id,
+      email: user.user?.email
+    };
+    await supabase.from('users').insert(newUser);
+
     if (error) {
       error.message === 'User already registered' && setErrorMessage('이미 사용 중인 이메일이에요.');
       error.message === 'Password should be at least 6 characters' &&
