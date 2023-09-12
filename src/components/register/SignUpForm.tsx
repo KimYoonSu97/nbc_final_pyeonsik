@@ -33,7 +33,7 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       toast('이미 로그인되어 메인화면으로 이동합니다.');
       navigate('/');
     }
-  });
+  }, [userId]);
 
   // 이메일 정규식 표현
   const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
