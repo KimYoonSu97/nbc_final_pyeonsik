@@ -34,6 +34,7 @@ export const SkeletonItem = styled.div`
   position: relative;
   overflow: hidden;
   border-radius: 4px;
+  // 이걸살려
 
   @keyframes skeleton-gradient {
     0% {

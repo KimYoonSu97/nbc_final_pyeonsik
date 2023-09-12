@@ -17,6 +17,7 @@ const Main = () => {
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const [userLogin, __] = useAtom(userAtom);
+  // 이걸살려
 
   return (
     <>
