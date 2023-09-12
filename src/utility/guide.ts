@@ -25,3 +25,13 @@ export const ERROR_AUTH = {
   'User already registered': '이미 사용 중인 이메일이에요.',
   'Password should be at least 6 characters': '비밀번호는 6자리 이상으로 입력해 주세요.'
 };
+
+export const MAX_NICKNAME_LENGTH = 15;
+
+
+export const CORRECT_NICK_MESSAGES = [
+  '아무도 생각하지 못한 멋진 닉네임이에요. 😎',
+  '이런 창의적인 생각은 어떻게 하시나요. 👏',
+  '이 세상에 하나뿐인 닉네임일지도 몰라요. 🥳',
+  '누구나 부러워할 최고의 닉네임이에요. 🤘'
+];

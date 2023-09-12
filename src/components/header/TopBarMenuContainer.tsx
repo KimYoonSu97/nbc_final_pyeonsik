@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { myPageHover, userAtom, writeCategorySelect } from 'src/globalState/jotai';
+import { myPageHover, userAtom, userSettingEmail, userSignUp, writeCategorySelect } from 'src/globalState/jotai';
 import supabase from 'src/lib/supabaseClient';
 import { css, styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
@@ -24,6 +24,8 @@ interface User {
 }
 
 const TopBarMenuContainer = () => {
+  const [nextStep, setNextStep] = useAtom(userSignUp);
+  const [userEmail, setUserEmail] = useAtom(userSettingEmail);
   const location = useLocation();
   const [userLogin, setUserLogin] = useAtom(userAtom);
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
@@ -47,6 +49,23 @@ const TopBarMenuContainer = () => {
       enabled: userLogin !== null || userId ? true : false
     }
   );
+
+  useEffect(() => {
+    //무조건로그인 상태일때만 검사하면됨
+    if (data && userId) {
+      console.log('실행됨');
+      console.log(data?.data?.profileImg);
+      console.log(data?.data?.nickname);
+      if (data?.data?.profileImg === null && data?.data?.nickname === null) {
+        toast('닉네임 프로필 설정 후 이용 가능합니다.');
+        setUserEmail(data?.data.email);
+        setNextStep(true);
+        navigate('/register');
+      }
+    } else {
+      return;
+    }
+  }, [data, userId]);
 
   //소셜로그인 검사함수
   const checkOrSetOAuthUser = async () => {
