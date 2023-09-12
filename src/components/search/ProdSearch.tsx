@@ -142,7 +142,7 @@ const S = {
     align-items: center;
     position: fixed;
     padding: 24px 0px 10px 0px;
-    background: red;
+    /* background: red; */
 
     top: 106px;
     left: calc((100vw - 1280px) / 2 + 16px);
