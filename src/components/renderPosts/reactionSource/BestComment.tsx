@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getBestCommentLikeByPostId } from 'src/api/commentLike';
 import { IconBestComment } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
+import { useLocation, useNavigate } from 'react-router';
 
 interface BestCommentProps {
   postId: string;
@@ -15,6 +16,8 @@ interface BestComment {
 }
 
 const BestComment = ({ postId }: BestCommentProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { data, isLoading } = useQuery({
     queryKey: ['bestComment', postId],
     queryFn: () => getBestCommentLikeByPostId(postId)
@@ -25,7 +28,11 @@ const BestComment = ({ postId }: BestCommentProps) => {
   }
 
   if (!data?.commentId) {
-    return <S.NoComment>베스트 댓글이 없습니다! </S.NoComment>;
+    return (
+      <S.NoComment onClick={() => navigate(`/detail/${postId}`, { state: { backgroundLocation: location } })}>
+        아직 베스트 댓글이 없습니다.
+      </S.NoComment>
+    );
   }
 
   const { commentId } = data as unknown as BestComment;
@@ -53,10 +60,15 @@ const S = {
     display: flex;
     /* align-items: center; */
     /* justify-content: center; */
+    margin-left: 50px;
+    /* margin-right: 30px; */
+    width: 550px;
+    /* border-right: 1px solid #d9d9d9; */
 
     /* height: 100%; */
-    width: 100%;
+    /* width: 100%; */
     position: relative;
+    cursor: pointer;
   `,
   ButtonContainer: styled.div``,
   CommentContainer: styled.div`
@@ -109,6 +121,7 @@ const S = {
   `,
 
   NoComment: styled.div`
+    margin-left: 50px;
     ${styleFont.bodyMedium}
   `
 };

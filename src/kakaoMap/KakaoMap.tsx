@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import 'react-kakao-maps-sdk';
-import { useGeoLocation } from './useGeoLocation';
-import { GetDistanceBtw } from './GetDistanceBtw';
-import { GetDetailAddress } from './GetDetailAddress';
-import { LocInform } from 'src/types/types';
+import { ConvsInform } from 'src/types/types';
+import { GetConvList } from './GetConvList';
+import styled from 'styled-components';
+import { CU, Emart24, GS25, IconMap, SevenEleven } from 'src/components/icons';
+import { styleFont } from 'src/styles/styleFont';
+import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import NearByBox from 'src/components/sidebar/event/NearByBox';
+import { Link } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -12,102 +16,320 @@ declare global {
 }
 
 const KakaoMap = () => {
-  const { location, error } = useGeoLocation();
+  const [convs, setConvs] = useState<ConvsInform[]>([]);
+  const [myLat, setMyLat] = useState<number | null>(null); // 위도 상태 변수
+  const [myLng, setMyLng] = useState<number | null>(null); // 경도 상태 변수
 
-  const [convs, setConvs] = useState<LocInform[]>([]);
-  const [curLoc, setCurLoc] = useState<string>();
+  const [nearConv, setNearConv] = useState<ConvsInform>();
+  const [Logo, setLogo] = useState<React.FunctionComponent<React.SVGProps<SVGSVGElement>> | null>(null);
 
-  if (error) {
-    console.log(error);
-  }
-
-  const ps = new kakao.maps.services.Places();
-  // 카테고리로 편의점을 검색합니다
+  // 현재 자신의 위치 좌표를 지정해줍니다.
+  const setMyPosition = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        setMyLat(lat);
+        setMyLng(lng);
+      });
+    } else {
+      setMyLat(37); // 서울 위도
+      setMyLng(127); // 서울 경도
+    }
+  };
 
   useEffect(() => {
-    if (location) {
-      ps.categorySearch(
-        'CS2',
-        (data, status, _pagination) => {
-          if (status === kakao.maps.services.Status.OK) {
-            // let markers = [];
+    setMyPosition();
+  }, []);
 
-            for (var i = 0; i < 3; i++) {
-              // 새로운 데이터를 생성
-              const newConv: LocInform = {
-                position: {
-                  lat: data[i].y,
-                  lng: data[i].x
-                },
-                content: data[i].place_name
-              };
-
-              // 이전 convs 배열에 새로운 데이터를 추가
-              setConvs((prevConvs) => [...prevConvs, newConv]);
-            }
-          }
-        },
-        {
-          location: new kakao.maps.LatLng(location?.position.lat as number, location?.position.lng as number),
-          // useMapCenter: true,
-          size: 15,
-          radius: 5000,
-          sort: kakao.maps.services.SortBy.DISTANCE
-          // 왜냐
-        }
-      );
-      // 시 주소를 받아옵니다.
-      // GetDetailAddress 함수를 호출하는 함수
-      async function getAddressAndUse() {
-        const latitude = 37.123456; // 위도
-        const longitude = 127.654321; // 경도
-
+  // 위치가 변경될 때마다 주변 편의점 리스트를 가져옵니다.
+  useEffect(() => {
+    if (myLat !== null && myLng !== null) {
+      const fetchData = async () => {
         try {
-          const address = await GetDetailAddress(latitude, longitude); // 여기에 원하는 위경도
-          if (address) {
-            console.log('주소:', address);
-            // 여기에서 주소 값을 사용하면 됩니다.
-          } else {
-            console.log('주소를 찾을 수 없습니다.');
-          }
+          const convList = await GetConvList(myLat, myLng);
+          setConvs(convList);
+
+          // console.log(convList);
         } catch (error) {
-          console.error('에러 발생:', error);
+          console.error('편의점 리스트 가져오기 오류:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [myLat, myLng]);
+
+  // 편의점 리스트 중 가장 가까운 편의점을 찾습니다.
+  const findClosest = () => {
+    if (convs.length === 0) {
+    } else {
+      let closestConv = convs.find((v) => v.distance > 0); // 초기값으로 값이 있는 원소
+      if (!closestConv) closestConv = convs[0];
+
+      for (let i = 0; i < convs.length; i++) {
+        if (convs[i].distance <= 0) continue; // 빈 값이면 패스
+        if (convs[i].distance < closestConv.distance) {
+          closestConv = convs[i]; // 더 작은 distance를 가진 원소로 업데이트
         }
       }
-      getAddressAndUse();
+      setNearConv(closestConv);
+      setLogoFn(closestConv.brand_name);
     }
-  }, [location]);
+  };
+  useEffect(() => {
+    findClosest();
+  }, [convs]);
+
+  // 브랜드명에 따라 로고를 지정해줍니다.
+  const setLogoFn = (brandName: string) => {
+    switch (brandName) {
+      case 'CU': {
+        setLogo(CU);
+        break;
+      }
+      case '이마트24': {
+        setLogo(Emart24);
+        break;
+      }
+      case 'GS25': {
+        setLogo(GS25);
+        break;
+      }
+      case '세븐일레븐': {
+        setLogo(SevenEleven);
+        break;
+      }
+      default:
+        // 예외 처리: 알 수 없는 브랜드명일 경우
+        setLogo(null);
+    }
+  };
 
   return (
-    <>
-      <div>위도:{location?.position.lat}</div>
-      <div>경도:{location?.position.lng}</div>
-      <br />
-      <div>{curLoc}</div>
-      <br />
-
-      <div className="conv-container" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {convs.map((conv, index) => (
-          <div key={index} className="conv-item">
-            <div>위도: {conv.position.lat}</div>
-            <div>경도: {conv.position.lng}</div>
-            <div>내용: {conv.content}</div>
-            <div>
-              거리차이:{' '}
-              {GetDistanceBtw(
-                location?.position.lat as number,
-                location?.position.lng as number,
-                conv.position.lat as number,
-                conv.position.lng as number,
-                'kilometer'
-              ).toFixed(2)}
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* <button>위치보기</button> */}
-    </>
+    <S.Container>
+      {nearConv && (
+        <>
+          <S.Title>지금 나랑 가장 가까운 편의점은?</S.Title>
+          {nearConv.distance ? (
+            <>
+            {/* 새창 으로 열기 */}
+              <S.LocationButton
+                to={`https://map.kakao.com/link/map/${nearConv?.full_name},${myLat},${myLng}`}
+                target="_blank"
+              >
+                <S.IconBox>
+                  <IconMap />
+                </S.IconBox>
+                위치 보기
+              </S.LocationButton>
+              <S.NearByStore>
+                <S.NearByLogo> {Logo && <Logo />}</S.NearByLogo>
+                <S.StoreInfo>
+                  <S.StoreName>{nearConv.position_name}</S.StoreName>
+                  <S.Distance>
+                    {Math.floor(nearConv.distance) === nearConv.distance
+                      ? nearConv.distance + 'm'
+                      : nearConv.distance + 'km'}
+                  </S.Distance>
+                </S.StoreInfo>
+              </S.NearByStore>
+            </>
+          ) : (
+            <S.NearByStore>
+              <S.NoStore>{'반경 5km 내\n가까운 편의점이 없습니다.'}</S.NoStore>
+            </S.NearByStore>
+          )}
+        </>
+      )}
+      <S.NearByBrand>
+        {convs
+          .filter((item) => {
+            return item.brand_name !== nearConv?.brand_name;
+          })
+          .map((item, index) => {
+            return <NearByBox key={index} brand={item} />;
+          })}
+      </S.NearByBrand>
+    </S.Container>
   );
 };
 
 export default KakaoMap;
+
+const S = {
+  Container: styled(FlexBoxCenter)`
+    padding: 16px 8px 0 8px;
+    /* background-color: royalblue; */
+    flex-direction: column;
+  `,
+  Title: styled.p`
+    color: var(--font-black, var(--Black, #242424));
+    ${styleFont.titleSmall}
+    margin-bottom: 8px;
+  `,
+  LocationButton: styled(Link)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-decoration: none;
+    width: 280px;
+    /* height: 30px; */
+    padding: 7px 0;
+    background: var(--main, #f02826);
+    color: #fff;
+    margin-bottom: 15px;
+    ${styleFont.buttonSmall}
+  `,
+  IconBox: styled(FlexBoxCenter)`
+    margin-right: 2px;
+  `,
+  NearByStore: styled(FlexBoxCenter)`
+    width: 280px;
+    height: 76px;
+    background: var(--neutral-100, #f2f4f7);
+    border-radius: 10px;
+    flex-direction: column;
+  `,
+  NearByLogo: styled.div`
+    margin-bottom: 11px;
+    height: 20px;
+  `,
+  StoreInfo: styled(FlexBoxAlignCenter)``,
+  StoreName: styled.p`
+    color: var(--font-black, var(--Black, #242424));
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+  `,
+  Distance: styled.p`
+    margin-left: 4px;
+    color: var(--neutral-400, #98a2b3);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 145.455% */
+  `,
+  NearByBrand: styled(FlexBoxAlignCenter)`
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0px 12px 0px;
+  `,
+  NoStore: styled.div`
+    color: var(--font-black, var(--Black, #242424));
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+    white-space: pre-line;
+  `
+};
+
+// const S = {
+//   Container: styled.div`
+//     display: flex;
+//     flex-direction: column;
+
+//     width: 500px;
+//     margin: 0 auto;
+//     padding: 15px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//   `,
+//   ListsContainer: styled.div`
+//     margin-top: 30px;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   ListContainer: styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   RowContainer: styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   ColumnContainer: styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+//   ContentContainer: styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     width: 450px;
+//     margin: 0 auto;
+//     padding: 20px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     background-color: #d2d2d2;
+//     justify-content: center; /* 가로 중앙 정렬 */
+//     align-items: center; /* 세로 중앙 정렬 */
+//   `,
+
+//   Title: styled.div`
+//     font-weight: bolder;
+//     font-size: 24px; /* 큰 텍스트 크기 */
+//     text-align: center; /* 가운데 정렬 */
+//     margin: 10px 0px;
+//   `,
+
+//   Content: styled.div`
+//     font-size: 18px;
+//     text-align: center; /* 가운데 정렬 */
+//     font-weight: bolder;
+//   `,
+//   DetailContent: styled.div`
+//     font-size: 13px;
+//     text-align: center; /* 가운데 정렬 */
+//     color: #919191;
+//     margin: 0px 5px;
+//   `,
+//   HugeButton: styled.a`
+//     padding: 12px 20px;
+//     background-color: black;
+//     color: #fff;
+//     border: none;
+//     cursor: pointer;
+//     text-align: center; /* 가운데 정렬 */
+//     border-radius: 15px;
+//     font-weight: bolder;
+//     text-decoration: none;
+//     height: 45px;
+//     margin: 0px 10px;
+//   `,
+//   PositionLink: styled.a`
+//     padding: 2px 5px;
+//     background-color: #707070;
+//     color: #fff;
+//     border: none;
+//     cursor: pointer;
+//     text-align: center; /* 가운데 정렬 */
+//     border-radius: 15px;
+//     font-weight: bolder;
+//     text-decoration: none;
+//   `,
+
+//   Separator: styled.hr`
+//     border-top: 3px solid #434343;
+//     margin: 10px 0;
+//   `
+// };

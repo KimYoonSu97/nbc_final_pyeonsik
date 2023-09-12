@@ -1,20 +1,21 @@
 import React from 'react';
+import { SERVICE_PREPARING } from 'src/utility/guide';
 
 import styled from 'styled-components';
 
 const NewReview = () => {
   return (
     <S.ContentsArea>
-      <S.ProductName>서비스 준비중입니다.</S.ProductName>
+      <S.ProductName>{SERVICE_PREPARING}</S.ProductName>
 
       {/* 요기부터 하위컴포넌트를 맵으로 돌려벌입니다. */}
       {/* <S.ContentWrapper>
         <S.Img />
         <S.ProductInfo>
-          <S.ProductName>서비스 준비중입니다.</S.ProductName> */}
+          <S.ProductName>{SERVICE_PREPARING}</S.ProductName> */}
 
       {/* 이건함수가 있어야해서 컴포넌트를 하나 맹글어서 프롭스로 내려줘야할거같네용 */}
-      {/* <S.Result>서비스 준비중입니다.</S.Result>
+      {/* <S.Result>{SERVICE_PREPARING}</S.Result>
         </S.ProductInfo>
       </S.ContentWrapper> */}
       {/* 요기까지 맵.. */}

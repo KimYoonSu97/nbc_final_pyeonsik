@@ -14,8 +14,8 @@ const postDelete = {
 const writePage = {
   title: '정말로 페이지를 이동할까요?',
   caption: '페이지를 이동하면 \n 작성 중인 내용이 모두 날라가요. \n 그래도 이동할까요?',
-  true: '취소하기',
-  false: '이동하기'
+  true: '이동하기',
+  false: '취소하기'
 };
 const userDelete = {
   title: '정말로 탈퇴할까요?',
@@ -24,14 +24,32 @@ const userDelete = {
   false: '취소하기'
 };
 
+const postWrite = {
+  title: '게시글을 공유하시겠어요?',
+  caption: '현재까지 입력한 내용이 올라가요!',
+  true: '공유하기',
+  false: '취소하기'
+};
+
+const deleteComponent = {
+  title: '작성글을 삭제하시겠어요?',
+  caption: '현재까지 입력한 내용이 사라져요!',
+  true: '삭제하기',
+  false: '취소하기'
+};
+
 export const confirmModalText = (type: string): ConfirmModalTextResult => {
   let result: ConfirmModalTextResult;
   if (type === 'postDelete') {
     result = postDelete;
-  } else if (type === 'writerPage') {
+  } else if (type === 'writePage') {
     result = writePage;
   } else if (type === 'userDelete') {
     result = userDelete;
+  } else if (type === 'postWrite') {
+    result = postWrite;
+  } else if (type === 'deleteComponent') {
+    result = deleteComponent;
   }
   return result!;
 };

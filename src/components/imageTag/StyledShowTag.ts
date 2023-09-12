@@ -19,7 +19,7 @@ export const S = {
   // 렌더링되는 이미지 사이즈도줄임.
   Image: styled.img`
     width: 790px;
-    height: 600px;
+    height: 790px;
     border-radius: 10px;
     object-fit: cover;
   `,
@@ -42,6 +42,8 @@ export const S = {
     height: 80px;
   `,
   TagIconContainer: styled(FlexBoxCenter)`
+    cursor: pointer;
+
     width: 40px;
     height: 40px;
     background-color: white;

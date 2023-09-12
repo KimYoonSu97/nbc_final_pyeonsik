@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
-import { NON_MEMBER } from 'src/utility/alertMessage';
+import { EMAIL_CHECK } from 'src/utility/guide';
 
 export const PrivateRoute = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export const PrivateRoute = () => {
       return true;
     } else {
       // navigate('/login', { state: { backgroundLocation: location } });
-      toast(NON_MEMBER);
+      toast(EMAIL_CHECK);
       return false;
     }
   };

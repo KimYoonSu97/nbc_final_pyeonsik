@@ -27,8 +27,9 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
           <S.TagContainer
             key={tagIndex}
             style={{
-              left: tag.x * 1.6667,
-              top: tag.y * 1.6667
+              //사진 비율 변경된 만큼 곱해주세요 790 / 360 = 2.1944 예시 600 / 360
+              left: tag.x * 2.1944,
+              top: tag.y * 2.1944
             }}
             onClick={() => handleTagClick(tag)}
           >
@@ -50,7 +51,15 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
         ))}
       </div>
       <div style={{ width: '790px' }}>
-        <Carousel showThumbs={false} showArrows={true} showStatus={false} centerMode={true} centerSlidePercentage={25}>
+        <Carousel
+          showThumbs={false}
+          showArrows={true}
+          showStatus={false}
+          centerMode={true}
+          centerSlidePercentage={25}
+          showIndicators={false}
+          selectedItem={0}
+        >
           {tagsForImage?.map((tag, tagIndex) => (
             <S.ProductWrapper
               key={tagIndex}

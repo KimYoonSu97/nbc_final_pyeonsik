@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { updateBugBadge, updateSheriffBadge } from 'src/api/badge';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
-import { updateBugBadge, updateSheriffBadge } from 'src/api/badge';
+import { EMAIL_CHECK } from 'src/utility/guide';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
+
+const options1 = ['유저 신고', '오류 제보', '기타'];
+const options2 = [
+  '불법성 게시물 또는 댓글',
+  '음란성 게시물 또는 댓글',
+  '개인정보노출 게시물 또는 댓글',
+  '저작권 침해 게시물 또는 댓글',
+  '홍보성 게시물 또는 댓글',
+  '비방/비하/욕설 게시물 또는 댓글',
+  '불법 상품 판매 게시물 또는 댓글'
+];
 
 const Report = () => {
   const [step, setStep] = useState<number>(1);
@@ -19,6 +31,10 @@ const Report = () => {
 
   const userId = useLoginUserId();
   const navigate = useNavigate();
+
+  const isStep1Complete = userId || (email.trim() !== '' && selectedInquiry1 !== '');
+  const isStep2Complete = selectedInquiry2 !== '';
+  const isStep3Complete = imageName !== '' && (urlLink.trim() !== '' || message.trim() !== '');
 
   const reportImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -42,10 +58,18 @@ const Report = () => {
   };
 
   const handleNext = () => {
-    if (selectedInquiry1) {
-      nextStep();
+    if (selectedInquiry1 === '유저 신고' && email.trim() !== '') {
+      if ((selectedInquiry1 === '유저 신고' && email.trim() !== '', !isValidEmail(email))) {
+        toast(EMAIL_CHECK);
+      } else {
+        setStep(2);
+      }
+    } else if (selectedInquiry1 === '오류 제보' || selectedInquiry1 === '기타') {
+      setStep(3);
+    } else if (userId && selectedInquiry1 === '유저 신고') {
+      setStep(2);
     } else {
-      toast('문의항목을 선택해 주세요.');
+      toast('항목을 선택해 주세요.');
     }
   };
   const handleNext2 = () => {
@@ -56,24 +80,13 @@ const Report = () => {
     }
   };
 
-  const options1 = ['유저 신고', '오류 제보', '기타'];
-  const options2 = [
-    '불법성 게시물 또는 댓글',
-    '음란성 게시물 또는 댓글',
-    '개인정보노출 게시물 또는 댓글',
-    '저작권 침해 게시물 또는 댓글',
-    '홍보성 게시물 또는 댓글',
-    '비방/비하/욕설 게시물 또는 댓글',
-    '불법 상품 판매 게시물 또는 댓글'
-  ];
-
   const handleSubmitButton = async () => {
     const url = [];
     if (image) {
       const { data, error } = await supabase.storage.from('photos').upload(`report/${imageName}`, image);
       if (error) {
         console.error('Error uploading image to Supabase storage:', error);
-        toast('이미지 업로드 중 에러가 발생했습니다!');
+        toast('이미지 업로드 중 에러가 발생했습니다.');
         return;
       }
       url.push(data.path);
@@ -98,26 +111,39 @@ const Report = () => {
     } else updateBugBadge(userId);
   };
 
+  const handleEmailBlur = () => {
+    if (email.trim() !== '' && !isValidEmail(email)) {
+      toast(EMAIL_CHECK);
+      return;
+    }
+  };
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  };
+
   return (
     <ReportWrap id="container">
       {step === 1 && (
         <ReportInner>
           <div>
-            <h1>식신 고객센터</h1>
+            <h1>편식 고객센터</h1>
             <h2>
-              안녕하세요! 식신 고객센터입니다.
-              <span>식신을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
+              안녕하세요! 편식 고객센터입니다.
+              <span>편식을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
             </h2>
           </div>
           {userId ? null : (
-            <div>
-              <h3>이메일 입력</h3>
+            <div className="emailWrap">
+              <h3>이메일</h3>
               <input
                 className="emailInput"
                 value={email}
+                onBlur={handleEmailBlur}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="이메일을 적어주세요."
-              ></input>
+              />
             </div>
           )}
           <div>
@@ -133,7 +159,9 @@ const Report = () => {
                 </p>
               ))}
             </div>
-            <button onClick={handleNext}>선택 완료</button>
+            <button onClick={handleNext} className={isStep1Complete ? 'complete' : ''}>
+              선택 완료
+            </button>
           </div>
         </ReportInner>
       )}
@@ -153,47 +181,52 @@ const Report = () => {
               );
             })}
           </div>
-          <button onClick={handleNext2}>선택 완료</button>
+          <button onClick={handleNext2} className={isStep2Complete ? 'complete' : ''}>
+            선택 완료
+          </button>
         </ReportInner>
       )}
       {step === 3 && (
         <ReportInner>
           <h3 className="last_h3">
-            해당 내용에 대해 확인 할 수 있는<span>사진, 파일, 링크를 업로드 해주세요.</span>
+            해당 내용을 확인 할 수 있는<span>사진이나 파일, 링크를 첨부해 주세요.</span>
           </h3>
           <div>
-            <label htmlFor="fileupload">{imageName ? imageName : '클릭하여 파일을 선택해주세요.'}</label>
+            <label htmlFor="fileupload">{imageName ? imageName : '클릭하여 파일을 선택해 주세요.'}</label>
             <input
               type="file"
               style={{ display: 'none' }}
               onChange={reportImage}
               id="fileupload"
-              placeholder="클릭하여 파일을 선택해주세요."
+              placeholder="클릭하여 파일을 선택해 주세요."
             />
           </div>
-          <input
-            value={urlLink}
-            onChange={(e) => setUrlLink(e.target.value)}
-            placeholder="주소 링크를 입력해주세요."
-          ></input>
+          <input value={urlLink} onChange={(e) => setUrlLink(e.target.value)} placeholder="링크를 입력해 주세요." />
           <input
             className="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="사진,파일,링크에 대해 식신 운영자가 이해할 수 있는 추가 설명을 해주세요."
-          ></input>
-          <button onClick={handleSubmitButton}>제출하기</button>
+            placeholder="사진이나 파일, 링크에 대해 편식 운영자가 이해할 수 있는 추가 설명을 해주세요."
+          />
+          <button onClick={handleSubmitButton} className={isStep3Complete ? 'complete' : ''}>
+            제출하기
+          </button>
         </ReportInner>
       )}
       {step === 4 && (
         <ReportInner>
-          <h1>제출이 완료되었습니다.</h1>
+          <h3 className="reportEnd">
+            제보해 주셔서 감사합니다.
+            <br />
+            빠른 시일 내에 문제를 해결하겠습니다.
+          </h3>
           <button
+            className="goHome"
             onClick={() => {
               navigate('/');
             }}
           >
-            홈으로 가기
+            메인 화면으로 돌아가기
           </button>
         </ReportInner>
       )}
@@ -206,6 +239,7 @@ export default Report;
 const ReportWrap = styled.div``;
 
 const ReportInner = styled.div`
+  margin-top: 70px;
   h1 {
     font-size: 32px;
     font-weight: bold;
@@ -217,6 +251,7 @@ const ReportInner = styled.div`
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 50px;
+    letter-spacing: -1.5px;
     span {
       display: block;
     }
@@ -227,8 +262,30 @@ const ReportInner = styled.div`
     font-weight: bold;
     line-height: 32px;
     margin-bottom: 16px;
+    letter-spacing: -1.5px;
     span {
       display: block;
+    }
+  }
+  .emailWrap {
+    margin-bottom: 50px;
+    h3 {
+      display: inline-block;
+      position: relative;
+      right: 0px;
+      top: 0px;
+      &::after {
+        display: block;
+        content: '*필수';
+        position: absolute;
+        right: -50px;
+        top: 5px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        color: #98a2b3;
+      }
     }
   }
 
@@ -256,10 +313,13 @@ const ReportInner = styled.div`
     border-radius: 5px;
     padding: 11px 0px 11px 12px;
     margin-bottom: 8px;
+    &:hover {
+      box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    }
   }
 
   .selected {
-    background: #ffb334;
+    border: 1px solid var(--main, #f02826);
   }
 
   button {
@@ -270,6 +330,7 @@ const ReportInner = styled.div`
     text-align: left;
     border-radius: 5px;
     background-color: #ced4da;
+    color: #fff;
   }
 
   label {
@@ -299,5 +360,15 @@ const ReportInner = styled.div`
 
   .message {
     padding-bottom: 140px;
+  }
+  .reportEnd {
+    margin-bottom: 40px;
+  }
+  .goHome {
+    background-color: #f02826;
+    letter-spacing: -1px;
+  }
+  .complete {
+    background-color: #f02826;
   }
 `;

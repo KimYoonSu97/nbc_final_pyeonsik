@@ -7,6 +7,10 @@ import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './';
 import ReportIcon from './components/report/ReportIcon';
+import SearchSummary from './components/search/SearchSummary';
+import { useAtom } from 'jotai';
+import { myPageHover, searchKeyWord } from './globalState/jotai';
+import MyPageHover from './components/mypage/MyPageHover';
 
 const queryClient = new QueryClient();
 
@@ -18,10 +22,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const App = () => {
+  const [search, _] = useAtom(searchKeyWord);
+  const [myPage, __] = useAtom(myPageHover);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
+        {search && <SearchSummary />}
+        {myPage && <MyPageHover />}
         <ReportIcon />
         <Router />
         <ToastContainer

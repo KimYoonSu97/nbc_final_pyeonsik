@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import supabase from 'src/lib/supabaseClient';
-import { EditPost, NewPost, NewRecipePost, TagEditPost } from 'src/types/types';
+import { EditPost, NewPost, NewRecipePost, Post, TagEditPost } from 'src/types/types';
 
 // post
 const getPost = async (id: string) => {
@@ -44,7 +44,7 @@ const tagUpdatePost = async (post: TagEditPost) => {
 const getMyPostsById = async (id: string) => {
   const response = await supabase
     .from('posts')
-    .select('*,userId(nickname,profileImg,level)')
+    .select('*,userId(id,nickname,profileImg,level)')
     .eq('userId', id)
     .order('created_at', { ascending: false });
   return response;
@@ -88,6 +88,16 @@ const getPostByKeyword = async ({ keyword, type }: Search) => {
   }
 };
 
+const getPostByKeywordSummary = async (keyword: string) => {
+  const { data } = await supabase
+    .from('posts')
+    .select('*,userId(id,nickname,profileImg,level)')
+    .ilike('title_body', `%${keyword}%`)
+    .range(0, 3);
+  const postData = data as Post[];
+  return postData;
+};
+
 export {
   getPost,
   getQuotationPosts,
@@ -99,5 +109,6 @@ export {
   getMyBookMarkById,
   addRecipePost,
   tagUpdatePost,
-  getPostByKeyword
+  getPostByKeyword,
+  getPostByKeywordSummary
 };

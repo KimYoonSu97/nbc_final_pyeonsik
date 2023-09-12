@@ -74,11 +74,12 @@ const S = {
       props.$type === props.$location &&
       css`
         transition: 0.5s;
-        border-bottom: 2px solid #000;
+        border-bottom: 2px solid #f02826;
+        color: #f02826;
       `}
     &:hover {
+      color: #f02826;
       transition: 0.5s;
-      border-bottom: 2px solid #000;
     }
   `,
   QuickButtonArea: styled(FlexBoxAlignCenter)`

@@ -13,7 +13,9 @@ import { styleFont } from 'src/styles/styleFont';
 const MyPost = () => {
   const id = useLoginUserId();
   const { search } = useLocation();
+
   const [filterHandler, setFilterHandler] = useState(search);
+
   const [
     { isLoading: bookmarkLoading, data: bookmark },
     { isLoading: likeLoading, data: like },
@@ -92,7 +94,7 @@ const MyPost = () => {
           $type={'?=mypost'}
           $location={search}
           onClick={() => {
-            setFilterHandler('');
+            setFilterHandler('?=mypost');
           }}
         >
           내가 쓴 글

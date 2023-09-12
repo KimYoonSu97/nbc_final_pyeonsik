@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
 import { Data } from 'src/types/types';
 import { SearchProps } from 'src/types/types';
 import { ReactComponent as SearchIcon } from 'src/components/imageTag/svg/SearchIcon.svg';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
+import debounce from 'lodash/debounce';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Data[]>([]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const performSearch = async () => {
-    if (!searchKeyword) return;
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      debouncedSearch(searchKeyword);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchKeyword]);
+
+  const debouncedSearch = debounce(async (keyword: string) => {
+    if (!keyword) return;
 
     const { data: filteredResults, error } = await supabase
       .from('products')
       .select('*')
-      .filter('prodName', 'ilike', `%${searchKeyword}%`);
+      .filter('prodName', 'ilike', `%${keyword}%`);
 
     if (error) {
       console.error('검색오류!', error);
       return;
     }
-
     setSearchResults(filteredResults);
-  };
+  }, 100);
 
   const handleSearchTextChange = (SearchKeyword: string) => {
     setSearchKeyword(SearchKeyword);
@@ -38,14 +47,20 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      performSearch();
+      debouncedSearch(searchKeyword);
+    }
+  };
+
+  const handleClickToFocus = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
     }
   };
 
   return (
     <S.SearchContainer>
       <S.SearchInputArea>
-        <S.SearchButton onClick={performSearch}>
+        <S.SearchButton onClick={() => debouncedSearch(searchKeyword)}>
           <SearchIcon />
         </S.SearchButton>
         <S.SearchInput
@@ -54,25 +69,39 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
           value={searchKeyword}
           onChange={(event) => handleSearchTextChange(event.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="제품명을 검색해주세요."
+          placeholder="제품명을 검색해 주세요."
           autoFocus
+          ref={searchInputRef}
+          onClick={handleClickToFocus}
         />
       </S.SearchInputArea>
 
       <S.SearchResults>
-        {searchResults.map((result, index) => (
-          <S.SearchResultItem key={index} onClick={() => handleSelectResult(result)}>
-            <S.ImageAndTextContainer>
-              <S.ImageContainer>
-                <img src={result.prodImg} alt="이미지" />
-              </S.ImageContainer>
-              <S.TextContainer>
-                <div>{result.prodBrand}</div>
-                <div>{result.prodName}</div>
-              </S.TextContainer>
-            </S.ImageAndTextContainer>
-          </S.SearchResultItem>
-        ))}
+        {searchResults.length === 0 ? (
+          <>
+            <S.NoResultText>
+              앗!
+              <S.ProductKeyWordContainer>
+                "{searchKeyword.length > 5 ? `${searchKeyword.slice(0, 5)}...` : searchKeyword}"
+              </S.ProductKeyWordContainer>
+              에 대한 검색 결과가 없어요!
+            </S.NoResultText>
+          </>
+        ) : (
+          searchResults.map((result, index) => (
+            <S.SearchResultItem key={index} onClick={() => handleSelectResult(result)}>
+              <S.ImageAndTextContainer>
+                <S.ImageContainer>
+                  <img src={result.prodImg} alt="이미지" />
+                </S.ImageContainer>
+                <S.TextContainer>
+                  <S.ProdContainer>{result.prodBrand}</S.ProdContainer>
+                  <div>{result.prodName}</div>
+                </S.TextContainer>
+              </S.ImageAndTextContainer>
+            </S.SearchResultItem>
+          ))
+        )}
       </S.SearchResults>
     </S.SearchContainer>
   );
@@ -124,21 +153,39 @@ const S = {
     margin-top: 12px;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
-    /* width: 380px; */
+    width: 355px;
+
     max-height: 400px;
     overflow-y: scroll;
+
+    margin-bottom: 10px;
     &::-webkit-scrollbar {
-      display: none;
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    /* 마우스 오버시 스크롤바 색상 변경 */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
     }
   `,
 
   SearchResultItem: styled(FlexBox)`
     border-radius: 10px;
     cursor: pointer;
-    width: 356px;
+    width: 335px;
     height: 100px;
-    /* margin-bottom: 10px; */
+    /* padding-right: 10px; */
+    margin-right: 10px;
     background-color: white;
     &:hover {
       background: #efefef;
@@ -155,6 +202,8 @@ const S = {
       border-radius: 10px;
       border: 1px solid #ccc;
       margin-left: 10px;
+      object-fit: contain;
+      background-color: white;
     }
   `,
 
@@ -165,11 +214,39 @@ const S = {
     margin-left: 10px;
     color: #000;
 
-    /* label-large */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
+  `,
+
+  ProdContainer: styled.div`
+    color: #98a2b3;
+  `,
+  NoResultText: styled.div`
+    display: flex;
+
+    color: #98a2b3;
+    margin-top: 100px;
+    max-width: 340px;
+    margin-left: 40px;
+
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  `,
+  ProductKeyWordContainer: styled.div`
+    color: #242424;
+
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
   `
 };

@@ -3,27 +3,32 @@ import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
+import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
-const brands = [
+export const brands = [
   {
     name: 'GS25',
     path: '?=GS25',
-    logoImg: <GS25 />
+    logoImg: <GS25 />,
+    color: '#2ABADA'
   },
   {
     name: 'SEVEN ELEVEN',
     path: '?=7-ELEVEn',
-    logoImg: <SevenEleven />
+    logoImg: <SevenEleven />,
+    color: '#008061'
   },
   {
     name: 'E-MART24',
     path: '?=emart24',
-    logoImg: <Emart24 />
+    logoImg: <Emart24 />,
+    color: '#FFB81C'
   },
   {
     name: 'CU',
     path: '?=CU',
-    logoImg: <CU />
+    logoImg: <CU />,
+    color: '#652F8D'
   }
 ];
 
@@ -60,7 +65,7 @@ const S = {
     padding: 8px 10px;
   `,
 
-  Icon: styled.div`
+  Icon: styled(FlexBoxAlignCenter)`
     padding: 10px 0;
     /* width: 20px; */
     /* height: 20px; */
@@ -79,10 +84,10 @@ const S = {
     ${(props) =>
       props.$type === props.$location &&
       css`
-        background-color: #efefef;
+        background: var(--neutral-100, #f2f4f7);
       `}
     &:hover {
-      background-color: #efefef;
+      background: var(--neutral-100, #f2f4f7);
     }
   `
 };

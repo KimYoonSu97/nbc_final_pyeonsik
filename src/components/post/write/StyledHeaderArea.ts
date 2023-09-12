@@ -1,3 +1,4 @@
+import { FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import styled from 'styled-components';
 
@@ -22,23 +23,33 @@ export const S = {
     padding: 11px 16px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   `,
 
   BackButton: styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
     color: var(--neutral-400, var(--neutral-400, #98a2b3));
     ${styleFont.buttonMedium}
   `,
 
+  IconBox: styled(FlexBoxCenter)``,
+
   LogoContainer: styled.div`
+    cursor: pointer;
+
     color: white;
     width: 80px;
     height: 22px;
     /* position: absolute; */
-    left: 16px;
+    /* left: 16px; */
   `,
 
   AddButton: styled.button`
-    margin-left: auto;
+    /* margin-left: auto; */
     background: var(--main, #f02826);
 
     width: 110px;

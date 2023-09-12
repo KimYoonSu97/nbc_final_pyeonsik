@@ -10,6 +10,7 @@ import { FlexBoxCenter } from 'src/styles/styleBox';
 import { deleteUser } from 'src/api/userLogin';
 import Confirm from '../popUp/Confirm';
 import { toast } from 'react-toastify';
+import UserDeleteAlert from '../popUp/UserDeleteAlert';
 
 const UserDelete = () => {
   const navigate = useNavigate();
@@ -18,27 +19,29 @@ const UserDelete = () => {
   const userId = useLoginUserId();
 
   const [_, setUserLogin] = useAtom(userAtom);
-  // const { deleteUserMutate } = useUserMutate();
 
   const clickWithdraw = async () => {
     if (await Confirm('userDelete')) {
       const { error: deleteError } = await supabase.auth.admin.deleteUser(userId);
       await deleteUser(userId);
+
+      // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
-        toast('죄송합니다. 고객 센터로 문의 주시기 바랍니다.');
+        toast('죄송합니다. 고객센터로 문의 주시기 바랍니다.');
         return;
       }
       setUserLogin(null);
-      navigate('/');
-      if (location.pathname.split('/')[1] === 'mypage') {
-        window.location.reload();
+      if (await UserDeleteAlert('type')) {
+        navigate('/');
+        if (location.pathname.split('/')[1] === 'mypage') {
+          window.location.reload();
+        }
+        localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
+        localStorage.removeItem('social');
+        queryClient.removeQueries(['loginUser']);
+        queryClient.resetQueries(['loginUser']);
       }
-      localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
-      localStorage.removeItem('social');
-      queryClient.removeQueries(['loginUser']);
-      queryClient.resetQueries(['loginUser']);
-      alert('회원탈퇴 완료!');
     }
   };
 
@@ -52,14 +55,23 @@ const S = {
     cursor: pointer;
     width: 350px;
     height: 50px;
+    margin: 60px 0px 30px 0px;
     padding: 13px 0px;
     border-radius: 10px;
     background: var(--neutral-300, #d0d5dd);
 
     color: var(--font-black, var(--Black, #242424));
+    /* button-medium */
+    font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 24px; /* 150% */
+
+    &:hover {
+      color: white;
+
+      background: var(--main, #f02826);
+    }
   `
 };

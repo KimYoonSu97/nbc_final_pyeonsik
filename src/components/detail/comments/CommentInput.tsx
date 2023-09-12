@@ -5,7 +5,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import useCommentMutate from 'src/hooks/useCommentMutate';
 import styled from 'styled-components';
 import { IconCommentInput } from 'src/components/icons';
-import { NON_MEMBER } from 'src/utility/alertMessage';
+import { EMAIL_CHECK } from 'src/utility/guide';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import { updateFirstCommentBadge } from 'src/api/badge';
 import { toast } from 'react-toastify';
@@ -19,7 +19,7 @@ interface Props {
 
 const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props) => {
   const navigate = useNavigate();
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState<string>('');
   const location = useLocation();
   const userId = useLoginUserId();
   const { id: postId } = useParams();
@@ -28,6 +28,12 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
 
   const functionChanger = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (comment.length === 0) {
+      toast('댓글을 입력해주세요.');
+      return;
+    }
+
     if (type === 'post') {
       return addComment();
     } else if (type === 'edit') {
@@ -44,7 +50,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
   const addComment = () => {
     // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
-      toast(NON_MEMBER);
+      toast(EMAIL_CHECK);
       navigate('/login', { state: { backgroundLocation: location } });
       return;
     }
@@ -64,10 +70,10 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
       <S.CommentInput
         placeholder="댓글을 남겨보세요!"
         type="text"
-        value={comment || ''}
+        value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      <S.CommentInputAddButton>
+      <S.CommentInputAddButton type="submit">
         <IconCommentInput />
       </S.CommentInputAddButton>
     </S.CommentInputForm>
@@ -91,6 +97,7 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
     border-radius: 10px;
     padding-right: 10px;
+    /* justify-content: center; */
   `,
   CommentInput: styled.input`
     width: 100%;
@@ -100,6 +107,7 @@ const S = {
     border: none;
     outline: none;
     background: transparent;
+    height: 42px;
 
     color: var(--neutral-500, #667085);
 

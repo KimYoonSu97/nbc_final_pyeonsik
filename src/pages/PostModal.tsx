@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import Comment from 'src/components/detail/comments/Comment';
 import PostDetail from 'src/components/post/detail/PostDetail';
 import { useNavigate } from 'react-router';
+import { motion } from 'framer-motion';
 
 const PostModal = () => {
   const postBoxRef = useRef<any>(null);
@@ -39,7 +39,7 @@ const PostModal = () => {
 export default PostModal;
 
 const S = {
-  PostContainer: styled.div`
+  PostContainer: styled(motion.div)`
     width: 890px;
     height: 100%;
     position: fixed;
@@ -58,7 +58,7 @@ const S = {
   PostBox: styled.div`
     margin: 84px 0;
   `,
-  ModalBackground: styled.div`
+  ModalBackground: styled(motion.div)`
     width: 100%;
     height: 100vh;
     position: fixed;

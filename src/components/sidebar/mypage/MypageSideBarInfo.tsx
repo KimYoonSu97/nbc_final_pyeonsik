@@ -8,6 +8,7 @@ import { IconBadge, IconCommon, IconRecipe } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from 'src/components/header/UserLevel';
 import supabase from 'src/lib/supabaseClient';
+import { FlexBox } from 'src/styles/styleBox';
 
 const getUserIdBadgeCount = async (userId: string) => {
   const { data, error } = await supabase.from('badge').select('*').eq('user_id', userId);
@@ -35,8 +36,6 @@ const MypageSideBarInfo = () => {
   const userId = useLoginUserId();
   const [badgeCount, setBadgeCount] = useState(0);
 
-  console.log(badgeCount);
-
   useEffect(() => {
     const fetchBadgeCount = async () => {
       const count = await getUserIdBadgeCount(userId);
@@ -58,7 +57,8 @@ const MypageSideBarInfo = () => {
         queryFn: () => getUserData(userId),
         enabled: userId ? true : false,
         refetchOnWindowFocus: false,
-        refetchOnMount: false
+        refetchOnMount: false,
+        staleTime: Infinity
       },
       {
         queryKey: ['MyPost'],
@@ -80,7 +80,7 @@ const MypageSideBarInfo = () => {
   return (
     <>
       <S.ProfileArea>
-        <S.ProfileImg $url={userData?.data?.profileImg}></S.ProfileImg>
+        <S.ProfileImg $url={userData?.data?.profileImg} />
         <S.DetailArea>
           <UserLevel level={userData?.data?.level} />
           <S.NickName>{userData?.data?.nickname}</S.NickName>
@@ -152,7 +152,10 @@ const S = {
     background-position: center;
   `,
 
-  DetailArea: styled.div``,
+  DetailArea: styled(FlexBox)`
+    flex-direction: column;
+    align-items: flex-start;
+  `,
 
   NickName: styled.div`
     color: var(--font-black, var(--black, #242424));

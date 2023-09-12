@@ -32,7 +32,7 @@ const deleteUser = async (id: string) => {
   try {
     await supabase.from('users').delete().eq('id', id);
   } catch (error) {
-    toast('에러가 발생했습니다.');
+    toast('오류가 발생했습니다.');
   }
 };
 

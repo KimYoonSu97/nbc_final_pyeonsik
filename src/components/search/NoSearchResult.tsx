@@ -7,6 +7,9 @@ import { useLocation, useNavigate } from 'react-router';
 
 const NoSearchResult = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
   return (
     <S.Container>
       <S.Logo>
@@ -14,7 +17,8 @@ const NoSearchResult = () => {
       </S.Logo>
       <S.Caption>
         앗!
-        <S.SearchKeyWord> "{decodeURI(window.location.search).slice(2)}" </S.SearchKeyWord>이 포함된 결과가 없어요!
+        <S.SearchKeyWord> "{decodeURI(window.location.search).slice(2)}" </S.SearchKeyWord>이 포함된{' '}
+        {location.pathname === '/search/products' ? '제품이' : '결과가'} 없어요!
       </S.Caption>
       <S.NavigateButton
         onClick={() => {

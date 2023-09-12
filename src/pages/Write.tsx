@@ -1,12 +1,18 @@
 import React from 'react';
+import { useAtom } from 'jotai';
+import { writeCategorySelect } from 'src/globalState/jotai';
 import PostWrite from 'src/components/post/write/PostWrite';
+import Select from 'src/components/post/write/Select';
 import styled from 'styled-components';
 
 const Write = () => {
+  const [writeCategory, setWriteCategory] = useAtom(writeCategorySelect);
+
   return (
     <S.ViewPort>
       <S.WriteArea>
-        <PostWrite />
+        {!writeCategory && <Select />}
+        {writeCategory && <PostWrite />}
       </S.WriteArea>
     </S.ViewPort>
   );

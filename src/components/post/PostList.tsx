@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router';
 import { Post } from 'src/types/types';
@@ -10,7 +10,7 @@ import { InfinityPostList } from 'src/types/types';
 
 const PostList = () => {
   const location = useLocation();
-
+  const constraintsRef = useRef(null);
   let pageKey: string;
   if (location.search === '') {
     pageKey = '/';
@@ -42,7 +42,7 @@ const PostList = () => {
   }, [posts]);
 
   const { ref } = useInView({
-    threshold: 0.5,
+    threshold: 0,
     onChange: (inView) => {
       if (!inView || !hasNextPage || isFetchingNextPage) return;
       fetchNextPage();
