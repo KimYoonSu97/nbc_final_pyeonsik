@@ -39,5 +39,3 @@ export const searchKeyWord = atom<{ postData: Post[] | null; productData: Produc
   productData: null,
   searchKey: ''
 });
-
-export const myPageHover = atom<boolean>(false);

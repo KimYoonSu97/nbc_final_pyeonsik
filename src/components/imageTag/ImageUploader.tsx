@@ -18,7 +18,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const maxSize = 5 * 1024 * 1024;
+      const maxSize = 10 * 1024 * 1024;
 
       if (FileSizeValid(file, maxSize)) {
         const originalFileName = file.name;

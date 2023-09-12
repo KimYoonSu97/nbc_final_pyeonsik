@@ -146,63 +146,26 @@ export const S = {
         `;
       }
     }}
+
     margin: 30px 0px 10px 0px;
     white-space: normal;
     word-wrap: break-word;
-
     color: var(--Black, #242424);
+
+    /* body-게시글 */
     font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 28px;
-    /* 175% */
-
-    .ql-size-small {
-      font-size: small;
-    }
-    .ql-size-large {
-      font-size: x-large;
-    }
-    .ql-align-center {
-      text-align: center;
-    }
-    .ql-align-right {
-      text-align: right;
-    }
-    .ql-align-justify {
-      text-align: justify;
-    }
-    b {
-      font-weight: bold;
-    }
-    i {
-      font-style: italic;
-    }
-    li {
-      display: list-item;
-      text-align: -webkit-match-parent;
-    }
-    ol,
-    ul {
-      display: block;
-      margin-inline-start: 0px;
-      margin-inline-end: 0px;
-      padding-inline-start: 50px;
-    }
-    ol {
-      list-style-type: decimal;
-    }
-    ul {
-      list-style-type: disc;
-    }
-
+    line-height: 28px; /* 175% */
     /* 디자이너님에게 공유  */
     /* padding: 20px; */
     /* border: 1px solid black; */
     /* border-radius: 10px; */
-  `,
 
+    /* font-family: 'inherit'; */
+    /* background-color: royalblue; */
+  `,
   PostBodyRecipe: styled.div<BodyHeightProps>`
     padding-top: 30px;
     min-height: ${(props) => {

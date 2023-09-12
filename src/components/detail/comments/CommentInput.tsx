@@ -19,7 +19,7 @@ interface Props {
 
 const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props) => {
   const navigate = useNavigate();
-  const [comment, setComment] = useState<string>('');
+  const [comment, setComment] = useState('');
   const location = useLocation();
   const userId = useLoginUserId();
   const { id: postId } = useParams();
@@ -28,12 +28,6 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
 
   const functionChanger = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (comment.length === 0) {
-      toast('댓글을 입력해주세요.');
-      return;
-    }
-
     if (type === 'post') {
       return addComment();
     } else if (type === 'edit') {
@@ -70,10 +64,10 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
       <S.CommentInput
         placeholder="댓글을 남겨보세요!"
         type="text"
-        value={comment}
+        value={comment || ''}
         onChange={(e) => setComment(e.target.value)}
       />
-      <S.CommentInputAddButton type="submit">
+      <S.CommentInputAddButton>
         <IconCommentInput />
       </S.CommentInputAddButton>
     </S.CommentInputForm>
@@ -97,7 +91,6 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
     border-radius: 10px;
     padding-right: 10px;
-    /* justify-content: center; */
   `,
   CommentInput: styled.input`
     width: 100%;
@@ -107,7 +100,6 @@ const S = {
     border: none;
     outline: none;
     background: transparent;
-    height: 42px;
 
     color: var(--neutral-500, #667085);
 

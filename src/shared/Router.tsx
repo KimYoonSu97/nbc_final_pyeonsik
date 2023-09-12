@@ -18,8 +18,7 @@ import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
 import Report from 'src/pages/Report';
-import ReviewList from 'src/pages/ReviewList';
-import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper';
+import Review from 'src/pages/Review';
 
 const Router = () => {
   const location = useLocation();
@@ -40,8 +39,7 @@ const Router = () => {
           <Route path="/event" element={<EventProd />} />
           <Route path="/search/:type" element={<SearchResult />} />
           <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/review_list" element={<ReviewList />} />
-          <Route path="/review_swiper" element={<ProdReviewSwiper />} />
+          <Route path="/review" element={<Review />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />

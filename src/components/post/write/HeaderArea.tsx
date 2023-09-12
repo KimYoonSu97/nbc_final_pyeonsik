@@ -23,10 +23,8 @@ const HeaderArea = () => {
     <S.WriteHeader>
       <S.WriteHeaderBox>
         <S.BackButton type="button" onClick={clickCancle}>
-          <S.IconBox>
-            <IconBackSpace />
-          </S.IconBox>
-          <div>뒤로가기</div>
+          <IconBackSpace />
+          뒤로가기
         </S.BackButton>
         <S.LogoContainer onClick={clickLogo}>
           <IconLogoSymbolH22 />
