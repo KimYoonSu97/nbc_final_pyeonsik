@@ -92,6 +92,11 @@ const TopBarMenuContainer = () => {
     }
   }, [localStorage.getItem('social')]);
 
+  useEffect(() => {
+    if (data?.data?.profileImg === null && data?.data?.nickname) {
+    }
+  });
+
   const clickReview = () => {
     navigate('/review_swiper');
   };
