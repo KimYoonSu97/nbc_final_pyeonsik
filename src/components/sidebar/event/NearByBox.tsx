@@ -21,6 +21,7 @@ const NearByBox = ({ brand }: Props) => {
           <S.StoreLocationDistanceBox>
             <S.StoreLocation
               to={`https://map.kakao.com/link/map/${brand.full_name},${brand.position.lat},${brand.position.lng}`}
+              target="_blank"
             >
               위치보기
             </S.StoreLocation>

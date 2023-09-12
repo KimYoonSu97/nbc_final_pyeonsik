@@ -23,7 +23,16 @@ const getCommentCountDataByPostId = async (postId: string) => {
     .from('detail_comments')
     .select('id', { count: 'exact', head: true })
     .eq('postId', postId);
-  return count;
+
+  const { count: recomment } = await supabase
+    .from('replay_comments')
+    .select('id', { count: 'exact', head: true })
+    .eq('postId', postId);
+
+  const response = recomment! + count!;
+
+  return response;
+
 };
 
 //댓글 작성하기
