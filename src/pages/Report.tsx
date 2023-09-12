@@ -136,7 +136,7 @@ const Report = () => {
           </div>
           {userId ? null : (
             <div className="emailWrap">
-              <h3>편식 가입 이메일</h3>
+              <h3>이메일</h3>
               <input
                 className="emailInput"
                 value={email}
