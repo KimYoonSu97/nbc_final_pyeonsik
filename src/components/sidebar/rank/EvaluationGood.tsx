@@ -14,9 +14,9 @@ const EvaluationGood = ({ prodId }: EvaluationGoodProps) => {
     queryFn: () => getSwiperData()
   });
 
-  const prodRate = dataSwiper?.data?.filter((swiper) => swiper.prodId === prodId);
-  const rateGood = prodRate?.filter((rate) => rate.isGood === true).length;
-  const percentGood = Math.round((rateGood! / prodRate!.length) * 1000) / 10;
+  const prodRate = dataSwiper?.data?.filter((swiper) => swiper.prodId === prodId)!;
+  const rateGood = prodRate?.filter((rate) => rate.isGood).length;
+  const percentGood = Math.round((rateGood / prodRate?.length) * 1000) / 10;
 
   const backgroundFront = `linear-gradient(to right, #62aaff ${rateGood ? percentGood : 0}%, #d9d9d9 ${
     rateGood ? percentGood : 0

@@ -9,8 +9,11 @@ import styled from 'styled-components';
 import { styleFont } from 'src/styles/styleFont';
 import { IconGoodFace } from 'src/components/icons';
 import EvaluationGood from './EvaluationGood';
+import { useNavigate } from 'react-router';
 
 const NewReview = () => {
+  const navigate = useNavigate();
+
   const { isLoading: lodingProd, data: dataProd } = useQuery({
     queryKey: ['new_prod_sidebar'],
     queryFn: () => getNewProd(),
@@ -94,6 +97,10 @@ const NewReview = () => {
     e.target.src = IMAGE_EMPTY;
   };
 
+  const clickNewReview = () => {
+    navigate('/review_list');
+  };
+
   if (lodingProd) {
     return <p>Loading…</p>;
   }
@@ -102,7 +109,7 @@ const NewReview = () => {
   }
 
   return (
-    <S.ContentsArea>
+    <S.ContentsArea onClick={clickNewReview}>
       {/* 요기부터 하위컴포넌트를 맵으로 돌려벌입니다.
       <S.ContentWrapper>
         <S.Img />
@@ -117,7 +124,7 @@ const NewReview = () => {
             <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
             <div>
               <S.TopContainer>
-                <S.ProdBrand>{prod.prodBrand}</S.ProdBrand>
+                <S.ProdBrand brand={prod.prodBrand}>{prod.prodBrand}</S.ProdBrand>
                 <S.ProdName>{prod.prodName}</S.ProdName>
               </S.TopContainer>
               <S.BottomContainer>
@@ -139,6 +146,8 @@ export default NewReview;
 
 const S = {
   ContentsArea: styled(FlexBoxColum)`
+    cursor: pointer;
+
     width: 296px;
     padding: 8px;
 
@@ -168,13 +177,26 @@ const S = {
     color: var(--font-black, var(--Black, #242424));
   `,
 
-  ProdBrand: styled(FlexBoxCenter)`
+  ProdBrand: styled(FlexBoxCenter)<{ brand: string }>`
     width: 54px;
     height: 14px;
     border-radius: 100px;
-    background: var(--neutral-200, #e4e7ec);
+    background-color: ${(props) => {
+      switch (props.brand) {
+        case 'CU':
+          return '#652F8D';
+        case 'GS25':
+          return '#2ABADA';
+        case '이마트24':
+          return '#FFB81C';
+        case '세븐일레븐':
+          return '#008061';
+        case '미니스톱':
+          return '#1864A7';
+      }
+    }};
 
-    color: var(--font-black, var(--Black, #242424));
+    color: var(--white, #fff);
     font-size: 10px;
     font-weight: 400;
     line-height: 16px; /* 160% */
