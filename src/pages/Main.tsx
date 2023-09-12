@@ -5,11 +5,15 @@ import { IconWriteButton } from 'src/components/icons';
 import styled from 'styled-components';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { toast } from 'react-toastify';
-import { useAtom } from 'jotai';
+import { atom, useAtom } from 'jotai';
 import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
 import { EMAIL_CHECK, SERVICE_PREPARING } from 'src/utility/guide';
+import PostSkeleton from 'src/components/skeleton/PostSkeleton';
+
+export const isLoadingAtom = atom<Boolean>(true);
 
 const Main = () => {
+  const [isLoading] = useAtom(isLoadingAtom);
   const navigate = useNavigate();
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
@@ -18,6 +22,15 @@ const Main = () => {
 
   return (
     <>
+      {' '}
+      {/* 데이터 불러올때 스켈레톤 UI */}
+      {isLoading && (
+        <>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <PostSkeleton key={index} />
+          ))}
+        </>
+      )}
       <S.FixedContainer>
         <S.WriteButton
           onClick={() => {
