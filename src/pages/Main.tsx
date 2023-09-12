@@ -49,9 +49,9 @@ const Main = () => {
               toast(SERVICE_PREPARING);
             }}
           >
-            추천순
+            최신순
           </S.FilterButton>
-          <S.FilterButton $isSelected={false}>최신순</S.FilterButton>
+          <S.FilterButton $isSelected={false}>추천순</S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
 

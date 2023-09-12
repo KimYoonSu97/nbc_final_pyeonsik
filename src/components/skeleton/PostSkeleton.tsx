@@ -19,6 +19,8 @@ const PostSkeleton = () => {
 
 export default PostSkeleton;
 
+// 이걸살려
+
 const S = {
   Container: styled.div`
     margin-bottom: 50px;
