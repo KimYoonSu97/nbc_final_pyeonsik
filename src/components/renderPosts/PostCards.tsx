@@ -9,6 +9,7 @@ import NoPost from '../mypage/NoPost';
 interface PostListProps {
   posts: Post[];
 }
+// 이걸살려
 
 const PostCards = ({ posts }: PostListProps) => {
   const location = useLocation();
