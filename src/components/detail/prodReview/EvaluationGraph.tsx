@@ -11,7 +11,9 @@ const EvaluationGraph = ({ swipers, prodId, isGood }: MyEvaluationProps) => {
 
   const backgroundBack =
     percentGood >= 50 ? 'linear-gradient(278deg, #FFB334 4.72%, #EB4335 92.67%)' : 'var(--neutral-300, #D0D5DD)';
-  const backgroundFront = `linear-gradient(to right, transparent ${percentGood}%, #f2f4f7 ${percentGood}%)`;
+  const backgroundFront = rateGood
+    ? `linear-gradient(to right, transparent ${percentGood}%, #f2f4f7 ${percentGood}%)`
+    : '#f2f4f7';
 
   return (
     <S.GraphContainer>

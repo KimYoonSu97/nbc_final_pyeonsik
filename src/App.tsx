@@ -39,13 +39,19 @@ const App = () => {
           }}
           toastStyle={{
             backgroundColor: 'black',
-            color: 'white',
+            color: '#FFF',
             minWidth: '530px',
             maxHeight: '200px',
             marginBottom: '0 10px',
             padding: '0',
             textAlign: 'center',
-            borderRadius: '10px'
+            borderRadius: '10px',
+
+            fontFamily: 'Pretendard',
+            fontSize: '16px',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: '24px'
           }}
           position="bottom-center"
           autoClose={2000}
