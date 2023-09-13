@@ -1,10 +1,10 @@
 import React from 'react';
-import { MyeEvaluationProps } from './MyEvaluation';
+import { MyeEvaluationProps as MyEvaluationProps } from './MyEvaluation';
 import { IconBad, IconGood } from 'src/components/icons';
 import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
-const EvaluationGraph = ({ swipers, prodId, isGood }: MyeEvaluationProps) => {
+const EvaluationGraph = ({ swipers, prodId, isGood }: MyEvaluationProps) => {
   const prodRate = swipers.filter((swiper) => swiper.prodId === prodId);
   const rateGood = prodRate.filter((rate) => rate.isGood === isGood).length;
   const percentGood = Math.round((rateGood / prodRate.length) * 1000) / 10;

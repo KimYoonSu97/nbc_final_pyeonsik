@@ -78,13 +78,27 @@ const getSearchProdSummary = async (keyword: string) => {
 };
 
 // new products
-const getNewProd = async () => {
+const getNewProdInfinite = async (pageParam: number = 0) => {
   const response = await supabase
-    .from('products')
-    .select('*')
-    .eq('new', 'TRUE')
-    .order('created_at', { ascending: false });
+    .from('show_products')
+    .select('id,prodImg,prodName')
+    // .order('created_at', { ascending: false })
+    .range(pageParam * 20, (pageParam + 1) * 20 - 1);
+  const data = response!.data;
+
+  let pageCount;
+  const { count } = await supabase.from('show_products').select('id', { count: 'exact', head: true });
+  // .order('created_at', { ascending: false });
+  pageCount = count;
+  const total_pages = Math.floor(pageCount! / 20);
+
+  return { error: response.error, products: data!, page: pageParam, total_pages, total_results: pageCount! };
+};
+
+const getNewProd = async () => {
+  const response = await supabase.from('show_products').select('*');
+
   return response;
 };
 
-export { getEventProd, getSearchProd, getSearchProdSummary, getNewProd };
+export { getEventProd, getSearchProd, getSearchProdSummary, getNewProdInfinite, getNewProd };

@@ -3,6 +3,7 @@ import RealTimeCombo from './RealTimeCombo';
 import NewReview from './NewReview';
 import FetchPosts from '../FetchPosts';
 import styled from 'styled-components';
+import KakaoMap from 'src/kakaoMap/KakaoMap';
 
 const RankSideBar = () => {
   return (
@@ -15,6 +16,7 @@ const RankSideBar = () => {
       <S.TitleArea>편의점 신제품 리뷰</S.TitleArea>
       <S.ContentsBox>
         <NewReview />
+        {/* <KakaoMap /> */}
       </S.ContentsBox>
     </S.Container>
   );
@@ -24,7 +26,8 @@ export default RankSideBar;
 
 const S = {
   Container: styled.div`
-    padding-bottom: 100px;
+    /* padding-bottom: 100px; */
+    padding-bottom: 0px;
   `,
 
   ContentsBox: styled.div`

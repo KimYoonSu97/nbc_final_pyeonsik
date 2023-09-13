@@ -117,16 +117,19 @@ const ProdReviewSwiper = () => {
                   >
                     <S.ProductWrap>
                       <S.productInner>
-                        <div>
+                        <p>
                           <img src={prod.prodImg} draggable="false" />
-                          <h1>{prod.prodName}</h1>
-                        </div>
+                        </p>
+                        <S.ProdNameWrap>
+                          <div>
+                            <h1>{prod.prodName}</h1>
+                          </div>
+                        </S.ProdNameWrap>
                       </S.productInner>
                     </S.ProductWrap>
                   </Swipeable>
                 )}
               </S.WrapperStyles>
-              
             ))}
             <S.SkipButtonWrap>
               <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
@@ -138,13 +141,12 @@ const ProdReviewSwiper = () => {
               <p>
                 앗! 더이상 남은<span>신제품 카드가 없어요!</span>
               </p>
-              <button onClick={() => navigate('/all_review')}>리뷰 보러가기</button>
+              <button onClick={() => navigate('/review_list')}>리뷰 보러가기</button>
             </div>
           </S.ReviewEndWrap>
         )}
       </S.ProdReviewWrap>
-
-      <S.AllReviewsWrap onClick={() => navigate('/all_review')}>
+      <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
         <p>
           <IconAllReview />
           <span>신제품 리뷰 보기</span>
@@ -176,7 +178,7 @@ const S = {
       height: 470px;
       border-radius: 10px;
       border: 1px solid var(--neutral-200, #e4e7ec);
-      background: var(--neutral-050, #f9fafb);
+      background: var(--neutral-050, #020202);
       z-index: -1;
     } */
   `,
@@ -221,6 +223,7 @@ const S = {
       align-items: center;
       justify-content: center;
     }
+
     h1 {
       font-size: 18px;
       font-style: normal;
@@ -271,28 +274,56 @@ const S = {
     background-clip: content-box, border-box;
     box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
     div {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
+      /* height: 100%; */
       align-items: center;
       text-align: center;
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 75%;
+      }
       img {
         width: auto;
-        max-width: 400px;
+        max-width: 350px;
         height: auto;
-        margin-bottom: 20px;
       }
-      h1 {
+      /* h1 {
+        height: 25%;
         font-size: 22px;
         font-style: normal;
         font-weight: 700;
         line-height: 28px;
         user-select: none;
-      }
+      } */
+    }
+  `,
+  ProdNameWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 25%;
+    h1 {
+      display: block;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      user-select: none;
+    }
+    div {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
     }
   `,
   productInner: styled.div`
     position: relative;
+    height: 100%;
   `,
   ReviewProducts: styled.div`
     width: 100%;

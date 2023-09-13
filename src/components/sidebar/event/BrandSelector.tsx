@@ -5,26 +5,30 @@ import { CU, Emart24, GS25, SevenEleven } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
-const brands = [
+export const brands = [
   {
     name: 'GS25',
     path: '?=GS25',
-    logoImg: <GS25 />
+    logoImg: <GS25 />,
+    color: '#2ABADA'
   },
   {
     name: 'SEVEN ELEVEN',
     path: '?=7-ELEVEn',
-    logoImg: <SevenEleven />
+    logoImg: <SevenEleven />,
+    color: '#008061'
   },
   {
     name: 'E-MART24',
     path: '?=emart24',
-    logoImg: <Emart24 />
+    logoImg: <Emart24 />,
+    color: '#FFB81C'
   },
   {
     name: 'CU',
     path: '?=CU',
-    logoImg: <CU />
+    logoImg: <CU />,
+    color: '#652F8D'
   }
 ];
 

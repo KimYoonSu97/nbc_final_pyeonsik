@@ -1,50 +1,78 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getNewProd } from 'src/api/product';
+import React, { useMemo } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { getNewProdInfinite } from 'src/api/product';
 import { getSwiperData } from 'src/api/ReviewSwiper';
-import { Product, Swiper } from 'src/types/types';
+import { Swiper } from 'src/types/types';
 import { IMAGE_EMPTY } from 'src/utility/guide';
+import MyEvaluation from './MyEvaluation';
+import EvaluationGraph from './EvaluationGraph';
 // style
 import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
-import MyEvaluation from './MyEvaluation';
-import EvaluationGraph from './EvaluationGraph';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
-const ReviewList = () => {
-  const { isLoading: lodingProd, data: dataProd } = useQuery({ queryKey: ['new_prod'], queryFn: () => getNewProd() });
+
+const ProdReviewList = () => {
+  const {
+    isLoading: lodingProd,
+    data: dataProd,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery<any>({
+    queryKey: ['new_prod'],
+    queryFn: ({ pageParam }) => getNewProdInfinite(pageParam),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+    }
+  });
   const { isLoading: lodingSwiper, data: dataSwiper } = useQuery({
     queryKey: ['swiper_list'],
     queryFn: () => getSwiperData()
   });
 
-  const produts = dataProd?.data as Product[] | undefined;
+  const products = useMemo(() => {
+    return dataProd?.pages
+      .map((data) => {
+        return data.products;
+      })
+      .flat();
+  }, [dataProd]);
   const swipers = dataSwiper?.data as Swiper[];
   const navigate = useNavigate()
-  const location = useLocation()
-  console.log(location)
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
     e.target.src = IMAGE_EMPTY;
   };
 
+  const { ref } = useInView({
+    threshold: 0.7,
+    onChange: (inView) => {
+      if (!inView || !hasNextPage || isFetchingNextPage) return;
+      fetchNextPage();
+    }
+  });
+
   if (lodingProd || lodingSwiper) {
     return <p>Loading…</p>;
   }
-  if (dataProd?.error || dataSwiper?.error) {
+  if (dataProd?.pages?.[0].error || dataSwiper?.error) {
     return <p>error</p>;
   }
 
-  const con = (id:string,index:number) => {
-    navigate(`/review_product/${id}`)
+  const con = (id:string,userId:string) => {
+    navigate(`/review_product/${id}`,{state:{id,userId}})
   }
 
   return (
     <S.ReviewContainer>
-      {produts?.map((prod, index) => {
+      {products?.map((prod) => {
         return (
-          <S.ReviewBox key={prod.id} onClick={()=>con(prod.id,index)}>
+          <S.ReviewBox key={prod.id} onClick={()=>con(prod.id,prod.userId)}>
             <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
             <S.TextContainer>
               <S.ProdName>{prod.prodName}</S.ProdName>
@@ -57,19 +85,25 @@ const ReviewList = () => {
           </S.ReviewBox>
         );
       })}
+      <S.LoadingBox ref={ref} />
     </S.ReviewContainer>
   );
 };
 
-export default ReviewList;
+export default ProdReviewList;
 
 const S = {
+  LoadingBox: styled.div`
+    width: 200px;
+    height: 200px;
+  `,
+
   ReviewContainer: styled(FlexBoxColum)`
     gap: 20px;
   `,
 
   ReviewBox: styled(FlexBoxAlignCenter)`
-    cursor: pointer;
+    /* cursor: pointer; */
     background: #fff;
 
     width: 890px;

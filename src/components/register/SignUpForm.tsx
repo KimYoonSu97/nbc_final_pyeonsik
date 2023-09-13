@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import supabase from 'src/lib/supabaseClient';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TermsAndConditions from './TermsAndConditions';
 import { useAtom } from 'jotai';
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from
 import OAuthLogin from '../OAuthLogin';
 import { IconWarning } from '../icons';
 import { ERROR_AUTH } from 'src/utility/guide';
+import useLoginUserId from 'src/hooks/useLoginUserId';
 
 interface Props {
   setNextStep: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
+  const userId = useLoginUserId();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
@@ -24,6 +27,13 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [terms1Agreed, setTerms1Agreed] = useState(false);
   const [terms2Agreed, setTerms2Agreed] = useState(false);
+
+  useEffect(() => {
+    if (userId) {
+      toast('이미 로그인되어 메인화면으로 이동합니다.');
+      navigate('/');
+    }
+  }, [userId]);
 
   // 이메일 정규식 표현
   const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
@@ -56,6 +66,14 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
       email,
       password
     });
+
+    const { data: user } = await supabase.auth.getUser();
+
+    const newUser = {
+      id: user.user?.id,
+      email: user.user?.email
+    };
+    await supabase.from('users').insert(newUser);
 
     if (error) {
       error.message === 'User already registered' && setErrorMessage('이미 사용 중인 이메일이에요.');

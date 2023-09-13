@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -7,59 +7,66 @@ import supabase from 'src/lib/supabaseClient';
 import Swipeable from 'react-swipy';
 import styled from 'styled-components';
 import { IconAllReview } from 'src/components/icons';
+import { toast } from 'react-toastify';
 
 const ReviewLocation = () => {
   const userId = useLoginUserId();
   const { id } = useParams();
   const location = useLocation();
+  console.log(location);
   const navigate = useNavigate();
+
+  const [page,setPage] = useState(1)
 
   const { data: swiperData } = useQuery(['swiper'], getSwiperData);
   const { data: prodData } = useQuery(['products'], getProdData);
 
   const product = prodData?.find((data) => {
-    return data.id == id;
+    return data && data.id == id;
   });
 
   const ReviewedProduct = swiperData?.data?.find((prod) => {
     return prod.prodId === product.id && prod.userId === userId;
   });
 
-  console.log('리뷰드프로덕트', ReviewedProduct);
 
+  console.log('스와이퍼데이터', swiperData);
+  console.log('리뷰드프로덕트', ReviewedProduct);
   console.log(id, '파람아이디');
   console.log(prodData, '솨이이퍼데이타');
   console.log(product, '여기임');
 
-  // const onDropToLike = async (id: string) => {
-  //     const plusReview = prodData?.data?.find((prod) => {
-  //       return prod.prodId === id && prod.userId === userId;
-  //     });
-  //     if (!plusReview) {
-  //       const addReview = {
-  //         prodId: id,
-  //         isGood: true,
-  //         userId: userId
-  //       };
-  //       await supabase.from('swiper').insert([addReview]);
+  const onDropToLike = async (id: string | undefined) => {
+    const plusReview = prodData?.find((prod) => {
+      return prod.prodId === id && prod.userId === userId;
+    });
+    if (!plusReview) {
+      const addReview = {
+        prodId: id,
+        isGood: true,
+        userId: userId
+      };
+      await supabase.from('swiper').insert([addReview]);
+      toast('평가 완료')
+      navigate('/review_list')
+    }
+  };
 
-  //     }
-  //   };
-
-  //   const onDropToDisLike = async (id: string) => {
-  //     const plusReview = swiperData?.data?.find((prod) => {
-  //       return prod.prodId === id && prod.userId === userId;
-  //     });
-  //     if (!plusReview) {
-  //       const addReview = {
-  //         prodId: id,
-  //         isGood: false,
-  //         userId: userId
-  //       };
-
-  //       await supabase.from('swiper').insert([addReview]);
-  //     }
-  //   };
+  const onDropToDisLike = async (id: string | undefined) => {
+    const plusReview = swiperData?.data?.find((prod) => {
+      return prod.prodId === id && prod.userId === userId;
+    });
+    if (!plusReview) {
+      const addReview = {
+        prodId: id,
+        isGood: false,
+        userId: userId
+      };
+      await supabase.from('swiper').insert([addReview]);
+      toast('평가 완료')
+      navigate('/review_list')
+    }
+  };
 
   const skip = () => {};
   return (
@@ -68,56 +75,95 @@ const ReviewLocation = () => {
         <S.ProdReviewWrap>
           <S.ReviewProducts>
             <S.WrapperStyles>
-              <Swipeable
-                buttons={({ right, left }: any) => (
-                  <S.ButtonWrap>
-                    <S.ReviewLike
-                      className={ReviewedProduct?.isGood === true ? 'selected' : ''}
-                      onClick={() => {
-                        left();
-                        setTimeout(() => {
-                          //   onDropToLike(prod.id);
-                        }, 300);
-                      }}
-                    >
-                      <div>
-                        <img src="/images/ReviewLike.png" draggable="false" />
-                        <h1>또 먹을래요!</h1>
-                      </div>
-                    </S.ReviewLike>
-                    <S.ReviewDisLike
-                      className={ReviewedProduct?.isGood === false ? 'selected' : ''}
-                      onClick={() => {
-                        right();
-                        setTimeout(() => {
-                          //   onDropToDisLike(prod.id);
-                        }, 300);
-                      }}
-                    >
-                      <div>
-                        <img src="/images/ReviewDisLike.png" draggable="false" />
-                        <h1>그만 먹을래요!</h1>
-                      </div>
-                    </S.ReviewDisLike>
-                  </S.ButtonWrap>
-                )}
-              >
-                <S.ProductWrap>
-                  <S.productInner>
-                    <div>
-                      <img src={product?.prodImg} draggable="false" />
-                      <h1>{product?.prodName}</h1>
-                    </div>
-                  </S.productInner>
-                </S.ProductWrap>
-              </Swipeable>
+              {ReviewedProduct !== undefined ? (
+                <Swipeable
+                  buttons={({ right, left }: any) => (
+                    <S.ButtonWrap>
+                      <S.ReviewLike className={ReviewedProduct?.isGood === true ? 'selected' : ''}>
+                        <div>
+                          <img src="/images/ReviewLike.png" draggable="false" />
+                          <h1>또 먹을래요!</h1>
+                        </div>
+                      </S.ReviewLike>
+                      <S.ReviewDisLike className={ReviewedProduct?.isGood === false ? 'selected' : ''}>
+                        <div>
+                          <img src="/images/ReviewDisLike.png" draggable="false" />
+                          <h1>그만 먹을래요!</h1>
+                        </div>
+                      </S.ReviewDisLike>
+                    </S.ButtonWrap>
+                  )}
+                >
+                  <S.ProductWrap>
+                    <S.productInner>
+                      <p>
+                        <img src={product?.prodImg} draggable="false" />
+                      </p>
+                      <S.blurWrap>
+                        <div className="textBlur">
+                          <h1>{product?.prodName}</h1>
+                        </div>
+                        <h3>
+                          앗! 이미<span>평가한 상품이에요!</span>
+                        </h3>
+                      </S.blurWrap>
+                    </S.productInner>
+                  </S.ProductWrap>
+                </Swipeable>
+              ) : (
+                <Swipeable
+                  buttons={({ right, left }: any) => (
+                    <S.ButtonWrap>
+                      <S.ReviewLike
+                        onClick={() => {
+                          left();
+                          setTimeout(() => {
+                            onDropToLike(id);
+                          }, 300);
+                        }}
+                      >
+                        <div>
+                          <img src="/images/ReviewLike.png" draggable="false" />
+                          <h1>또 먹을래요!</h1>
+                        </div>
+                      </S.ReviewLike>
+                      <S.ReviewDisLike
+                        onClick={() => {
+                          right();
+                          setTimeout(() => {
+                            onDropToDisLike(id);
+                          }, 300);
+                        }}
+                      >
+                        <div>
+                          <img src="/images/ReviewDisLike.png" draggable="false" />
+                          <h1>그만 먹을래요!</h1>
+                        </div>
+                      </S.ReviewDisLike>
+                    </S.ButtonWrap>
+                  )}
+                >
+                  <S.ProductWrap>
+                    <S.productInner>
+                      <p>
+                        <img src={product?.prodImg} draggable="false" />
+                      </p>
+                      <S.ProdNameWrap>
+                        <div>
+                          <h1>{product?.prodName}</h1>
+                        </div>
+                      </S.ProdNameWrap>
+                    </S.productInner>
+                  </S.ProductWrap>
+                </Swipeable>
+              )}
             </S.WrapperStyles>
             <S.SkipButtonWrap>
               <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
             </S.SkipButtonWrap>
           </S.ReviewProducts>
         </S.ProdReviewWrap>
-        <S.AllReviewsWrap onClick={() => navigate('/all_review')}>
+        <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
           <p>
             <IconAllReview />
             <span>신제품 리뷰 보기</span>
@@ -140,19 +186,6 @@ const S = {
     overflow: hidden;
     background-color: #fff;
     height: 700px;
-    /* ::before {
-        display: block;
-        content: '';
-        position: absolute;
-        left: 0;
-        top: -10px;
-        width: 353px;
-        height: 470px;
-        border-radius: 10px;
-        border: 1px solid var(--neutral-200, #e4e7ec);
-        background: var(--neutral-050, #f9fafb);
-        z-index: -1;
-      } */
   `,
 
   ProdReviewWrap: styled.div`
@@ -245,34 +278,101 @@ const S = {
     height: 464px;
     background-color: #fff;
     border-radius: 10px;
-    border: 2px solid transparent;
-    background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #ffb334 0%, #eb4335 100%);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
+    border: 2px solid #e4e7ec;
     box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
     div {
+      width: 100%;
+      text-align: center;
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 75%;
+        border-radius: 10px;
+        img {
+          width: auto;
+          max-width: 250px;
+          height: auto;
+          border-radius: 10px;
+        }
+      }
+    }
+  `,
+  blurWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 25%;
+    border-top: solid 2px #e4e7ec;
+    overflow: hidden;
+    box-sizing: border-box;
+    h1 {
+      display: block;
+      filter: blur(6px);
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      user-select: none;
+    }
+    h3 {
+      width: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 99;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 32px;
+      letter-spacing: -1.5px;
+      span {
+        display: block;
+      }
+    }
+    .textBlur {
+      position: relative;
       display: flex;
       justify-content: center;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
-      img {
-        width: auto;
-        max-width: 400px;
-        height: auto;
-        margin-bottom: 20px;
-      }
-      h1 {
-        font-size: 22px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 28px;
-        user-select: none;
-      }
+      width: 100%;
+      height: 100%;
+      background-color: #e4e7ec;
+      filter: blur(7px);
+    }
+  `,
+  ProdNameWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 25%;
+    /* overflow: hidden; */
+    /* box-sizing: border-box; */
+    h1 {
+      display: block;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      user-select: none;
+    }
+    div {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
     }
   `,
   productInner: styled.div`
     position: relative;
+    left: 0;
+    top: 0;
+    height: 100%;
   `,
   ReviewProducts: styled.div`
     width: 100%;

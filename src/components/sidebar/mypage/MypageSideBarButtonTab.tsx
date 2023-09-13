@@ -18,13 +18,12 @@ const MypageSideBarButtonTab = () => {
   const signOutHandler = async () => {
     const { error } = await supabase.auth.signOut();
 
+    //login user data를 같이쓰는 마이페이지에서 로그아웃시 새로고침 시켜줘야함...
+    // if (location.pathname.split('/')[1] === 'mypage') {
+    window.location.reload();
+    // }
     setUserLogin(null);
     navigate('/');
-
-    //login user data를 같이쓰는 마이페이지에서 로그아웃시 새로고침 시켜줘야함...
-    if (location.pathname.split('/')[1] === 'mypage') {
-      window.location.reload();
-    }
 
     localStorage.removeItem('sb-wwkfivwrtwucsiwsnisz-auth-token');
     localStorage.removeItem('social');

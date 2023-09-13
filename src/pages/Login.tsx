@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Location, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { userAtom } from 'src/globalState/jotai';
 import styled from 'styled-components';
@@ -7,8 +7,9 @@ import supabase from 'src/lib/supabaseClient';
 import OAuthLogin from '../components/OAuthLogin';
 import { IconLogoSymbolH32, IconWarning, IconWaterMarkH32 } from 'src/components/icons';
 import { toast } from 'react-toastify';
-import { FlexBox } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import Register from './Register';
 
 interface User {
   id: string;
@@ -20,11 +21,12 @@ interface User {
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   //로그인 모달 닫는(뒤로가기) 함수
   const loginModalCloser = () => {
     navigate(-1);
   };
+  // console.log(backgroundLocation);
 
   //이메일 형식검사
   const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
@@ -117,7 +119,6 @@ const Login = () => {
               <S.LinkTo to={'/register'}>회원가입</S.LinkTo>
             </S.LinkToArea>
           </S.InputArea>
-
           {/* 소셜로그인 영역 */}
           {/* 깃허브는 디자인에 없어서 일단 주석 */}
           <S.SocialArea>
@@ -162,7 +163,7 @@ const S = {
     justify-content: center;
     align-items: center;
     width: 490px;
-    height: 516px;
+    height: 532px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -174,11 +175,12 @@ const S = {
     height: 32px;
   `,
   About: styled.div`
-    color: #6a6a6a;
     margin: 14px 0 34px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+
+    color: #6a6a6a;
+    text-align: center;
+
+    ${styleFont.bodyMedium}
   `,
   InputArea: styled.form`
     display: flex;
@@ -189,7 +191,7 @@ const S = {
   `,
   InputBox: styled.input`
     width: 294px;
-    padding: 10px;
+    padding: 11px 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     color: var(--black, #242424);
@@ -207,9 +209,12 @@ const S = {
     &:focus {
       border: 1px solid var(--neutral-500, #667085);
     }
+    ${styleFont.bodyMedium}
   `,
   LoginButton: styled.button<LoginButtonStateProps>`
-    margin-top: 28px;
+    /* margin-top: 28px; */
+    margin-top: 44px;
+
     width: 294px;
     height: 42px;
     display: flex;
@@ -279,10 +284,14 @@ const S = {
     border: 1px solid #efefef;
     padding-right: 35px;
   `,
-  ErrorMessage: styled(FlexBox)`
-    color: #ff7474;
+  ErrorMessage: styled(FlexBoxCenter)`
+    position: absolute;
+    top: 250px;
+    left: 98px;
 
     gap: 4px;
+
+    color: #ff7474;
     ${styleFont.bodySmall}
   `
 };

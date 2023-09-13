@@ -30,7 +30,7 @@ const TitleArea = ({ category, setCategory, title, setTitle }: TitleAreaProps) =
         ref={postRef}
         type="text"
         name="title"
-        placeholder="제목을 입력해 주세요."
+        placeholder={category === 'common' ? '제목을 입력해 주세요' : '나만의 편식 조합 이름을 입력해 주세요.'}
         value={title || ''}
         onChange={changeTitle}
         autoFocus
