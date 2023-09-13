@@ -31,11 +31,6 @@ const ProdReviewSwiper = () => {
     });
   });
 
-  if (filterprodData && filterprodData!.length >= 10) {
-    filterprodData!.length = 10;
-  }
-  console.log(filterprodData);
-
   const onDropToLike = async (id: string) => {
     const plusReview = swiperData?.data?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;

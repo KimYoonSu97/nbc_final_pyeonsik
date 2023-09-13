@@ -13,7 +13,7 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox'
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
 import { toast } from 'react-toastify';
-import { EMAIL_CHECK, SERVICE_PREPARING } from 'src/utility/guide';
+import { EMAIL_CHECK, NON_MEMBER, SERVICE_PREPARING } from 'src/utility/guide';
 
 interface User {
   id: string;
@@ -53,8 +53,8 @@ const TopBarMenuContainer = () => {
   useEffect(() => {
     //무조건로그인 상태일때만 검사하면됨
     if (data && userId) {
-      console.log('실행됨');
-      console.log(data?.data?.profileImg);
+      // console.log('실행됨');
+      // console.log(data?.data?.profileImg);
       console.log(data?.data?.nickname);
       if (data?.data?.profileImg === null && data?.data?.nickname === null) {
         toast('닉네임 프로필 설정 후 이용 가능합니다.');
@@ -112,6 +112,10 @@ const TopBarMenuContainer = () => {
   }, [localStorage.getItem('social')]);
 
   const clickReview = () => {
+    if (!userId && !userLogin) {
+      toast(NON_MEMBER);
+      return;
+    }
     navigate('/review_swiper');
   };
 
