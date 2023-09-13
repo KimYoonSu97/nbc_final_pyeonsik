@@ -10,6 +10,8 @@ import EvaluationGraph from './EvaluationGraph';
 // style
 import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
+import { useNavigate } from 'react-router';
+
 
 const ProdReviewList = () => {
   const {
@@ -40,6 +42,7 @@ const ProdReviewList = () => {
       .flat();
   }, [dataProd]);
   const swipers = dataSwiper?.data as Swiper[];
+  const navigate = useNavigate()
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
@@ -61,11 +64,15 @@ const ProdReviewList = () => {
     return <p>error</p>;
   }
 
+  const con = (id:string,userId:string) => {
+    navigate(`/review_product/${id}`,{state:{id,userId}})
+  }
+
   return (
     <S.ReviewContainer>
       {products?.map((prod) => {
         return (
-          <S.ReviewBox key={prod.id}>
+          <S.ReviewBox key={prod.id} onClick={()=>con(prod.id,prod.userId)}>
             <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
             <S.TextContainer>
               <S.ProdName>{prod.prodName}</S.ProdName>
