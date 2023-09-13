@@ -21,76 +21,18 @@ const NewReview = () => {
   });
 
   const products = dataProd?.data;
-  // const randomProducts = () => {
-  //   let array = [] as Product[];
-  //   for (let i = 0; array.length < 5; i++) {
-  //     let index = Math.floor(Math.random() * dataProd?.data?.length!);
-  //     if (!array.includes(products?.[index]!)) {
-  //       array.push(products?.[index]!);
-  //     } else {
-  //       return;
-  //     }
-  //   }
-  //   return array;
-  // };
-
-  const randomProducts = [
-    {
-      id: '0af159db-ad70-4b38-b3f5-6da9061a7ce7',
-      created_at: '2023-09-10T15:24:39.255482+00:00',
-      prodName: '혜자로운집밥)제육볶음',
-      price: '4,500원',
-      prodBrand: 'GS25',
-      prodCategory: '식품',
-      prodImg: 'https://image.woodongs.com/imgsvr/item/GD_2700038845663_004.jpg',
-      new: true,
-      event: null
-    },
-    {
-      id: '15470cbe-8a8a-4564-9e28-26da5f68833a',
-      created_at: '2023-09-10T15:24:39.255482+00:00',
-      prodName: '얼큰돈코츠라멘',
-      price: '3,900원',
-      prodBrand: 'GS25',
-      prodCategory: '식품',
-      prodImg: 'https://image.woodongs.com/imgsvr/item/GD_8809860730636_002.jpg',
-      new: true,
-      event: null
-    },
-    {
-      id: '259a8c29-c7ee-4fcd-82fb-143fe453a994',
-      created_at: '2023-09-10T15:24:39.255482+00:00',
-      prodName: '반반돈까스김밥',
-      price: '2,800원',
-      prodBrand: 'GS25',
-      prodCategory: '식품',
-      prodImg: 'https://image.woodongs.com/imgsvr/item/GD_2700038848107_001.jpg',
-      new: true,
-      event: null
-    },
-    {
-      id: '5e4637f8-7120-4361-9b0f-b530e0972ff2',
-      created_at: '2023-09-10T13:40:51.093817+00:00',
-      prodName: '샌)초당옥수수크림샌드',
-      price: '3,000',
-      prodBrand: 'CU',
-      prodCategory: '식품',
-      prodImg: '//tqklhszfkvzk6518638.cdn.ntruss.com/product/8801771028659.jpg',
-      new: true,
-      event: null
-    },
-    {
-      id: '7fd049b9-ca92-46e5-858e-44bbcb089105',
-      created_at: '2023-09-10T15:24:39.255482+00:00',
-      prodName: 'DP)슈넬치킨마요김밥',
-      price: '2,900원',
-      prodBrand: 'GS25',
-      prodCategory: '식품',
-      prodImg: 'https://image.woodongs.com/imgsvr/item/GD_2700038850254_001.jpg',
-      new: true,
-      event: null
+  const randomProducts = () => {
+    let array = [] as Product[];
+    for (let i = 0; array.length < 5; i++) {
+      let index = Math.floor(Math.random() * dataProd?.data?.length!);
+      if (!array.includes(products?.[index]!)) {
+        array.push(products?.[index]!);
+      } else {
+        return;
+      }
     }
-  ];
+    return array;
+  };
 
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
     e.target.onerror = null;
@@ -118,7 +60,7 @@ const NewReview = () => {
       요기까지 맵.. */}
 
       {/* review list */}
-      {randomProducts?.map((prod) => {
+      {randomProducts()?.map((prod) => {
         return (
           <S.ReviewBox key={prod.id}>
             <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
@@ -203,7 +145,15 @@ const S = {
   `,
 
   ProdName: styled.div`
-    /* width: 164px; */
+    width: 150px;
+    flex-shrink: 0;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+
+    text-align: left;
+    overflow: hidden;
     text-overflow: ellipsis;
     color: var(--font-black, var(--Black, #242424));
     ${styleFont.bodyMedium}

@@ -8,39 +8,36 @@ import { IconAllReview } from 'src/components/icons';
 import { useLocation, useNavigate } from 'react-router';
 import { debounce } from 'lodash';
 import Swipeable from 'react-swipy';
+import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
 
 const ProdReviewSwiper = () => {
   const [step, setStep] = useState(0);
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
-  const getProdData = async () => {
-    const { data } = await supabase
-      .from('show_products')
-      .select('id,prodName,prodImg')
-      .order('created_at', { ascending: false })
-      .limit(10);
-    return data;
-  };
+  const location = useLocation();
+  // const locationId = location.state.id
 
-  const getSwiperData = async () => {
-    const { data } = await supabase.from('swiper').select('*');
-    return data;
-  };
+  console.log(location);
+  // console.log(state)
 
   const { data: prodData } = useQuery(['products'], getProdData);
 
   const { data: swiperData } = useQuery(['swiper'], getSwiperData);
 
   const filterprodData = prodData?.filter((prod) => {
-    return !swiperData?.some((swiperProd) => {
+    return !swiperData?.data?.some((swiperProd) => {
       return prod.id === swiperProd.prodId && swiperProd.userId === userId;
     });
   });
 
+  if (filterprodData && filterprodData!.length >= 10) {
+    filterprodData!.length = 10;
+  }
+  console.log(filterprodData);
+
   const onDropToLike = async (id: string) => {
-    console.log('라이크카드', id);
-    const plusReview = swiperData?.find((prod) => {
+    const plusReview = swiperData?.data?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
     if (!plusReview) {
@@ -55,8 +52,7 @@ const ProdReviewSwiper = () => {
   };
 
   const onDropToDisLike = async (id: string) => {
-    console.log('라이크카드', id);
-    const plusReview = swiperData?.find((prod) => {
+    const plusReview = swiperData?.data?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
     if (!plusReview) {
@@ -79,12 +75,6 @@ const ProdReviewSwiper = () => {
     prodNext();
   };
 
-  // const remove = () => setCardData(cardData?.slice(1, cardData.length));
-
-  // useEffect(()=>{
-  //   remove()
-  // },[onDropToDisLike,onDropToLike])
-
   return (
     <S.containerWrap>
       <S.ProdReviewWrap>
@@ -105,7 +95,7 @@ const ProdReviewSwiper = () => {
                           }}
                         >
                           <div>
-                            <img src="/images/ReviewLike.png" />
+                            <img src="/images/ReviewLike.png" draggable="false" />
                             <h1>또 먹을래요!</h1>
                           </div>
                         </S.ReviewLike>
@@ -118,20 +108,23 @@ const ProdReviewSwiper = () => {
                           }}
                         >
                           <div>
-                            <img src="/images/ReviewLike.png" />
+                            <img src="/images/ReviewDisLike.png" draggable="false" />
                             <h1>그만 먹을래요!</h1>
                           </div>
                         </S.ReviewDisLike>
                       </S.ButtonWrap>
                     )}
-                    // onAfterSwipe={remove}
                   >
                     <S.ProductWrap>
                       <S.productInner>
-                        <div>
+                        <p>
                           <img src={prod.prodImg} draggable="false" />
-                          <h1>{prod.prodName}</h1>
-                        </div>
+                        </p>
+                        <S.ProdNameWrap>
+                          <div>
+                            <h1>{prod.prodName}</h1>
+                          </div>
+                        </S.ProdNameWrap>
                       </S.productInner>
                     </S.ProductWrap>
                   </Swipeable>
@@ -185,7 +178,7 @@ const S = {
       height: 470px;
       border-radius: 10px;
       border: 1px solid var(--neutral-200, #e4e7ec);
-      background: var(--neutral-050, #f9fafb);
+      background: var(--neutral-050, #020202);
       z-index: -1;
     } */
   `,
@@ -230,6 +223,7 @@ const S = {
       align-items: center;
       justify-content: center;
     }
+
     h1 {
       font-size: 18px;
       font-style: normal;
@@ -278,28 +272,59 @@ const S = {
     background-image: linear-gradient(#fff, #fff), linear-gradient(to right, red 0%, orange 100%);
     background-origin: border-box;
     background-clip: content-box, border-box;
+    box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
     div {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
+      /* height: 100%; */
       align-items: center;
       text-align: center;
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 75%;
+      }
       img {
         width: auto;
-        max-width: 300px;
+        max-width: 350px;
         height: auto;
-        margin-bottom: 20px;
       }
-      h1 {
+      /* h1 {
+        height: 25%;
         font-size: 22px;
         font-style: normal;
         font-weight: 700;
         line-height: 28px;
         user-select: none;
-      }
+      } */
     }
   `,
-  productInner: styled.div``,
+  ProdNameWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 25%;
+    h1 {
+      display: block;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      user-select: none;
+    }
+    div {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+  `,
+  productInner: styled.div`
+    position: relative;
+    height: 100%;
+  `,
   ReviewProducts: styled.div`
     width: 100%;
     height: 100%;

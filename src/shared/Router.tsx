@@ -20,6 +20,7 @@ import PostModal from 'src/pages/PostModal';
 import Report from 'src/pages/Report';
 import ReviewList from 'src/pages/ReviewList';
 import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper';
+import ReviewLocation from 'src/components/detail/prodReview/ReviewLocation';
 
 const Router = () => {
   const location = useLocation();
@@ -42,6 +43,7 @@ const Router = () => {
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/review_list" element={<ReviewList />} />
           <Route path="/review_swiper" element={<ProdReviewSwiper />} />
+          <Route path="/review_product/:id" element={<ReviewLocation />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/mypage/:tab" element={<Mypage />} />
