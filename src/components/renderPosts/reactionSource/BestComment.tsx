@@ -5,6 +5,7 @@ import { getBestCommentLikeByPostId } from 'src/api/commentLike';
 import { IconBestComment } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import { useLocation, useNavigate } from 'react-router';
+import { ProgressCircle } from 'src/utility/ProgressCircle';
 
 interface BestCommentProps {
   postId: string;
@@ -24,7 +25,11 @@ const BestComment = ({ postId }: BestCommentProps) => {
   });
 
   if (isLoading) {
-    return <div>로딩중</div>;
+    return (
+      <div>
+        <ProgressCircle />
+      </div>
+    );
   }
 
   if (!data?.commentId) {

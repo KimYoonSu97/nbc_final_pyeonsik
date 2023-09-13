@@ -15,6 +15,7 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from
 import { styleFont } from 'src/styles/styleFont';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+import { ProgressCircle } from 'src/utility/ProgressCircle';
 
 dayjs.locale('ko');
 
@@ -59,7 +60,7 @@ const CommentForMap = ({ comment }: Props) => {
   const date = dayjs(comment.created_at).get('D');
 
   if (reCommentIsLoading) {
-    return <>로딩중</>;
+    return <ProgressCircle />;
   }
 
   return (
