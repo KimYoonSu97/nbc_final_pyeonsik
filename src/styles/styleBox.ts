@@ -34,7 +34,6 @@ export const SkeletonItem = styled.div`
   position: relative;
   overflow: hidden;
   border-radius: 4px;
-  // 이걸살려
 
   @keyframes skeleton-gradient {
     0% {
@@ -58,3 +57,5 @@ export const SkeletonItem = styled.div`
     animation: skeleton-gradient 1.5s infinite ease-in-out;
   }
 `;
+
+

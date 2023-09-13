@@ -8,6 +8,7 @@ import CommentInput from './CommentInput';
 import { FlexBox } from 'src/styles/styleBox';
 import { getUserData } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
+import { ProgressCircle } from 'src/utility/ProgressCircle';
 
 interface CommentDataType {
   id: string;
@@ -52,7 +53,7 @@ const Comment = () => {
   // const { data: commentData, isLoading: commentIsLoading } = useQuery();
 
   if (commentIsLoading) {
-    return <div>Loading</div>;
+    return <div><ProgressCircle/></div>;
   }
 
   return (
