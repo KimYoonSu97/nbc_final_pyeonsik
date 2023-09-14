@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
+import { getProdData,  getSwiperData } from 'src/api/ReviewSwiper';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import Swipeable from 'react-swipy';
@@ -11,33 +11,40 @@ import { toast } from 'react-toastify';
 
 const ReviewLocation = () => {
   const userId = useLoginUserId();
-  const { id } = useParams();
-  const location = useLocation();
-  console.log(location);
+  const { id } = useParams<string>();
+
   const navigate = useNavigate();
 
-  const [page,setPage] = useState(1)
 
-  const { data: swiperData } = useQuery(['swiper'], getSwiperData);
+  const {data : swiperData} = useQuery(['swiperData'],getSwiperData)
   const { data: prodData } = useQuery(['products'], getProdData);
+  // const { data: filteredSwiperData } = useQuery(['filteredSwiper'], ()=>getReviewedProductData(product.id,userId));
+
+
+
+  // console.log("1",prodData)
+  // console.log("2",filteredSwiperData)
 
   const product = prodData?.find((data) => {
     return data && data.id == id;
   });
 
-  const ReviewedProduct = swiperData?.data?.find((prod) => {
-    return prod.prodId === product.id && prod.userId === userId;
+  const reviewedProduct = swiperData?.data?.find((prod) => {
+    return prod.prodId === product?.id && prod.userId === userId;
   });
 
+  console.log("111111111111111111111111111111111111111",product)
+  console.log("222222222222222222222222222222222222222",reviewedProduct)
 
-  console.log('스와이퍼데이터', swiperData);
-  console.log('리뷰드프로덕트', ReviewedProduct);
-  console.log(id, '파람아이디');
-  console.log(prodData, '솨이이퍼데이타');
-  console.log(product, '여기임');
+
+
+  // console.log('스와이퍼데이터', swiperData);
+
+  // console.log('프로드데이타',prodData);
+
 
   const onDropToLike = async (id: string | undefined) => {
-    const plusReview = prodData?.find((prod) => {
+    const plusReview = swiperData?.data?.find((prod) => {
       return prod.prodId === id && prod.userId === userId;
     });
     if (!plusReview) {
@@ -75,17 +82,17 @@ const ReviewLocation = () => {
         <S.ProdReviewWrap>
           <S.ReviewProducts>
             <S.WrapperStyles>
-              {ReviewedProduct !== undefined ? (
+              {reviewedProduct? (
                 <Swipeable
                   buttons={({ right, left }: any) => (
                     <S.ButtonWrap>
-                      <S.ReviewLike className={ReviewedProduct?.isGood === true ? 'selected' : ''}>
+                      <S.ReviewLike className={reviewedProduct?.isGood === true ? 'selected' : ''}>
                         <div>
                           <img src="/images/ReviewLike.png" draggable="false" />
                           <h1>또 먹을래요!</h1>
                         </div>
                       </S.ReviewLike>
-                      <S.ReviewDisLike className={ReviewedProduct?.isGood === false ? 'selected' : ''}>
+                      <S.ReviewDisLike className={reviewedProduct?.isGood === false ? 'selected' : ''}>
                         <div>
                           <img src="/images/ReviewDisLike.png" draggable="false" />
                           <h1>그만 먹을래요!</h1>

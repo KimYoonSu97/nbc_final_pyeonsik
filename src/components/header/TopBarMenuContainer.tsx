@@ -13,7 +13,7 @@ import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox'
 import { styleFont } from 'src/styles/styleFont';
 import UserLevel from './UserLevel';
 import { toast } from 'react-toastify';
-import { EMAIL_CHECK, SERVICE_PREPARING } from 'src/utility/guide';
+import { EMAIL_CHECK, NON_MEMBER, SERVICE_PREPARING } from 'src/utility/guide';
 
 interface User {
   id: string;
@@ -109,6 +109,10 @@ const TopBarMenuContainer = () => {
   }, [localStorage.getItem('social')]);
 
   const clickReview = () => {
+    if (!userId && !userLogin) {
+      toast(NON_MEMBER);
+      return;
+    }
     navigate('/review_swiper');
   };
 
