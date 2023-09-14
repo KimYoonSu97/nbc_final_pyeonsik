@@ -114,6 +114,7 @@ const ProfileSetForm = () => {
   };
   useEffect(() => {
     observeNickName();
+  
 
     // 글자 수별 글자 색 변화
     if (nickname.length < MAX_NICKNAME_LENGTH) {

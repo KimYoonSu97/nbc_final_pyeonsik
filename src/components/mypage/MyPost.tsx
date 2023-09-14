@@ -9,6 +9,7 @@ import { css, styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 import { FlexBox } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 const MyPost = () => {
   const id = useLoginUserId();
@@ -42,15 +43,27 @@ const MyPost = () => {
 
   if (filterHandler === '?=bookmark') {
     if (bookmarkLoading) {
-      return <div>Loading</div>;
+      return (
+        <div>
+          <ProgressCircle />
+        </div>
+      );
     }
   } else if (filterHandler === '?=like') {
     if (likeLoading) {
-      return <div>Loading</div>;
+      return (
+        <div>
+          <ProgressCircle />
+        </div>
+      );
     }
   } else {
     if (myPostLoading) {
-      return <div>Loading</div>;
+      return (
+        <div>
+          <ProgressCircle />
+        </div>
+      );
     }
   }
 
