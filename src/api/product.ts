@@ -97,7 +97,6 @@ const getNewProdInfinite = async (pageParam: number = 0) => {
 
 const getNewProd = async () => {
   const response = await supabase.from('show_products').select('*');
-
   return response;
 };
 
