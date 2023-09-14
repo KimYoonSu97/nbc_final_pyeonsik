@@ -5,7 +5,7 @@ import { getBestCommentLikeByPostId } from 'src/api/commentLike';
 import { IconBestComment } from 'src/components/icons';
 import { styleFont } from 'src/styles/styleFont';
 import { useLocation, useNavigate } from 'react-router';
-import { ProgressCircle } from 'src/utility/ProgressCircle';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 interface BestCommentProps {
   postId: string;

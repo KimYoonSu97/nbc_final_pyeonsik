@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getSwiperData } from 'src/api/ReviewSwiper';
 import styled from 'styled-components';
 import { FlexBoxAlignCenter } from 'src/styles/styleBox';
-import { ProgressCircle } from 'src/utility/ProgressCircle';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 interface EvaluationGoodProps {
   prodId: string;
@@ -24,7 +24,11 @@ const EvaluationGood = ({ prodId }: EvaluationGoodProps) => {
   }%)`;
 
   if (lodingSwiper) {
-    return <p><ProgressCircle/></p>;
+    return (
+      <p>
+        <ProgressCircle />
+      </p>
+    );
   }
   if (dataSwiper?.error) {
     return <p>error</p>;

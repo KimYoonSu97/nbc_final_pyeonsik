@@ -8,7 +8,7 @@ import supabase from 'src/lib/supabaseClient';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { EMAIL_CHECK } from 'src/utility/guide';
 import { toast } from 'react-toastify';
-import { ProgressCircle } from 'src/utility/ProgressCircle';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 interface Props {
   commentId: string;
@@ -58,11 +58,19 @@ const CommentLikes = ({ commentId }: Props) => {
   };
 
   if (isLoading) {
-    return <S.LikeNum><ProgressCircle /></S.LikeNum>;
+    return (
+      <S.LikeNum>
+        <ProgressCircle />
+      </S.LikeNum>
+    );
   }
 
   if (isLike === undefined) {
-    return <S.LikeNum><ProgressCircle/></S.LikeNum>;
+    return (
+      <S.LikeNum>
+        <ProgressCircle />
+      </S.LikeNum>
+    );
   }
 
   return (

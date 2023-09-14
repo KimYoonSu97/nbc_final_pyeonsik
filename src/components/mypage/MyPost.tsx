@@ -9,7 +9,7 @@ import { css, styled } from 'styled-components';
 import PostCards from '../renderPosts/PostCards';
 import { FlexBox } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
-import { ProgressCircle } from 'src/utility/ProgressCircle';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 const MyPost = () => {
   const id = useLoginUserId();

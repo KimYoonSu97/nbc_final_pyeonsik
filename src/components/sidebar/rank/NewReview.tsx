@@ -10,7 +10,7 @@ import { styleFont } from 'src/styles/styleFont';
 import { IconGoodFace } from 'src/components/icons';
 import EvaluationGood from './EvaluationGood';
 import { useNavigate } from 'react-router';
-import { ProgressCircle } from 'src/utility/ProgressCircle';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 const NewReview = () => {
   const navigate = useNavigate();
