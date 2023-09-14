@@ -10,12 +10,11 @@ import ReCommentForMap from './ReCommentForMap';
 import { getReCommentDataByCommentId } from 'src/api/ReComment';
 import { useQuery } from '@tanstack/react-query';
 import CommentUserInfo from './CommentUserInfo';
-import CreatedAt from 'src/utility/CreatedAt';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { ProgressCircle } from 'src/utility/ProgressCircle';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 dayjs.locale('ko');
 
