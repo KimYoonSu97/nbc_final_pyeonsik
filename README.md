@@ -24,7 +24,7 @@
 ## Members
 
 |                   이름                   |    역할     | <center/>담당                                                  |
-| :--------------------------------------: | :---------: | :------------------------------------------------------------- |
+| :--------------------------------------: | :---------: | -------------------------------------------------------------- |
 |   [김윤수](https://velog.io/@zkzk625)    |   leader    | 전체 프로젝트 일정 관리, 데이터 구축 및 개발 총괄              |
 |   [이혜영](https://velog.io/@kkotburi)   | vice leader | 일반 게시글 및 게시글 부가 기능, 신제품 리뷰 결과 리스트       |
 |   [원유길](https://d161.tistory.com/)    |   member    | 데이터 구축, 이미지 태그 게시글 관련 기능                      |
@@ -76,15 +76,15 @@
 
 ### ETC.
 
-<img src="https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black"> <img src="https://img.shields.io/badge/.env-ECD53F?style=for-the-badge&logo=dotenv&logoColor=black"> <img src="https://img.shields.io/badge/visual_studio_code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
+<img src="https://img.shields.io/badge/visual_studio_code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"> <img src="https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white"> <img src="https://img.shields.io/badge/.env-ECD53F?style=for-the-badge&logo=dotenv&logoColor=black"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black">
 
 <br/>
 
 ## Process Guide
 
 1. &nbsp;환경 변수(.env) 설정
-2. `yarn` package 설치
-3. `yarn start` client 실행
+2. &nbsp;`yarn` package 설치
+3. &nbsp;`yarn start` client 실행
 
 <br/>
 
