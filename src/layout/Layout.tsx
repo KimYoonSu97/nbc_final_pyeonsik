@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/header/Header';
 import SideBar from 'src/components/sidebar/SideBar';
@@ -7,6 +7,14 @@ import styled, { css } from 'styled-components';
 const Layout = () => {
   const location = useLocation();
   const path = location.pathname.split('/')[1];
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const Top = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
+  };
   return (
     <>
       {path === 'write' || path === 'edit' ? (
@@ -14,7 +22,7 @@ const Layout = () => {
       ) : (
         <>
           <Header />
-          <S.BottomContainer $path={path}>
+          <S.BottomContainer $path={path} ref={containerRef}>
             <S.Container id="scroll">
               <S.ContentsArea $path={path}>
                 <Outlet />
@@ -22,6 +30,8 @@ const Layout = () => {
               {path === 'login' || path === 'register' || path === 'detail' || path === 'report' ? <></> : <SideBar />}
             </S.Container>
           </S.BottomContainer>
+
+          <S.TopButton onClick={Top}>Top</S.TopButton>
         </>
       )}
     </>
@@ -92,5 +102,12 @@ const S = {
   PositionBox: styled.div`
     width: 296px;
     height: 10px;
+  `,
+  TopButton: styled.button`
+    position: fixed;
+    bottom: 200px;
+    right: 40px;
+    background-color: red;
+    cursor: pointer;
   `
 };
