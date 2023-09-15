@@ -21,7 +21,7 @@
 
 <br/>
 
-## 구성원
+## Members
 
 |                   이름                   |    역할     | <center/>담당                                                  |
 | :--------------------------------------: | :---------: | :------------------------------------------------------------- |
@@ -91,381 +91,381 @@
 ## Commit Convention
 
 **Chore**: build 업무, package manager 수정, package 관리자 구성 update 등<br/>
-**Docs** 문서 수정<br/>
 **Feat**: 새로운 기능 추가<br/>
 **Fix**: bug 수정<br/>
+**Refactor**: code refactoring<br/>
 **Comment**: 필요한 주석 추가 및 변경<br/>
 **Style**: code fomat 변경, semi colon 누락<br/>
-**Refactor**: code refactoring<br/>
 **Design**: UI Design 변경 (styled-component)<br/>
 **Rename**: folder, file 이름 수정 및 이동<br/>
 **Remove**: file 삭제<br/>
+**Docs**: 문서 수정<br/>
 **Test**: test code<br/>
 
 <br/>
 
 ## File Tree
 
-📦src
-┣ 📂api
-┃ ┣ 📂mainPage
-┃ ┃ ┗ 📜getPostInfinity.ts
-┃ ┣ 📜badge.ts
-┃ ┣ 📜bestComment.ts
-┃ ┣ 📜comment.ts
-┃ ┣ 📜commentLike.ts
-┃ ┣ 📜postBookmark.ts
-┃ ┣ 📜postLikes.ts
-┃ ┣ 📜posts.ts
-┃ ┣ 📜product.ts
-┃ ┣ 📜ReComment.ts
-┃ ┣ 📜ReCommentLike.ts
-┃ ┣ 📜ReviewSwiper.ts
-┃ ┗ 📜userLogin.ts
-┣ 📂components
-┃ ┣ 📂detail
-┃ ┃ ┣ 📂comments
-┃ ┃ ┃ ┣ 📜Comment.tsx
-┃ ┃ ┃ ┣ 📜CommentForMap.tsx
-┃ ┃ ┃ ┣ 📜CommentInput.tsx
-┃ ┃ ┃ ┣ 📜CommentLikes.tsx
-┃ ┃ ┃ ┣ 📜CommentUserInfo.tsx
-┃ ┃ ┃ ┣ 📜ReCommentForMap.tsx
-┃ ┃ ┃ ┣ 📜ReCommentInput.tsx
-┃ ┃ ┃ ┣ 📜ReCommentLikes.tsx
-┃ ┃ ┃ ┗ 📜styledComments.ts
-┃ ┃ ┗ 📂prodReview
-┃ ┃ ┃ ┣ 📜EvaluationGraph.tsx
-┃ ┃ ┃ ┣ 📜MyEvaluation.tsx
-┃ ┃ ┃ ┣ 📜ProdReviewSwiper.tsx
-┃ ┃ ┃ ┣ 📜ReviewList.tsx
-┃ ┃ ┃ ┣ 📜ReviewLocation.tsx
-┃ ┃ ┃ ┗ 📜ReviewProduct.tsx
-┃ ┣ 📂eventProd
-┃ ┃ ┣ 📜ProdCard.tsx
-┃ ┃ ┗ 📜ProdList.tsx
-┃ ┣ 📂header
-┃ ┃ ┣ 📂search
-┃ ┃ ┃ ┗ 📜SearchResult.tsx
-┃ ┃ ┣ 📂write_edit
-┃ ┃ ┃ ┗ 📜WriteHeader.tsx
-┃ ┃ ┣ 📜BoardSearchContainer.tsx
-┃ ┃ ┣ 📜BottomBarMenuContainer.tsx
-┃ ┃ ┣ 📜Header.tsx
-┃ ┃ ┣ 📜HeaderSearchBar.tsx
-┃ ┃ ┣ 📜TopBarMenuContainer.tsx
-┃ ┃ ┗ 📜UserLevel.tsx
-┃ ┣ 📂icons
-┃ ┃ ┣ 📂achievement
-┃ ┃ ┃ ┣ 📂block
-┃ ┃ ┃ ┃ ┣ 📜BookMarkBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜BugBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜CommentKingBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜EarlyBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜FirstCommentBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜FirstNewProductReivewBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜FirstRecipeBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜GoFoundedBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜GoldChairBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜HolicBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜KingStarBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜Likes100Block.svg
-┃ ┃ ┃ ┃ ┣ 📜NewProductUploaderBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜OurEmployeeBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜RecipeManiaBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜RisingStarBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜SevenBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜SheriffBlock.svg
-┃ ┃ ┃ ┃ ┣ 📜SilverChairBlock.svg
-┃ ┃ ┃ ┃ ┗ 📜SoilChairBlock.svg
-┃ ┃ ┃ ┣ 📂modal
-┃ ┃ ┃ ┃ ┣ 📜IconBookMark.svg
-┃ ┃ ┃ ┃ ┣ 📜IconBug.svg
-┃ ┃ ┃ ┃ ┣ 📜IconCommentKing.svg
-┃ ┃ ┃ ┃ ┣ 📜IconEarly.svg
-┃ ┃ ┃ ┃ ┣ 📜IconFirstComment.svg
-┃ ┃ ┃ ┃ ┣ 📜IconFirstNewProductReview.svg
-┃ ┃ ┃ ┃ ┣ 📜IconFirstRecipe.svg
-┃ ┃ ┃ ┃ ┣ 📜IconGoFounded.svg
-┃ ┃ ┃ ┃ ┣ 📜IconGoldChair.svg
-┃ ┃ ┃ ┃ ┣ 📜IconHolic.svg
-┃ ┃ ┃ ┃ ┣ 📜IconKingStar.svg
-┃ ┃ ┃ ┃ ┣ 📜IconLikes100.svg
-┃ ┃ ┃ ┃ ┣ 📜IconNewProductUploader.svg
-┃ ┃ ┃ ┃ ┣ 📜IconOurEmployee.svg
-┃ ┃ ┃ ┃ ┣ 📜IconRecipeMania.svg
-┃ ┃ ┃ ┃ ┣ 📜IconRisingStar.svg
-┃ ┃ ┃ ┃ ┣ 📜IconSeven.svg
-┃ ┃ ┃ ┃ ┣ 📜IConSheriff.svg
-┃ ┃ ┃ ┃ ┣ 📜IconSilverChair.svg
-┃ ┃ ┃ ┃ ┣ 📜IconSoilChair.svg
-┃ ┃ ┃ ┃ ┗ 📜index.ts
-┃ ┃ ┃ ┣ 📜BookMark.svg
-┃ ┃ ┃ ┣ 📜Bug.svg
-┃ ┃ ┃ ┣ 📜CommentKing.svg
-┃ ┃ ┃ ┣ 📜Early.svg
-┃ ┃ ┃ ┣ 📜FirstComment.svg
-┃ ┃ ┃ ┣ 📜FirstNewProductReivew.svg
-┃ ┃ ┃ ┣ 📜FirstRecipe.svg
-┃ ┃ ┃ ┣ 📜GoFounded.svg
-┃ ┃ ┃ ┣ 📜GoldChair.svg
-┃ ┃ ┃ ┣ 📜Holic.svg
-┃ ┃ ┃ ┣ 📜KingStar.svg
-┃ ┃ ┃ ┣ 📜Likes100.svg
-┃ ┃ ┃ ┣ 📜NewProductUploader.svg
-┃ ┃ ┃ ┣ 📜OurEmployee.svg
-┃ ┃ ┃ ┣ 📜RecipeMania.svg
-┃ ┃ ┃ ┣ 📜RisingStar.svg
-┃ ┃ ┃ ┣ 📜Seven.svg
-┃ ┃ ┃ ┣ 📜Sheriff.svg
-┃ ┃ ┃ ┣ 📜SilverChair.svg
-┃ ┃ ┃ ┗ 📜SoilChair.svg
-┃ ┃ ┣ 📂brand
-┃ ┃ ┃ ┣ 📜CU.svg
-┃ ┃ ┃ ┣ 📜Emart24.svg
-┃ ┃ ┃ ┣ 📜GS25.svg
-┃ ┃ ┃ ┗ 📜SevenEleven.svg
-┃ ┃ ┣ 📂login
-┃ ┃ ┃ ┗ 📜IconWarning.svg
-┃ ┃ ┣ 📂map
-┃ ┃ ┃ ┣ 📜IconLocation.svg
-┃ ┃ ┃ ┗ 📜IconMap.svg
-┃ ┃ ┣ 📂mypage
-┃ ┃ ┃ ┣ 📜IconLogOut.svg
-┃ ┃ ┃ ┗ 📜IconSecret.svg
-┃ ┃ ┣ 📂post
-┃ ┃ ┃ ┣ 📂recipe
-┃ ┃ ┃ ┃ ┣ 📜AddBtn.svg
-┃ ┃ ┃ ┃ ┣ 📜ArrowIcon.svg
-┃ ┃ ┃ ┃ ┣ 📜CameraIcon.svg
-┃ ┃ ┃ ┃ ┣ 📜DeleteIcon.svg
-┃ ┃ ┃ ┃ ┣ 📜DotIcon.svg
-┃ ┃ ┃ ┃ ┣ 📜SearchIcon.svg
-┃ ┃ ┃ ┃ ┣ 📜SelectedFileIcon.svg
-┃ ┃ ┃ ┃ ┣ 📜TagIcon.svg
-┃ ┃ ┃ ┃ ┗ 📜TrashCanIcon.svg
-┃ ┃ ┃ ┣ 📜IconAdd.svg
-┃ ┃ ┃ ┣ 📜IconBookmark.svg
-┃ ┃ ┃ ┣ 📜IconClose.svg
-┃ ┃ ┃ ┣ 📜IconComment.svg
-┃ ┃ ┃ ┣ 📜IconLike.svg
-┃ ┃ ┃ ┣ 📜IconLink.svg
-┃ ┃ ┃ ┣ 📜IconLinkCopy.svg
-┃ ┃ ┃ ┣ 📜IconLinkFacebook.svg
-┃ ┃ ┃ ┣ 📜IconLinkKakao.svg
-┃ ┃ ┃ ┣ 📜IconLinkTwitter.svg
-┃ ┃ ┃ ┣ 📜IconOrgPost.svg
-┃ ┃ ┃ ┣ 📜IconQuotation.svg
-┃ ┃ ┃ ┣ 📜IconSelect.svg
-┃ ┃ ┃ ┣ 📜IconUnBookmark.svg
-┃ ┃ ┃ ┣ 📜IconUnLike.svg
-┃ ┃ ┃ ┣ 📜IconUnLink.svg
-┃ ┃ ┃ ┗ 📜IconUnQuotation.svg
-┃ ┃ ┣ 📂register
-┃ ┃ ┃ ┣ 📜IconConsent.svg
-┃ ┃ ┃ ┣ 📜IconConsentConfirm.svg
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┃ ┣ 📂report
-┃ ┃ ┃ ┗ 📜IconReport.svg
-┃ ┃ ┣ 📂review
-┃ ┃ ┃ ┗ 📜IconGood.svg
-┃ ┃ ┣ 📂search
-┃ ┃ ┃ ┗ 📜IconNoSearchResult.svg
-┃ ┃ ┣ 📂write
-┃ ┃ ┃ ┣ 📜IconCommon.svg
-┃ ┃ ┃ ┗ 📜IconRecipe.svg
-┃ ┃ ┣ 📜IconAddReComment.svg
-┃ ┃ ┣ 📜IconAllReview.svg
-┃ ┃ ┣ 📜IconBackSpace.svg
-┃ ┃ ┣ 📜IconBad.svg
-┃ ┃ ┣ 📜IconBadFace.svg
-┃ ┃ ┣ 📜IconBadge.svg
-┃ ┃ ┣ 📜IconBadgeSmall.svg
-┃ ┃ ┣ 📜IconBell.svg
-┃ ┃ ┣ 📜IconBestComment.svg
-┃ ┃ ┣ 📜IconCamera.svg
-┃ ┃ ┣ 📜IconCameraSmall.svg
-┃ ┃ ┣ 📜IconCommentInput.svg
-┃ ┃ ┣ 📜IconCommon.svg
-┃ ┃ ┣ 📜IconGoodBig.svg
-┃ ┃ ┣ 📜IconGoodFace.svg
-┃ ┃ ┣ 📜IconGoogle.svg
-┃ ┃ ┣ 📜IconKaKao.svg
-┃ ┃ ┣ 📜IconLiked.svg
-┃ ┃ ┣ 📜IconLogoSymbolH22.svg
-┃ ┃ ┣ 📜IconLogoSymbolH32.svg
-┃ ┃ ┣ 📜IconLogoWaterMarkH22.svg
-┃ ┃ ┣ 📜IconLogoWaterMarkH32.svg
-┃ ┃ ┣ 📜IconMyPostBox.svg
-┃ ┃ ┣ 📜IconPlusTag.svg
-┃ ┃ ┣ 📜IconProfile.svg
-┃ ┃ ┣ 📜IconRecipe.svg
-┃ ┃ ┣ 📜IconUnLiked.svg
-┃ ┃ ┣ 📜IconWriteButton.svg
-┃ ┃ ┗ 📜index.ts
-┃ ┣ 📂imageTag
-┃ ┃ ┣ 📂svg
-┃ ┃ ┃ ┣ 📜ArrowIcon.svg
-┃ ┃ ┃ ┣ 📜CameraIcon.svg
-┃ ┃ ┃ ┣ 📜DeleteIcon.svg
-┃ ┃ ┃ ┣ 📜DotIcon.svg
-┃ ┃ ┃ ┣ 📜IconAddBtn.svg
-┃ ┃ ┃ ┣ 📜SearchIcon.svg
-┃ ┃ ┃ ┣ 📜SelectedFileIcon.svg
-┃ ┃ ┃ ┣ 📜TagIcon.svg
-┃ ┃ ┃ ┗ 📜TrashCanIcon.svg
-┃ ┃ ┣ 📜AddImageTagComponent.tsx
-┃ ┃ ┣ 📜ImageTag.tsx
-┃ ┃ ┣ 📜ImageUploader.tsx
-┃ ┃ ┣ 📜Search.tsx
-┃ ┃ ┣ 📜ShowTag.tsx
-┃ ┃ ┣ 📜StyledAddImageTagComponent.ts
-┃ ┃ ┣ 📜StyledImageTag.ts
-┃ ┃ ┣ 📜StyledShowTag.ts
-┃ ┃ ┗ 📜TagModal.tsx
-┃ ┣ 📂mypage
-┃ ┃ ┣ 📜Achievement.tsx
-┃ ┃ ┣ 📜AchievementExport.ts
-┃ ┃ ┣ 📜AchievementModal.tsx
-┃ ┃ ┣ 📜BadgeMapping.tsx
-┃ ┃ ┣ 📜MyAchievement.tsx
-┃ ┃ ┣ 📜MyPageHover.tsx
-┃ ┃ ┣ 📜MyPost.tsx
-┃ ┃ ┣ 📜NoPost.tsx
-┃ ┃ ┗ 📜Profile.tsx
-┃ ┣ 📂popUp
-┃ ┃ ┣ 📜BadgeAlert.tsx
-┃ ┃ ┣ 📜BoardAlert.tsx
-┃ ┃ ┣ 📜Confirm.tsx
-┃ ┃ ┣ 📜confirmModalText.ts
-┃ ┃ ┗ 📜UserDeleteAlert.tsx
-┃ ┣ 📂post
-┃ ┃ ┣ 📂detail
-┃ ┃ ┃ ┣ 📜BottomFunction.tsx
-┃ ┃ ┃ ┣ 📜BottomShare.tsx
-┃ ┃ ┃ ┣ 📜OrgPostCard.tsx
-┃ ┃ ┃ ┣ 📜PostDetail.tsx
-┃ ┃ ┃ ┣ 📜StyledBottomFunction.ts
-┃ ┃ ┃ ┣ 📜StyledOrgPostCard.ts
-┃ ┃ ┃ ┣ 📜StyledPostDetail.ts
-┃ ┃ ┃ ┗ 📜WriterInfo.tsx
-┃ ┃ ┣ 📂write
-┃ ┃ ┃ ┣ 📜EditorQuill.tsx
-┃ ┃ ┃ ┣ 📜HeaderArea.tsx
-┃ ┃ ┃ ┣ 📜PostWrite.tsx
-┃ ┃ ┃ ┣ 📜PostWriteBodyInput.tsx
-┃ ┃ ┃ ┣ 📜Select.tsx
-┃ ┃ ┃ ┣ 📜StyledEditorQuill.css
-┃ ┃ ┃ ┣ 📜StyledHeaderArea.ts
-┃ ┃ ┃ ┣ 📜StyledPostWrite.ts
-┃ ┃ ┃ ┣ 📜StyledTitleArea.ts
-┃ ┃ ┃ ┣ 📜TitleArea.tsx
-┃ ┃ ┃ ┗ 📜userLevelUp.ts
-┃ ┃ ┣ 📜PostEditCommon.tsx
-┃ ┃ ┣ 📜PostEditRecipe.tsx
-┃ ┃ ┗ 📜PostList.tsx
-┃ ┣ 📂register
-┃ ┃ ┣ 📜ProfileSetForm.tsx
-┃ ┃ ┣ 📜SignUpForm.tsx
-┃ ┃ ┣ 📜TermsAndConditions.tsx
-┃ ┃ ┗ 📜UserDelete.tsx
-┃ ┣ 📂renderPosts
-┃ ┃ ┣ 📂reactionSource
-┃ ┃ ┃ ┣ 📜BestComment.tsx
-┃ ┃ ┃ ┣ 📜ContentBox.tsx
-┃ ┃ ┃ ┗ 📜WriterContainer.tsx
-┃ ┃ ┣ 📜CommonPost.tsx
-┃ ┃ ┣ 📜PostCards.tsx
-┃ ┃ ┗ 📜PostForMain.tsx
-┃ ┣ 📂report
-┃ ┃ ┗ 📜ReportIcon.tsx
-┃ ┣ 📂search
-┃ ┃ ┣ 📜NoSearchResult.tsx
-┃ ┃ ┣ 📜Prodfilter.ts
-┃ ┃ ┣ 📜ProdSearch.tsx
-┃ ┃ ┗ 📜SearchSummary.tsx
-┃ ┣ 📂sidebar
-┃ ┃ ┣ 📂event
-┃ ┃ ┃ ┣ 📜BrandSelector.tsx
-┃ ┃ ┃ ┣ 📜EventSideBar.tsx
-┃ ┃ ┃ ┣ 📜NearBy.tsx
-┃ ┃ ┃ ┗ 📜NearByBox.tsx
-┃ ┃ ┣ 📂mypage
-┃ ┃ ┃ ┣ 📜BadgeCount.tsx
-┃ ┃ ┃ ┣ 📜MypageSideBar.tsx
-┃ ┃ ┃ ┣ 📜MypageSideBarButtonTab.tsx
-┃ ┃ ┃ ┗ 📜MypageSideBarInfo.tsx
-┃ ┃ ┣ 📂rank
-┃ ┃ ┃ ┣ 📜EvaluationGood.tsx
-┃ ┃ ┃ ┣ 📜NewReview.tsx
-┃ ┃ ┃ ┣ 📜RankSideBar.tsx
-┃ ┃ ┃ ┣ 📜RealTimeCombo.tsx
-┃ ┃ ┃ ┗ 📜StyledRealTimeCombo.ts
-┃ ┃ ┣ 📜FetchPosts.tsx
-┃ ┃ ┣ 📜Footer.tsx
-┃ ┃ ┗ 📜SideBar.tsx
-┃ ┣ 📂skeleton
-┃ ┃ ┣ 📜PostSkeleton.tsx
-┃ ┃ ┗ 📜ProdSkeleton.tsx
-┃ ┣ 📜OAuthLogin.tsx
-┃ ┗ 📜ProgressCircle.tsx
-┣ 📂d.ts
-┃ ┗ 📜badwords.d.ts
-┣ 📂function
-┃ ┣ 📜GetDistanceBtw.ts
-┃ ┗ 📜setBrandName.ts
-┣ 📂globalState
-┃ ┗ 📜jotai.ts
-┣ 📂hooks
-┃ ┣ 📜useCommentMutate.ts
-┃ ┣ 📜useInput.ts
-┃ ┣ 📜useLoginUserId.ts
-┃ ┣ 📜usePost.ts
-┃ ┣ 📜usePostBookmark.ts
-┃ ┣ 📜usePostLikes.ts
-┃ ┣ 📜useReCommentMutate.ts
-┃ ┗ 📜useUserMutate.ts
-┣ 📂kakaoMap
-┃ ┣ 📜GetConvList.ts
-┃ ┣ 📜GetDetailAddress.tsx
-┃ ┣ 📜GetDistanceBtw.ts
-┃ ┗ 📜KakaoMap.tsx
-┣ 📂layout
-┃ ┗ 📜Layout.tsx
-┣ 📂lib
-┃ ┗ 📜supabaseClient.ts
-┣ 📂pages
-┃ ┣ 📜Detail.tsx
-┃ ┣ 📜Edit.tsx
-┃ ┣ 📜EventProd.tsx
-┃ ┣ 📜Login.tsx
-┃ ┣ 📜Main.tsx
-┃ ┣ 📜Mypage.tsx
-┃ ┣ 📜PasswordChange.tsx
-┃ ┣ 📜PasswordReset.tsx
-┃ ┣ 📜PostModal.tsx
-┃ ┣ 📜Register.tsx
-┃ ┣ 📜Report.tsx
-┃ ┣ 📜ReviewList.tsx
-┃ ┣ 📜SearchResult.tsx
-┃ ┗ 📜Write.tsx
-┣ 📂shared
-┃ ┣ 📜PrivateRoute.tsx
-┃ ┗ 📜Router.tsx
-┣ 📂styles
-┃ ┣ 📜GlobalFont.ts
-┃ ┣ 📜GlobalStyle.ts
-┃ ┣ 📜styleBox.ts
-┃ ┗ 📜styleFont.ts
-┣ 📂types
-┃ ┣ 📜supabase.ts
-┃ ┗ 📜types.ts
-┣ 📂utility
-┃ ┣ 📜CreatedAt.tsx
-┃ ┗ 📜guide.ts
-┣ 📜App.tsx
-┣ 📜badwords-ko.d.ts
-┣ 📜index.tsx
-┣ 📜react-app-env.d.ts
-┣ 📜react-swipy.d.ts
-┗ 📜toast.css
+📦src<br/>
+┣ 📂api<br/>
+┃ ┣ 📂mainPage<br/>
+┃ ┃ ┗ 📜getPostInfinity.ts<br/>
+┃ ┣ 📜badge.ts<br/>
+┃ ┣ 📜bestComment.ts<br/>
+┃ ┣ 📜comment.ts<br/>
+┃ ┣ 📜commentLike.ts<br/>
+┃ ┣ 📜postBookmark.ts<br/>
+┃ ┣ 📜postLikes.ts<br/>
+┃ ┣ 📜posts.ts<br/>
+┃ ┣ 📜product.ts<br/>
+┃ ┣ 📜ReComment.ts<br/>
+┃ ┣ 📜ReCommentLike.ts<br/>
+┃ ┣ 📜ReviewSwiper.ts<br/>
+┃ ┗ 📜userLogin.ts<br/>
+┣ 📂components<br/>
+┃ ┣ 📂detail<br/>
+┃ ┃ ┣ 📂comments<br/>
+┃ ┃ ┃ ┣ 📜Comment.tsx<br/>
+┃ ┃ ┃ ┣ 📜CommentForMap.tsx<br/>
+┃ ┃ ┃ ┣ 📜CommentInput.tsx<br/>
+┃ ┃ ┃ ┣ 📜CommentLikes.tsx<br/>
+┃ ┃ ┃ ┣ 📜CommentUserInfo.tsx<br/>
+┃ ┃ ┃ ┣ 📜ReCommentForMap.tsx<br/>
+┃ ┃ ┃ ┣ 📜ReCommentInput.tsx<br/>
+┃ ┃ ┃ ┣ 📜ReCommentLikes.tsx<br/>
+┃ ┃ ┃ ┗ 📜styledComments.ts<br/>
+┃ ┃ ┗ 📂prodReview<br/>
+┃ ┃ ┃ ┣ 📜EvaluationGraph.tsx<br/>
+┃ ┃ ┃ ┣ 📜MyEvaluation.tsx<br/>
+┃ ┃ ┃ ┣ 📜ProdReviewSwiper.tsx<br/>
+┃ ┃ ┃ ┣ 📜ReviewList.tsx<br/>
+┃ ┃ ┃ ┣ 📜ReviewLocation.tsx<br/>
+┃ ┃ ┃ ┗ 📜ReviewProduct.tsx<br/>
+┃ ┣ 📂eventProd<br/>
+┃ ┃ ┣ 📜ProdCard.tsx<br/>
+┃ ┃ ┗ 📜ProdList.tsx<br/>
+┃ ┣ 📂header<br/>
+┃ ┃ ┣ 📂search<br/>
+┃ ┃ ┃ ┗ 📜SearchResult.tsx<br/>
+┃ ┃ ┣ 📂write_edit<br/>
+┃ ┃ ┃ ┗ 📜WriteHeader.tsx<br/>
+┃ ┃ ┣ 📜BoardSearchContainer.tsx<br/>
+┃ ┃ ┣ 📜BottomBarMenuContainer.tsx<br/>
+┃ ┃ ┣ 📜Header.tsx<br/>
+┃ ┃ ┣ 📜HeaderSearchBar.tsx<br/>
+┃ ┃ ┣ 📜TopBarMenuContainer.tsx<br/>
+┃ ┃ ┗ 📜UserLevel.tsx<br/>
+┃ ┣ 📂icons<br/>
+┃ ┃ ┣ 📂achievement<br/>
+┃ ┃ ┃ ┣ 📂block<br/>
+┃ ┃ ┃ ┃ ┣ 📜BookMarkBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜BugBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜CommentKingBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜EarlyBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜FirstCommentBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜FirstNewProductReivewBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜FirstRecipeBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜GoFoundedBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜GoldChairBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜HolicBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜KingStarBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜Likes100Block.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜NewProductUploaderBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜OurEmployeeBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜RecipeManiaBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜RisingStarBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜SevenBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜SheriffBlock.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜SilverChairBlock.svg<br/>
+┃ ┃ ┃ ┃ ┗ 📜SoilChairBlock.svg<br/>
+┃ ┃ ┃ ┣ 📂modal<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconBookMark.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconBug.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconCommentKing.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconEarly.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconFirstComment.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconFirstNewProductReview.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconFirstRecipe.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconGoFounded.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconGoldChair.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconHolic.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconKingStar.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconLikes100.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconNewProductUploader.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconOurEmployee.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconRecipeMania.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconRisingStar.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconSeven.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IConSheriff.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconSilverChair.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜IconSoilChair.svg<br/>
+┃ ┃ ┃ ┃ ┗ 📜index.ts<br/>
+┃ ┃ ┃ ┣ 📜BookMark.svg<br/>
+┃ ┃ ┃ ┣ 📜Bug.svg<br/>
+┃ ┃ ┃ ┣ 📜CommentKing.svg<br/>
+┃ ┃ ┃ ┣ 📜Early.svg<br/>
+┃ ┃ ┃ ┣ 📜FirstComment.svg<br/>
+┃ ┃ ┃ ┣ 📜FirstNewProductReivew.svg<br/>
+┃ ┃ ┃ ┣ 📜FirstRecipe.svg<br/>
+┃ ┃ ┃ ┣ 📜GoFounded.svg<br/>
+┃ ┃ ┃ ┣ 📜GoldChair.svg<br/>
+┃ ┃ ┃ ┣ 📜Holic.svg<br/>
+┃ ┃ ┃ ┣ 📜KingStar.svg<br/>
+┃ ┃ ┃ ┣ 📜Likes100.svg<br/>
+┃ ┃ ┃ ┣ 📜NewProductUploader.svg<br/>
+┃ ┃ ┃ ┣ 📜OurEmployee.svg<br/>
+┃ ┃ ┃ ┣ 📜RecipeMania.svg<br/>
+┃ ┃ ┃ ┣ 📜RisingStar.svg<br/>
+┃ ┃ ┃ ┣ 📜Seven.svg<br/>
+┃ ┃ ┃ ┣ 📜Sheriff.svg<br/>
+┃ ┃ ┃ ┣ 📜SilverChair.svg<br/>
+┃ ┃ ┃ ┗ 📜SoilChair.svg<br/>
+┃ ┃ ┣ 📂brand<br/>
+┃ ┃ ┃ ┣ 📜CU.svg<br/>
+┃ ┃ ┃ ┣ 📜Emart24.svg<br/>
+┃ ┃ ┃ ┣ 📜GS25.svg<br/>
+┃ ┃ ┃ ┗ 📜SevenEleven.svg<br/>
+┃ ┃ ┣ 📂login<br/>
+┃ ┃ ┃ ┗ 📜IconWarning.svg<br/>
+┃ ┃ ┣ 📂map<br/>
+┃ ┃ ┃ ┣ 📜IconLocation.svg<br/>
+┃ ┃ ┃ ┗ 📜IconMap.svg<br/>
+┃ ┃ ┣ 📂mypage<br/>
+┃ ┃ ┃ ┣ 📜IconLogOut.svg<br/>
+┃ ┃ ┃ ┗ 📜IconSecret.svg<br/>
+┃ ┃ ┣ 📂post<br/>
+┃ ┃ ┃ ┣ 📂recipe<br/>
+┃ ┃ ┃ ┃ ┣ 📜AddBtn.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜ArrowIcon.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜CameraIcon.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜DeleteIcon.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜DotIcon.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜SearchIcon.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜SelectedFileIcon.svg<br/>
+┃ ┃ ┃ ┃ ┣ 📜TagIcon.svg<br/>
+┃ ┃ ┃ ┃ ┗ 📜TrashCanIcon.svg<br/>
+┃ ┃ ┃ ┣ 📜IconAdd.svg<br/>
+┃ ┃ ┃ ┣ 📜IconBookmark.svg<br/>
+┃ ┃ ┃ ┣ 📜IconClose.svg<br/>
+┃ ┃ ┃ ┣ 📜IconComment.svg<br/>
+┃ ┃ ┃ ┣ 📜IconLike.svg<br/>
+┃ ┃ ┃ ┣ 📜IconLink.svg<br/>
+┃ ┃ ┃ ┣ 📜IconLinkCopy.svg<br/>
+┃ ┃ ┃ ┣ 📜IconLinkFacebook.svg<br/>
+┃ ┃ ┃ ┣ 📜IconLinkKakao.svg<br/>
+┃ ┃ ┃ ┣ 📜IconLinkTwitter.svg<br/>
+┃ ┃ ┃ ┣ 📜IconOrgPost.svg<br/>
+┃ ┃ ┃ ┣ 📜IconQuotation.svg<br/>
+┃ ┃ ┃ ┣ 📜IconSelect.svg<br/>
+┃ ┃ ┃ ┣ 📜IconUnBookmark.svg<br/>
+┃ ┃ ┃ ┣ 📜IconUnLike.svg<br/>
+┃ ┃ ┃ ┣ 📜IconUnLink.svg<br/>
+┃ ┃ ┃ ┗ 📜IconUnQuotation.svg<br/>
+┃ ┃ ┣ 📂register<br/>
+┃ ┃ ┃ ┣ 📜IconConsent.svg<br/>
+┃ ┃ ┃ ┣ 📜IconConsentConfirm.svg<br/>
+┃ ┃ ┃ ┗ 📜index.ts<br/>
+┃ ┃ ┣ 📂report<br/>
+┃ ┃ ┃ ┗ 📜IconReport.svg<br/>
+┃ ┃ ┣ 📂review<br/>
+┃ ┃ ┃ ┗ 📜IconGood.svg<br/>
+┃ ┃ ┣ 📂search<br/>
+┃ ┃ ┃ ┗ 📜IconNoSearchResult.svg<br/>
+┃ ┃ ┣ 📂write<br/>
+┃ ┃ ┃ ┣ 📜IconCommon.svg<br/>
+┃ ┃ ┃ ┗ 📜IconRecipe.svg<br/>
+┃ ┃ ┣ 📜IconAddReComment.svg<br/>
+┃ ┃ ┣ 📜IconAllReview.svg<br/>
+┃ ┃ ┣ 📜IconBackSpace.svg<br/>
+┃ ┃ ┣ 📜IconBad.svg<br/>
+┃ ┃ ┣ 📜IconBadFace.svg<br/>
+┃ ┃ ┣ 📜IconBadge.svg<br/>
+┃ ┃ ┣ 📜IconBadgeSmall.svg<br/>
+┃ ┃ ┣ 📜IconBell.svg<br/>
+┃ ┃ ┣ 📜IconBestComment.svg<br/>
+┃ ┃ ┣ 📜IconCamera.svg<br/>
+┃ ┃ ┣ 📜IconCameraSmall.svg<br/>
+┃ ┃ ┣ 📜IconCommentInput.svg<br/>
+┃ ┃ ┣ 📜IconCommon.svg<br/>
+┃ ┃ ┣ 📜IconGoodBig.svg<br/>
+┃ ┃ ┣ 📜IconGoodFace.svg<br/>
+┃ ┃ ┣ 📜IconGoogle.svg<br/>
+┃ ┃ ┣ 📜IconKaKao.svg<br/>
+┃ ┃ ┣ 📜IconLiked.svg<br/>
+┃ ┃ ┣ 📜IconLogoSymbolH22.svg<br/>
+┃ ┃ ┣ 📜IconLogoSymbolH32.svg<br/>
+┃ ┃ ┣ 📜IconLogoWaterMarkH22.svg<br/>
+┃ ┃ ┣ 📜IconLogoWaterMarkH32.svg<br/>
+┃ ┃ ┣ 📜IconMyPostBox.svg<br/>
+┃ ┃ ┣ 📜IconPlusTag.svg<br/>
+┃ ┃ ┣ 📜IconProfile.svg<br/>
+┃ ┃ ┣ 📜IconRecipe.svg<br/>
+┃ ┃ ┣ 📜IconUnLiked.svg<br/>
+┃ ┃ ┣ 📜IconWriteButton.svg<br/>
+┃ ┃ ┗ 📜index.ts<br/>
+┃ ┣ 📂imageTag<br/>
+┃ ┃ ┣ 📂svg<br/>
+┃ ┃ ┃ ┣ 📜ArrowIcon.svg<br/>
+┃ ┃ ┃ ┣ 📜CameraIcon.svg<br/>
+┃ ┃ ┃ ┣ 📜DeleteIcon.svg<br/>
+┃ ┃ ┃ ┣ 📜DotIcon.svg<br/>
+┃ ┃ ┃ ┣ 📜IconAddBtn.svg<br/>
+┃ ┃ ┃ ┣ 📜SearchIcon.svg<br/>
+┃ ┃ ┃ ┣ 📜SelectedFileIcon.svg<br/>
+┃ ┃ ┃ ┣ 📜TagIcon.svg<br/>
+┃ ┃ ┃ ┗ 📜TrashCanIcon.svg<br/>
+┃ ┃ ┣ 📜AddImageTagComponent.tsx<br/>
+┃ ┃ ┣ 📜ImageTag.tsx<br/>
+┃ ┃ ┣ 📜ImageUploader.tsx<br/>
+┃ ┃ ┣ 📜Search.tsx<br/>
+┃ ┃ ┣ 📜ShowTag.tsx<br/>
+┃ ┃ ┣ 📜StyledAddImageTagComponent.ts<br/>
+┃ ┃ ┣ 📜StyledImageTag.ts<br/>
+┃ ┃ ┣ 📜StyledShowTag.ts<br/>
+┃ ┃ ┗ 📜TagModal.tsx<br/>
+┃ ┣ 📂mypage<br/>
+┃ ┃ ┣ 📜Achievement.tsx<br/>
+┃ ┃ ┣ 📜AchievementExport.ts<br/>
+┃ ┃ ┣ 📜AchievementModal.tsx<br/>
+┃ ┃ ┣ 📜BadgeMapping.tsx<br/>
+┃ ┃ ┣ 📜MyAchievement.tsx<br/>
+┃ ┃ ┣ 📜MyPageHover.tsx<br/>
+┃ ┃ ┣ 📜MyPost.tsx<br/>
+┃ ┃ ┣ 📜NoPost.tsx<br/>
+┃ ┃ ┗ 📜Profile.tsx<br/>
+┃ ┣ 📂popUp<br/>
+┃ ┃ ┣ 📜BadgeAlert.tsx<br/>
+┃ ┃ ┣ 📜BoardAlert.tsx<br/>
+┃ ┃ ┣ 📜Confirm.tsx<br/>
+┃ ┃ ┣ 📜confirmModalText.ts<br/>
+┃ ┃ ┗ 📜UserDeleteAlert.tsx<br/>
+┃ ┣ 📂post<br/>
+┃ ┃ ┣ 📂detail<br/>
+┃ ┃ ┃ ┣ 📜BottomFunction.tsx<br/>
+┃ ┃ ┃ ┣ 📜BottomShare.tsx<br/>
+┃ ┃ ┃ ┣ 📜OrgPostCard.tsx<br/>
+┃ ┃ ┃ ┣ 📜PostDetail.tsx<br/>
+┃ ┃ ┃ ┣ 📜StyledBottomFunction.ts<br/>
+┃ ┃ ┃ ┣ 📜StyledOrgPostCard.ts<br/>
+┃ ┃ ┃ ┣ 📜StyledPostDetail.ts<br/>
+┃ ┃ ┃ ┗ 📜WriterInfo.tsx<br/>
+┃ ┃ ┣ 📂write<br/>
+┃ ┃ ┃ ┣ 📜EditorQuill.tsx<br/>
+┃ ┃ ┃ ┣ 📜HeaderArea.tsx<br/>
+┃ ┃ ┃ ┣ 📜PostWrite.tsx<br/>
+┃ ┃ ┃ ┣ 📜PostWriteBodyInput.tsx<br/>
+┃ ┃ ┃ ┣ 📜Select.tsx<br/>
+┃ ┃ ┃ ┣ 📜StyledEditorQuill.css<br/>
+┃ ┃ ┃ ┣ 📜StyledHeaderArea.ts<br/>
+┃ ┃ ┃ ┣ 📜StyledPostWrite.ts<br/>
+┃ ┃ ┃ ┣ 📜StyledTitleArea.ts<br/>
+┃ ┃ ┃ ┣ 📜TitleArea.tsx<br/>
+┃ ┃ ┃ ┗ 📜userLevelUp.ts<br/>
+┃ ┃ ┣ 📜PostEditCommon.tsx<br/>
+┃ ┃ ┣ 📜PostEditRecipe.tsx<br/>
+┃ ┃ ┗ 📜PostList.tsx<br/>
+┃ ┣ 📂register<br/>
+┃ ┃ ┣ 📜ProfileSetForm.tsx<br/>
+┃ ┃ ┣ 📜SignUpForm.tsx<br/>
+┃ ┃ ┣ 📜TermsAndConditions.tsx<br/>
+┃ ┃ ┗ 📜UserDelete.tsx<br/>
+┃ ┣ 📂renderPosts<br/>
+┃ ┃ ┣ 📂reactionSource<br/>
+┃ ┃ ┃ ┣ 📜BestComment.tsx<br/>
+┃ ┃ ┃ ┣ 📜ContentBox.tsx<br/>
+┃ ┃ ┃ ┗ 📜WriterContainer.tsx<br/>
+┃ ┃ ┣ 📜CommonPost.tsx<br/>
+┃ ┃ ┣ 📜PostCards.tsx<br/>
+┃ ┃ ┗ 📜PostForMain.tsx<br/>
+┃ ┣ 📂report<br/>
+┃ ┃ ┗ 📜ReportIcon.tsx<br/>
+┃ ┣ 📂search<br/>
+┃ ┃ ┣ 📜NoSearchResult.tsx<br/>
+┃ ┃ ┣ 📜Prodfilter.ts<br/>
+┃ ┃ ┣ 📜ProdSearch.tsx<br/>
+┃ ┃ ┗ 📜SearchSummary.tsx<br/>
+┃ ┣ 📂sidebar<br/>
+┃ ┃ ┣ 📂event<br/>
+┃ ┃ ┃ ┣ 📜BrandSelector.tsx<br/>
+┃ ┃ ┃ ┣ 📜EventSideBar.tsx<br/>
+┃ ┃ ┃ ┣ 📜NearBy.tsx<br/>
+┃ ┃ ┃ ┗ 📜NearByBox.tsx<br/>
+┃ ┃ ┣ 📂mypage<br/>
+┃ ┃ ┃ ┣ 📜BadgeCount.tsx<br/>
+┃ ┃ ┃ ┣ 📜MypageSideBar.tsx<br/>
+┃ ┃ ┃ ┣ 📜MypageSideBarButtonTab.tsx<br/>
+┃ ┃ ┃ ┗ 📜MypageSideBarInfo.tsx<br/>
+┃ ┃ ┣ 📂rank<br/>
+┃ ┃ ┃ ┣ 📜EvaluationGood.tsx<br/>
+┃ ┃ ┃ ┣ 📜NewReview.tsx<br/>
+┃ ┃ ┃ ┣ 📜RankSideBar.tsx<br/>
+┃ ┃ ┃ ┣ 📜RealTimeCombo.tsx<br/>
+┃ ┃ ┃ ┗ 📜StyledRealTimeCombo.ts<br/>
+┃ ┃ ┣ 📜FetchPosts.tsx<br/>
+┃ ┃ ┣ 📜Footer.tsx<br/>
+┃ ┃ ┗ 📜SideBar.tsx<br/>
+┃ ┣ 📂skeleton<br/>
+┃ ┃ ┣ 📜PostSkeleton.tsx<br/>
+┃ ┃ ┗ 📜ProdSkeleton.tsx<br/>
+┃ ┣ 📜OAuthLogin.tsx<br/>
+┃ ┗ 📜ProgressCircle.tsx<br/>
+┣ 📂d.ts<br/>
+┃ ┗ 📜badwords.d.ts<br/>
+┣ 📂function<br/>
+┃ ┣ 📜GetDistanceBtw.ts<br/>
+┃ ┗ 📜setBrandName.ts<br/>
+┣ 📂globalState<br/>
+┃ ┗ 📜jotai.ts<br/>
+┣ 📂hooks<br/>
+┃ ┣ 📜useCommentMutate.ts<br/>
+┃ ┣ 📜useInput.ts<br/>
+┃ ┣ 📜useLoginUserId.ts<br/>
+┃ ┣ 📜usePost.ts<br/>
+┃ ┣ 📜usePostBookmark.ts<br/>
+┃ ┣ 📜usePostLikes.ts<br/>
+┃ ┣ 📜useReCommentMutate.ts<br/>
+┃ ┗ 📜useUserMutate.ts<br/>
+┣ 📂kakaoMap<br/>
+┃ ┣ 📜GetConvList.ts<br/>
+┃ ┣ 📜GetDetailAddress.tsx<br/>
+┃ ┣ 📜GetDistanceBtw.ts<br/>
+┃ ┗ 📜KakaoMap.tsx<br/>
+┣ 📂layout<br/>
+┃ ┗ 📜Layout.tsx<br/>
+┣ 📂lib<br/>
+┃ ┗ 📜supabaseClient.ts<br/>
+┣ 📂pages<br/>
+┃ ┣ 📜Detail.tsx<br/>
+┃ ┣ 📜Edit.tsx<br/>
+┃ ┣ 📜EventProd.tsx<br/>
+┃ ┣ 📜Login.tsx<br/>
+┃ ┣ 📜Main.tsx<br/>
+┃ ┣ 📜Mypage.tsx<br/>
+┃ ┣ 📜PasswordChange.tsx<br/>
+┃ ┣ 📜PasswordReset.tsx<br/>
+┃ ┣ 📜PostModal.tsx<br/>
+┃ ┣ 📜Register.tsx<br/>
+┃ ┣ 📜Report.tsx<br/>
+┃ ┣ 📜ReviewList.tsx<br/>
+┃ ┣ 📜SearchResult.tsx<br/>
+┃ ┗ 📜Write.tsx<br/>
+┣ 📂shared<br/>
+┃ ┣ 📜PrivateRoute.tsx<br/>
+┃ ┗ 📜Router.tsx<br/>
+┣ 📂styles<br/>
+┃ ┣ 📜GlobalFont.ts<br/>
+┃ ┣ 📜GlobalStyle.ts<br/>
+┃ ┣ 📜styleBox.ts<br/>
+┃ ┗ 📜styleFont.ts<br/>
+┣ 📂types<br/>
+┃ ┣ 📜supabase.ts<br/>
+┃ ┗ 📜types.ts<br/>
+┣ 📂utility<br/>
+┃ ┣ 📜CreatedAt.tsx<br/>
+┃ ┗ 📜guide.ts<br/>
+┣ 📜App.tsx<br/>
+┣ 📜badwords-ko.d.ts<br/>
+┣ 📜index.tsx<br/>
+┣ 📜react-app-env.d.ts<br/>
+┣ 📜react-swipy.d.ts<br/>
+┗ 📜toast.css<br/>
