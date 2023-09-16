@@ -1,7 +1,49 @@
 import styled from 'styled-components';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
+import { styleFont } from 'src/styles/styleFont';
 
 export const S = {
+  BubbleContainer: styled.div`
+    background-color: red;
+  `,
+  BubbleTail: styled(FlexBox)`
+    margin-top: 100.9px;
+
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(25px);
+  `,
+  BubbleTailFalse: styled(FlexBox)`
+    z-index: 2;
+    background: #fff;
+
+    margin-top: -14px;
+    width: 13px;
+    height: 13px;
+    transform: rotate(45deg);
+  `,
+  BubbleBox: styled(FlexBoxCenter)`
+    z-index: 1;
+
+    margin-top: -7.9px;
+    width: 195px;
+    height: 26px;
+    flex-shrink: 0;
+
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+  `,
+
   ImageTagContainer: styled(FlexBox)`
     position: relative;
     /* gap: 12px; */
@@ -9,8 +51,22 @@ export const S = {
     padding-bottom: 20px;
     margin-bottom: 20px;
   `,
+
   AddTagButton: styled(FlexBoxCenter)`
     cursor: pointer;
+
+    &:hover .dropDownLink {
+      cursor: auto;
+      position: absolute;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .dropDownLink {
+      display: none;
+    }
 
     width: 180px;
     height: 48px;
@@ -118,15 +174,14 @@ export const S = {
   CloseButton: styled.button`
     width: 40px;
     height: 30px;
-    position: absolute;
     right: 30px;
     top: 25px;
-    cursor: pointer;
-    color: black;
-    background-color: transparent;
+    position: absolute;
     &:hover {
       color: gray;
     }
+
+    ${styleFont.bodyMedium}
   `,
 
   SearchResultsContainer: styled.div`

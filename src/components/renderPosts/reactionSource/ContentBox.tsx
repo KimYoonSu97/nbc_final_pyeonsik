@@ -128,7 +128,7 @@ export const S = {
 
   PostTitle: styled.div`
     width: 790px;
-    margin: 20px 0px 0px 0px;
+    margin: 50px 0px 0px 0px;
 
     display: flex;
     align-items: center;
