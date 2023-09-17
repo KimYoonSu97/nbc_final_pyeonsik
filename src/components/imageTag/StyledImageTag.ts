@@ -4,11 +4,9 @@ import { styleFont } from 'src/styles/styleFont';
 
 export const S = {
   BubbleContainer: styled.div`
-    background-color: red;
+    margin-top: 96px;
   `,
   BubbleTail: styled(FlexBox)`
-    margin-top: 100.9px;
-
     width: 14px;
     height: 14px;
     transform: rotate(45deg);
