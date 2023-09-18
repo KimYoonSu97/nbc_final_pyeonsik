@@ -14,6 +14,7 @@ export { ReactComponent as IconMyPostBox } from './IconMyPostBox.svg';
 export { ReactComponent as IconCamera } from './IconCamera.svg';
 export { ReactComponent as IconCameraSmall } from './IconCameraSmall.svg';
 export { ReactComponent as IconBackSpace } from './IconBackSpace.svg';
+export { ReactComponent as IconTopButton } from './IconTopButton.svg';
 
 // post
 export { ReactComponent as IconAdd } from './post/IconAdd.svg';
@@ -33,7 +34,6 @@ export { ReactComponent as IconLinkTwitter } from './post/IconLinkTwitter.svg';
 export { ReactComponent as IconLinkKakao } from './post/IconLinkKakao.svg';
 export { ReactComponent as IconLinkCopy } from './post/IconLinkCopy.svg';
 export { ReactComponent as IconClose } from './post/IconClose.svg';
-
 export { ReactComponent as IconBestComment } from './IconBestComment.svg';
 
 // recipe
@@ -46,6 +46,8 @@ export { ReactComponent as SearchIcon } from './post/recipe/SearchIcon.svg';
 export { ReactComponent as SelectedFileIcon } from './post/recipe/SelectedFileIcon.svg';
 export { ReactComponent as TagIcon } from './post/recipe/TagIcon.svg';
 export { ReactComponent as TrashCanIcon } from './post/recipe/TrashCanIcon.svg';
+export { ReactComponent as IconArrow } from './post/recipe/IconArrow.svg';
+export { ReactComponent as IconUnArrow } from './post/recipe/IconUnArrow.svg';
 
 // comment
 export { ReactComponent as IconCommentInput } from './IconCommentInput.svg';

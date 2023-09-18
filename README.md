@@ -8,7 +8,7 @@
 
 🔗 [IP 주소](https://tripshare-theta.vercel.app/)
 
-📜 [S.A(Starting Assignments)](https://www.notion.so/SE7EN-DAYS-S-A-18c506d357b743c78f58a76550c92d40)
+📜 [S.A (Starting Assignments)](https://www.notion.so/SE7EN-DAYS-S-A-18c506d357b743c78f58a76550c92d40)
 
 #### 📌 핵심 기능
 

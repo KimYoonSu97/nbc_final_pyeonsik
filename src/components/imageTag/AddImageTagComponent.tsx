@@ -264,7 +264,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
           </S.SmallButton>
         )}
       </S.ButtonThumbnailArea>
-
       {/* 여기는 전체 에디터가 담길 부분임. */}
       <S.ContentArea>
         {imageTagComponents.map((component, index) => {

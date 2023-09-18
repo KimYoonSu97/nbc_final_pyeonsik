@@ -11,13 +11,15 @@ const BottomBarMenuContainer = () => {
     return str.split('/')[1];
   };
 
+  console.log(location);
+
   return (
     <S.ButtonArea>
       {findPath(location.pathname) === 'search' ? (
         <>
           <S.SearchCategory>검색 카테고리</S.SearchCategory>
           <S.BoardButton to={`/search/all${location.search}`} $type={'/search/all'} $location={location.pathname}>
-            전체보기
+            전체 보기
           </S.BoardButton>
           <S.BoardButton to={`/search/recipe${location.search}`} $type={'/search/recipe'} $location={location.pathname}>
             편식조합
@@ -35,15 +37,19 @@ const BottomBarMenuContainer = () => {
         </>
       ) : (
         <>
-          <S.BoardButton to={`/`} $type={''} $location={location.search}>
-            전체보기
-          </S.BoardButton>
+          <S.AllButton to={`/`} $type={''} $location={location.search} $path={location.pathname}>
+            전체 보기
+          </S.AllButton>
           <S.BoardButton to={`/?=recipe`} $type={'?=recipe'} $location={location.search}>
             편식조합
           </S.BoardButton>
           <S.BoardButton to={`/?=common`} $type={'?=common'} $location={location.search}>
             그르르갉
           </S.BoardButton>
+          <S.BoardButton to={`/event`} $type={'/event'} $location={location.pathname}>
+            행사 제품
+          </S.BoardButton>
+          {/* <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton> */}
         </>
       )}
     </S.ButtonArea>
@@ -53,6 +59,7 @@ const BottomBarMenuContainer = () => {
 type Props = {
   $location: string;
   $type: string;
+  $path?: string;
 };
 
 export default BottomBarMenuContainer;
@@ -60,6 +67,29 @@ export default BottomBarMenuContainer;
 const S = {
   ButtonArea: styled(FlexBoxCenter)`
     margin-right: 14px;
+  `,
+  AllButton: styled(Link)<Props>`
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 3px 18px;
+    border-bottom: 2px solid white;
+    text-decoration: none;
+    ${styleFont.labelLarge}
+    color: var(--font-black, var(--black, #242424));
+    ${(props) =>
+      props.$type === props.$location && props.$path === '/'
+        ? css`
+            transition: 0.5s;
+            border-bottom: 2px solid #f02826;
+            color: #f02826;
+          `
+        : ''}
+
+    &:hover {
+      color: #f02826;
+      transition: 0.5s;
+    }
   `,
   BoardButton: styled(Link)<Props>`
     display: flex;
@@ -77,6 +107,7 @@ const S = {
         border-bottom: 2px solid #f02826;
         color: #f02826;
       `}
+
     &:hover {
       color: #f02826;
       transition: 0.5s;

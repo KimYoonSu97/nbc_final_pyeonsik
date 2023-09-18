@@ -163,11 +163,5 @@ const S = {
     font-size: 12px;
     font-style: normal;
     line-height: 16px; /* 133.333% */
-  `,
-  TopButton: styled.button`
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    cursor: pointer;
   `
 };

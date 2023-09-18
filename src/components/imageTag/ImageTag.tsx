@@ -195,8 +195,6 @@ const ImageTag: React.FC<ImageTagProps> = ({
         {/* 이미지 선택 후 태그가 찍힐 부분 */}
         {selectedImage && (
           <S.ImageContainer ref={imageContainerRef}>
-            {/* 이혜영 수정 사항 */}
-            {/* <S.ModalContainer>{tags.length === 0 && modal && <TagModal isOpen={modal}></TagModal>}</S.ModalContainer> */}
             {typeof selectedImage === 'string' ? (
               <S.Image
                 src={`${process.env.REACT_APP_SUPABASE_STORAGE_URL}${selectedImage}`}
@@ -226,6 +224,11 @@ const ImageTag: React.FC<ImageTagProps> = ({
                 <IconPlusTag />
               </S.IconBox>
               {addTagMode ? '태그 추가 완료' : '제품 태그 추가'}
+              <S.BubbleContainer className="dropDownLink">
+                <S.BubbleTail />
+                <S.BubbleTailFalse />
+                <S.BubbleBox>버튼을 누르고 원하는 위치를 클릭해 주세요.</S.BubbleBox>
+              </S.BubbleContainer>
             </S.AddTagButton>
 
             {tags.map((tag, index) => (

@@ -1,4 +1,4 @@
-import { FlexBoxCenter } from 'src/styles/styleBox';
+import { FlexBox, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
 
@@ -79,8 +79,7 @@ export const S = {
 
   LinkBubble: styled.div``,
 
-  LinkTail: styled.div`
-    display: flex;
+  LinkTail: styled(FlexBox)`
     margin-top: 30.9px;
 
     width: 14px;
@@ -91,23 +90,21 @@ export const S = {
     backdrop-filter: blur(25px);
   `,
 
-  LinkTailFalse: styled.div`
+  LinkTailFalse: styled(FlexBox)`
     z-index: 1;
     background: #fff;
 
-    display: flex;
     margin-top: -14px;
     width: 14px;
     height: 14px;
     transform: rotate(45deg);
   `,
 
-  LinkBox: styled.div`
-    display: flex;
+  LinkBox: styled(FlexBox)`
     gap: 16px;
 
     margin-top: -7.9px;
-    padding: 11px 13px 11px 13px;
+    padding: 11px 13px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
