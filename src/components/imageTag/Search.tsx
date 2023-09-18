@@ -9,7 +9,7 @@ import debounce from 'lodash/debounce';
 import { setBrandName } from 'src/function/setBrandName';
 import { ERROR_IMG } from 'src/utility/guide';
 
-const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
+const Search = ({ onSearchResultSelect }: SearchProps) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Data[]>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);

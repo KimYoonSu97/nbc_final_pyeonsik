@@ -8,7 +8,7 @@ import { S } from './StyledShowTag';
 import { IconArrow, IconUnArrow } from '../icons';
 import { setBrandName } from 'src/function/setBrandName';
 
-const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage }) => {
+const TagImage = ({ imageUrl, recipeBody, tagsForImage }: TagImageProps) => {
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
   const [isMouseOverImage, setIsMouseOverImage] = useState(false);
   const [hoveredProductIndex, setHoveredProductIndex] = useState<number | null>(null);

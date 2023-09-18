@@ -4,7 +4,7 @@ interface TagModalProps {
   isOpen: boolean;
 }
 
-const TagModal: React.FC<TagModalProps> = ({ isOpen }) => {
+const TagModal = ({ isOpen }: TagModalProps) => {
   if (!isOpen) return null;
   return (
     <div className="modal">
