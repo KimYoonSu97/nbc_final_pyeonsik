@@ -14,13 +14,6 @@ const NoPost = () => {
         <IconNoSearchResult />
       </S.Logo>
       <S.Caption>앗! 보관된 글이 없어요!</S.Caption>
-      {/* <S.NavigateButton
-        onClick={() => {
-          navigate('/write');
-        }}
-      >
-        글 작성하기
-      </S.NavigateButton> */}
     </S.Container>
   );
 };
@@ -40,24 +33,22 @@ const S = {
     color: var(--font-black, var(--Black, #242424));
     text-align: center;
 
-    /* headline-small */
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
     margin-bottom: 16px;
   `,
   SearchKeyWord: styled.span`
     color: var(--neutral-500, var(--Black, #667085));
     text-align: center;
 
-    /* headline-small */
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
   `,
   NavigateButton: styled.div`
     width: 210px;

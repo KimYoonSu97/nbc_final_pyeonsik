@@ -13,8 +13,6 @@ export const S = {
     z-index: 99;
     top: 0;
     right: 0;
-    /* padding: 11px 16px; */
-    /* gap: 1082px; */
   `,
 
   WriteHeaderBox: styled.div`
@@ -44,12 +42,9 @@ export const S = {
     color: white;
     width: 80px;
     height: 22px;
-    /* position: absolute; */
-    /* left: 16px; */
   `,
 
   AddButton: styled.button`
-    /* margin-left: auto; */
     background: var(--main, #f02826);
 
     width: 110px;

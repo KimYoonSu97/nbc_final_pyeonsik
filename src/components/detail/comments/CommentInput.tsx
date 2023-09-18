@@ -41,14 +41,11 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
     }
   };
 
-  // 만약 prevComment가 프롭스로 내려왔다면 그건 수정이라는뜻
   useEffect(() => {
     setComment(prevComment!);
   }, [prevComment]);
 
-  //댓글 작성 함수
   const addComment = () => {
-    // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
       toast(EMAIL_CHECK);
       navigate('/login', { state: { backgroundLocation: location } });
@@ -59,7 +56,6 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
     setComment('');
   };
 
-  //댓글 수정 함수
   const updateComment = () => {
     updateCommentButton(commentId, comment);
     setIsEditComment!(false);
@@ -97,7 +93,6 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
     border-radius: 10px;
     padding-right: 10px;
-    /* justify-content: center; */
   `,
   CommentInput: styled.input`
     width: 100%;
@@ -111,12 +106,11 @@ const S = {
 
     color: var(--neutral-500, #667085);
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   CommentInputAddButton: styled.button``
 };

@@ -15,8 +15,6 @@ const PasswordChange: React.FC = () => {
   const [user, setUser] = useAtom(userAtom);
 
   const handleResetPassword = async () => {
-    // 유효성 검사
-    // 빈 값이 있을 시
     if (!password || !checkPassword) {
       setErrorMessage('빈 값이 존재합니다.');
       setPassword('');
@@ -31,7 +29,6 @@ const PasswordChange: React.FC = () => {
       return;
     }
 
-    // 현재 로그인된 회원이 있을시 비밀번호 변경
     if (user) {
       const { error } = await supabase.auth.updateUser({
         password: password
@@ -39,7 +36,6 @@ const PasswordChange: React.FC = () => {
 
       if (!error) {
         toast('비밀번호 재설정 완료!');
-        // setUser('');
         supabase.auth.signOut();
         navigate('/login');
         const successMsg = 'Password changed successfully';
@@ -96,9 +92,9 @@ const ResetFormContainer = styled.div`
 `;
 
 const ResetTitle = styled.div`
-  font-weight: bold; /* 굵게 설정 */
-  font-size: 24px; /* 큰 텍스트 크기 */
-  text-align: center; /* 가운데 정렬 */
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
 `;
 
 const Input = styled.input`
@@ -124,7 +120,6 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-// 성공, 오류 메시지 스타일
 const SuccessMessage = styled.div`
   margin-top: 10px;
   color: blue;

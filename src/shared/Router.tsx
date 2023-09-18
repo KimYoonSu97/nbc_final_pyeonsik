@@ -4,7 +4,6 @@ import { GlobalStyle } from '../styles/GlobalStyle';
 import { GlobalFont } from 'src/styles/GlobalFont';
 import { PrivateRoute } from './PrivateRoute';
 import Layout from '../layout/Layout';
-// pages
 import Main from '../pages/Main';
 import Login from 'src/pages/Login';
 import Register from 'src/pages/Register';

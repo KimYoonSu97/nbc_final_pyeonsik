@@ -56,8 +56,6 @@ const ProdList = () => {
 
   return (
     <>
-      {/* 이것도 */}
-      {/* 제품 불러올때 스켈레톤 UI */}
       {isProdLoading && (
         <>
           <ProdSkeleton />

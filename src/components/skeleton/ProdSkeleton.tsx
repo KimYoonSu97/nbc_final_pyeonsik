@@ -16,8 +16,6 @@ const ProdSkeleton = () => {
 
 export default ProdSkeleton;
 
-// 이걸살려
-
 const S = {
   Container: styled.div`
     width: 100%;
@@ -28,7 +26,7 @@ const S = {
     align-content: center;
   `,
   EmptyBox: styled(SkeletonItem)`
-    width: calc(25% - 30px); /* 4 columns with 30px gap in between */
+    width: calc(25% - 30px);
     height: 250px;
     border-radius: 10px;
     margin-bottom: 30px;

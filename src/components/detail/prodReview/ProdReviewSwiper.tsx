@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { debounce } from 'lodash';
 import { getProdData, getReviewedProductData, getSwiperData } from 'src/api/ReviewSwiper';
 import { CardSwiper } from 'react-card-rotate-swiper';
+import { ERROR_IMG } from 'src/utility/guide';
 
 const ProdReviewSwiper = () => {
   const [step, setStep] = useState(0);
@@ -19,7 +20,8 @@ const ProdReviewSwiper = () => {
 
   const { data: prodData } = useQuery(['products'], getProdData);
 
-const {data : filteredData} = useQuery(['filteredProducts',userId],()=>getReviewedProductData(userId))
+
+// const {data : filteredData} = useQuery(['filteredProducts',userId],()=>getReviewedProductData(userId))
 
 const filterprodData = prodData?.filter((prod) => {
       return !swiperData?.data?.some((swiperProd) => {
@@ -46,6 +48,7 @@ const filterprodData = prodData?.filter((prod) => {
   // setData(filterprodData)
 
   console.log(data);
+
 
   const onDropToLike = async (id: string) => {
     const addReview = {
@@ -91,6 +94,7 @@ const filterprodData = prodData?.filter((prod) => {
     // setData([last, ...slice]);
     // console.log([last, ...slice], 'datadaaaa');
     setStep((pstep)=> pstep+1)
+
   };
 
   return (
@@ -108,7 +112,7 @@ const filterprodData = prodData?.filter((prod) => {
               <S.ReviewEndWrap>
                 <div>
                   <p>
-                    앗! 더이상 남은<span>신제품 카드가 없어요!</span>
+                    앗! 더이상 남은<span>신상품 카드가 없어요!</span>
                   </p>
                   <button onClick={() => navigate('/review_list')}>리뷰 보러가기</button>
                 </div>
@@ -119,19 +123,19 @@ const filterprodData = prodData?.filter((prod) => {
                   return (
                     <div key={prod.id}>
                       {step === index && (
-                      <CardSwiper
-                        onSwipe={(dir: any) => cardsSwipe(dir, prod.id)}
-                        className={'card'}
-                        contents={
-                          <div className="cardWrap">
-                            <div>
-                              <img src={prod.prodImg} draggable="false" />
+                        <CardSwiper
+                          onSwipe={(dir: any) => cardsSwipe(dir, prod.id)}
+                          className={'card'}
+                          contents={
+                            <div className="cardWrap">
+                              <div>
+                                <img src={prod.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} draggable="false" />
+                              </div>
+                              <h3 className="text">{prod.prodName}</h3>
                             </div>
-                            <h3 className="text">{prod.prodName}</h3>
-                          </div>
-                        }
-                      ></CardSwiper>
-                      )} 
+                          }
+                        ></CardSwiper>
+                      )}
                     </div>
                   );
                 })}
@@ -153,7 +157,7 @@ const filterprodData = prodData?.filter((prod) => {
           <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
             <p>
               <IconAllReview />
-              <span>신제품 리뷰 보기</span>
+              <span>신상품 리뷰 보기</span>
             </p>
           </S.AllReviewsWrap>
         </S.containerInner>
@@ -318,7 +322,6 @@ const S = {
     background-clip: content-box, border-box;
     box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
     div {
-      /* height: 100%; */
       align-items: center;
       text-align: center;
       p {

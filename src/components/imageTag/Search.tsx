@@ -6,6 +6,8 @@ import { SearchProps } from 'src/types/types';
 import { ReactComponent as SearchIcon } from 'src/components/imageTag/svg/SearchIcon.svg';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import debounce from 'lodash/debounce';
+import { setBrandName } from 'src/function/setBrandName';
+import { ERROR_IMG } from 'src/utility/guide';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
@@ -69,7 +71,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
           value={searchKeyword}
           onChange={(event) => handleSearchTextChange(event.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="제품명을 검색해 주세요."
+          placeholder="상품명을 검색해 주세요."
           autoFocus
           ref={searchInputRef}
           onClick={handleClickToFocus}
@@ -92,10 +94,10 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
             <S.SearchResultItem key={index} onClick={() => handleSelectResult(result)}>
               <S.ImageAndTextContainer>
                 <S.ImageContainer>
-                  <img src={result.prodImg} alt="이미지" />
+                  <img src={result.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} />
                 </S.ImageContainer>
                 <S.TextContainer>
-                  <S.ProdContainer>{result.prodBrand}</S.ProdContainer>
+                  <S.ProdContainer>{setBrandName(result.prodBrand)}</S.ProdContainer>
                   <div>{result.prodName}</div>
                 </S.TextContainer>
               </S.ImageAndTextContainer>
@@ -113,8 +115,6 @@ const S = {
   SearchContainer: styled.div`
     position: relative;
     padding: 20px;
-    /* z-index: 9999; */
-    /* z-index: 999; */
   `,
   SearchInputArea: styled(FlexBox)`
     width: 356px;
@@ -133,12 +133,11 @@ const S = {
 
     color: #000;
 
-    /* body-large */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
     &::placeholder {
       color: var(--neutral-400, #98a2b3);
     }
@@ -173,7 +172,6 @@ const S = {
       border-radius: 10px;
     }
 
-    /* 마우스 오버시 스크롤바 색상 변경 */
     &::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
@@ -184,7 +182,6 @@ const S = {
     cursor: pointer;
     width: 335px;
     height: 100px;
-    /* padding-right: 10px; */
     margin-right: 10px;
     background-color: white;
     &:hover {

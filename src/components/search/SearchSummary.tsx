@@ -9,14 +9,11 @@ import { setBrandName } from 'src/function/setBrandName';
 import { searchBar, searchKeyWord } from 'src/globalState/jotai';
 import { Post, Product } from 'src/types/types';
 import styled from 'styled-components';
+
 const SearchSummary = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useAtom(searchBar);
   const [searchData, setSearchData] = useAtom(searchKeyWord);
-
-  // if (!search) {
-  //   return <></>;
-  // }
 
   if (!search) {
     return <></>;
@@ -33,8 +30,6 @@ const SearchSummary = () => {
       </AnimatePresence>
     );
   }
-
-  console.log(searchData.searchKey);
 
   return (
     <>
@@ -59,7 +54,7 @@ const SearchSummary = () => {
               })}
             </S.PostContainer>
             <S.ProductContainer>
-              <S.Title>편의점 제품</S.Title>
+              <S.Title>편의점 상품</S.Title>
               {searchData?.productData?.map((item) => {
                 return (
                   <S.ProductRow key={item.id}>
@@ -99,7 +94,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 171.429% */
+    line-height: 24px;
   `,
   Container: styled(motion.div)`
     padding: 12px 14px;
@@ -133,7 +128,7 @@ const S = {
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 200% */
+    line-height: 24px;
   `,
   PostCategory: styled.div`
     color: var(--font-black, var(--Black, #242424));
@@ -154,7 +149,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 171.429% */
+    line-height: 24px;
     padding-top: 1px;
     border-bottom: 1px solid transparent;
     &:hover {
@@ -210,38 +205,6 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 171.429% */
+    line-height: 24px;
   `
 };
-
-// const [{ isLoading: allPostLoading, data: allPost }, { isLoading: productLoading, data: searchProduct }] = useQueries(
-//   {
-//     queries: [
-//       {
-//         queryKey: ['searchPostSummary'],
-//         queryFn: () => getPostByKeywordSummary(searchKeywordAtom),
-//         enabled: searchKeywordAtom !== '' ? true : false,
-//         refetchOnWindowFocus: false
-//       },
-//       {
-//         queryKey: ['searchProductSummary'],
-//         queryFn: () => getSearchProdSummary(searchKeywordAtom),
-//         enabled: searchKeywordAtom !== '' ? true : false,
-//         refetchOnWindowFocus: false
-//       }
-//     ]
-//   }
-// );
-
-// useEffect(() => {
-//   console.log(searchKeywordAtom);
-//   if (searchKeywordAtom.length >= 2) {
-//     queryClient.invalidateQueries(['searchPostSummary']);
-//     queryClient.invalidateQueries(['searchProductSummary']);
-//   }
-
-//   return () => {
-//     queryClient.removeQueries(['searchPostSummary']);
-//     queryClient.removeQueries(['searchProductSummary']);
-//   };
-// }, [searchKeywordAtom, queryClient]);

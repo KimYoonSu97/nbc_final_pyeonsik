@@ -33,8 +33,6 @@ const TopBarMenuContainer = () => {
   const navigate = useNavigate();
   const [myPage, setMyPage] = useAtom(myPageHover);
 
-  // 로그인 한 유저의 정보를 가져오는 쿼리
-  // 아이디가 있어야함...
   const queryKey = userLogin?.id;
   const { data, isLoading, isError } = useQuery(
     ['loginUser'],
@@ -51,9 +49,7 @@ const TopBarMenuContainer = () => {
   );
 
   useEffect(() => {
-    //무조건로그인 상태일때만 검사하면됨
     if (data && userId) {
-
       if (data?.data?.profileImg === null && data?.data?.nickname === null) {
         toast('닉네임 프로필 설정 후 이용 가능합니다.');
         setUserEmail(data?.data.email);
@@ -65,23 +61,19 @@ const TopBarMenuContainer = () => {
     }
   }, [data, userId]);
 
-  //소셜로그인 검사함수
   const checkOrSetOAuthUser = async () => {
     const { data: checkLogin, error: checkLoginError } = await supabase.auth.getSession();
     if (checkLoginError) {
       return;
     }
-    // 아이디값을 기준으로 조회해봄
     const { data, error } = await supabase
       .from('users')
       .select('*')
       .eq('id', checkLogin.session?.user.id)
       .maybeSingle();
-    // 값이 있나요?
     if (data !== null) {
       setUserLogin(data);
     } else {
-      // 값이 없나요?
       const social = localStorage.getItem('social');
       const socialData = checkLogin.session?.user.identities?.filter((item) => {
         if (item.provider === social) {
@@ -102,7 +94,6 @@ const TopBarMenuContainer = () => {
     }
   };
 
-  //소셜로그인
   useEffect(() => {
     if (localStorage.getItem('social') && !data) {
       checkOrSetOAuthUser();
@@ -132,12 +123,9 @@ const TopBarMenuContainer = () => {
         >
           나만의 편식조합 공유하기
         </S.QuickPostButton>
-        <S.QuickButton onClick={clickReview}>신제품 리뷰하기</S.QuickButton>
-        {/* <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton> */}
+        <S.QuickButton onClick={clickReview}>신상품 리뷰하기</S.QuickButton>
       </S.QuickButtonArea>
       <S.TopBarLogContainer as="ul" $logged={data ? true : false}>
-        {/* 공통 */}
-        {/* 로그인 전 */}
         {data === undefined || data === null ? (
           <>
             <S.TopBarLogButton
@@ -150,10 +138,8 @@ const TopBarMenuContainer = () => {
             <S.TopBarLogButton as="li" onClick={() => navigate('/register')} $signIn={true}>
               회원가입
             </S.TopBarLogButton>
-            {/* <Link to={'/map'}>카카오맵</Link> */}
           </>
         ) : (
-          // 로그인 후
           <>
             <S.Icon>
               <IconBell />
@@ -212,7 +198,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
     &:hover {
       border: 1px solid var(--main, #f02826);
     }
@@ -229,7 +215,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
     &:hover {
       box-shadow: 0px 0px 6px 0px rgba(255, 116, 116, 0.5);
 

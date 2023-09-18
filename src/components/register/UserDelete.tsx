@@ -25,7 +25,6 @@ const UserDelete = () => {
       const { error: deleteError } = await supabase.auth.admin.deleteUser(userId);
       await deleteUser(userId);
 
-      // logout
       const { error: singOutError } = await supabase.auth.signOut();
       if (deleteError || singOutError) {
         toast('죄송합니다. 고객센터로 문의 주시기 바랍니다.');
@@ -61,12 +60,11 @@ const S = {
     background: var(--neutral-300, #d0d5dd);
 
     color: var(--font-black, var(--Black, #242424));
-    /* button-medium */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
 
     &:hover {
       color: white;

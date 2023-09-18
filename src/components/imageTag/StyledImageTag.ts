@@ -44,7 +44,6 @@ export const S = {
 
   ImageTagContainer: styled(FlexBox)`
     position: relative;
-    /* gap: 12px; */
     margin-right: 12px;
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -79,12 +78,11 @@ export const S = {
     bottom: 32px;
     left: calc((360px - 180px) / 2);
 
-    /* label-large */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
     &:hover {
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -102,10 +100,8 @@ export const S = {
     border-radius: 10px;
     margin-right: 12px;
   `,
-  // 이미지 태그 사이즈 고정....
 
   Image: styled.img`
-    /* width: 474px; */
     width: 360px;
     height: 360px;
     object-fit: cover;

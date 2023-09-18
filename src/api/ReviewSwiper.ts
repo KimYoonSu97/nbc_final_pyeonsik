@@ -1,16 +1,16 @@
 import supabase from 'src/lib/supabaseClient';
 
-
 const getProdData = async () => {
+
   const { data } = await supabase
     .from('show_products')
     .select('*')
     .order('created_at', { ascending: false })
     // .range(0,1)
     console.log("먼저와야할 프로드데이터",data)
+
   return data;
 };
-
 
 const getSwiperData = async () => {
   const response = await supabase.from('swiper').select('*');
@@ -18,13 +18,10 @@ const getSwiperData = async () => {
   return response;
 };
 
-// const getSwiperId = async (id:string) => {
-//   const {data} = await supabase.from('show_products').select("*").eq("userId",id)
-//   return data;
-// }
-const getReviewedProductData = async (userId:string) =>{
-  const {data} = await supabase.from('swiper').select("*").eq("userId",userId)
-  return data;
-}
+const getReviewedProductData = async (prodId: string, userId: string) => {
+  const { data } = await supabase.from('show_products').select('*').neq('prodId', prodId).eq('userId', userId);
 
-export { getSwiperData,getProdData,getReviewedProductData };
+  return data;
+};
+
+export { getSwiperData, getProdData, getReviewedProductData };

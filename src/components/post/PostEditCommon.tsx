@@ -38,7 +38,6 @@ const PostEditCommon = () => {
       return false;
     }
 
-    // type 문제 해결 필요
     if (category === 'common') {
       const editPost = {
         orgPostId: post.orgPostId?.id,

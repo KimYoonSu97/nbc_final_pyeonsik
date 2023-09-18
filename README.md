@@ -26,10 +26,10 @@
 |                   이름                   |    역할     | <center/>담당                                                  |
 | :--------------------------------------: | :---------: | -------------------------------------------------------------- |
 |   [김윤수](https://velog.io/@zkzk625)    |   leader    | 전체 프로젝트 일정 관리, 데이터 구축 및 개발 총괄              |
-|   [이혜영](https://velog.io/@kkotburi)   | vice leader | 일반 게시글 및 게시글 부가 기능, 신제품 리뷰 결과 리스트       |
+|   [이혜영](https://velog.io/@kkotburi)   | vice leader | 일반 게시글 및 게시글 부가 기능, 신상품 리뷰 결과 리스트       |
 |   [원유길](https://d161.tistory.com/)    |   member    | 데이터 구축, 이미지 태그 게시글 관련 기능                      |
 |  [임호진](https://hojin96.tistory.com/)  |   member    | 인증/인가, 주변 편의점 안내, 스켈레톤 UI                       |
-| [황대성](https://reactprac.tistory.com/) |   member    | 댓글 관련 기능, 고객센터, 신제품 리뷰 스와이프                 |
+| [황대성](https://reactprac.tistory.com/) |   member    | 댓글 관련 기능, 고객센터, 신상품 리뷰 스와이프                 |
 |    [최정윤](https://www.yun-dna.com/)    |  designer   | 사용자 플로우 작성, UI/UX 디자인 및 시스템, 서비스 로고 디자인 |
 
 <br/>

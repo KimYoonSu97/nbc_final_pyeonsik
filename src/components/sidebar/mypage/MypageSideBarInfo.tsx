@@ -171,14 +171,13 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
 
   ButtonArea: styled.div`
     display: flex;
     margin: 0 16px 0 16px;
     padding-bottom: 24px;
-    /* justify-content: center; */
     gap: 9px;
   `,
 

@@ -24,11 +24,7 @@ const EvaluationGood = ({ prodId }: EvaluationGoodProps) => {
   }%)`;
 
   if (lodingSwiper) {
-    return (
-      <p>
-        <ProgressCircle />
-      </p>
-    );
+    return <ProgressCircle />;
   }
   if (dataSwiper?.error) {
     return <p>error</p>;
@@ -60,6 +56,6 @@ const S = {
     color: var(--font-black, var(--Black, #242424));
     font-size: 10px;
     font-weight: 600;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `
 };

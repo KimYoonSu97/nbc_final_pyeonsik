@@ -4,14 +4,12 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getNewProdInfinite } from 'src/api/product';
 import { getSwiperData } from 'src/api/ReviewSwiper';
 import { Swiper } from 'src/types/types';
-import { IMAGE_EMPTY } from 'src/utility/guide';
+import { ERROR_IMG, IMAGE_EMPTY } from 'src/utility/guide';
 import MyEvaluation from './MyEvaluation';
 import EvaluationGraph from './EvaluationGraph';
-// style
 import { styled } from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
 import { useNavigate } from 'react-router';
-
 
 const ProdReviewList = () => {
   const {
@@ -42,12 +40,7 @@ const ProdReviewList = () => {
       .flat();
   }, [dataProd]);
   const swipers = dataSwiper?.data as Swiper[];
-  const navigate = useNavigate()
-
-  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
-    e.target.onerror = null;
-    e.target.src = IMAGE_EMPTY;
-  };
+  const navigate = useNavigate();
 
   const { ref } = useInView({
     threshold: 0.7,
@@ -64,16 +57,16 @@ const ProdReviewList = () => {
     return <p>error</p>;
   }
 
-  const con = (id:string,userId:string) => {
-    navigate(`/review_product/${id}`,{state:{id,userId}})
-  }
+  const con = (id: string, userId: string) => {
+    navigate(`/review_product/${id}`, { state: { id, userId } });
+  };
 
   return (
     <S.ReviewContainer>
       {products?.map((prod) => {
         return (
-          <S.ReviewBox key={prod.id} onClick={()=>con(prod.id,prod.userId)}>
-            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
+          <S.ReviewBox key={prod.id} onClick={() => con(prod.id, prod.userId)}>
+            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} />
             <S.TextContainer>
               <S.ProdName>{prod.prodName}</S.ProdName>
               <MyEvaluation swipers={swipers} prodId={prod.id} />
@@ -103,7 +96,8 @@ const S = {
   `,
 
   ReviewBox: styled(FlexBoxAlignCenter)`
-    /* cursor: pointer; */
+    cursor: pointer;
+
     background: #fff;
 
     width: 890px;
@@ -136,7 +130,7 @@ const S = {
     font-family: Pretendard;
     font-size: 22px;
     font-weight: 700;
-    line-height: 30px; /* 136.364% */
+    line-height: 30px;
   `,
 
   AllEvaluation: styled.div`
@@ -156,12 +150,11 @@ const S = {
   IsGoodText: styled.div`
     color: var(--font-black, var(--Black, #242424));
 
-    /* button-small */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
   `,
 
   GraphBack: styled.div`
@@ -191,7 +184,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
   `,
 
   IconGoodBox: styled(FlexBoxCenter)`

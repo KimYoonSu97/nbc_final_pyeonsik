@@ -14,7 +14,6 @@ const UserDeleteAlert = (type: string) => {
             <S.Container>
               <S.ConfirmBox>
                 <S.Title>탈퇴가 완료되었습니다.</S.Title>
-                {/* <S.Caption /> */}
                 <S.Description>
                   {'그동안 이용해 주셔서 감사합니다.\n언제든 다시 오셔서\n맛있는 편식 조합을 공유해 주세요!'}
                 </S.Description>
@@ -85,8 +84,6 @@ const S = {
     background: #fff;
 
     padding: 30px;
-    /* padding: 90px 0 30px; */
-    /* padding-top: 90px; */
 
     position: fixed;
     top: calc((100vh - 274px) / 2);
@@ -100,7 +97,7 @@ const S = {
     font-size: 22px;
     font-style: normal;
     font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    line-height: 28px;
     margin-bottom: 30px;
   `,
   Caption: styled.p`
@@ -131,7 +128,6 @@ const S = {
   Badge: styled(FlexBoxCenter)`
     width: 140px;
     height: 140px;
-    /* background-color: royalblue; */
     position: absolute;
     top: -70px;
   `

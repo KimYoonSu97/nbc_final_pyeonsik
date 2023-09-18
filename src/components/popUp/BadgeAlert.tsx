@@ -88,7 +88,6 @@ const S = {
     border-radius: 10px;
     background: #fff;
 
-    /* padding: 90px 0 30px; */
     padding-top: 90px;
 
     position: fixed;
@@ -103,7 +102,7 @@ const S = {
     font-size: 22px;
     font-style: normal;
     font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    line-height: 28px;
     margin-bottom: 8px;
   `,
   Caption: styled.p`
@@ -134,7 +133,6 @@ const S = {
   Badge: styled(FlexBoxCenter)`
     width: 140px;
     height: 140px;
-    /* background-color: royalblue; */
     position: absolute;
     top: -70px;
   `

@@ -1,4 +1,3 @@
-// input custom hook
 export interface InputProps {
   type: string;
   name: string;
@@ -19,7 +18,6 @@ export interface TextAreaInputProps {
   autoFocus?: boolean;
 }
 
-// post
 export interface Post {
   id: string;
   created_at: string;
@@ -53,7 +51,6 @@ export interface BottomFunctionProps {
   post: Post;
 }
 
-// 게시글 작성 임시
 export interface NewPost {
   orgPostId: string;
   hasOrgPost: boolean;
@@ -64,7 +61,6 @@ export interface NewPost {
 }
 
 export interface NewRecipePost {
-  // orgPostId: string | null;
   hasOrgPost: boolean;
   postCategory: string;
   title: string;
@@ -84,7 +80,6 @@ export interface TagEditPost {
   recipeBody: string[];
 }
 
-// post like
 export interface PostLike {
   id: string;
   postId: string;
@@ -96,7 +91,6 @@ export interface NewPostLike {
   userId: string;
 }
 
-// post bookmark
 export interface PostBookmark {
   id: string;
   postId: string;
@@ -108,7 +102,6 @@ export interface NewPostBookmark {
   userId: string;
 }
 
-// etc.
 export interface UserType {
   uid: string;
   email: string;
@@ -132,7 +125,6 @@ export interface RenderComponents {
   component: JSX.Element;
 }
 
-// 이 아래는 이미지 태그 관련 프롭스입니다! 위에 포스트에도 살짝 있긴합니다
 export interface Tag {
   x: number;
   y: number;
@@ -205,9 +197,7 @@ export interface TagImageProps {
   recipeBody: string;
   tagsForImage?: ImageTag[];
 }
-//여기까지
 
-/// 무한스크롤 관련
 export interface ProdEvent {
   type: string;
 }
@@ -244,7 +234,7 @@ export interface AddImageTagProps {
   body?: string[] | null;
   isEditMode?: boolean;
 }
-// 카카오맵
+
 export interface ConvsInform {
   brand_name: string;
   position_name: string;
@@ -261,7 +251,6 @@ export interface Badge {
   yourBooleanProp: boolean;
 }
 
-// swiper
 export interface Swiper {
   id: string;
   userId: string;

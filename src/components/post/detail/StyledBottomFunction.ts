@@ -131,7 +131,7 @@ export const S = {
           font-size: 16px;
           font-style: normal;
           font-weight: 400;
-          line-height: 28px; /* 175% */
+          line-height: 28px;
         `;
       } else {
         return css`
@@ -148,6 +148,6 @@ export const S = {
     font-style: normal;
     font-size: 16px;
     font-weight: 400;
-    line-height: 28px; /* 175% */
+    line-height: 28px;
   `
 };
