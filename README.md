@@ -8,6 +8,8 @@
 
 🔗 [IP 주소](https://pyeonsik.vercel.app/)
 
+<a href="(https://pyeonsik.vercel.app/)" target="_blank">사이트 주소</a>
+
 📜 [S.A (Starting Assignments)](https://www.notion.so/SE7EN-DAYS-S-A-18c506d357b743c78f58a76550c92d40)
 
 #### 📌 핵심 기능
