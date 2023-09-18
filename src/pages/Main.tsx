@@ -7,7 +7,7 @@ import useLoginUserId from 'src/hooks/useLoginUserId';
 import { toast } from 'react-toastify';
 import { atom, useAtom } from 'jotai';
 import { userAtom, writeCategorySelect } from 'src/globalState/jotai';
-import { EMAIL_CHECK, SERVICE_PREPARING } from 'src/utility/guide';
+import { EMAIL_CHECK, NON_MEMBER, SERVICE_PREPARING } from 'src/utility/guide';
 import PostSkeleton from 'src/components/skeleton/PostSkeleton';
 
 export const isLoadingAtom = atom<Boolean>(true);
@@ -32,7 +32,7 @@ const Main = () => {
         <S.WriteButton
           onClick={() => {
             if (!userId && !userLogin) {
-              toast(EMAIL_CHECK);
+              toast(NON_MEMBER);
               return;
             }
             setWriteCategory('');

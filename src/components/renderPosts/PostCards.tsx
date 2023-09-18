@@ -22,7 +22,7 @@ const PostCards = ({ posts }: PostListProps) => {
       const checker = localStorage.getItem('boardInfoNever');
       if (checker === null) BoardAlert();
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (posts) setIsLoading(false);
