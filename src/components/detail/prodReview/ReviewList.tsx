@@ -101,6 +101,8 @@ const S = {
   `,
 
   ReviewBox: styled(FlexBoxAlignCenter)`
+    cursor: pointer;
+
     background: #fff;
 
     width: 890px;

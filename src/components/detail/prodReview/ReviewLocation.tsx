@@ -98,7 +98,6 @@ const ReviewLocation = () => {
             ) : (
               <S.Div>
                 <div key={product?.id}>
-                  {/* {step === index && ( */}
                   <CardSwiper
                     onSwipe={(dir: any) => cardsSwipe(dir, product?.id)}
                     className={'card'}
@@ -122,14 +121,9 @@ const ReviewLocation = () => {
               </div>
             </S.ReviewDisLike>
           </S.ProdReviewWrap>
-          {/* <S.SkipButtonWrap>
-            <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
-          </S.SkipButtonWrap> */}
           <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
-            <p>
-              <IconAllReview />
-              <span>신제품 리뷰 보기</span>
-            </p>
+            <IconAllReview />
+            <span>신제품 리뷰 보기</span>
           </S.AllReviewsWrap>
         </S.containerInner>
       </S.containerWrap>
@@ -288,8 +282,7 @@ const S = {
     top: 0;
     width: 100%;
     height: 25%;
-    /* overflow: hidden; */
-    /* box-sizing: border-box; */
+
     h1 {
       display: block;
       font-size: 22px;
