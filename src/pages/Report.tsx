@@ -32,7 +32,7 @@ const Report = () => {
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
-  const isStep1Complete = userId || (email.trim() !== '' && selectedInquiry1 !== '');
+  const isStep1Complete = userId ? selectedInquiry1 !== '' : (email.trim() !== '' && selectedInquiry1 !== '');
   const isStep2Complete = selectedInquiry2 !== '';
   const isStep3Complete = imageName !== '' && (urlLink.trim() !== '' || message.trim() !== '');
 
