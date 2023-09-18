@@ -1,11 +1,7 @@
 import supabase from 'src/lib/supabaseClient';
 
 const getProdData = async () => {
-  const { data } = await supabase
-    .from('show_products')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .range(0, 1);
+  const { data } = await supabase.from('show_products').select('*').order('created_at', { ascending: false });
   return data;
 };
 

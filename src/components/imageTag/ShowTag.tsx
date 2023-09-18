@@ -43,7 +43,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
                 <S.LinkTail />
                 <S.TagDataContainer>
                   <S.LinkTailFalse />
-                  <S.TagImage src={tag.img} alt="상품 이미지" />
+                  <S.TagImage src={tag.img} alt="상품 사진" />
                   <S.DataContainer>
                     <S.ProdBrandContainer>{setBrandName(tag.prodBrand!)}</S.ProdBrandContainer>
                     <S.ProdContainer>{tag.prodData}</S.ProdContainer>
@@ -82,7 +82,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
               onMouseEnter={() => handleProductMouseEnter(tagIndex)}
               onMouseLeave={handleProductMouseLeave}
             >
-              <S.ProductImage src={tag.img} alt="상품 이미지" />
+              <S.ProductImage src={tag.img} alt="상품 사진" />
               {hoveredProductIndex === tagIndex && (
                 <S.ProdDataOverlay>
                   <S.ProdDataText>{tag.prodData}</S.ProdDataText>

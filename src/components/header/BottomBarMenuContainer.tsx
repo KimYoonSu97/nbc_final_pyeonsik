@@ -30,7 +30,7 @@ const BottomBarMenuContainer = () => {
             $type={'/search/products'}
             $location={location.pathname}
           >
-            편의점 제품
+            편의점 상품
           </S.BoardButton>
         </>
       ) : (
@@ -45,7 +45,7 @@ const BottomBarMenuContainer = () => {
             그르르갉
           </S.BoardButton>
           <S.BoardButton to={`/event`} $type={'/event'} $location={location.pathname}>
-            행사 제품
+            행사 상품
           </S.BoardButton>
         </>
       )}

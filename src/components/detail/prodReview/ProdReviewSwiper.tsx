@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { debounce } from 'lodash';
 import { getProdData, getReviewedProductData, getSwiperData } from 'src/api/ReviewSwiper';
 import { CardSwiper } from 'react-card-rotate-swiper';
+import { ERROR_IMG } from 'src/utility/guide';
 
 const ProdReviewSwiper = () => {
   const [step, setStep] = useState(0);
@@ -83,7 +84,7 @@ const ProdReviewSwiper = () => {
               <S.ReviewEndWrap>
                 <div>
                   <p>
-                    앗! 더이상 남은<span>신제품 카드가 없어요!</span>
+                    앗! 더이상 남은<span>신상품 카드가 없어요!</span>
                   </p>
                   <button onClick={() => navigate('/review_list')}>리뷰 보러가기</button>
                 </div>
@@ -100,7 +101,7 @@ const ProdReviewSwiper = () => {
                           contents={
                             <div className="cardWrap">
                               <div>
-                                <img src={prod.prodImg} draggable="false" />
+                                <img src={prod.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} draggable="false" />
                               </div>
                               <h3 className="text">{prod.prodName}</h3>
                             </div>
@@ -125,7 +126,7 @@ const ProdReviewSwiper = () => {
           <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
             <p>
               <IconAllReview />
-              <span>신제품 리뷰 보기</span>
+              <span>신상품 리뷰 보기</span>
             </p>
           </S.AllReviewsWrap>
         </S.containerInner>

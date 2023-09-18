@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getNewProd } from 'src/api/product';
 import { Product } from 'src/types/types';
-import { IMAGE_EMPTY } from 'src/utility/guide';
+import { ERROR_IMG, IMAGE_EMPTY } from 'src/utility/guide';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
 
 import styled from 'styled-components';
@@ -36,11 +36,6 @@ const NewReview = () => {
     return array;
   };
 
-  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
-    e.target.onerror = null;
-    e.target.src = IMAGE_EMPTY;
-  };
-
   const clickNewReview = () => {
     navigate('/review_list');
   };
@@ -57,7 +52,7 @@ const NewReview = () => {
       {randomProducts()?.map((prod) => {
         return (
           <S.ReviewBox key={prod.id}>
-            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
+            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} />
             <div>
               <S.TopContainer>
                 <S.ProdBrand brand={prod.prodBrand}>{setBrandName(prod.prodBrand)}</S.ProdBrand>

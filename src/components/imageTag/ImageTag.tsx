@@ -10,6 +10,7 @@ import { IconPlusTag } from '../icons';
 import { S } from './StyledImageTag';
 import TagModal from './TagModal';
 import { setBrandName } from 'src/function/setBrandName';
+import { ERROR_IMG } from 'src/utility/guide';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -204,7 +205,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
               <S.IconBox>
                 <IconPlusTag />
               </S.IconBox>
-              {addTagMode ? '태그 추가 완료' : '제품 태그 추가'}
+              {addTagMode ? '태그 추가 완료' : '상품 태그 추가'}
               <S.BubbleContainer className="dropDownLink">
                 <S.BubbleTail />
                 <S.BubbleTailFalse />
@@ -230,7 +231,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
 
                 {selectedTagIndex === index && selectedTagVisible && (
                   <S.TagDataContainer searchFormHandler={searchFormHandler} onClick={handleModalClick}>
-                    {tag.img && <S.TagImage src={`${tag.img}`} alt="이미지" />}
+                    {tag.img && <S.TagImage src={`${tag.img}`} alt="상품 사진 없음" onError={ERROR_IMG} />}
 
                     <S.DeleteButton onClick={() => handleDeleteTag(index)}>
                       <S.DeleteIconContainer>

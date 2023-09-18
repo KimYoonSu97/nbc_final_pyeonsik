@@ -116,7 +116,7 @@ const seven = {
 
 const newProductUploader = {
   component: <IconNewProductUploader />,
-  name: '신제품 업로더',
+  name: '신상품 업로더',
   description: ''
 };
 

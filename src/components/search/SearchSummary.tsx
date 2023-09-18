@@ -54,7 +54,7 @@ const SearchSummary = () => {
               })}
             </S.PostContainer>
             <S.ProductContainer>
-              <S.Title>편의점 제품</S.Title>
+              <S.Title>편의점 상품</S.Title>
               {searchData?.productData?.map((item) => {
                 return (
                   <S.ProductRow key={item.id}>
