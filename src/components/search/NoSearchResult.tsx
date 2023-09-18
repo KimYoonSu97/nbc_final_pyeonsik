@@ -9,7 +9,6 @@ const NoSearchResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
   return (
     <S.Container>
       <S.Logo>
@@ -18,7 +17,7 @@ const NoSearchResult = () => {
       <S.Caption>
         앗!
         <S.SearchKeyWord> "{decodeURI(window.location.search).slice(2)}" </S.SearchKeyWord>이 포함된{' '}
-        {location.pathname === '/search/products' ? '제품이' : '결과가'} 없어요!
+        {location.pathname === '/search/products' ? '상품이' : '결과가'} 없어요!
       </S.Caption>
       <S.NavigateButton
         onClick={() => {
@@ -46,24 +45,22 @@ const S = {
     color: var(--font-black, var(--Black, #242424));
     text-align: center;
 
-    /* headline-small */
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
     margin-bottom: 16px;
   `,
   SearchKeyWord: styled.span`
     color: var(--neutral-500, var(--Black, #667085));
     text-align: center;
 
-    /* headline-small */
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
   `,
   NavigateButton: styled.div`
     width: 210px;

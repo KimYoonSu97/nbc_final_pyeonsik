@@ -22,44 +22,11 @@ const PostForMain = ({ item: postData }: Props) => {
   const writer = post?.userId;
 
   return (
-    // <AnimatePresence>
-    //   <S.Container key={postData.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-    //     {/* 게시글 작성자 정보 */}
-    //     <S.Head>
-    //       <WriterContainer post={post} writer={writer} />
-    //     </S.Head>
-    //     {/* 여기를 클릭하면 링크로 넘어감 */}
-    //     <S.HoverBox>
-    //       <S.ContentAreaForClickEvent
-    //         onClick={() => navigate(`/detail/${postData.id}`, { state: { backgroundLocation: location } })}
-    //       >
-    //         {/* 게시글 데이터 */}
-    //         <S.ContentArea>
-    //           <S.ContentBox>
-    //             <ContentBox post={post} />
-    //           </S.ContentBox>
-    //         </S.ContentArea>
-    //         <S.LinearContainer />
-    //       </S.ContentAreaForClickEvent>
-    //       <S.BottomContainer>
-    //         {/* 베스트 댓글 => 좋아요가 많은 댓글 */}
-    //         <BestComment postId={post.id} />
-    //         {/* 인터렉션 버튼 */}
-    //         <S.FunctionBox>
-    //           <BottomFunction userId={userId} post={post} />
-    //         </S.FunctionBox>
-    //       </S.BottomContainer>
-    //     </S.HoverBox>
-    //   </S.Container>
-    // </AnimatePresence>
     <AnimatePresence>
       <S.Container key={postData.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        {/* 게시글 작성자 정보 */}
         <S.Head>
           <WriterContainer post={post} writer={writer} />
         </S.Head>
-        {/* 여기를 클릭하면 링크로 넘어감 */}
-
         <S.HoverBox>
           <div style={{ height: '100%', position: 'relative' }}>
             <S.FunctionBox>
@@ -68,7 +35,6 @@ const PostForMain = ({ item: postData }: Props) => {
             <S.ContentAreaForClickEvent
               onClick={() => navigate(`/detail/${postData.id}`, { state: { backgroundLocation: location } })}
             >
-              {/* 게시글 데이터 */}
               <S.ContentArea>
                 <S.ContentBox>
                   <ContentBox post={post} />
@@ -88,11 +54,6 @@ const PostForMain = ({ item: postData }: Props) => {
 
 export default PostForMain;
 
-// <S.BottomContainer>
-//   {/* 베스트 댓글 => 좋아요가 많은 댓글 */}
-//   {/* 인터렉션 버튼 */}
-
-// </S.BottomContainer>
 const S = {
   HoverBox: styled.div`
     border-radius: 10px;
@@ -114,7 +75,6 @@ const S = {
     border-left: 1px solid #d9d9d9;
     z-index: 1;
     padding-left: 40px;
-    /* height: 100px; */
   `,
   LinearContainer: styled.div`
     padding: 0 40px;
@@ -135,11 +95,8 @@ const S = {
     background: #fff;
   `,
   Container: styled(motion.div)`
-    /* max-height: 580px; */
-    /* border: 1px solid red; */
     margin-bottom: 50px;
     width: 890px;
-    /* overflow: hidden; */
     border-radius: 10px;
     position: relative;
   `,

@@ -32,13 +32,12 @@ const Report = () => {
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
-  const isStep1Complete = userId || (email.trim() !== '' && selectedInquiry1 !== '');
+  const isStep1Complete = userId ? selectedInquiry1 !== '' : (email.trim() !== '' && selectedInquiry1 !== '');
   const isStep2Complete = selectedInquiry2 !== '';
   const isStep3Complete = imageName !== '' && (urlLink.trim() !== '' || message.trim() !== '');
 
   const reportImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      //null 방지?
       const uploadimage = event?.target.files[0];
       const originalFileName = uploadimage.name;
       const fileExtension = originalFileName.split('.').pop();

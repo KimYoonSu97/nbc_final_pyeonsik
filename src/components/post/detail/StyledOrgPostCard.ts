@@ -22,7 +22,7 @@ export const S = {
     font-style: normal;
     font-size: 18px;
     font-weight: 700;
-    line-height: 24px; /* 133.333% */
+    line-height: 24px;
   `,
 
   OrgContentsBox: styled(FlexBoxJustifyCenter)`
@@ -42,7 +42,7 @@ export const S = {
     font-style: normal;
     font-size: 16px;
     font-weight: 600;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
   `,
 
   OrgInfoBox: styled(FlexBoxAlignCenter)`
@@ -52,6 +52,6 @@ export const S = {
     font-style: normal;
     font-size: 12px;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `
 };

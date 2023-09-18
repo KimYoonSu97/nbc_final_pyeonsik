@@ -68,7 +68,7 @@ export const S = {
     font-style: normal;
     font-size: 14px;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
 
     display: inline-flex;
     align-items: flex-start;
@@ -86,7 +86,7 @@ export const S = {
     color: var(--font-black, var(--black, #242424));
     font-size: 12px;
     font-weight: 700;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
 
     display: flex;
     justify-content: center;
@@ -117,7 +117,7 @@ export const S = {
     font-style: normal;
     font-size: 12px;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `,
 
   WriterFunction: styled.div<ColorProps>`
@@ -171,7 +171,6 @@ export const S = {
     font-weight: 400;
   `,
 
-  // 김윤수가 추가한 컨텐츠 박스
   ContentsBox: styled.div`
     width: 890px;
     display: flex;
@@ -193,7 +192,7 @@ export const S = {
     font-style: normal;
     font-size: 22px;
     font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    line-height: 28px;
   `,
 
   PostBodyCommon: styled.pre`
@@ -204,19 +203,12 @@ export const S = {
     word-wrap: break-word;
     color: var(--Black, #242424);
 
-    /* body-게시글 */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 28px; /* 175% */
-
-    /* 디자이너님에게 공유  */
-    /* padding: 20px; */
-    /* border: 1px solid black; */
-    /* border-radius: 10px; */
+    line-height: 28px;
 
     font-family: 'inherit';
-    /* background-color: royalblue; */
   `
 };

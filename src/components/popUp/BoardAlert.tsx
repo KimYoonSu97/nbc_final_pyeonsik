@@ -86,7 +86,6 @@ const S = {
     width: 100%;
     height: 100%;
     background: rgba(36, 36, 36, 0.2);
-    /* backdrop-filter: blur(10px);/ */
     z-index: 101;
   `,
   ConfirmBox: styled(FlexBoxAlignCenter)`
@@ -95,7 +94,6 @@ const S = {
     border-radius: 10px;
     background: #fff;
 
-    /* padding: 90px 0 30px; */
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
     position: fixed;
     top: calc((100vh - 274px) / 2);
@@ -109,7 +107,7 @@ const S = {
     font-size: 22px;
     font-style: normal;
     font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    line-height: 28px;
     margin-top: 30px;
     margin-bottom: 24px;
   `,
@@ -144,11 +142,11 @@ const S = {
     text-align: center;
 
     cursor: pointer;
-    /* label-small */
+
     font-family: Pretendard;
     font-size: 11px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 145.455% */
+    line-height: 16px;
   `
 };

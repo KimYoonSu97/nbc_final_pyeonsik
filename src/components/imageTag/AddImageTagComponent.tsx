@@ -9,19 +9,16 @@ import { ArrowIconWrapper, S, DocIconWrapper } from './StyledAddImageTagComponen
 import { toast } from 'react-toastify';
 import Confirm from 'src/components/popUp/Confirm';
 
-//Jotai atom을 이용 데이터 전역관리
 export const contentsAtom = atom<{ [key: string]: string }>({});
 export const tagsDataAtom = atom<{ [key: string]: Tag[] }>({});
 export const imagesAtom = atom<{ [key: string]: File }>({});
 
-// 이미지 태그를 추가하는 컴포넌트 정의
 const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tagData, isEditMode }) => {
   const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
   const setInputData = useSetAtom(contentsAtom);
   const setTagsData = useSetAtom(tagsDataAtom);
   const [image, setImages] = useAtom(imagesAtom);
 
-  //데이터를 받아와서 세팅하기 위한 변수
   const [, setSelectedImage] = useState<File[] | null>(imageData ?? null);
   const [, setTags] = useState<Tag[][]>(tagData ?? []);
   const [, setContents] = useState<string[]>(body ?? []);
@@ -29,7 +26,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
   const [dragging, setDragging] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  //수정 페이지 접근 시 원래 값 담기위해 사용
   useEffect(() => {
     if (!editMode) {
       addImageTagComponent();
@@ -39,13 +35,11 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     setContents(body ?? []);
   }, [imageData, tagData, body]);
 
-  // 수정 페이지에서 접근 시 필요합니다 컴포넌트 생성
   useEffect(() => {
     if (imageData && imageData.length > 0) {
       const newComponents = imageData.map((image, index) => {
         const componentUuid = uuidv4();
 
-        //수정 페이지에서 접근 시 들어온 값을 Atom에 세팅
         setImages((prevImages) => ({
           ...prevImages,
           [componentUuid]: image
@@ -79,7 +73,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     }
   }, [imageData]);
 
-  // 이미지 태그 컴포넌트 추가 함수
   const addImageTagComponent = () => {
     const componentUuid = uuidv4();
 
@@ -102,7 +95,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     setImageTagComponents((prevComponents) => [...prevComponents, newImageTagComponent]);
   };
 
-  //이미지 변경 처리 함수
   const handleSetImage = (uuid: string, selectedImage: File) => {
     setImages((prevImages) => ({
       ...prevImages,
@@ -110,17 +102,14 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
     }));
   };
 
-  // 태그 변경 처리 함수
   const handleTagsChange = (uuid: string, tags: Tag[]) => {
     setTagsData((prevTagsData) => ({ ...prevTagsData, [uuid]: tags }));
   };
 
-  //내용 변경 처리 함수
   const handleContentsChange = (uuid: string, newContents: string) => {
     setInputData((prevInputData) => ({ ...prevInputData, [uuid]: newContents }));
   };
 
-  //컴포넌트 삭제 처리 함수
   const removeImageTagComponent = async (uuid: string) => {
     const confirm = await Confirm('deleteComponent');
 
@@ -219,7 +208,6 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
         {imageTagComponents.map((component, index) => {
           const componentUuid = (component.key as string) || '';
           return (
-            // 김윤수 추가 S.Contests
             <React.Fragment key={componentUuid}>
               {image[componentUuid] && (
                 <S.ThumbnailImgWrapper>
@@ -264,13 +252,11 @@ const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tag
           </S.SmallButton>
         )}
       </S.ButtonThumbnailArea>
-      {/* 여기는 전체 에디터가 담길 부분임. */}
       <S.ContentArea>
         {imageTagComponents.map((component, index) => {
           const componentUuid = (component.key as string) || '';
           const isFirstContainer = index === 0;
           return (
-            // 김윤수 추가 S.Contests
             <S.Contents key={componentUuid} style={{ marginTop: '10px' }}>
               {component}
               {!isFirstContainer && (

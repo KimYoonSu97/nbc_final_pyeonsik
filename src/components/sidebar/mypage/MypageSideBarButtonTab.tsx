@@ -18,10 +18,7 @@ const MypageSideBarButtonTab = () => {
   const signOutHandler = async () => {
     const { error } = await supabase.auth.signOut();
 
-    //login user data를 같이쓰는 마이페이지에서 로그아웃시 새로고침 시켜줘야함...
-    // if (location.pathname.split('/')[1] === 'mypage') {
     window.location.reload();
-    // }
     setUserLogin(null);
     navigate('/');
 
@@ -30,7 +27,6 @@ const MypageSideBarButtonTab = () => {
     queryClient.removeQueries(['loginUser']);
     queryClient.resetQueries(['loginUser']);
     toast('로그아웃 완료!');
-    // handleRefresh();
   };
 
   return (
@@ -97,7 +93,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
     border-radius: 10px;
     text-decoration: none;
     color: ${(props) => (props.$type === props.$location ? 'black' : 'var(--neutral-500, #667085)')};
@@ -127,7 +123,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
 
     svg {
       fill: var(--neutral-500, #667085);

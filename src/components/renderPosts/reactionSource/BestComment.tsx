@@ -63,15 +63,10 @@ export default BestComment;
 const S = {
   Container: styled.div`
     display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
-    margin-left: 50px;
-    /* margin-right: 30px; */
-    width: 550px;
-    /* border-right: 1px solid #d9d9d9; */
 
-    /* height: 100%; */
-    /* width: 100%; */
+    margin-left: 50px;
+    width: 550px;
+
     position: relative;
     cursor: pointer;
   `,
@@ -81,9 +76,6 @@ const S = {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    /* position: absolute; */
-    /* top: 0; */
-    /* left: 30px; */
   `,
   UserBox: styled.div`
     display: flex;
@@ -101,7 +93,7 @@ const S = {
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
 
     display: flex;
     align-items: center;
@@ -113,7 +105,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   Comment: styled.div`
     width: 490px;

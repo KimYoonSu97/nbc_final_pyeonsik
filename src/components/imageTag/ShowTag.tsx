@@ -6,6 +6,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { ReactComponent as TagIcon } from 'src/components/imageTag/svg/TagIcon.svg';
 import { S } from './StyledShowTag';
 import { IconArrow, IconUnArrow } from '../icons';
+import { setBrandName } from 'src/function/setBrandName';
 
 const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage }) => {
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
@@ -29,33 +30,27 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
           <S.TagContainer
             key={tagIndex}
             style={{
-              //사진 비율 변경된 만큼 곱해주세요 790 / 360 = 2.1944 예시 600 / 360
               left: tag.x * 2.1944 - 20,
               top: tag.y * 2.1944 - 20
             }}
             onClick={() => handleTagClick(tag)}
           >
-            {/* {isMouseOverImage && ( */}
             <S.TagIconContainer>
               <TagIcon />
             </S.TagIconContainer>
-            {/* )} */}
-            {
-              // isMouseOverImage &&
-              selectedTag === tag && (
-                <>
-                  <S.LinkTail />
-                  <S.TagDataContainer>
-                    <S.LinkTailFalse />
-                    <S.TagImage src={tag.img} alt="상품 이미지" />
-                    <S.DataContainer>
-                      <S.ProdBrandContainer>{tag.prodBrand}</S.ProdBrandContainer>
-                      <S.ProdContainer>{tag.prodData}</S.ProdContainer>
-                    </S.DataContainer>
-                  </S.TagDataContainer>
-                </>
-              )
-            }
+            {selectedTag === tag && (
+              <>
+                <S.LinkTail />
+                <S.TagDataContainer>
+                  <S.LinkTailFalse />
+                  <S.TagImage src={tag.img} alt="상품 사진" />
+                  <S.DataContainer>
+                    <S.ProdBrandContainer>{setBrandName(tag.prodBrand!)}</S.ProdBrandContainer>
+                    <S.ProdContainer>{tag.prodData}</S.ProdContainer>
+                  </S.DataContainer>
+                </S.TagDataContainer>
+              </>
+            )}
           </S.TagContainer>
         ))}
       </div>
@@ -87,7 +82,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
               onMouseEnter={() => handleProductMouseEnter(tagIndex)}
               onMouseLeave={handleProductMouseLeave}
             >
-              <S.ProductImage src={tag.img} alt="상품 이미지" />
+              <S.ProductImage src={tag.img} alt="상품 사진" />
               {hoveredProductIndex === tagIndex && (
                 <S.ProdDataOverlay>
                   <S.ProdDataText>{tag.prodData}</S.ProdDataText>
@@ -168,8 +163,6 @@ export const withCustomStatusArrowsAndIndicators = () => {
           />
         );
       }}
-    >
-      {/* {baseChildren.props.children} */}
-    </Carousel>
+    ></Carousel>
   );
 };

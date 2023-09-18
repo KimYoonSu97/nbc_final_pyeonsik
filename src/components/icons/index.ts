@@ -16,7 +16,6 @@ export { ReactComponent as IconCameraSmall } from './IconCameraSmall.svg';
 export { ReactComponent as IconBackSpace } from './IconBackSpace.svg';
 export { ReactComponent as IconTopButton } from './IconTopButton.svg';
 
-// post
 export { ReactComponent as IconAdd } from './post/IconAdd.svg';
 export { ReactComponent as IconBookmark } from './post/IconBookmark.svg';
 export { ReactComponent as IconLike } from './post/IconLike.svg';
@@ -36,7 +35,6 @@ export { ReactComponent as IconLinkCopy } from './post/IconLinkCopy.svg';
 export { ReactComponent as IconClose } from './post/IconClose.svg';
 export { ReactComponent as IconBestComment } from './IconBestComment.svg';
 
-// recipe
 export { ReactComponent as AddBtn } from './post/recipe/AddBtn.svg';
 export { ReactComponent as ArrowIcon } from './post/recipe/ArrowIcon.svg';
 export { ReactComponent as CameraIcon } from './post/recipe/CameraIcon.svg';
@@ -49,7 +47,6 @@ export { ReactComponent as TrashCanIcon } from './post/recipe/TrashCanIcon.svg';
 export { ReactComponent as IconArrow } from './post/recipe/IconArrow.svg';
 export { ReactComponent as IconUnArrow } from './post/recipe/IconUnArrow.svg';
 
-// comment
 export { ReactComponent as IconCommentInput } from './IconCommentInput.svg';
 export { ReactComponent as IconAddReComment } from './IconAddReComment.svg';
 export { ReactComponent as IconLiked } from './IconLiked.svg';
@@ -58,20 +55,17 @@ export { ReactComponent as IconUnLiked } from './IconUnLiked.svg';
 export { ReactComponent as IconWriteButton } from './IconWriteButton.svg';
 export { ReactComponent as IconPlusTag } from './IconPlusTag.svg';
 
-// brand
 export { ReactComponent as SevenEleven } from './brand/SevenEleven.svg';
 export { ReactComponent as GS25 } from './brand/GS25.svg';
 export { ReactComponent as Emart24 } from './brand/Emart24.svg';
 export { ReactComponent as CU } from './brand/CU.svg';
 
-// review
 export { ReactComponent as IconGood } from './review/IconGood.svg';
 export { ReactComponent as IconBad } from './IconBad.svg';
 export { ReactComponent as IconGoodFace } from './IconGoodFace.svg';
 export { ReactComponent as IconBadFace } from './IconBadFace.svg';
 export { ReactComponent as IconAllReview } from './IconAllReview.svg';
 
-// my page
 export { ReactComponent as IconLogOut } from './mypage/IconLogOut.svg';
 
 export { ReactComponent as IconNoSearchResult } from './search/IconNoSearchResult.svg';
@@ -85,6 +79,5 @@ export { ReactComponent as IconWarning } from './login/IconWarning.svg';
 
 export { ReactComponent as IconSecret } from './mypage/IconSecret.svg';
 
-// location
 export { ReactComponent as IconMap } from './map/IconMap.svg';
 export { ReactComponent as IconLocation } from './map/IconLocation.svg';

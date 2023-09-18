@@ -4,8 +4,6 @@ import { ReactComponent as Add } from 'src/components/post/svg/Add.svg';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 
 const WriteHeader = () => {
-  //여기에 작성(생성)하는 함수
-
   return (
     <S.TopBarMenuContainer>
       <S.AddButton as="button" type="submit">
@@ -40,11 +38,10 @@ const S = {
   AddText: styled.div`
     color: #000;
 
-    /* button-medium */
     font-style: normal;
     font-size: 16px;
     font-weight: 700;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
   `,
 
   AddIcon: styled.div`

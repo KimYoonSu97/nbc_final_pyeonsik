@@ -22,8 +22,6 @@ export default EventSideBar;
 const S = {
   Container: styled.div`
     padding-bottom: 100px;
-    /* position: fixed; */
-    /* right: calc(((100vw - 1280px) / 2) + 16px); */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -33,6 +31,5 @@ const S = {
     background: white;
     width: 296px;
     border-radius: 10px;
-    /* margin-bottom: 20px; */
   `
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-// import { S } from '../style/StyledPostDetail';
 import TagImage from 'src/components/imageTag/ShowTag';
 import { styleFont } from 'src/styles/styleFont';
 import styled, { css } from 'styled-components';
@@ -99,8 +98,7 @@ export const S = {
     color: var(--font-black, var(--black, #242424));
     font-size: 12px;
     font-weight: 700;
-    line-height: 16px; /* 133.333% */
-
+    line-height: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +113,6 @@ export const S = {
     margin: 0px 4.5px;
   `,
 
-  // 김윤수가 추가한 컨텐츠 박스
   ContentsBox: styled.div`
     width: 890px;
     display: flex;
@@ -156,7 +153,6 @@ export const S = {
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
-    /* 175% */
 
     .ql-size-small {
       font-size: small;
@@ -196,11 +192,6 @@ export const S = {
     ul {
       list-style-type: disc;
     }
-
-    /* 디자이너님에게 공유  */
-    /* padding: 20px; */
-    /* border: 1px solid black; */
-    /* border-radius: 10px; */
   `,
 
   PostBodyRecipe: styled.div<BodyHeightProps>`

@@ -9,8 +9,6 @@ const PasswordReset: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [password, setPassword] = useState('');
 
-  // TODO: 아무것도 안보내짐..
-  // 작성한 이메일로 비밀번호 변경 링크 발송
   const handleResetPassword = async () => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
 
@@ -20,7 +18,6 @@ const PasswordReset: React.FC = () => {
     console.log(error);
   };
 
-  // 발송된 링크 클릭 후 돌아오면 리셋 이벤트 발생
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
@@ -71,9 +68,9 @@ const ResetFormContainer = styled.div`
 `;
 
 const ResetTitle = styled.div`
-  font-weight: bold; /* 굵게 설정 */
-  font-size: 24px; /* 큰 텍스트 크기 */
-  text-align: center; /* 가운데 정렬 */
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
 `;
 
 const Input = styled.input`
@@ -99,7 +96,6 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-// 성공, 오류 메시지 스타일
 const SuccessMessage = styled.div`
   margin-top: 10px;
   color: blue;

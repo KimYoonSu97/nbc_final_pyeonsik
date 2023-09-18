@@ -24,17 +24,14 @@ const ReCommentLikes = ({ commentId }: Props) => {
   const { id: postId } = useParams();
   const [likeNum, setLikeNum] = useState<number>(0);
 
-  // //좋아요 데이터 받기
   const { data: likeData, isLoading } = useQuery(
     ['reLikes', commentId],
     () => getLikeByReCommentId(commentId, userId),
     {
-      // enabled: userId ? true : false,
       refetchOnWindowFocus: false
     }
   );
 
-  // 가져온 데이터에서 내아이디가 있으면 빨강아이콘 나오도록 설정
   useEffect(() => {
     setLikeNum(likeData?.likeNum as number);
     if (likeData?.myLike === 1) {
@@ -44,7 +41,6 @@ const ReCommentLikes = ({ commentId }: Props) => {
     }
   }, [likeData]);
 
-  // // 내 좋아요 상태에 따라 다른....작동...
   const clickButton = async () => {
     if (!userId) {
       toast(EMAIL_CHECK);

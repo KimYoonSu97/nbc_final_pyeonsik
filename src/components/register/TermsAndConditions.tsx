@@ -80,7 +80,6 @@ const S = {
     width: 294px;
     height: 24px;
     padding: 0 12px;
-    /* margin: 8px 0; */
     color: var(--font-black, var(--Black, #242424));
     ${styleFont.labelLarge}
     font-size: 14px;
@@ -96,19 +95,17 @@ const S = {
     font-size: 11px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 145.455% */
+    line-height: 16px;
     text-decoration-line: underline;
     cursor: pointer;
   `
 };
 
 const TermsCheckbox = styled.input`
-  /* 체크박스 스타일링 */
   margin-right: 8px;
 `;
 
 const TermsModal = styled.div`
-  /* 모달 배경 스타일링 */
   position: fixed;
   top: 0;
   left: 0;
@@ -121,7 +118,6 @@ const TermsModal = styled.div`
 `;
 
 const ModalContent = styled.div`
-  /* 모달 내용 스타일링 */
   background-color: white;
   padding: 20px;
   border-radius: 4px;
@@ -129,7 +125,6 @@ const ModalContent = styled.div`
 `;
 
 const AllAgreeLabel = styled.label`
-  /* 모달 내용 스타일링 */
   background-color: white;
 
   font-weight: bold;

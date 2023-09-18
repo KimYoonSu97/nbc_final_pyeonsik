@@ -86,7 +86,7 @@ const ProdSearch = () => {
               setEventFilter(false);
             }}
           >
-            전체 제품
+            전체 상품
           </S.FilterButton>
           <S.FilterButton
             $isSelected={!eventFilter}
@@ -94,7 +94,7 @@ const ProdSearch = () => {
               setEventFilter(true);
             }}
           >
-            행사 제품
+            행사 상품
           </S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>
@@ -122,9 +122,7 @@ const S = {
   BrandSelect: styled(FlexBoxCenter)<FilterProps>`
     cursor: pointer;
     width: 68px;
-    /* color: var(--font-black, var(--Black, #242424)); */
     color: ${(props) => {
-      // props.$brandCode === props.$isSelected ? 'white' : "#242424"
       if (props.$brandCode === props.$isSelected) {
         return 'white';
       } else {
@@ -170,7 +168,6 @@ const S = {
     align-items: center;
     position: fixed;
     padding: 24px 0px 10px 0px;
-    /* background: red; */
 
     top: 106px;
     left: calc((100vw - 1280px) / 2 + 16px);
@@ -225,6 +222,6 @@ const S = {
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `
 };

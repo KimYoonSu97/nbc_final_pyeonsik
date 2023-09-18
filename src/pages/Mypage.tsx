@@ -22,7 +22,6 @@ const renderPage = [
 ];
 
 const Mypage = () => {
-  //사이드바 버튼으로 컨텐츠 영역의 컴포넌트를 제어합니다.
   const param = useParams();
 
   const renderSelector = (type: string, renderPage: RenderComponents[]): JSX.Element => {

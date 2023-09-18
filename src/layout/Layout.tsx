@@ -18,8 +18,6 @@ const Layout = () => {
     }
   };
 
-  console.log(containerRef);
-
   return (
     <>
       {path === 'write' || path === 'edit' ? (
@@ -60,7 +58,6 @@ const S = {
     background: var(--background, #f6f7f9);
     display: flex;
     gap: 62px;
-    /* justify-content: center; */
   `,
 
   BottomContainer: styled.div<Props>`
@@ -130,6 +127,6 @@ const S = {
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `
 };
