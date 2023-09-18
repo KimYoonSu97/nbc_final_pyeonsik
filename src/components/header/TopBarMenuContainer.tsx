@@ -55,7 +55,7 @@ const TopBarMenuContainer = () => {
     if (data && userId) {
       // console.log('실행됨');
       // console.log(data?.data?.profileImg);
-      console.log(data?.data?.nickname);
+      // console.log(data?.data?.nickname);
       if (data?.data?.profileImg === null && data?.data?.nickname === null) {
         toast('닉네임 프로필 설정 후 이용 가능합니다.');
         setUserEmail(data?.data.email);

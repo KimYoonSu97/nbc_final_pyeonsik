@@ -5713,6 +5713,11 @@ graphemer@^1.4.0:
   resolved "https://registry.yarnpkg.com/graphemer/-/graphemer-1.4.0.tgz#fb2f1d55e0e3a1849aeffc90c4fa0dd53a0e66c6"
   integrity sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==
 
+gsap@^3.8.0:
+  version "3.12.2"
+  resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.12.2.tgz#6e88203eed360761cbf2a2cb3a8d702aa87f3f6d"
+  integrity sha512-EkYnpG8qHgYBFAwsgsGEqvT1WUidX0tt/ijepx7z8EUJHElykg91RvW1XbkT59T0gZzzszOpjQv7SE41XuIXyQ==
+
 gzip-size@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/gzip-size/-/gzip-size-6.0.0.tgz#065367fd50c239c0671cbcbad5be3e2eeb10e462"
@@ -8708,6 +8713,13 @@ react-app-polyfill@^3.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
+
+react-card-rotate-swiper@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/react-card-rotate-swiper/-/react-card-rotate-swiper-0.0.14.tgz#48609ad8bdce5edae64146bd685cea2274355594"
+  integrity sha512-jVQjX55NTNbVrmZC7tVczY7ee4er69tZCWYjYrY4CIGVMdRFJa+G+bErbOrIMiG3Ri7BIIDXC6V1uf7xMqQiuQ==
+  dependencies:
+    gsap "^3.8.0"
 
 react-confirm-alert@^3.0.6:
   version "3.0.6"
