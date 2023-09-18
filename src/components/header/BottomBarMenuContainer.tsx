@@ -19,7 +19,7 @@ const BottomBarMenuContainer = () => {
         <>
           <S.SearchCategory>검색 카테고리</S.SearchCategory>
           <S.BoardButton to={`/search/all${location.search}`} $type={'/search/all'} $location={location.pathname}>
-            전체보기
+            전체 보기
           </S.BoardButton>
           <S.BoardButton to={`/search/recipe${location.search}`} $type={'/search/recipe'} $location={location.pathname}>
             편식조합
@@ -38,7 +38,7 @@ const BottomBarMenuContainer = () => {
       ) : (
         <>
           <S.AllButton to={`/`} $type={''} $location={location.search} $path={location.pathname}>
-            전체보기
+            전체 보기
           </S.AllButton>
           <S.BoardButton to={`/?=recipe`} $type={'?=recipe'} $location={location.search}>
             편식조합
@@ -47,7 +47,7 @@ const BottomBarMenuContainer = () => {
             그르르갉
           </S.BoardButton>
           <S.BoardButton to={`/event`} $type={'/event'} $location={location.pathname}>
-            행사제품
+            행사 제품
           </S.BoardButton>
           {/* <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton> */}
         </>
