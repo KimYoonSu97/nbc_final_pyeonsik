@@ -40,6 +40,7 @@ const S = {
 
     resize: none;
     padding: 24px 22px;
+
     /* background-color: royalblue; */
 
     color: var(--font-black, var(--Black, #242424));
@@ -50,6 +51,7 @@ const S = {
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 150% */
+    box-sizing: border-box;
 
     outline: none;
     /* bor */
