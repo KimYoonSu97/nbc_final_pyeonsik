@@ -20,14 +20,35 @@ const ProdReviewSwiper = () => {
 
   const { data: prodData } = useQuery(['products'], getProdData);
 
-  const filterprodData = prodData?.filter((prod) => {
-    return !swiperData?.data?.some((swiperProd) => {
-      return prod.id === swiperProd.prodId && swiperProd.userId === userId;
-    });
-  });
+
+// const {data : filteredData} = useQuery(['filteredProducts',userId],()=>getReviewedProductData(userId))
+
+const filterprodData = prodData?.filter((prod) => {
+      return !swiperData?.data?.some((swiperProd) => {
+        return prod.id === swiperProd.prodId && swiperProd.userId === userId;
+      });
+     });
+
+// console.log(filteredData,"필터드데디틍ㅇㅇㅇㅇㅇㅇ")
+
   useEffect(() => {
-    setData(filterprodData);
-  }, [swiperData]);
+    // if (swiperData && prodData) {
+    //   const filterprodData = prodData.filter((prod) => {
+    //     return !swiperData?.data?.some((swiperProd) => {
+    //       return prod.id === swiperProd.prodId && swiperProd.userId === userId;
+    //     });
+    //   });
+    //   console.log("필터 데이터 그냥",filterprodData)
+    //   setData(filterprodData);
+    // }else{
+    //   console.log("그냥 필터한 데이터가 먼저 들어와버림")
+    // }
+    // console.log('스와이퍼데이터', swiperData?.data);
+  }, [swiperData, prodData]);
+  // setData(filterprodData)
+
+  console.log(data);
+
 
   const onDropToLike = async (id: string) => {
     const addReview = {
@@ -36,10 +57,11 @@ const ProdReviewSwiper = () => {
       userId: userId
     };
 
-    const newData = data!.filter((prod) => prod.id !== id);
-    setData(newData);
+    // const newData = data!.filter((prod) => prod.id !== id);
+    // setData(newData);
 
     await supabase.from('swiper').insert([addReview]);
+    setStep((pstep)=> pstep+1)
   };
 
   const onDropToDisLike = async (id: string) => {
@@ -49,10 +71,11 @@ const ProdReviewSwiper = () => {
       userId: userId
     };
 
-    const newData = data!.filter((prod) => prod.id !== id);
-    setData(newData);
+    // const newData = data!.filter((prod) => prod.id !== id);
+    // setData(newData);
 
     await supabase.from('swiper').insert([addReview]);
+    setStep((pstep)=> pstep+1)
   };
 
   const cardsSwipe = (dir: any, id: string) => {
@@ -64,9 +87,14 @@ const ProdReviewSwiper = () => {
   };
 
   const skip = () => {
-    const last = data?.pop();
-    const slice = data!.slice(0, data!.length);
-    setData([last, ...slice]);
+    // const last = data?.pop();
+    // console.log(last, '마지막뎅터');
+    // const slice = data!.slice(0, data!.length);
+    // console.log(slice, '마지막을 제외한 뎅;터ㅏ');
+    // setData([last, ...slice]);
+    // console.log([last, ...slice], 'datadaaaa');
+    setStep((pstep)=> pstep+1)
+
   };
 
   return (
@@ -80,7 +108,7 @@ const ProdReviewSwiper = () => {
                 <h1>또 사먹을래요!</h1>
               </div>
             </S.ReviewDisLike>
-            {0 === data?.length ? (
+            {step === filterprodData?.length || filterprodData === undefined ? (
               <S.ReviewEndWrap>
                 <div>
                   <p>
@@ -91,7 +119,7 @@ const ProdReviewSwiper = () => {
               </S.ReviewEndWrap>
             ) : (
               <S.Div>
-                {data?.map((prod, index) => {
+                {filterprodData?.map((prod, index) => {
                   return (
                     <div key={prod.id}>
                       {step === index && (
@@ -120,9 +148,12 @@ const ProdReviewSwiper = () => {
               </div>
             </S.ReviewDisLike>
           </S.ProdReviewWrap>
-          <S.SkipButtonWrap>
-            <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
-          </S.SkipButtonWrap>
+          
+            {step !== filterprodData?.length && (
+              <S.SkipButtonWrap>
+                <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
+              </S.SkipButtonWrap>
+            )}
           <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
             <p>
               <IconAllReview />
@@ -193,7 +224,8 @@ const S = {
       img {
         width: auto;
         height: auto;
-        max-width: 300px;
+        max-width: 250px;
+        margin-bottom: 40px;
       }
     }
     .text {

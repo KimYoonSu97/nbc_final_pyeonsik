@@ -29,6 +29,8 @@ const BoardAlert = () => {
                   <S.Button
                     as="button"
                     onClick={() => {
+                      localStorage.setItem('boardInfoNever', 'true');
+
                       onClose();
                     }}
                   >
