@@ -9,7 +9,6 @@ const NoSearchResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
   return (
     <S.Container>
       <S.Logo>
@@ -46,24 +45,22 @@ const S = {
     color: var(--font-black, var(--Black, #242424));
     text-align: center;
 
-    /* headline-small */
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
     margin-bottom: 16px;
   `,
   SearchKeyWord: styled.span`
     color: var(--neutral-500, var(--Black, #667085));
     text-align: center;
 
-    /* headline-small */
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
   `,
   NavigateButton: styled.div`
     width: 210px;

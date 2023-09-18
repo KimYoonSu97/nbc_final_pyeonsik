@@ -1,4 +1,4 @@
-import Filter from 'badwords-ko'; // 비속어 필터링(한글)
+import Filter from 'badwords-ko';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from 'src/lib/supabaseClient';
@@ -28,7 +28,6 @@ const ProfileSetForm = () => {
   const inputRef = useRef<any>(null);
 
   const userId = useLoginUserId();
-  // const [userEmail, setUserEmail] = useAtom(userSettingEmail);
   const filter = new Filter();
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
@@ -39,11 +38,10 @@ const ProfileSetForm = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [_, setLoginUser] = useAtom(userAtom);
-  const [nickNameColor, setNickNameColor] = useState<string>('black'); // 초기 색상은 검정색
+  const [nickNameColor, setNickNameColor] = useState<string>('black');
 
   const [isError, setIsError] = useState(false);
 
-  // Blob 형태를 string으로 변환
   const encodeFileTobase64 = (fileBlob: Blob) => {
     if (fileBlob.size > 3 * 1024 * 1024) {
       toast(LIMIT_3MB);
@@ -61,7 +59,6 @@ const ProfileSetForm = () => {
 
   const observeNickName = async () => {
     const filterdNickName = filter.clean(nickname);
-    // 유효성 검사
 
     handleDebounce(nickname);
 
@@ -70,7 +67,6 @@ const ProfileSetForm = () => {
       setSuccessMessage('편식에서만의 닉네임을 사용해 보세요!');
       return;
     }
-    // 한글, 영어,숫자, _ , - 만 가능
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
     if (!nicknamePattern.test(nickname) && nickname) {
       setIsError(true);
@@ -88,8 +84,6 @@ const ProfileSetForm = () => {
       return;
     }
 
-    // 타자칠때마다 서버 통신을 합니당 ㅠ
-    // 일단 위에 리턴문이 있어서 그거 다 통과해야 검사 할수 있도록 하는...거로 해놓았습니다.
     const { data: existingUsers, error: existingUsersError } = await supabase
       .from('users')
       .select('*')
@@ -114,9 +108,7 @@ const ProfileSetForm = () => {
   };
   useEffect(() => {
     observeNickName();
-  
 
-    // 글자 수별 글자 색 변화
     if (nickname.length < MAX_NICKNAME_LENGTH) {
       setNickNameColor('black');
     } else setNickNameColor('red');
@@ -124,9 +116,7 @@ const ProfileSetForm = () => {
 
   const setProfile = async () => {
     const filterdNickName = filter.clean(nickname);
-    // 유효성 검사
 
-    // 대소문자, 숫자, 한글, _, -만 가능
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
     if (!nicknamePattern.test(nickname)) {
       toast(NICKNAME_FORM);
@@ -161,7 +151,6 @@ const ProfileSetForm = () => {
     navigate('/');
   };
 
-  // 자꾸 닉네임 15자 제한해도 16자 써져서 일단 이렇게 해놈..
   const handleDebounce = debounce((nickname: string) => {
     if (nickname.length > MAX_NICKNAME_LENGTH) setNickname((prevNickname) => prevNickname.slice(0, -1));
   }, 10);
@@ -200,7 +189,6 @@ const ProfileSetForm = () => {
           {nickname.length}/{MAX_NICKNAME_LENGTH}
         </S.InputLimtArea>
       </S.InputArea>
-
       {!isError && <S.SuccessMessage>{successMessage}</S.SuccessMessage>}
       {isError && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
       {isError ? (
@@ -265,7 +253,6 @@ const S = {
     border: 1px solid #ced4da;
     background: #fff;
     padding: 12px 11px;
-    /* margin-bottom: 8px; */
   `,
   InputLimtArea: styled.div`
     color: ${(props) => props.color};

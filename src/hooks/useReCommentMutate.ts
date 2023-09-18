@@ -26,7 +26,6 @@ const useReCommentMutate = (parent_commentId: string) => {
     writeReCommentMutation.mutate(newReComment);
   };
 
-  //댓글 삭제 버튼
   const deleteReCommentButton = (id: string) => {
     if (window.confirm('댓글을 삭제하시겠습니까?')) {
       deleteReCommentMutation.mutate(id);
@@ -35,7 +34,6 @@ const useReCommentMutate = (parent_commentId: string) => {
     }
   };
 
-  //댓글 수정
   const updateReCommentButton = (id: string, updateComment: string) => {
     if (window.confirm('댓글을 수정 하시겠습니까?')) {
       updateReCommentMutation.mutate({ id, comment: updateComment });

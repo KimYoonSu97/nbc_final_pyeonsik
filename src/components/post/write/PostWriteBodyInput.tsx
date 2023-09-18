@@ -22,16 +22,11 @@ const PostWriteBodyInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
 export default PostWriteBodyInput;
 
 const S = {
-  InputContainer: styled.div`
-    /* width: 100%; */
-    /* min-height: 360px; */
-    /* margin-bottom: 1rem; */
-  `,
+  InputContainer: styled.div``,
   Label: styled.label`
     font-weight: bold;
   `,
   TextAreaElement: styled.textarea`
-    /* max-width: 578px; */
     width: 578px;
     border-radius: 10px;
 
@@ -41,19 +36,15 @@ const S = {
     resize: none;
     padding: 24px 22px;
 
-    /* background-color: royalblue; */
-
     color: var(--font-black, var(--Black, #242424));
 
-    /* body-large */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
     box-sizing: border-box;
 
     outline: none;
-    /* bor */
   `
 };

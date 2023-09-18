@@ -27,12 +27,10 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  // id로 main과 detail 구분 (main => 댓글 수, detail => link 복사)
   const { id } = useParams<string>();
   const { addPostLikeMutate, deletePostLikeMutate } = usePostLikes(post.id);
   const { addPostBookmarkMutate, deletePostBookmarkMutate } = usePostBookmark(post.id);
 
-  // query key id 값 추가 (props의 post.id)
   const { data: commentCountData } = useQuery({
     queryKey: ['commentCount', post.id],
     queryFn: () => getCommentCountDataByPostId(post.id!),
@@ -71,7 +69,6 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
         case 'bookmark':
           postBookmark ? deletePostBookmarkMutate.mutate(postBookmark.id) : addPostBookmarkMutate.mutate(payload);
 
-          //요기서 업적 업데이트가 호출됩니다! -원유길-
           updateBookmarkBadge(userId);
           break;
         case 'quotation':

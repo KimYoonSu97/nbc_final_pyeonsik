@@ -54,14 +54,6 @@ const NewReview = () => {
 
   return (
     <S.ContentsArea onClick={clickNewReview}>
-      {/* 요기부터 하위컴포넌트를 맵으로 돌려벌입니다.
-      <S.ContentWrapper>
-        <S.Img />
-        <S.ProductInfo>이건함수가 있어야해서 컴포넌트를 하나 맹글어서 프롭스로 내려줘야할거같네용</S.ProductInfo>
-      </S.ContentWrapper>
-      요기까지 맵.. */}
-
-      {/* review list */}
       {randomProducts()?.map((prod) => {
         return (
           <S.ReviewBox key={prod.id}>
@@ -143,7 +135,7 @@ const S = {
     color: var(--white, #fff);
     font-size: 10px;
     font-weight: 400;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `,
 
   ProdName: styled.div`
@@ -172,10 +164,9 @@ const S = {
     color: var(--neutral-500, #667085);
     font-size: 10px;
     font-weight: 400;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `,
 
-  // 주석
   ContentWrapper: styled.div`
     width: 100%;
     padding: 6px 8px;
@@ -198,21 +189,19 @@ const S = {
   ProductName: styled.div`
     color: var(--font-black, var(--Black, #242424));
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   Result: styled.div`
     color: var(--font-black, var(--Black, #242424));
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `
 };

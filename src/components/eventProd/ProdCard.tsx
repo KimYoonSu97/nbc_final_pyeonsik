@@ -72,7 +72,6 @@ const S = {
     align-items: center;
     border-radius: 100px;
     padding: 2px 7px;
-    /* padding-top: 4px; */
     color: #000;
     text-align: center;
     ${styleFont.labelSmall}
@@ -108,7 +107,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   ProdPrice: styled.div`
     color: #000;
@@ -117,7 +116,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
   `,
   ProdInnerBox: styled.div`
     width: 200px;

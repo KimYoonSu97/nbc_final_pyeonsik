@@ -23,7 +23,6 @@ export const DocIconWrapper = styled(FlexBoxCenter)`
 `;
 
 export const S = {
-  // 김윤수 추가
   ButtonThumbnailArea: styled(FlexBox)`
     width: 48px;
     position: fixed;
@@ -99,7 +98,6 @@ export const S = {
     border-radius: 5px;
     position: absolute;
 
-    /* 드래글 설명 부분 수정 (혜영) */
     width: 115px;
     height: 24px;
     top: -30px;

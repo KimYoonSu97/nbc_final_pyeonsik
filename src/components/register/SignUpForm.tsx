@@ -35,25 +35,19 @@ const SignUpForm = ({ setNextStep, setUserEmail }: Props) => {
     }
   }, [userId]);
 
-  // 이메일 정규식 표현
   const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
 
   const handleSignUp = async () => {
-    //유효성 검사
     if (!email || !password || !checkPassword) {
       toast('모두 입력해 주세요.');
       return;
     }
-    // 이메일 검사
     if (!emailPattern.test(email)) {
       setErrorMessage('이메일을 확인해 주세요.');
-      // setEmail('');
       return;
     }
     if (password !== checkPassword) {
       setErrorMessage('비밀번호가 일치하지 않아요.');
-      // setPassword('');
-      // setCheckPassword('');
       return;
     }
 
@@ -154,7 +148,6 @@ export default SignUpForm;
 const S = {
   Container: styled(FlexBoxAlignCenter)`
     width: 490px;
-    /* height: 560px; */
     background: #fff;
     border-radius: 10px;
     border: 1px solid #efefef;
@@ -220,7 +213,7 @@ const S = {
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
     text-decoration-line: underline;
   `,
   SocialArea: styled.div`
@@ -234,10 +227,8 @@ const S = {
     border-radius: 10px;
     gap: 10px;
     color: #666;
-    /* margin-top: 50px; */
     border: 1px solid #efefef;
 
-    /* body-medium */
     margin: 0 auto;
     margin-top: 10px;
     ${styleFont.bodyMedium}

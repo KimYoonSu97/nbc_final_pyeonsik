@@ -11,8 +11,6 @@ const BottomBarMenuContainer = () => {
     return str.split('/')[1];
   };
 
-  console.log(location);
-
   return (
     <S.ButtonArea>
       {findPath(location.pathname) === 'search' ? (
@@ -49,7 +47,6 @@ const BottomBarMenuContainer = () => {
           <S.BoardButton to={`/event`} $type={'/event'} $location={location.pathname}>
             행사 제품
           </S.BoardButton>
-          {/* <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton> */}
         </>
       )}
     </S.ButtonArea>

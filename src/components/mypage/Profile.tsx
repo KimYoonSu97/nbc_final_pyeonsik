@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Filter from 'badwords-ko'; // 비속어 필터링(한글)
+import Filter from 'badwords-ko';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserData, updateUserNickname, updateProfileImg } from 'src/api/userLogin';
 import useLoginUserId from 'src/hooks/useLoginUserId';
@@ -9,7 +9,6 @@ import { IconCamera, IconSecret } from '../icons';
 import { FlexBox, FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import useUserMutate from 'src/hooks/useUserMutate';
-// 탈퇴
 import UserDelete from '../register/UserDelete';
 import { toast } from 'react-toastify';
 import {
@@ -30,7 +29,7 @@ const Profile = () => {
   const [currentNickname, setCurrentNickname] = useState('');
   const [social, setSocial] = useState('');
   const inputRef = useRef<any>(null);
-  const [nameLimitColor, setNameLimitColor] = useState<string>('black'); // 초기 색상은 검정색
+  const [nameLimitColor, setNameLimitColor] = useState<string>('black');
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -64,7 +63,6 @@ const Profile = () => {
     reader.readAsDataURL(fileBlob);
     return new Promise(() => {
       reader.onload = () => {
-        // setProfileImg(reader.result as string);
         const newProfileImg = {
           profileImg: reader.result,
           id: userId
@@ -88,8 +86,8 @@ const Profile = () => {
       toast(NICKNAME_ALREADY);
       return;
     }
-    if(isNickError){
-      toast(errorMessage)
+    if (isNickError) {
+      toast(errorMessage);
       return;
     }
 
@@ -97,11 +95,8 @@ const Profile = () => {
     toast('닉네임이 변경되었습니다.');
   };
 
-  // 글자 수별 제한 숫자색 변경
   useEffect(() => {
-    // 디바운싱 함수 호출
     handleDebounce(nickname);
-    // 닉네임 유효성
     if (nickname === '') {
       setNickError(false);
       setSuccessMessage('편식에서만의 닉네임을 사용해 보세요!');
@@ -112,7 +107,6 @@ const Profile = () => {
       setSuccessMessage(randomMessage);
     }
 
-    // 한글, 영어,숫자, _ , - 만 가능
     const nicknamePattern = /^[a-zA-Z0-9가-힣_\-]+$/;
     if (!nicknamePattern.test(nickname) && nickname) {
       setNickError(true);
@@ -152,7 +146,6 @@ const Profile = () => {
     return <p>none</p>;
   }
 
-  // 자꾸 닉네임 15자 제한해도 16자 써져서 일단 이렇게 해놈..
   const handleDebounce = debounce((nickname: string) => {
     if (nickname.length > MAX_NICKNAME_LENGTH) setNickname((prevNickname) => prevNickname.slice(0, -1));
   }, 10);
@@ -214,7 +207,6 @@ const Profile = () => {
           <S.InfoCaption>비밀번호 변경</S.InfoCaption>
           <S.NicknameInputBox>
             <IconSecret />
-            {/* 아무도 모르게 비밀번호 변경하기 */}
             {SERVICE_PREPARING}
             <S.InfoSubmitButton>변경</S.InfoSubmitButton>
           </S.NicknameInputBox>
@@ -291,7 +283,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   InputArea: styled.input`
     outline: none;
@@ -317,12 +309,11 @@ const S = {
     color: var(--font-black, var(--black, #242424));
     text-align: center;
 
-    /* label-small */
     font-family: Pretendard;
     font-size: 11px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 145.455% */
+    line-height: 16px;
   `,
   NicknameInputBox: styled(FlexBoxAlignCenter)`
     width: 350px;
@@ -337,7 +328,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
 
   ErrorMessage: styled.div`

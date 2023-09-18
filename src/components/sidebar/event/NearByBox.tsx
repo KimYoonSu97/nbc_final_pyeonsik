@@ -107,7 +107,7 @@ const S = {
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `,
   IconBox: styled(FlexBoxCenter)`
     margin-right: 2px;
@@ -118,7 +118,7 @@ const S = {
     font-size: 11px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 145.455% */
+    line-height: 16px;
   `,
   StoreBoxName: styled.div`
     color: var(--font-black, var(--Black, #242424));
@@ -126,7 +126,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 171.429% */
+    line-height: 24px;
   `,
   NoStore: styled.div`
     color: var(--font-black, var(--Black, #242424));
@@ -134,6 +134,6 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 171.429% */
+    line-height: 24px;
   `
 };

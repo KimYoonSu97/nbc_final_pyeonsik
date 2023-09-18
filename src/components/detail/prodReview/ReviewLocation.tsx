@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { getProdData,  getSwiperData } from 'src/api/ReviewSwiper';
+import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import Swipeable from 'react-swipy';
@@ -15,15 +15,8 @@ const ReviewLocation = () => {
 
   const navigate = useNavigate();
 
-
-  const {data : swiperData} = useQuery(['swiperData'],getSwiperData)
+  const { data: swiperData } = useQuery(['swiperData'], getSwiperData);
   const { data: prodData } = useQuery(['products'], getProdData);
-  // const { data: filteredSwiperData } = useQuery(['filteredSwiper'], ()=>getReviewedProductData(product.id,userId));
-
-
-
-  // console.log("1",prodData)
-  // console.log("2",filteredSwiperData)
 
   const product = prodData?.find((data) => {
     return data && data.id == id;
@@ -32,16 +25,6 @@ const ReviewLocation = () => {
   const reviewedProduct = swiperData?.data?.find((prod) => {
     return prod.prodId === product?.id && prod.userId === userId;
   });
-
-  console.log("111111111111111111111111111111111111111",product)
-  console.log("222222222222222222222222222222222222222",reviewedProduct)
-
-
-
-  // console.log('스와이퍼데이터', swiperData);
-
-  // console.log('프로드데이타',prodData);
-
 
   const onDropToLike = async (id: string | undefined) => {
     const plusReview = swiperData?.data?.find((prod) => {
@@ -54,8 +37,8 @@ const ReviewLocation = () => {
         userId: userId
       };
       await supabase.from('swiper').insert([addReview]);
-      toast('평가 완료')
-      navigate('/review_list')
+      toast('평가 완료');
+      navigate('/review_list');
     }
   };
 
@@ -70,8 +53,8 @@ const ReviewLocation = () => {
         userId: userId
       };
       await supabase.from('swiper').insert([addReview]);
-      toast('평가 완료')
-      navigate('/review_list')
+      toast('평가 완료');
+      navigate('/review_list');
     }
   };
 
@@ -82,7 +65,7 @@ const ReviewLocation = () => {
         <S.ProdReviewWrap>
           <S.ReviewProducts>
             <S.WrapperStyles>
-              {reviewedProduct? (
+              {reviewedProduct ? (
                 <Swipeable
                   buttons={({ right, left }: any) => (
                     <S.ButtonWrap>
@@ -356,8 +339,7 @@ const S = {
     top: 0;
     width: 100%;
     height: 25%;
-    /* overflow: hidden; */
-    /* box-sizing: border-box; */
+
     h1 {
       display: block;
       font-size: 22px;

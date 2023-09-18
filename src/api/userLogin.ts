@@ -11,7 +11,6 @@ interface UpdateUserLevel {
   level: string;
 }
 
-//로그인시 헤더 정보
 const getUserData = async (id: string) => {
   return await supabase.from('users').select('*').eq('id', id).single();
 };

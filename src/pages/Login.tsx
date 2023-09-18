@@ -22,20 +22,16 @@ interface User {
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  //로그인 모달 닫는(뒤로가기) 함수
   const loginModalCloser = () => {
     navigate(-1);
   };
-  // console.log(backgroundLocation);
 
-  //이메일 형식검사
   const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net)$/;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // 유저의 정보를 헤더로 보내주는 아톰
   const [_, setUserLogin] = useAtom(userAtom);
 
   const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -72,16 +68,11 @@ const Login = () => {
     <>
       <S.FixedBox>
         <S.LoginFormContainer>
-          {/* 로고 영역 */}
           <S.LogoArea>
             <IconLogoSymbolH32 />
             <IconWaterMarkH32 />
           </S.LogoArea>
-
-          {/* 캡션 */}
           <S.About>편의점 음식을 조합 및 공유하는 커뮤니티, 편의점 식신!</S.About>
-
-          {/* 입력 영역 폼태그 사용했음*/}
           <S.InputArea onSubmit={handleLogin}>
             <S.InputBox
               maxLength={30}
@@ -99,31 +90,25 @@ const Login = () => {
               id="password"
               placeholder="비밀번호를 입력하세요"
             />
-            {/* 에러메세지 없을땐 안보여줌 */}
             {errorMessage.length !== 0 && (
               <S.ErrorMessage>
                 <IconWarning />
                 아이디 또는 비밀번호를 확인해 주세요.
               </S.ErrorMessage>
             )}
-            {/* 입력상태에 따른 버튼 색상변경을위한 분기 */}
             {emailPattern.test(email) && password.length >= 6 ? (
               <S.LoginButton $active={true}>로그인</S.LoginButton>
             ) : (
               <S.LoginButton $active={false}>로그인</S.LoginButton>
             )}
-            {/* 비번 재설정 및 회원가입 영역 */}
             <S.LinkToArea>
               <S.LinkTo to={'/password_reset'}>비밀번호 재설정</S.LinkTo>
               <div>|</div>
               <S.LinkTo to={'/register'}>회원가입</S.LinkTo>
             </S.LinkToArea>
           </S.InputArea>
-          {/* 소셜로그인 영역 */}
-          {/* 깃허브는 디자인에 없어서 일단 주석 */}
           <S.SocialArea>
             간편한 소셜 로그인
-            {/* 버튼영역 */}
             <OAuthLogin />
           </S.SocialArea>
         </S.LoginFormContainer>
@@ -154,7 +139,6 @@ const S = {
     background-color: rgba(0, 0, 0, 0.6);
     top: 0;
     right: 0;
-    /* transition: backdrop-filter 1s; */
     backdrop-filter: blur(10px);
   `,
   LoginFormContainer: styled.div`
@@ -195,10 +179,10 @@ const S = {
     border: 1px solid #ccc;
     border-radius: 5px;
     color: var(--black, #242424);
-    /* body-medium */
+
     font-size: 14px;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
     border: none;
     outline: none;
     border: 1px solid #ced4da;
@@ -212,7 +196,6 @@ const S = {
     ${styleFont.bodyMedium}
   `,
   LoginButton: styled.button<LoginButtonStateProps>`
-    /* margin-top: 28px; */
     margin-top: 44px;
 
     width: 294px;
@@ -232,23 +215,22 @@ const S = {
       }
     }};
 
-    /* button-small */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
   `,
   LinkToArea: styled.div`
     display: flex;
     gap: 8px;
     color: #666;
-    /* body-small */
+
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `,
   LinkTo: styled(Link)`
     color: #666;
@@ -262,12 +244,12 @@ const S = {
     gap: 10px;
     color: #666;
     margin-top: 50px;
-    /* body-medium */
+
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   SocialButtonArea: styled.div`
     display: flex;

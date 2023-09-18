@@ -2,7 +2,6 @@ import { toast } from 'react-toastify';
 import supabase from 'src/lib/supabaseClient';
 import { EditPost, NewPost, NewRecipePost, Post, TagEditPost } from 'src/types/types';
 
-// post
 const getPost = async (id: string) => {
   const response = await supabase
     .from('posts')
@@ -30,7 +29,6 @@ const deletePost = async (id: string) => {
   await supabase.from('posts').delete().eq('id', id);
 };
 
-//값 타입이 달라져서 추가했습니다! - 원유길
 const addRecipePost = async (post: NewRecipePost) => {
   await supabase.from('posts').insert(post).select();
   toast('작성이 완료되었습니다.');
@@ -40,7 +38,6 @@ const tagUpdatePost = async (post: TagEditPost) => {
   await supabase.from('posts').update(post).eq('id', post.id).select();
 };
 
-// MyPosts
 const getMyPostsById = async (id: string) => {
   const response = await supabase
     .from('posts')

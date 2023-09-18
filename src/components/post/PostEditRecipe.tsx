@@ -34,13 +34,11 @@ const PostEditRecipe = () => {
 
   const { tagUpdatePostMutate } = usePost(prams!);
 
-  // read
   const { isLoading, data } = useQuery({ queryKey: ['post', prams], queryFn: () => getPost(prams!) });
   const post = data?.data;
   const category = post?.postCategory as string;
   const orgPost = post?.orgPostId;
 
-  // useEffect 순서 확인하기!
   useEffect(() => {
     setTitle(post?.title);
     setBody(post?.recipeBody);
@@ -50,7 +48,6 @@ const PostEditRecipe = () => {
     setInputData(post?.recipeBody);
   }, [post]);
 
-  // edit
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -61,7 +58,6 @@ const PostEditRecipe = () => {
 
     const updatedImageUrls = [];
 
-    // 파일 업로드 및 URL 가져오기
     for (const selectedImage of Object.values(selectedImages)) {
       if (selectedImage instanceof File) {
         const { data, error } = await supabase.storage

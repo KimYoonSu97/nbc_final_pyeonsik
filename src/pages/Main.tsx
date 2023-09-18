@@ -18,11 +18,9 @@ const Main = () => {
   const userId = useLoginUserId();
   const [_, setWriteCategory] = useAtom(writeCategorySelect);
   const [userLogin, __] = useAtom(userAtom);
-  // 이걸살려
 
   return (
     <>
-      {/* 데이터 불러올때 스켈레톤 UI */}
       {isLoading && (
         <>
           {Array.from({ length: 5 }).map((_, index) => (
@@ -75,10 +73,7 @@ const S = {
     justify-content: flex-end;
 
     position: fixed;
-    /* top: 137px; */
 
-    /* padding: 20px 0 10px; */
-    /* 수정 */
     padding: 24px 0px 10px 0px;
 
     top: 106px;
@@ -89,14 +84,10 @@ const S = {
   FixedBox: styled.div`
     width: 100%;
 
-    /* height: 20px; */
-    /* 수정 */
     height: 7px;
 
     position: fixed;
 
-    /* top: 156px; */
-    /* 수정 */
     top: 160px;
 
     background: linear-gradient(0deg, transparent 0%, #f6f7f9 100%);
@@ -110,7 +101,6 @@ const S = {
 
     gap: 2px;
     display: flex;
-    /* width: 80px; */
     height: 26px;
     justify-content: center;
     align-items: center;
@@ -126,7 +116,7 @@ const S = {
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `,
   FilterArea: styled.div`
     display: flex;
@@ -162,6 +152,6 @@ const S = {
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `
 };

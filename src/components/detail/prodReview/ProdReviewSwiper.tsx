@@ -16,10 +16,6 @@ const ProdReviewSwiper = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  // const locationId = location.state.id
-
-  console.log(location);
-  // console.log(state)
 
   const { data: prodData } = useQuery(['products'], getProdData);
 
@@ -163,19 +159,6 @@ const S = {
     overflow: hidden;
     background-color: #fff;
     height: 700px;
-    /* ::before {
-      display: block;
-      content: '';
-      position: absolute;
-      left: 0;
-      top: -10px;
-      width: 353px;
-      height: 470px;
-      border-radius: 10px;
-      border: 1px solid var(--neutral-200, #e4e7ec);
-      background: var(--neutral-050, #020202);
-      z-index: -1;
-    } */
   `,
 
   ProdReviewWrap: styled.div`
@@ -269,7 +252,6 @@ const S = {
     background-clip: content-box, border-box;
     box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
     div {
-      /* height: 100%; */
       align-items: center;
       text-align: center;
       p {
@@ -283,14 +265,6 @@ const S = {
         max-width: 350px;
         height: auto;
       }
-      /* h1 {
-        height: 25%;
-        font-size: 22px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 28px;
-        user-select: none;
-      } */
     }
   `,
   ProdNameWrap: styled.div`

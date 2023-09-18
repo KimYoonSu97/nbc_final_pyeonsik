@@ -122,9 +122,7 @@ const S = {
   BrandSelect: styled(FlexBoxCenter)<FilterProps>`
     cursor: pointer;
     width: 68px;
-    /* color: var(--font-black, var(--Black, #242424)); */
     color: ${(props) => {
-      // props.$brandCode === props.$isSelected ? 'white' : "#242424"
       if (props.$brandCode === props.$isSelected) {
         return 'white';
       } else {
@@ -170,7 +168,6 @@ const S = {
     align-items: center;
     position: fixed;
     padding: 24px 0px 10px 0px;
-    /* background: red; */
 
     top: 106px;
     left: calc((100vw - 1280px) / 2 + 16px);
@@ -225,6 +222,6 @@ const S = {
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `
 };

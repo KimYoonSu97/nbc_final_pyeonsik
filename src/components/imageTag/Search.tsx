@@ -114,8 +114,6 @@ const S = {
   SearchContainer: styled.div`
     position: relative;
     padding: 20px;
-    /* z-index: 9999; */
-    /* z-index: 999; */
   `,
   SearchInputArea: styled(FlexBox)`
     width: 356px;
@@ -134,12 +132,11 @@ const S = {
 
     color: #000;
 
-    /* body-large */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
     &::placeholder {
       color: var(--neutral-400, #98a2b3);
     }
@@ -174,7 +171,6 @@ const S = {
       border-radius: 10px;
     }
 
-    /* 마우스 오버시 스크롤바 색상 변경 */
     &::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
@@ -185,7 +181,6 @@ const S = {
     cursor: pointer;
     width: 335px;
     height: 100px;
-    /* padding-right: 10px; */
     margin-right: 10px;
     background-color: white;
     &:hover {

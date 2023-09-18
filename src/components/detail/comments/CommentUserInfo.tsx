@@ -45,47 +45,43 @@ const S = {
     margin-left: 4px;
     color: var(--font-black, var(--Black, #242424));
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   Time: styled.div`
     margin-left: 4px;
 
     color: #737373;
 
-    /* body-small */
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `,
   ReCommentToggle: styled.div`
     margin-right: 12px;
     color: var(--neutral-500, #667085);
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   LikeButton: styled.div``,
   LikeNum: styled.div`
     color: var(--neutral-500, #667085);
     text-align: right;
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   CommentBody: styled.div`
     padding: 10px 14px;
@@ -96,12 +92,11 @@ const S = {
 
     color: var(--font-black, #242424);
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   ReCommentAddButton: styled(FlexBoxCenter)`
     margin-top: auto;
@@ -115,12 +110,11 @@ const S = {
     justify-content: flex-end;
     text-align: center;
 
-    /* body-small */
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `,
   EditButton: styled(FlexBoxJustifyCenter)`
     width: 28px;
