@@ -14,6 +14,7 @@ export { ReactComponent as IconMyPostBox } from './IconMyPostBox.svg';
 export { ReactComponent as IconCamera } from './IconCamera.svg';
 export { ReactComponent as IconCameraSmall } from './IconCameraSmall.svg';
 export { ReactComponent as IconBackSpace } from './IconBackSpace.svg';
+export { ReactComponent as IconTopButton } from './IconTopButton.svg';
 
 // post
 export { ReactComponent as IconAdd } from './post/IconAdd.svg';
