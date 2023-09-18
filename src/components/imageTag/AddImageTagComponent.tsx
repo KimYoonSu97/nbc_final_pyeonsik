@@ -13,7 +13,7 @@ export const contentsAtom = atom<{ [key: string]: string }>({});
 export const tagsDataAtom = atom<{ [key: string]: Tag[] }>({});
 export const imagesAtom = atom<{ [key: string]: File }>({});
 
-const AddImageTagComponent: React.FC<AddImageTagProps> = ({ body, imageData, tagData, isEditMode }) => {
+const AddImageTagComponent = ({ body, imageData, tagData, isEditMode }: AddImageTagProps) => {
   const [imageTagComponents, setImageTagComponents] = useState<JSX.Element[]>([]);
   const setInputData = useSetAtom(contentsAtom);
   const setTagsData = useSetAtom(tagsDataAtom);
