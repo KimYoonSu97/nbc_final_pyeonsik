@@ -1,6 +1,6 @@
 import BadgeAlert from 'src/components/popUp/BadgeAlert';
 import supabase from 'src/lib/supabaseClient';
-// 업적을 업데이트하는 함수
+
 const updateBadge = async (userId: string, badgeField: string) => {
   const { data: badgeData, error: badgeError } = await supabase.from('badge').select(badgeField).eq('user_id', userId);
 
@@ -21,7 +21,6 @@ const updateBadge = async (userId: string, badgeField: string) => {
   }
 };
 
-// 게시글 수를 가져오는 함수
 const getPostCount = async (userId: string, postCategory: string) => {
   const { data: postsData, error: postsError } = await supabase
     .from('posts')
@@ -37,7 +36,6 @@ const getPostCount = async (userId: string, postCategory: string) => {
   return postsData ? postsData.length : 0;
 };
 
-// 다양한 업적 업데이트 함수
 const updateFirstRecipeBadge = async (userId: string) => {
   const postCount = await getPostCount(userId, 'recipe');
 

@@ -11,7 +11,6 @@ const useLoginUserId = () => {
     }
   }, []);
 
-  //loginUserId가 바뀌지 않는 한 다시 지정하지 않습니다.
   const userId = useMemo(() => {
     if (loginUserId) {
       return loginUserId;

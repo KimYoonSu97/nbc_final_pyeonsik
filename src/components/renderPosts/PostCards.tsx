@@ -12,7 +12,6 @@ import BoardAlert from '../popUp/BoardAlert';
 interface PostListProps {
   posts: Post[];
 }
-// 이걸살려
 
 const PostCards = ({ posts }: PostListProps) => {
   const [_, setIsLoading] = useAtom(isLoadingAtom);
@@ -25,7 +24,6 @@ const PostCards = ({ posts }: PostListProps) => {
     }
   }, []);
 
-  // 데이터 유무에 따른 전역 상태 관리(Main.tsx- skeleton UI)
   useEffect(() => {
     if (posts) setIsLoading(false);
   }, [posts]);

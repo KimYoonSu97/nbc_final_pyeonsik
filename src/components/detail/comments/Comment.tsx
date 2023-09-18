@@ -49,9 +49,6 @@ const Comment = () => {
     ]
   });
 
-  //포스트 아이디와 같은 댓글만을 위한 쿼리 데이터
-  // const { data: commentData, isLoading: commentIsLoading } = useQuery();
-
   if (commentIsLoading) {
     return (
       <div>
@@ -107,12 +104,11 @@ const S = {
 
     color: var(--neutral-500, #667085);
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   CommentRenderArea: styled(FlexBox)`
     margin-top: 30px;

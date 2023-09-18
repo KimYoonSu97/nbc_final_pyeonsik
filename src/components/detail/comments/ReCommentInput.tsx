@@ -58,14 +58,11 @@ const ReCommentInput = ({
     }
   };
 
-  // 만약 prevComment가 프롭스로 내려왔다면 그건 수정이라는뜻
   useEffect(() => {
     setReComment(prevComment!);
   }, [prevComment]);
 
-  //댓글 작성 함수
   const addReComment = () => {
-    // 유저아이디가 없을때 => 로그인 하지 않았을 떄
     if (!userId) {
       toast(EMAIL_CHECK);
       navigate('/login', { state: { backgroundLocation: location } });
@@ -78,7 +75,6 @@ const ReCommentInput = ({
     setIsOpenReCommentInput!(false);
   };
 
-  // 댓글 수정함수
   const updateReComment = () => {
     updateReCommentButton(commentId!, reComment);
     setIsEditComment!(false);
@@ -109,7 +105,6 @@ const S = {
     display: flex;
     margin-left: 25px;
     align-items: center;
-    /* margin: 16px 0 50px 0; */
   `,
   CommentInPutProfile: styled.img`
     width: 36px;
@@ -125,7 +120,6 @@ const S = {
     background: var(--neutral-100, #f2f4f7);
     border-radius: 10px;
     margin-left: 16px;
-    /* margin: 16px 0 50px; */
   `,
   CommentInput: styled.input`
     width: 100%;

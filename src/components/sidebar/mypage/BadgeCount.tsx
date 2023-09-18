@@ -8,7 +8,7 @@ const getUserIdBadgeCount = async (userId: string) => {
     return 0;
   }
 
-  const trueBadgeCount = data.filter((badge) => badge && badge.sheriff === true).length; // sheriff 업적에 대한 예시
+  const trueBadgeCount = data.filter((badge) => badge && badge.sheriff === true).length;
 
   return trueBadgeCount;
 };

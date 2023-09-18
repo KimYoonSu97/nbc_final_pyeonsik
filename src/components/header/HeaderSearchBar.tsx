@@ -61,7 +61,6 @@ const HeaderSearchBar = () => {
           }}
           onBlur={() => {
             setTimeout(() => {
-              // setSearchKeyView('');
               setSearch(false);
             }, 200);
           }}
@@ -71,7 +70,6 @@ const HeaderSearchBar = () => {
           onChange={onChangeSearchBar}
         />
       </form>
-      {/* {searchResult && <S.SearchResultBox />} */}
     </S.Area>
   );
 };

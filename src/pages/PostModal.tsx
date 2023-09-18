@@ -10,17 +10,13 @@ const PostModal = () => {
 
   return (
     <>
-      {/* 컨텐츠 박스 영역 */}
       <S.PostContainer id="postbox">
         <S.PostArea ref={postBoxRef}>
           <S.PostBox>
             <PostDetail isModal={true} />
-            {/* <Comment /> */}
           </S.PostBox>
         </S.PostArea>
       </S.PostContainer>
-
-      {/* 검정배경 */}
       <S.ModalBackground
         id="background"
         onWheel={(e) => {

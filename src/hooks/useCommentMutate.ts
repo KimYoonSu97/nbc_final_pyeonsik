@@ -21,7 +21,6 @@ const useCommentMutate = (postId?: string) => {
     }
   };
 
-  //댓글작성
   const WriteCommentButton = (userId: string, postId: string, comment: string) => {
     if (comment.trim() === '') {
       toast('댓글을 작성해 주세요.');
@@ -30,7 +29,6 @@ const useCommentMutate = (postId?: string) => {
     writeCommentMutation.mutate({ comment, userId, postId });
   };
 
-  //댓글 삭제 버튼
   const deleteCommentButton = (id: string) => {
     if (window.confirm('댓글을 삭제하시겠습니까?')) {
       deleteCommentMutation.mutate(id);
@@ -39,7 +37,6 @@ const useCommentMutate = (postId?: string) => {
     }
   };
 
-  //댓글 수정
   const updateCommentButton = (id: string, updateComment: string) => {
     if (window.confirm('댓글을 수정 하시겠습니까?')) {
       const newComment = {

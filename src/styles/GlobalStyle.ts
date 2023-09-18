@@ -2,14 +2,11 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
-/* 라이브러리 오류같음 해당 태그가 생성되기때문에 안보이게 처리 */
 #react-confirm-alert-firm-svg {
   display: none;
 }
 
-// reset.css
 *{
-	/* font-family: "Pretendard-Regular"; */
     box-sizing: border-box;
 }
 
@@ -41,7 +38,6 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;

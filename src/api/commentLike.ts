@@ -22,7 +22,6 @@ interface BestComment {
   userId: { nickname: string };
 }
 
-//포스트 아이디값을 기준으으로 댓글의 좋아요를 가져옴... 근데 내부에서 필터링을 거쳐서 가장 많은걸 가져오긴 힘든듯
 const getBestCommentLikeByPostId = async (postId: string) => {
   const { data } = await supabase
     .from('comment_likes')

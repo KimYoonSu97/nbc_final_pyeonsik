@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getNewProd } from 'src/api/product';
 import { Product } from 'src/types/types';
-import { IMAGE_EMPTY } from 'src/utility/guide';
+import { ERROR_IMG, IMAGE_EMPTY } from 'src/utility/guide';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
 
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ import { IconGoodFace } from 'src/components/icons';
 import EvaluationGood from './EvaluationGood';
 import { useNavigate } from 'react-router';
 import ProgressCircle from 'src/components/ProgressCircle';
+import { setBrandName } from 'src/function/setBrandName';
 
 const NewReview = () => {
   const navigate = useNavigate();
@@ -35,21 +36,12 @@ const NewReview = () => {
     return array;
   };
 
-  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
-    e.target.onerror = null;
-    e.target.src = IMAGE_EMPTY;
-  };
-
   const clickNewReview = () => {
     navigate('/review_list');
   };
 
   if (lodingProd) {
-    return (
-      <p>
-        <ProgressCircle />
-      </p>
-    );
+    return <ProgressCircle />;
   }
   if (dataProd?.error) {
     return <p>error</p>;
@@ -57,21 +49,13 @@ const NewReview = () => {
 
   return (
     <S.ContentsArea onClick={clickNewReview}>
-      {/* 요기부터 하위컴포넌트를 맵으로 돌려벌입니다.
-      <S.ContentWrapper>
-        <S.Img />
-        <S.ProductInfo>이건함수가 있어야해서 컴포넌트를 하나 맹글어서 프롭스로 내려줘야할거같네용</S.ProductInfo>
-      </S.ContentWrapper>
-      요기까지 맵.. */}
-
-      {/* review list */}
       {randomProducts()?.map((prod) => {
         return (
           <S.ReviewBox key={prod.id}>
-            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
+            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} />
             <div>
               <S.TopContainer>
-                <S.ProdBrand brand={prod.prodBrand}>{prod.prodBrand}</S.ProdBrand>
+                <S.ProdBrand brand={prod.prodBrand}>{setBrandName(prod.prodBrand)}</S.ProdBrand>
                 <S.ProdName>{prod.prodName}</S.ProdName>
               </S.TopContainer>
               <S.BottomContainer>
@@ -146,7 +130,7 @@ const S = {
     color: var(--white, #fff);
     font-size: 10px;
     font-weight: 400;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `,
 
   ProdName: styled.div`
@@ -175,10 +159,9 @@ const S = {
     color: var(--neutral-500, #667085);
     font-size: 10px;
     font-weight: 400;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `,
 
-  // 주석
   ContentWrapper: styled.div`
     width: 100%;
     padding: 6px 8px;
@@ -201,21 +184,19 @@ const S = {
   ProductName: styled.div`
     color: var(--font-black, var(--Black, #242424));
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   Result: styled.div`
     color: var(--font-black, var(--Black, #242424));
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `
 };

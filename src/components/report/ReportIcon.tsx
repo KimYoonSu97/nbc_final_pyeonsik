@@ -50,6 +50,6 @@ const S = {
     font-size: 10px;
     font-style: normal;
     font-weight: 600;
-    line-height: 16px; /* 160% */
+    line-height: 16px;
   `
 };

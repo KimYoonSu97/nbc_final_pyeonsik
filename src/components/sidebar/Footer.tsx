@@ -1,12 +1,10 @@
 import React from 'react';
-// import { SideFotter, FotterContainer } from './StyledSideBar';
 import styled from 'styled-components';
 
 const Footer = () => {
   return (
     <FotterContainer>
       <SideFotter>팀원 소개 · 이용약관 · 개인정보처리방침 </SideFotter>
-      {/* 아래 스타일에서  marginBottom: '20px' 제거 */}
       <FooterCopyRight style={{ fontSize: '10px', marginBottom: '20px' }}>
         © 2023. SE7EN DAYS all rights reserved.
       </FooterCopyRight>
@@ -27,18 +25,14 @@ export const SideFotter = styled.div`
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px; /* 160% */
+  line-height: 16px;
 `;
 
 export const FotterContainer = styled.div`
-  /* position: absolute; */
-  /* bottom: 0; */
   margin-top: auto;
-  /* position: fixed; */
-  /* right: calc(((100vw - 1280px) / 2) + 16px); */
+
   width: 296px;
   border-top: 1px solid black;
-  /* margin-top: auto; */
 `;
 
 const FooterCopyRight = styled.div`
@@ -48,5 +42,5 @@ const FooterCopyRight = styled.div`
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px; /* 160% */
+  line-height: 16px;
 `;

@@ -52,7 +52,7 @@ const S = {
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
     margin-bottom: 28px;
     background: linear-gradient(109deg, #ffb334 23.92%, #eb4335 100%);
     background-clip: text;
@@ -73,7 +73,6 @@ const S = {
 
     padding: 34px 32px;
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     &:hover {
       box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
@@ -92,7 +91,6 @@ const S = {
     display: flex;
     background: #fff;
 
-    /* justify-content: center; */
     align-items: center;
     &:hover {
       box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);

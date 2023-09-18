@@ -4,6 +4,7 @@ import { Product } from 'src/types/types';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import { setBrandName } from 'src/function/setBrandName';
+import { ERROR_IMG } from 'src/utility/guide';
 
 interface Props {
   data: Product;
@@ -26,7 +27,7 @@ const ProdCard = ({ data }: Props) => {
         <S.ProdPrice>{data.price}</S.ProdPrice>
       </S.ProdInfoBox>
       <S.ProdInnerBox>
-        <S.ProdImg $src={data.prodImg} />
+        <S.ProdImg $src={data.prodImg} onError={ERROR_IMG} />
       </S.ProdInnerBox>
     </S.ProdBox>
   );
@@ -72,7 +73,6 @@ const S = {
     align-items: center;
     border-radius: 100px;
     padding: 2px 7px;
-    /* padding-top: 4px; */
     color: #000;
     text-align: center;
     ${styleFont.labelSmall}
@@ -108,7 +108,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
   ProdPrice: styled.div`
     color: #000;
@@ -117,7 +117,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 16px; /* 114.286% */
+    line-height: 16px;
   `,
   ProdInnerBox: styled.div`
     width: 200px;

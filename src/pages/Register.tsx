@@ -4,7 +4,6 @@ import ProfileSetForm from 'src/components/register/ProfileSetForm';
 import SignUpForm from 'src/components/register/SignUpForm';
 import { userSettingEmail, userSignUp } from 'src/globalState/jotai';
 
-// 회원가입
 const Register = () => {
   const [nextStep, setNextStep] = useAtom(userSignUp);
   const [userEmail, setUserEmail] = useAtom(userSettingEmail);
