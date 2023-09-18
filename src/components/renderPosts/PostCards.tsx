@@ -23,7 +23,7 @@ const PostCards = ({ posts }: PostListProps) => {
       const checker = localStorage.getItem('boardInfoNever');
       if (checker === null) BoardAlert();
     }
-  });
+  }, []);
 
   // 데이터 유무에 따른 전역 상태 관리(Main.tsx- skeleton UI)
   useEffect(() => {
