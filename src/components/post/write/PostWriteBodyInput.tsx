@@ -7,7 +7,7 @@ const PostWriteBodyInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
     return (
       <S.InputContainer>
         <S.TextAreaElement
-          placeholder="어떤 제품으로 만든 레시피인가요?&#13;&#10;사진 추가 후 상품을 검색하고 해당 제품을 태그해 보세요."
+          placeholder="어떤 제품으로 만든 레시피인가요?&#13;&#10;사진을 추가하여 해당 상품을 검색하고 태그해 보세요.&#13;&#10;태그 후에는 완료 버튼을 꼭 눌러주세요."
           ref={ref}
           name={name}
           value={value}
