@@ -123,8 +123,10 @@ const ReviewLocation = () => {
             </S.ReviewDisLike>
           </S.ProdReviewWrap>
           <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
-            <IconAllReview />
-            <span>신상품 리뷰 보기</span>
+            <p>
+              <IconAllReview />
+              <span>신상품 리뷰 보기</span>
+            </p>
           </S.AllReviewsWrap>
         </S.containerInner>
       </S.containerWrap>
@@ -142,7 +144,7 @@ const S = {
     z-index: 999;
     width: 356px;
     height: 464px;
-    &::before {
+    /* &::before {
       display: block;
       content: '';
       position: absolute;
@@ -167,7 +169,7 @@ const S = {
       background-color: #f9fafb;
       border: solid 1px #e4e7ec;
       border-radius: 10px;
-    }
+    } */
     .card {
       z-index: 999;
       position: absolute;
