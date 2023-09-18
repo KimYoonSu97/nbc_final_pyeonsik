@@ -38,7 +38,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelec
       <S.FileLabel as="label" imageselected={imageSelected}>
         <S.IconWrapper imageselected={imageSelected}>
           {imageSelected === 'true' ? (
-            <SelectedFileIcon />
+            <S.SelectedFileIconBox>
+              <SelectedFileIcon />
+            </S.SelectedFileIconBox>
           ) : (
             <S.FileAddBox>
               <CameraIcon />
@@ -88,6 +90,10 @@ const S = {
 
   FileLabelText: styled.span`
     margin-left: 140px;
+  `,
+
+  SelectedFileIconBox: styled.div`
+    margin-top: 4px;
   `,
 
   // 이미지 업로드 부분 추가 (혜영)

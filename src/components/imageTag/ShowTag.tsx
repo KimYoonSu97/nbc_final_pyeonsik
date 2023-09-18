@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 
 import { Tag, TagImageProps } from 'src/types/types';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { ReactComponent as TagIcon } from 'src/components/imageTag/svg/TagIcon.svg';
 import { S } from './StyledShowTag';
+import { IconArrow, IconUnArrow } from '../icons';
 
 const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage }) => {
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
@@ -19,6 +20,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
   const handleProductMouseLeave = () => {
     setHoveredProductIndex(null);
   };
+
   return (
     <S.ImageContainer>
       <div onMouseEnter={() => setIsMouseOverImage(true)} onMouseLeave={() => setIsMouseOverImage(false)}>
@@ -28,37 +30,56 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
             key={tagIndex}
             style={{
               //사진 비율 변경된 만큼 곱해주세요 790 / 360 = 2.1944 예시 600 / 360
-              left: tag.x * 2.1944,
-              top: tag.y * 2.1944
+              left: tag.x * 2.1944 - 20,
+              top: tag.y * 2.1944 - 20
             }}
             onClick={() => handleTagClick(tag)}
           >
-            {isMouseOverImage && (
-              <S.TagIconContainer>
-                <TagIcon />
-              </S.TagIconContainer>
-            )}
-            {selectedTag === tag && (
-              <S.TagDataContainer>
-                <S.TagImage src={tag.img} alt="상품 이미지" />
-                <S.DataContainer>
-                  <S.ProdBrandContainer>{tag.prodBrand}</S.ProdBrandContainer>
-                  <S.ProdContainer>{tag.prodData}</S.ProdContainer>
-                </S.DataContainer>
-              </S.TagDataContainer>
-            )}
+            {/* {isMouseOverImage && ( */}
+            <S.TagIconContainer>
+              <TagIcon />
+            </S.TagIconContainer>
+            {/* )} */}
+            {
+              // isMouseOverImage &&
+              selectedTag === tag && (
+                <>
+                  <S.LinkTail />
+                  <S.TagDataContainer>
+                    <S.LinkTailFalse />
+                    <S.TagImage src={tag.img} alt="상품 이미지" />
+                    <S.DataContainer>
+                      <S.ProdBrandContainer>{tag.prodBrand}</S.ProdBrandContainer>
+                      <S.ProdContainer>{tag.prodData}</S.ProdContainer>
+                    </S.DataContainer>
+                  </S.TagDataContainer>
+                </>
+              )
+            }
           </S.TagContainer>
         ))}
       </div>
-      <div style={{ width: '790px' }}>
+      <S.CaroudelContainer>
         <Carousel
-          showThumbs={false}
-          showArrows={true}
-          showStatus={false}
           centerMode={true}
-          centerSlidePercentage={25}
+          showStatus={false}
           showIndicators={false}
-          selectedItem={0}
+          showThumbs={false}
+          centerSlidePercentage={26.9541779}
+          renderArrowPrev={(onClickHandler, hasPrev, label) =>
+            hasPrev && (
+              <S.ArrowButton type="button" onClick={onClickHandler} title={label} style={{ left: 15 }}>
+                <IconUnArrow />
+              </S.ArrowButton>
+            )
+          }
+          renderArrowNext={(onClickHandler, hasNext, label) =>
+            hasNext && (
+              <S.ArrowButton type="button" onClick={onClickHandler} title={label} style={{ right: 15 }}>
+                <IconArrow />
+              </S.ArrowButton>
+            )
+          }
         >
           {tagsForImage?.map((tag, tagIndex) => (
             <S.ProductWrapper
@@ -67,11 +88,15 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
               onMouseLeave={handleProductMouseLeave}
             >
               <S.ProductImage src={tag.img} alt="상품 이미지" />
-              {hoveredProductIndex === tagIndex && <S.ProdDataOverlay>{tag.prodData}</S.ProdDataOverlay>}
+              {hoveredProductIndex === tagIndex && (
+                <S.ProdDataOverlay>
+                  <S.ProdDataText>{tag.prodData}</S.ProdDataText>
+                </S.ProdDataOverlay>
+              )}
             </S.ProductWrapper>
           ))}
         </Carousel>
-      </div>
+      </S.CaroudelContainer>
       {recipeBody && (
         <S.recipeBody
           dangerouslySetInnerHTML={{
@@ -83,3 +108,68 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
   );
 };
 export default TagImage;
+
+export const withCustomStatusArrowsAndIndicators = () => {
+  const arrowStyles: CSSProperties = {
+    position: 'absolute',
+    zIndex: 2,
+    top: 'calc(50% - 15px)',
+    width: 30,
+    height: 30,
+    cursor: 'pointer'
+  };
+
+  const indicatorStyles: CSSProperties = {
+    background: '#fff',
+    width: 8,
+    height: 8,
+    display: 'inline-block',
+    margin: '0 8px'
+  };
+
+  return (
+    <Carousel
+      statusFormatter={(current, total) => `Current slide: ${current} / Total: ${total}`}
+      renderArrowPrev={(onClickHandler, hasPrev, label) =>
+        hasPrev && (
+          <button type="button" onClick={onClickHandler} title={label} style={{ ...arrowStyles, left: 15 }}>
+            -
+          </button>
+        )
+      }
+      renderArrowNext={(onClickHandler, hasNext, label) =>
+        hasNext && (
+          <button type="button" onClick={onClickHandler} title={label} style={{ ...arrowStyles, right: 15 }}>
+            +
+          </button>
+        )
+      }
+      renderIndicator={(onClickHandler, isSelected, index, label) => {
+        if (isSelected) {
+          return (
+            <li
+              style={{ ...indicatorStyles, background: '#000' }}
+              aria-label={`Selected: ${label} ${index + 1}`}
+              title={`Selected: ${label} ${index + 1}`}
+            />
+          );
+        }
+        return (
+          <li
+            style={indicatorStyles}
+            onClick={onClickHandler}
+            onKeyDown={onClickHandler}
+            value={index}
+            key={index}
+            role="button"
+            tabIndex={0}
+            title={`${label} ${index + 1}`}
+            aria-label={`${label} ${index + 1}`}
+          />
+        );
+      }}
+    >
+      {/* {baseChildren.props.children} */}
+    </Carousel>
+  );
+};

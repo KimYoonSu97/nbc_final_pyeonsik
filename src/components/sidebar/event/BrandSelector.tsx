@@ -37,7 +37,7 @@ const BrandSelector = () => {
   return (
     <S.Container>
       <S.TapButton to={'event'} $type={''} $location={location.search}>
-        행사 상품 전체보기
+        행사 상품 전체 보기
       </S.TapButton>
       {brands.map((brand) => {
         return (

@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/header/Header';
 import SideBar from 'src/components/sidebar/SideBar';
 import styled, { css } from 'styled-components';
+import { FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
+import { IconTopButton } from 'src/components/icons';
 
 const Layout = () => {
   const location = useLocation();
   const path = location.pathname.split('/')[1];
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const Top = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
+  };
+
+  console.log(containerRef);
+
   return (
     <>
       {path === 'write' || path === 'edit' ? (
@@ -14,7 +27,7 @@ const Layout = () => {
       ) : (
         <>
           <Header />
-          <S.BottomContainer $path={path}>
+          <S.BottomContainer $path={path} ref={containerRef}>
             <S.Container id="scroll">
               <S.ContentsArea $path={path}>
                 <Outlet />
@@ -22,6 +35,11 @@ const Layout = () => {
               {path === 'login' || path === 'register' || path === 'detail' || path === 'report' ? <></> : <SideBar />}
             </S.Container>
           </S.BottomContainer>
+          <S.TopButton onClick={Top}>
+            {' '}
+            <IconTopButton />
+            위로 가기
+          </S.TopButton>
         </>
       )}
     </>
@@ -92,5 +110,26 @@ const S = {
   PositionBox: styled.div`
     width: 296px;
     height: 10px;
+  `,
+
+  TopButton: styled(FlexBoxColum)`
+    cursor: pointer;
+    position: fixed;
+    z-index: 999;
+    right: 16px;
+    bottom: 184px;
+
+    width: 74px;
+    height: 74px;
+    border-radius: 60px;
+    background: #fff;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+
+    color: var(--font-black, var(--Black, #242424));
+    font-family: Pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 160% */
   `
 };

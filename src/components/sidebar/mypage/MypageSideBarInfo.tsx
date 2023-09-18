@@ -9,6 +9,7 @@ import { styleFont } from 'src/styles/styleFont';
 import UserLevel from 'src/components/header/UserLevel';
 import supabase from 'src/lib/supabaseClient';
 import { FlexBox } from 'src/styles/styleBox';
+import ProgressCircle from 'src/components/ProgressCircle';
 
 const getUserIdBadgeCount = async (userId: string) => {
   const { data, error } = await supabase.from('badge').select('*').eq('user_id', userId);
@@ -71,7 +72,11 @@ const MypageSideBarInfo = () => {
   });
 
   if (userIsLoading || myPostIsLoading) {
-    return <div>loading</div>;
+    return (
+      <div>
+        <ProgressCircle />
+      </div>
+    );
   }
   if (userIsError || myPostIsError) {
     return <div>error</div>;

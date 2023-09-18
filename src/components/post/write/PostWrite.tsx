@@ -31,6 +31,8 @@ const PostWrite = () => {
   const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
 
+  console.log(selectedImages);
+
   const { addPostMutate, addRecipePostMutate } = usePost();
   const { levelMutation } = useUserMutate();
 
@@ -54,8 +56,6 @@ const PostWrite = () => {
   const submitPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const confirm = await Confirm('postWrite');
-
     const isAllContentsEmpty = Object.keys(allContents).every((key) => allContents[key] === '');
     if (
       title.trim() === '' ||
@@ -65,6 +65,16 @@ const PostWrite = () => {
       toast('제목과 내용을 입력해 주세요.');
       return false;
     }
+
+    if (category === 'recipe') {
+      if (Object.keys(selectedImages).length === 0) {
+        toast('이미지를 첨부해 주세요!.');
+        return;
+      }
+    }
+
+    const confirm = await Confirm('postWrite');
+
     if (confirm) {
       const imageUrls = [];
       for (const selectedImage of Object.values(selectedImages)) {
@@ -92,10 +102,10 @@ const PostWrite = () => {
         addPostMutate.mutate(newPost);
         updateCommonPostBadge(userId);
       } else if (category === 'recipe') {
-        if (imageUrls.length === 0) {
-          toast('이미지를 첨부해 주세요!.');
-          return;
-        }
+        // if (imageUrls.length === 0) {
+        //   toast('이미지를 첨부해 주세요!.');
+        //   return;
+        // }
 
         const newPost = {
           postCategory: category,

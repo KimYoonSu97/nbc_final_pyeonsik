@@ -53,9 +53,7 @@ const TopBarMenuContainer = () => {
   useEffect(() => {
     //무조건로그인 상태일때만 검사하면됨
     if (data && userId) {
-      // console.log('실행됨');
-      // console.log(data?.data?.profileImg);
-      // console.log(data?.data?.nickname);
+
       if (data?.data?.profileImg === null && data?.data?.nickname === null) {
         toast('닉네임 프로필 설정 후 이용 가능합니다.');
         setUserEmail(data?.data.email);
@@ -135,7 +133,7 @@ const TopBarMenuContainer = () => {
           나만의 편식조합 공유하기
         </S.QuickPostButton>
         <S.QuickButton onClick={clickReview}>신제품 리뷰하기</S.QuickButton>
-        <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton>
+        {/* <S.QuickButton onClick={() => navigate('/event')}>행사 제품</S.QuickButton> */}
       </S.QuickButtonArea>
       <S.TopBarLogContainer as="ul" $logged={data ? true : false}>
         {/* 공통 */}
