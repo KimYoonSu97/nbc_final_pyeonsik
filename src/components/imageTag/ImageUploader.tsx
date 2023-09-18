@@ -73,8 +73,6 @@ const S = {
 
     border: ${(props) => (props.imageselected === 'true' ? 'none' : '2px solid #FFF;')};
     background-color: ${(props) => (props.imageselected === 'true' ? '    ' : 'var(--neutral-200, #E4E7EC);')};
-    /* width: 474px;
-    height: 360px; */
 
     width: ${(props) => (props.imageselected === 'true' ? '40px' : '360px')};
     height: ${(props) => (props.imageselected === 'true' ? '40px' : '360px')};
@@ -96,7 +94,6 @@ const S = {
     margin-top: 4px;
   `,
 
-  // 이미지 업로드 부분 추가 (혜영)
   FileAddBox: styled(FlexBoxColum)`
     text-align: center;
     color: var(--neutral-500, #667085);
@@ -106,17 +103,17 @@ const S = {
 
   FileAddText: styled.div`
     margin-top: 12px;
-    /* title-large */
+
     font-size: 22px;
     font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    line-height: 28px;
   `,
 
   FileAddGuide: styled.div`
     margin-top: 4px;
-    /* body-small */
+
     font-size: 12px;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
   `
 };

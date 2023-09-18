@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import { Post } from 'src/types/types';
 import CreatedAt from 'src/utility/CreatedAt';
-// import { S } from 'src/components/post/style/StyledOrgPostCard';
 import { IconOrgPost } from 'src/components/icons';
 import styled from 'styled-components';
 import { FlexBoxAlignCenter, FlexBoxJustifyCenter } from 'src/styles/styleBox';
@@ -77,12 +76,11 @@ export const S = {
   OrgText: styled.div`
     color: var(--font-black, var(--Black, #242424));
 
-    /* title-medium */
     font-family: Pretendard;
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px; /* 133.333% */
+    line-height: 24px;
   `,
 
   OrgContentsBox: styled(FlexBoxJustifyCenter)`

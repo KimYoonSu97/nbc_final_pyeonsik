@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-//왜 안돼?
 
 export const CommentWriteWrap = styled.div`
   margin-bottom: 30px;

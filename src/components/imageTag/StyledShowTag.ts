@@ -149,11 +149,10 @@ export const S = {
     width: 790px;
     flex-shrink: 0;
     color: var(--font-black, var(--Black, #242424));
-    /* body-게시글 */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 28px; /* 175% */
+    line-height: 28px;
   `
 };

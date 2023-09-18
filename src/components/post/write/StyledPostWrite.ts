@@ -26,7 +26,7 @@ export const S = {
     font-style: normal;
     font-size: 16px;
     font-weight: 700;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
   `,
 
   TitleBox: styled.div`
@@ -48,7 +48,7 @@ export const S = {
     font-style: normal;
     font-size: 14px;
     font-weight: 700;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `,
 
   Contour: styled.div`
@@ -69,7 +69,7 @@ export const S = {
     font-style: normal;
     font-size: 16px;
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
   `,
 
   SelectCategory: styled.div`
@@ -91,6 +91,6 @@ export const S = {
     font-style: normal;
     font-size: 14px;
     font-weight: 700;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `
 };

@@ -29,7 +29,6 @@ const CommonPost = ({ item: postItem }: Props) => {
           <S.GradientArea />
           <S.BottomArea />
           <S.TitleArea>{title}</S.TitleArea>
-          {/* editor 내용 변환 */}
           <S.BodyArea dangerouslySetInnerHTML={{ __html: recipeBody ? recipeBody[0] : body }} />
         </S.PostBox>
       </S.Container>
@@ -47,7 +46,6 @@ const S = {
     margin-top: 55px;
   `,
   Container: styled(Link)`
-    /* margin-bottom: 55px; */
     text-decoration: none;
     color: black;
   `,
@@ -69,7 +67,7 @@ const S = {
   Level: styled.div`
     font-size: 12px;
     font-weight: 700;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
     background: #d9d9d9;
     width: 58px;
     height: 20px;
@@ -85,7 +83,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
     padding-top: 2px;
     margin-left: 4px;
   `,
@@ -94,7 +92,7 @@ const S = {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
     padding-top: 2px;
     margin-left: 4px;
   `,

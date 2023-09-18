@@ -38,14 +38,10 @@ interface Props {
 const CommentForMap = ({ comment }: Props) => {
   const userId = useLoginUserId();
 
-  // 수정할수도있어서 state => memo
-
-  // 토글 state
   const [isEditComment, setIsEditComment] = useState(false);
   const [isOpenReComment, setIsOpenReComment] = useState(false);
   const [isOpenReCommentInput, setIsOpenReCommentInput] = useState(false);
 
-  // 삭제 뮤테이션
   const { deleteCommentButton } = useCommentMutate(comment.postId);
 
   const { data: reCommentData, isLoading: reCommentIsLoading } = useQuery({
@@ -66,7 +62,6 @@ const CommentForMap = ({ comment }: Props) => {
     <>
       <S.CommentArea>
         <S.UpWrapper>
-          {/* 유저영역 */}
           <S.UserArea>
             <CommentUserInfo users={comment.users} />
             <S.Time>·</S.Time>
@@ -79,8 +74,6 @@ const CommentForMap = ({ comment }: Props) => {
                   {reCommentData!.count}개의 답글보기
                 </S.ReCommentToggle>
               )}
-
-              {/* 좋아요 컴포넌트 */}
               <CommentLikes commentId={comment.id} />
             </S.ButtonArea>
           </S.UserArea>
@@ -98,8 +91,6 @@ const CommentForMap = ({ comment }: Props) => {
           ) : (
             <S.ReCommentAddButtonEmpty />
           )}
-
-          {/* 수정 컴포넌트 */}
           {isEditComment ? (
             <CommentInput
               type={'edit'}
@@ -111,8 +102,6 @@ const CommentForMap = ({ comment }: Props) => {
             <S.CommentBody>{comment.comment}</S.CommentBody>
           )}
         </S.LowWrapper>
-        {/* {isOpenReComment && <ReComment commentId={comment.id} isOpen={isOpenReComment}/>} */}
-
         {userId === comment.userId && (
           <S.EditButtonArea>
             <S.EditButton onClick={() => setIsEditComment(!isEditComment)}>
@@ -213,8 +202,6 @@ const S = {
     width: 20px;
     height: 20px;
     border-radius: 125px;
-    /* border: 0.625px solid var(--neutral-500, #667085); */
-    /* background: var(--neutral-100, #f2f4f7); */
   `,
   EditButtonArea: styled(FlexBoxAlignCenter)`
     justify-content: flex-end;

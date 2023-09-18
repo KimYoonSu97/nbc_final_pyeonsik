@@ -43,15 +43,6 @@ const EditorQuill = ({ body, setBody }: CommonBodyProps) => {
     };
   };
 
-  // const handlerLink = (body: string) => {
-  //   if (body) {
-  //     const href = prompt('Enter the URL');
-  //     this?.quill.format('link', href);
-  //   } else {
-  //     this?.quill.format('link', false);
-  //   }
-  // };
-
   var bold = Quill.import('formats/bold');
   bold.tagName = 'b';
   Quill.register(bold, true);

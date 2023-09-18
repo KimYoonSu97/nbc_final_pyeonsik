@@ -1,14 +1,14 @@
 import { ConvsInform } from 'src/types/types';
 import { GetDistanceBtw } from './GetDistanceBtw';
 
-const MAX_RESULTS = 5; // 가져올 편의점 개수
+const MAX_RESULTS = 5;
 
 export const GetConvList = async (lat: number, lng: number): Promise<ConvsInform[]> => {
   try {
     const ps = new kakao.maps.services.Places();
     const result = await new Promise<any>((resolve, reject) => {
       ps.categorySearch(
-        'CS2', // 편의점
+        'CS2',
         (data: any, status: any) => {
           if (status === kakao.maps.services.Status.OK) {
             resolve(data);
@@ -61,9 +61,7 @@ export const GetConvList = async (lat: number, lng: number): Promise<ConvsInform
             position: { lat: 0, lng: 0 }
           });
     }
-    // console.log(nearestConvs)
     return nearestConvs;
-    // return convs;
   } catch (error) {
     console.error('편의점 리스트 가져오기 오류:', error);
     return [];

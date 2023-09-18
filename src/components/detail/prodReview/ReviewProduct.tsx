@@ -53,27 +53,7 @@ const S = {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-
-    /* background: transparent; */
   `,
 
-  ProdImgBox: styled.div``,
-
-  o: styled.div``,
-
-  i: styled.div``,
-
-  u: styled.div``,
-
-  y: styled.div``,
-
-  t: styled.div``,
-
-  r: styled.div``,
-
-  e: styled.div``,
-
-  w: styled.div``,
-
-  q: styled.div``
+  ProdImgBox: styled.div``
 };

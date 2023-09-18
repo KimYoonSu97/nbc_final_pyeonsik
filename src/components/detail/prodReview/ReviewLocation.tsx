@@ -18,10 +18,6 @@ const ReviewLocation = () => {
 
   const { data: swiperData } = useQuery(['swiperData'], getSwiperData);
   const { data: prodData } = useQuery(['products'], getProdData);
-  // const { data: filteredSwiperData } = useQuery(['filteredSwiper'], ()=>getReviewedProductData(product.id,userId));
-
-  // console.log("1",prodData)
-  // console.log("2",filteredSwiperData)
 
   const product = prodData?.find((data) => {
     return data && data.id == id;
@@ -30,13 +26,6 @@ const ReviewLocation = () => {
   const reviewedProduct = swiperData?.data?.find((prod) => {
     return prod.prodId === product?.id && prod.userId === userId;
   });
-
-  console.log('111111111111111111111111111111111111111', product);
-  console.log('222222222222222222222222222222222222222', reviewedProduct);
-
-  // console.log('스와이퍼데이터', swiperData);
-
-  // console.log('프로드데이타',prodData);
 
   const onDropToLike = async (id: string | undefined) => {
     const plusReview = swiperData?.data?.find((prod) => {
@@ -92,24 +81,23 @@ const ReviewLocation = () => {
             </S.ReviewDisLike>
             {reviewedProduct ? (
               <S.ProductWrap>
-              <S.productInner>
-                <p>
-                  <img src={product?.prodImg} draggable="false" />
-                </p>
-                <S.blurWrap>
-                  <div className="textBlur">
-                    <h1>{product?.prodName}</h1>
-                  </div>
-                  <h3>
-                    앗! 이미<span>평가한 상품이에요!</span>
-                  </h3>
-                </S.blurWrap>
-              </S.productInner>
-            </S.ProductWrap>
+                <S.productInner>
+                  <p>
+                    <img src={product?.prodImg} draggable="false" />
+                  </p>
+                  <S.blurWrap>
+                    <div className="textBlur">
+                      <h1>{product?.prodName}</h1>
+                    </div>
+                    <h3>
+                      앗! 이미<span>평가한 상품이에요!</span>
+                    </h3>
+                  </S.blurWrap>
+                </S.productInner>
+              </S.ProductWrap>
             ) : (
               <S.Div>
                 <div key={product?.id}>
-                  {/* {step === index && ( */}
                   <CardSwiper
                     onSwipe={(dir: any) => cardsSwipe(dir, product?.id)}
                     className={'card'}
@@ -133,14 +121,9 @@ const ReviewLocation = () => {
               </div>
             </S.ReviewDisLike>
           </S.ProdReviewWrap>
-          {/* <S.SkipButtonWrap>
-            <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
-          </S.SkipButtonWrap> */}
           <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
-            <p>
-              <IconAllReview />
-              <span>신제품 리뷰 보기</span>
-            </p>
+            <IconAllReview />
+            <span>신제품 리뷰 보기</span>
           </S.AllReviewsWrap>
         </S.containerInner>
       </S.containerWrap>
@@ -217,113 +200,112 @@ const S = {
     }
   `,
   ProductWrap: styled.div`
-  position: relative;
-  left: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 356px;
-  height: 464px;
-  background-color: #fff;
-  border-radius: 10px;
-  border: 2px solid #e4e7ec;
-  box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
-  div {
-    width: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    p {
+    width: 356px;
+    height: 464px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 2px solid #e4e7ec;
+    box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
+    div {
+      width: 100%;
+      text-align: center;
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 75%;
+        border-radius: 10px;
+        img {
+          width: auto;
+          max-width: 250px;
+          height: auto;
+          border-radius: 10px;
+        }
+      }
+    }
+  `,
+  blurWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 25%;
+    border-top: solid 2px #e4e7ec;
+    overflow: hidden;
+    box-sizing: border-box;
+    h1 {
+      display: block;
+      filter: blur(6px);
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      user-select: none;
+    }
+    h3 {
+      width: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 99;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 32px;
+      letter-spacing: -1.5px;
+      span {
+        display: block;
+      }
+    }
+    .textBlur {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 75%;
-      border-radius: 10px;
-      img {
-        width: auto;
-        max-width: 250px;
-        height: auto;
-        border-radius: 10px;
-      }
+      width: 100%;
+      height: 100%;
+      background-color: #e4e7ec;
+      filter: blur(7px);
     }
-  }
-`,
-blurWrap: styled.div`
-  position: relative;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 25%;
-  border-top: solid 2px #e4e7ec;
-  overflow: hidden;
-  box-sizing: border-box;
-  h1 {
-    display: block;
-    filter: blur(6px);
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 28px;
-    user-select: none;
-  }
-  h3 {
+  `,
+  ProdNameWrap: styled.div`
+    position: relative;
+    left: 0;
+    top: 0;
     width: 100%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 99;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 32px;
-    letter-spacing: -1.5px;
-    span {
+    height: 25%;
+
+    h1 {
       display: block;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 28px;
+      user-select: none;
     }
-  }
-  .textBlur {
+    div {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+  `,
+  productInner: styled.div`
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    left: 0;
+    top: 0;
     height: 100%;
-    background-color: #e4e7ec;
-    filter: blur(7px);
-  }
-`,
-ProdNameWrap: styled.div`
-  position: relative;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 25%;
-  /* overflow: hidden; */
-  /* box-sizing: border-box; */
-  h1 {
-    display: block;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 28px;
-    user-select: none;
-  }
-  div {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-  }
-`,
-productInner: styled.div`
-  position: relative;
-  left: 0;
-  top: 0;
-  height: 100%;
-`,
+  `,
   containerWrap: styled.div`
     position: relative;
     left: 0;

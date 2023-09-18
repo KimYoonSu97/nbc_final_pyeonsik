@@ -15,19 +15,9 @@ const ProdReviewSwiper = () => {
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
-  
-
-  
-
   const { data: swiperData } = useQuery(['swiper'], getSwiperData);
 
   const { data: prodData } = useQuery(['products'], getProdData);
-
-  // const {data : filteredData} = useQuery(['filteredProducts'],()=>getReviewedProductData())
-
-
-
-
 
   const filterprodData = prodData?.filter((prod) => {
     return !swiperData?.data?.some((swiperProd) => {
@@ -36,12 +26,7 @@ const ProdReviewSwiper = () => {
   });
   useEffect(() => {
     setData(filterprodData);
-    console.log("스와이퍼데이터",swiperData?.data)
   }, [swiperData]);
-  // setData(filterprodData)
-  
-  console.log(data)
-
 
   const onDropToLike = async (id: string) => {
     const addReview = {
@@ -77,15 +62,10 @@ const ProdReviewSwiper = () => {
     }
   };
 
-
-
   const skip = () => {
     const last = data?.pop();
-    console.log(last, '마지막뎅터');
     const slice = data!.slice(0, data!.length);
-    console.log(slice, '마지막을 제외한 뎅;터ㅏ');
     setData([last, ...slice]);
-    console.log([last, ...slice], 'datadaaaa');
   };
 
   return (
@@ -114,20 +94,18 @@ const ProdReviewSwiper = () => {
                   return (
                     <div key={prod.id}>
                       {step === index && (
-                      <CardSwiper
-                        onSwipe={(dir: any) => cardsSwipe(dir, prod.id)}
-                        className={'card'}
-                        contents={
-                          <div className="cardWrap">
-                            <div>
-                              <img src={prod.prodImg} draggable="false" />
+                        <CardSwiper
+                          onSwipe={(dir: any) => cardsSwipe(dir, prod.id)}
+                          className={'card'}
+                          contents={
+                            <div className="cardWrap">
+                              <div>
+                                <img src={prod.prodImg} draggable="false" />
+                              </div>
+                              <h3 className="text">{prod.prodName}</h3>
                             </div>
-                            <h3 className="text">{prod.prodName}</h3>
-                            <p>{step}</p>
-                            <p>{index}</p>
-                          </div>
-                        }
-                      ></CardSwiper>
+                          }
+                        ></CardSwiper>
                       )}
                     </div>
                   );
@@ -311,7 +289,6 @@ const S = {
     background-clip: content-box, border-box;
     box-shadow: 0px 0px 16px rgba(206, 212, 218, 0.1);
     div {
-      /* height: 100%; */
       align-items: center;
       text-align: center;
       p {

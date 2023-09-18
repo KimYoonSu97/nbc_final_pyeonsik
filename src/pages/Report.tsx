@@ -38,7 +38,6 @@ const Report = () => {
 
   const reportImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      //null 방지?
       const uploadimage = event?.target.files[0];
       const originalFileName = uploadimage.name;
       const fileExtension = originalFileName.split('.').pop();

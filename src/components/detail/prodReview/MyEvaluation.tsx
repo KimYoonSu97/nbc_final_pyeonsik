@@ -43,11 +43,10 @@ const S = {
   MyText: styled(FlexBoxAlignCenter)`
     color: var(--neutral-500, #667085);
 
-    /* body-large */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
   `
 };

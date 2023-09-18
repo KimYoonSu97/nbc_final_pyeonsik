@@ -23,17 +23,14 @@ const getReCommentData = async (parentId: string | null) => {
   return data;
 };
 
-//댓글 작성하기
 const writeReCommentData = async (newReComment: Omit<ReCommentType, 'id' | 'parent_commentId'>) => {
   await supabase.from('replay_comments').insert([newReComment]);
 };
 
-//댓글 삭제하기
 const deleteReCommentData = async (id: string) => {
   await supabase.from('replay_comments').delete().eq('id', id);
 };
 
-//댓그 업데이트 하기
 const updateReCommentData = async (comment: any) => {
   await supabase.from('replay_comments').update([comment]).eq('id', comment.id);
 };

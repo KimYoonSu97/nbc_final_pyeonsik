@@ -111,7 +111,7 @@ const S = {
     font-size: 22px;
     font-style: normal;
     font-weight: 700;
-    line-height: 28px; /* 127.273% */
+    line-height: 28px;
   `,
   Caption: styled.p`
     color: var(--font-black, var(--Black, #242424));

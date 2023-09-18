@@ -1,4 +1,3 @@
-//정상 뱃지
 export { ReactComponent as BookMark } from '../icons/achievement/BookMark.svg';
 export { ReactComponent as Bug } from '../icons/achievement/Bug.svg';
 export { ReactComponent as CommentKing } from '../icons/achievement/CommentKing.svg';
@@ -20,7 +19,6 @@ export { ReactComponent as Sheriff } from '../icons/achievement/Sheriff.svg';
 export { ReactComponent as SilverChair } from '../icons/achievement/SilverChair.svg';
 export { ReactComponent as SoilChair } from '../icons/achievement/SoilChair.svg';
 
-//Block 뱃지
 export { ReactComponent as BookMarkBlock } from '../icons/achievement/block/BookMarkBlock.svg';
 export { ReactComponent as BugBlock } from '../icons/achievement/block/BugBlock.svg';
 export { ReactComponent as CommentKingBlock } from '../icons/achievement/block/CommentKingBlock.svg';

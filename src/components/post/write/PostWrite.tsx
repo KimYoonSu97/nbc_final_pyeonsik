@@ -23,15 +23,12 @@ const PostWrite = () => {
   const { state: orgPost } = useLocation();
   const userId: string | undefined = useLoginUserId();
 
-  // const [category, setCategory] = useState<string>('');
   const [category, setCategory] = useAtom(writeCategorySelect);
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [allContents, setContentsAtom] = useAtom(contentsAtom);
   const [allTags, setTagsDataAtom] = useAtom(tagsDataAtom);
   const [selectedImages, setImagesDataAtom] = useAtom(imagesAtom);
-
-  console.log(selectedImages);
 
   const { addPostMutate, addRecipePostMutate } = usePost();
   const { levelMutation } = useUserMutate();
@@ -89,7 +86,6 @@ const PostWrite = () => {
         imageUrls.push(data.path);
       }
 
-      // type 문제 해결 필요
       if (category === 'common') {
         const newPost = {
           postCategory: category,
@@ -102,11 +98,6 @@ const PostWrite = () => {
         addPostMutate.mutate(newPost);
         updateCommonPostBadge(userId);
       } else if (category === 'recipe') {
-        // if (imageUrls.length === 0) {
-        //   toast('이미지를 첨부해 주세요!.');
-        //   return;
-        // }
-
         const newPost = {
           postCategory: category,
           hasOrgPost: !!orgPost,
@@ -121,15 +112,11 @@ const PostWrite = () => {
         addRecipePostMutate.mutate(newPost);
         updateFirstRecipeBadge(userId);
 
-        // 이다음에 체크하고 네비게이트
-        // 이 함수가 반환하는 것은 레벨업데이트가 필요한지 여부에대한 것과 어떤 레벨로 업데이트 할것인지에 대한 것임
         const result = await levelChecker(userId);
-        //만약 업데이트 가 필요하지 않다면 그냥 바로 네비게이트로 홈으로 보내버림
         if (!result.isNeedUpdate) {
           navigate('/');
           return;
         }
-        // 만약 True가 나와서 필요하다면 업데이트 및 로그인 유저에대한 데이터를 인벨리데이트 시켜버려서 새로 패치함
         const update = {
           userId,
           level: result.userLevel as string

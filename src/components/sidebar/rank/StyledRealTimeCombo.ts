@@ -44,12 +44,12 @@ export const S = {
     justify-content: center;
     align-items: center;
     text-align: center;
-    /* body-small */
+
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 133.333% */
+    line-height: 16px;
     color: ${({ $isfirst }) => ($isfirst ? 'white' : '#d9d9d9')};
   `,
 
@@ -61,11 +61,10 @@ export const S = {
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    /* body-medium */
     font-family: Pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   `
 };
