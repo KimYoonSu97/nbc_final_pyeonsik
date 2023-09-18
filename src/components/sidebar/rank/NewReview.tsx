@@ -41,7 +41,11 @@ const NewReview = () => {
   };
 
   if (lodingProd) {
-    return <ProgressCircle />;
+    return (
+      <div>
+        <ProgressCircle />
+      </div>
+    );
   }
   if (dataProd?.error) {
     return <p>error</p>;

@@ -66,7 +66,7 @@ const CommentInput = ({ type, commentId, prevComment, setIsEditComment }: Props)
       <S.CommentInput
         placeholder="댓글을 남겨보세요!"
         type="text"
-        value={comment}
+        value={comment || ''}
         onChange={(e) => setComment(e.target.value)}
       />
       <S.CommentInputAddButton type="submit">

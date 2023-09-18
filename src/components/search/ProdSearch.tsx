@@ -78,7 +78,6 @@ const ProdSearch = () => {
             </S.BrandSelect>
           );
         })}
-
         <S.FilterArea>
           <S.FilterButton
             $isSelected={eventFilter}
@@ -99,7 +98,6 @@ const ProdSearch = () => {
         </S.FilterArea>
       </S.FixedContainer>
       <S.FixedBox />
-
       <S.Container>
         {filteredData?.map((item) => {
           return <ProdCard key={item.id} data={item} />;

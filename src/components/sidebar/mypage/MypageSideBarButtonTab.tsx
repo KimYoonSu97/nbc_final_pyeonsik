@@ -37,14 +37,12 @@ const MypageSideBarButtonTab = () => {
         </S.Icon>
         프로필
       </S.TapButton>
-
       <S.TapButton to={'mypage/mypost?=mypost'} $type={'/mypage/mypost'} $location={location.pathname}>
         <S.Icon>
           <IconMyPostBox />
         </S.Icon>
         보관함
       </S.TapButton>
-
       <S.TapButton to={'mypage/achievement'} $type={'/mypage/achievement'} $location={location.pathname}>
         <S.Icon>
           <IconBadgeSmall />

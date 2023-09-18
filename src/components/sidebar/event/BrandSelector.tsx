@@ -7,6 +7,12 @@ import { FlexBoxAlignCenter } from 'src/styles/styleBox';
 
 export const brands = [
   {
+    name: 'CU',
+    path: '?=CU',
+    logoImg: <CU />,
+    color: '#652F8D'
+  },
+  {
     name: 'GS25',
     path: '?=GS25',
     logoImg: <GS25 />,
@@ -23,12 +29,6 @@ export const brands = [
     path: '?=emart24',
     logoImg: <Emart24 />,
     color: '#FFB81C'
-  },
-  {
-    name: 'CU',
-    path: '?=CU',
-    logoImg: <CU />,
-    color: '#652F8D'
   }
 ];
 
