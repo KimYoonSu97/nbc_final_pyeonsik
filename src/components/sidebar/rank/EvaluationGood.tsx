@@ -24,11 +24,7 @@ const EvaluationGood = ({ prodId }: EvaluationGoodProps) => {
   }%)`;
 
   if (lodingSwiper) {
-    return (
-      <p>
-        <ProgressCircle />
-      </p>
-    );
+    return <ProgressCircle />;
   }
   if (dataSwiper?.error) {
     return <p>error</p>;

@@ -9,6 +9,7 @@ import { TagIcon, DeleteIcon } from '../icons/index';
 import { IconPlusTag } from '../icons';
 import { S } from './StyledImageTag';
 import TagModal from './TagModal';
+import { setBrandName } from 'src/function/setBrandName';
 
 const ImageTag: React.FC<ImageTagProps> = ({
   onTagsAndResultsChange,
@@ -260,7 +261,7 @@ const ImageTag: React.FC<ImageTagProps> = ({
                     </S.DeleteButton>
 
                     <S.DataContainer>
-                      {tag.prodBrand && <S.ProdBrandContainer>{tag.prodBrand}</S.ProdBrandContainer>}
+                      {tag.prodBrand && <S.ProdBrandContainer>{setBrandName(tag.prodBrand)}</S.ProdBrandContainer>}
                       {tag.prodData && <S.ProdContainer>{tag.prodData}</S.ProdContainer>}
                     </S.DataContainer>
 

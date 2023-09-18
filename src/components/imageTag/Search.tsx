@@ -6,6 +6,7 @@ import { SearchProps } from 'src/types/types';
 import { ReactComponent as SearchIcon } from 'src/components/imageTag/svg/SearchIcon.svg';
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import debounce from 'lodash/debounce';
+import { setBrandName } from 'src/function/setBrandName';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
@@ -95,7 +96,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
                   <img src={result.prodImg} alt="이미지" />
                 </S.ImageContainer>
                 <S.TextContainer>
-                  <S.ProdContainer>{result.prodBrand}</S.ProdContainer>
+                  <S.ProdContainer>{setBrandName(result.prodBrand)}</S.ProdContainer>
                   <div>{result.prodName}</div>
                 </S.TextContainer>
               </S.ImageAndTextContainer>

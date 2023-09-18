@@ -11,6 +11,7 @@ import { IconGoodFace } from 'src/components/icons';
 import EvaluationGood from './EvaluationGood';
 import { useNavigate } from 'react-router';
 import ProgressCircle from 'src/components/ProgressCircle';
+import { setBrandName } from 'src/function/setBrandName';
 
 const NewReview = () => {
   const navigate = useNavigate();
@@ -45,11 +46,7 @@ const NewReview = () => {
   };
 
   if (lodingProd) {
-    return (
-      <p>
-        <ProgressCircle />
-      </p>
-    );
+    return <ProgressCircle />;
   }
   if (dataProd?.error) {
     return <p>error</p>;
@@ -71,7 +68,7 @@ const NewReview = () => {
             <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
             <div>
               <S.TopContainer>
-                <S.ProdBrand brand={prod.prodBrand}>{prod.prodBrand}</S.ProdBrand>
+                <S.ProdBrand brand={prod.prodBrand}>{setBrandName(prod.prodBrand)}</S.ProdBrand>
                 <S.ProdName>{prod.prodName}</S.ProdName>
               </S.TopContainer>
               <S.BottomContainer>

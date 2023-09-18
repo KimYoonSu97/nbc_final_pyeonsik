@@ -6,6 +6,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { ReactComponent as TagIcon } from 'src/components/imageTag/svg/TagIcon.svg';
 import { S } from './StyledShowTag';
 import { IconArrow, IconUnArrow } from '../icons';
+import { setBrandName } from 'src/function/setBrandName';
 
 const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage }) => {
   const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
@@ -49,7 +50,7 @@ const TagImage: React.FC<TagImageProps> = ({ imageUrl, recipeBody, tagsForImage 
                     <S.LinkTailFalse />
                     <S.TagImage src={tag.img} alt="상품 이미지" />
                     <S.DataContainer>
-                      <S.ProdBrandContainer>{tag.prodBrand}</S.ProdBrandContainer>
+                      <S.ProdBrandContainer>{setBrandName(tag.prodBrand!)}</S.ProdBrandContainer>
                       <S.ProdContainer>{tag.prodData}</S.ProdContainer>
                     </S.DataContainer>
                   </S.TagDataContainer>
