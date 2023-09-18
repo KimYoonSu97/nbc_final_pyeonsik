@@ -7,6 +7,7 @@ import { ReactComponent as SearchIcon } from 'src/components/imageTag/svg/Search
 import { FlexBox, FlexBoxAlignCenter } from 'src/styles/styleBox';
 import debounce from 'lodash/debounce';
 import { setBrandName } from 'src/function/setBrandName';
+import { ERROR_IMG } from 'src/utility/guide';
 
 const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
@@ -70,7 +71,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
           value={searchKeyword}
           onChange={(event) => handleSearchTextChange(event.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="제품명을 검색해 주세요."
+          placeholder="상품명을 검색해 주세요."
           autoFocus
           ref={searchInputRef}
           onClick={handleClickToFocus}
@@ -93,7 +94,7 @@ const Search: React.FC<SearchProps> = ({ onSearchResultSelect }) => {
             <S.SearchResultItem key={index} onClick={() => handleSelectResult(result)}>
               <S.ImageAndTextContainer>
                 <S.ImageContainer>
-                  <img src={result.prodImg} alt="이미지" />
+                  <img src={result.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} />
                 </S.ImageContainer>
                 <S.TextContainer>
                   <S.ProdContainer>{setBrandName(result.prodBrand)}</S.ProdContainer>

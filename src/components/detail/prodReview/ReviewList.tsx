@@ -4,7 +4,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getNewProdInfinite } from 'src/api/product';
 import { getSwiperData } from 'src/api/ReviewSwiper';
 import { Swiper } from 'src/types/types';
-import { IMAGE_EMPTY } from 'src/utility/guide';
+import { ERROR_IMG, IMAGE_EMPTY } from 'src/utility/guide';
 import MyEvaluation from './MyEvaluation';
 import EvaluationGraph from './EvaluationGraph';
 import { styled } from 'styled-components';
@@ -42,11 +42,6 @@ const ProdReviewList = () => {
   const swipers = dataSwiper?.data as Swiper[];
   const navigate = useNavigate();
 
-  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
-    e.target.onerror = null;
-    e.target.src = IMAGE_EMPTY;
-  };
-
   const { ref } = useInView({
     threshold: 0.7,
     onChange: (inView) => {
@@ -71,7 +66,7 @@ const ProdReviewList = () => {
       {products?.map((prod) => {
         return (
           <S.ReviewBox key={prod.id} onClick={() => con(prod.id, prod.userId)}>
-            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={onErrorImg} />
+            <S.ProdImg src={prod.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} />
             <S.TextContainer>
               <S.ProdName>{prod.prodName}</S.ProdName>
               <MyEvaluation swipers={swipers} prodId={prod.id} />

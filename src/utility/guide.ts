@@ -30,3 +30,8 @@ export const CORRECT_NICK_MESSAGES = [
   '이 세상에 하나뿐인 닉네임일지도 몰라요. 🥳',
   '누구나 부러워할 최고의 닉네임이에요. 🤘'
 ];
+
+export const ERROR_IMG = (e: React.SyntheticEvent<HTMLImageElement, Event> | any) => {
+  e.target.onerror = null;
+  e.target.src = IMAGE_EMPTY;
+};

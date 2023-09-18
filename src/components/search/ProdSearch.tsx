@@ -86,7 +86,7 @@ const ProdSearch = () => {
               setEventFilter(false);
             }}
           >
-            전체 제품
+            전체 상품
           </S.FilterButton>
           <S.FilterButton
             $isSelected={!eventFilter}
@@ -94,7 +94,7 @@ const ProdSearch = () => {
               setEventFilter(true);
             }}
           >
-            행사 제품
+            행사 상품
           </S.FilterButton>
         </S.FilterArea>
       </S.FixedContainer>

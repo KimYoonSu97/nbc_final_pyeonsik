@@ -17,7 +17,7 @@ const NoSearchResult = () => {
       <S.Caption>
         앗!
         <S.SearchKeyWord> "{decodeURI(window.location.search).slice(2)}" </S.SearchKeyWord>이 포함된{' '}
-        {location.pathname === '/search/products' ? '제품이' : '결과가'} 없어요!
+        {location.pathname === '/search/products' ? '상품이' : '결과가'} 없어요!
       </S.Caption>
       <S.NavigateButton
         onClick={() => {

@@ -4,6 +4,7 @@ import { Product } from 'src/types/types';
 import { FlexBoxAlignCenter, FlexBoxCenter } from 'src/styles/styleBox';
 import { styleFont } from 'src/styles/styleFont';
 import { setBrandName } from 'src/function/setBrandName';
+import { ERROR_IMG } from 'src/utility/guide';
 
 interface Props {
   data: Product;
@@ -26,7 +27,7 @@ const ProdCard = ({ data }: Props) => {
         <S.ProdPrice>{data.price}</S.ProdPrice>
       </S.ProdInfoBox>
       <S.ProdInnerBox>
-        <S.ProdImg $src={data.prodImg} />
+        <S.ProdImg $src={data.prodImg} onError={ERROR_IMG} />
       </S.ProdInnerBox>
     </S.ProdBox>
   );
