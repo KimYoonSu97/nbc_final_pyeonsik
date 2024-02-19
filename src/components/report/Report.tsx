@@ -7,6 +7,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { EMAIL_CHECK } from 'src/utility/guide';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { isValidEmail } from './EmailValid';
+import ReportHeader from './ReportHeader';
+import EmailInput from './EmailInput';
 
 const options1 = ['유저 신고', '오류 제보', '기타'];
 const options2 = [
@@ -32,7 +35,7 @@ const Report = () => {
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
-  const isStep1Complete = userId ? selectedInquiry1 !== '' : (email.trim() !== '' && selectedInquiry1 !== '');
+  const isStep1Complete = userId ? selectedInquiry1 !== '' : email.trim() !== '' && selectedInquiry1 !== '';
   const isStep2Complete = selectedInquiry2 !== '';
   const isStep3Complete = imageName !== '' && (urlLink.trim() !== '' || message.trim() !== '');
 
@@ -117,47 +120,28 @@ const Report = () => {
     }
   };
 
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
+  const renderOptions = (options: string[], selectedOption: string, onClickHandler: (option: string) => void) => {
+    return options.map((option) => (
+      <p
+        key={option}
+        className={`option ${selectedOption === option ? 'selected' : ''}`}
+        onClick={() => onClickHandler(option)}
+      >
+        {option}
+      </p>
+    ));
   };
-
   return (
     <ReportWrap id="container">
       {step === 1 && (
         <ReportInner>
-          <div>
-            <h1>편식 고객센터</h1>
-            <h2>
-              안녕하세요! 편식 고객센터입니다.
-              <span>편식을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
-            </h2>
-          </div>
+          <ReportHeader/>
           {userId ? null : (
-            <div className="emailWrap">
-              <h3>이메일</h3>
-              <input
-                className="emailInput"
-                value={email}
-                onBlur={handleEmailBlur}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="이메일을 적어주세요."
-              />
-            </div>
+            <EmailInput email={email} onBlur={handleEmailBlur} onChange={setEmail} />
           )}
           <div>
             <h3>문의 항목</h3>
-            <div className="options-box">
-              {options1.map((option) => (
-                <p
-                  key={option}
-                  className={`option ${selectedInquiry1 === option ? 'selected' : ''}`}
-                  onClick={() => handleOptionClick(option)}
-                >
-                  {option}
-                </p>
-              ))}
-            </div>
+            <div className="options-box">{renderOptions(options1, selectedInquiry1, handleOptionClick)}</div>
             <button onClick={handleNext} className={isStep1Complete ? 'complete' : ''}>
               선택 완료
             </button>
@@ -167,19 +151,7 @@ const Report = () => {
       {step === 2 && (
         <ReportInner>
           <h3>이런! 불쾌함을 조성하는 유저가 있나요?</h3>
-          <div className="options-box">
-            {options2.map((option) => {
-              return (
-                <p
-                  key={option}
-                  className={`option ${selectedInquiry2 === option ? 'selected' : ''}`}
-                  onClick={() => handleOption2Click(option)}
-                >
-                  {option}
-                </p>
-              );
-            })}
-          </div>
+          <div className="options-box">{renderOptions(options2, selectedInquiry2, handleOption2Click)}</div>
           <button onClick={handleNext2} className={isStep2Complete ? 'complete' : ''}>
             선택 완료
           </button>
@@ -264,27 +236,6 @@ const ReportInner = styled.div`
     letter-spacing: -1.5px;
     span {
       display: block;
-    }
-  }
-  .emailWrap {
-    margin-bottom: 50px;
-    h3 {
-      display: inline-block;
-      position: relative;
-      right: 0px;
-      top: 0px;
-      &::after {
-        display: block;
-        content: '*필수';
-        position: absolute;
-        right: -50px;
-        top: 5px;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 24px;
-        color: #98a2b3;
-      }
     }
   }
 

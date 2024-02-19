@@ -12,9 +12,11 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split('/')[1];
+  console.log("패스",location)
 
   return (
-    <S.Area $path={path}>
+    // <S.Area $path={path}>
+    <S.Area>
       <S.UpperContainer>
         <S.LogoContainer
           onClick={() => {

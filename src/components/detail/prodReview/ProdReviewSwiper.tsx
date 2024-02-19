@@ -1,53 +1,29 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React, {  useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import { IconAllReview } from 'src/components/icons';
-import { useLocation, useNavigate } from 'react-router';
-import { debounce } from 'lodash';
-import { getProdData, getReviewedProductData, getSwiperData } from 'src/api/ReviewSwiper';
+import { useNavigate } from 'react-router';
+import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
 import { CardSwiper } from 'react-card-rotate-swiper';
 import { ERROR_IMG } from 'src/utility/guide';
 
 const ProdReviewSwiper = () => {
   const [step, setStep] = useState(0);
-  const [data, setData] = useState<any[] | undefined>();
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
   const { data: swiperData } = useQuery(['swiper'], getSwiperData);
-
   const { data: prodData } = useQuery(['products'], getProdData);
 
 
-// const {data : filteredData} = useQuery(['filteredProducts',userId],()=>getReviewedProductData(userId))
 
 const filterprodData = prodData?.filter((prod) => {
       return !swiperData?.data?.some((swiperProd) => {
         return prod.id === swiperProd.prodId && swiperProd.userId === userId;
       });
      });
-
-// console.log(filteredData,"필터드데디틍ㅇㅇㅇㅇㅇㅇ")
-
-  useEffect(() => {
-    // if (swiperData && prodData) {
-    //   const filterprodData = prodData.filter((prod) => {
-    //     return !swiperData?.data?.some((swiperProd) => {
-    //       return prod.id === swiperProd.prodId && swiperProd.userId === userId;
-    //     });
-    //   });
-    //   console.log("필터 데이터 그냥",filterprodData)
-    //   setData(filterprodData);
-    // }else{
-    //   console.log("그냥 필터한 데이터가 먼저 들어와버림")
-    // }
-    // console.log('스와이퍼데이터', swiperData?.data);
-  }, [swiperData, prodData]);
-  // setData(filterprodData)
-
-  console.log(data);
 
 
   const onDropToLike = async (id: string) => {
@@ -56,12 +32,8 @@ const filterprodData = prodData?.filter((prod) => {
       isGood: true,
       userId: userId
     };
-
-    // const newData = data!.filter((prod) => prod.id !== id);
-    // setData(newData);
-
     await supabase.from('swiper').insert([addReview]);
-    setStep((pstep)=> pstep+1)
+    setStep(step+1)
   };
 
   const onDropToDisLike = async (id: string) => {
@@ -70,12 +42,8 @@ const filterprodData = prodData?.filter((prod) => {
       isGood: false,
       userId: userId
     };
-
-    // const newData = data!.filter((prod) => prod.id !== id);
-    // setData(newData);
-
     await supabase.from('swiper').insert([addReview]);
-    setStep((pstep)=> pstep+1)
+    setStep(step+1)
   };
 
   const cardsSwipe = (dir: any, id: string) => {
@@ -87,14 +55,7 @@ const filterprodData = prodData?.filter((prod) => {
   };
 
   const skip = () => {
-    // const last = data?.pop();
-    // console.log(last, '마지막뎅터');
-    // const slice = data!.slice(0, data!.length);
-    // console.log(slice, '마지막을 제외한 뎅;터ㅏ');
-    // setData([last, ...slice]);
-    // console.log([last, ...slice], 'datadaaaa');
-    setStep((pstep)=> pstep+1)
-
+    setStep(step+1)
   };
 
   return (

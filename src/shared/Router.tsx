@@ -16,7 +16,7 @@ import Write from 'src/pages/Write';
 import Edit from 'src/pages/Edit';
 import SearchResult from 'src/pages/SearchResult';
 import PostModal from 'src/pages/PostModal';
-import Report from 'src/pages/Report';
+import Report from 'src/pages/ReportPage';
 import ReviewList from 'src/pages/ReviewList';
 import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper';
 import ReviewLocation from 'src/components/detail/prodReview/ReviewLocation';
@@ -24,6 +24,7 @@ import ReviewLocation from 'src/components/detail/prodReview/ReviewLocation';
 const Router = () => {
   const location = useLocation();
   let state = location.state as { backgroundLocation?: Location };
+  console.log("스테이트",state)
 
   return (
     <>
