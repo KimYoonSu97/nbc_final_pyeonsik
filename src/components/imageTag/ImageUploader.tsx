@@ -8,7 +8,7 @@ import { ImageUploaderProps } from 'src/types/types';
 import { FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
 import { LIMIT_10MB } from 'src/utility/guide';
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imageSelected }) => {
+const ImageUploader = ({ onImageSelect, imageSelected }: ImageUploaderProps) => {
   const [, setImageSelect] = useState(false);
 
   const FileSizeValid = (file: File, maxSize: number) => {
