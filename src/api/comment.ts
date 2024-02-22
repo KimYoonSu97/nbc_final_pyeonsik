@@ -7,7 +7,7 @@ export type CommentType = {
   userId: string | undefined;
 };
 
-const getCommentDataByPostId = async (postId: string) => {
+const getCommentDataByPostId = async (postId:string) => {
   const { data } = await supabase
     .from('detail_comments')
     .select('*,users("*")')

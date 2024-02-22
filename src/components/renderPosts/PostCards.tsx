@@ -41,9 +41,9 @@ const PostCards = ({ posts }: PostListProps) => {
 
   return (
     <S.Area>
-      {posts &&
+      {posts! &&
         posts?.map((item: Post) => {
-          return <PostForMain key={item.id} item={item} />;
+          return <PostForMain key={item!.id!} item={item} />;
         })}
     </S.Area>
   );
