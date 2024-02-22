@@ -8,7 +8,6 @@
 
 🔗 [IP 주소](https://pyeonsik.vercel.app/)
 
-
 📜 [S.A (Starting Assignments)](https://www.notion.so/SE7EN-DAYS-S-A-18c506d357b743c78f58a76550c92d40)
 
 #### 📌 핵심 기능
@@ -378,8 +377,15 @@
 ┃ ┃ ┣ 📜CommonPost.tsx<br/>
 ┃ ┃ ┣ 📜PostCards.tsx<br/>
 ┃ ┃ ┗ 📜PostForMain.tsx<br/>
-┃ ┣ 📂report<br/>
-┃ ┃ ┗ 📜ReportIcon.tsx<br/>
+┃ ┣ 📂report
+┃ ┃ ┣ 📂utility
+┃ ┃ ┃ ┗ 📜Email.ts
+┃ ┃ ┣ 📜Report.tsx
+┃ ┃ ┣ 📜ReportIcon.tsx
+┃ ┃ ┣ 📜ReportStep1.tsx
+┃ ┃ ┣ 📜ReportStep2.tsx
+┃ ┃ ┣ 📜ReportStep3.tsx
+┃ ┃ ┗ 📜ReportStep4.tsx
 ┃ ┣ 📂search<br/>
 ┃ ┃ ┣ 📜NoSearchResult.tsx<br/>
 ┃ ┃ ┣ 📜Prodfilter.ts<br/>
