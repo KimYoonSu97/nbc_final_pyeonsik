@@ -7,14 +7,14 @@ const getProdData = async () => {
     .select('*')
     .order('created_at', { ascending: false })
     // .range(0,1)
-    console.log("먼저와야할 프로드데이터",data)
+    // console.log("먼저와야할 프로드데이터",data)
 
   return data;
 };
 
 const getSwiperData = async () => {
   const response = await supabase.from('swiper').select('*');
-  console.log('먼저와야할 스와이프데이터',response.data)
+  // console.log('먼저와야할 스와이프데이터',response.data)
   return response;
 };
 

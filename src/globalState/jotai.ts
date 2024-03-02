@@ -45,3 +45,9 @@ export const myPageHover = atom<boolean>(false);
 export const userSettingEmail = atom<string>('');
 
 export const userSignUp = atom<boolean>(false);
+
+//고객센터 전역변수
+export const emailAtom = atom<string>('')
+export const inquiry1Atom = atom<string>('')
+export const inquiry2Atom = atom<string>('')
+export const stepAtom = atom<number>(1)
