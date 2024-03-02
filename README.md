@@ -377,15 +377,15 @@
 ┃ ┃ ┣ 📜CommonPost.tsx<br/>
 ┃ ┃ ┣ 📜PostCards.tsx<br/>
 ┃ ┃ ┗ 📜PostForMain.tsx<br/>
-┃ ┣ 📂report
-┃ ┃ ┣ 📂utility
-┃ ┃ ┃ ┗ 📜Email.ts
-┃ ┃ ┣ 📜Report.tsx
-┃ ┃ ┣ 📜ReportIcon.tsx
-┃ ┃ ┣ 📜ReportStep1.tsx
-┃ ┃ ┣ 📜ReportStep2.tsx
-┃ ┃ ┣ 📜ReportStep3.tsx
-┃ ┃ ┗ 📜ReportStep4.tsx
+┃ ┣ 📂report<br/>
+┃ ┃ ┣ 📂utility<br/>
+┃ ┃ ┃ ┗ 📜Email.ts<br/>
+┃ ┃ ┣ 📜Report.tsx<br/>
+┃ ┃ ┣ 📜ReportIcon.tsx<br/>
+┃ ┃ ┣ 📜ReportStep1.tsx<br/>
+┃ ┃ ┣ 📜ReportStep2.tsx<br/>
+┃ ┃ ┣ 📜ReportStep3.tsx<br/>
+┃ ┃ ┗ 📜ReportStep4.tsx<br/>
 ┃ ┣ 📂search<br/>
 ┃ ┃ ┣ 📜NoSearchResult.tsx<br/>
 ┃ ┃ ┣ 📜Prodfilter.ts<br/>
