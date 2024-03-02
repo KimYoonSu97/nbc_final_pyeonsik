@@ -1,8 +1,9 @@
+import React from 'react';
 import { useAtom } from 'jotai';
-import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { inquiry2Atom, stepAtom } from 'src/globalState/jotai';
 import styled from 'styled-components';
+import { Title, ReportButton, Option } from './utility/CommonStyles';
 
 const options2 = [
   '불법성 게시물 또는 댓글',
@@ -19,10 +20,6 @@ const ReportStep2 = () => {
   const [, setStep] = useAtom(stepAtom);
 
   const isStep2Complete = selectedInquiry2 !== '';
-
-  const handleOption2Click = (option: string) => {
-    setSelectedInquiry2(option);
-  };
 
   const handleNext2 = () => {
     if (selectedInquiry2) {
@@ -41,16 +38,16 @@ const ReportStep2 = () => {
             <S.Option
               key={option}
               className={`option ${selectedInquiry2 === option ? 'selected' : ''}`}
-              onClick={() => handleOption2Click(option)}
+              onClick={() => setSelectedInquiry2(option)}
             >
               {option}
             </S.Option>
           );
         })}
       </S.OptionBox>
-      <button onClick={handleNext2} className={isStep2Complete ? 'complete' : ''}>
+      <S.ReportButton onClick={handleNext2} className={isStep2Complete ? 'complete' : ''}>
         선택 완료
-      </button>
+      </S.ReportButton>
     </S.ReportInner>
   );
 };
@@ -62,40 +59,14 @@ const S = {
     .selected {
       border: 1px solid var(--main, #f02826);
     }
-    button {
-      width: 210px;
-      padding: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: left;
-      border-radius: 5px;
-      background-color: #ced4da;
-      color: #fff;
-    }
     .complete {
       background-color: #f02826;
     }
   `,
-  OptionTitle: styled.h3`
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 32px;
-    margin-bottom: 16px;
-    letter-spacing: -1.5px;
-  `,
+  OptionTitle: styled(Title)``,
   OptionBox: styled.div`
     margin-bottom: 40px;
   `,
-  Option: styled.p`
-    width: 310px;
-    border: 1px solid #ced4da;
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 11px 0px 11px 12px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    &:hover {
-      box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-    }
-  `
+  Option: styled(Option)``,
+  ReportButton: styled(ReportButton)``
 };

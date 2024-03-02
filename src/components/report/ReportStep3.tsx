@@ -7,11 +7,12 @@ import { updateBugBadge, updateSheriffBadge } from 'src/api/badge';
 import supabase from 'src/lib/supabaseClient';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { emailAtom, inquiry1Atom, inquiry2Atom, stepAtom } from 'src/globalState/jotai';
+import { Title, ReportButton } from './utility/CommonStyles';
 
 const ReportStep3 = () => {
-  const [email] = useAtom(emailAtom);
-  const [inquiry1] = useAtom(inquiry1Atom);
-  const [inquiry2] = useAtom(inquiry2Atom);
+  const [email,setEmail] = useAtom(emailAtom);
+  const [inquiry1,setInquiry1] = useAtom(inquiry1Atom);
+  const [inquiry2,setInquiry2] = useAtom(inquiry2Atom);
   const [imageName, setImageName] = useState<string>('');
   const [image, setImage] = useState<File>();
   const [urlLink, setUrlLink] = useState<string>('');
@@ -63,6 +64,9 @@ const ReportStep3 = () => {
     ) {
       await supabase.from('reports').insert([reportData]);
       setStep(4);
+      setEmail("")
+      setInquiry1("")
+      setInquiry2("")
     } else {
       toast('항목을 입력해주세요.');
       return;
@@ -95,9 +99,9 @@ const ReportStep3 = () => {
         onChange={(e) => setMessage(e.target.value)}
         placeholder="사진이나 파일, 링크에 대해 편식 운영자가 이해할 수 있는 추가 설명을 해주세요."
       />
-      <button onClick={handleSubmitButton} className={isStep3Complete ? 'complete' : ''}>
+      <S.ReportButton onClick={handleSubmitButton} className={isStep3Complete ? 'complete' : ''}>
         제출하기
-      </button>
+      </S.ReportButton>
     </S.ReportInner>
   );
 };
@@ -118,25 +122,11 @@ const S = {
     .message {
       padding-bottom: 140px;
     }
-    button {
-      width: 210px;
-      padding: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: left;
-      border-radius: 5px;
-      background-color: #ced4da;
-      color: #fff;
-    }
     .complete {
       background-color: #f02826;
     }
   `,
-  Title: styled.h3`
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 32px;
-    letter-spacing: -1.5px;
+  Title: styled(Title)`
     margin-bottom: 34px;
     span{
       display: block;
@@ -154,5 +144,8 @@ const S = {
       margin-bottom: 15px;
       cursor: pointer;
     }
+  `,
+  ReportButton:styled(ReportButton)`
+    
   `
 };

@@ -19,7 +19,7 @@ const NewReview = () => {
   const { isLoading: lodingProd, data: dataProd } = useQuery({
     queryKey: ['new_prod_sidebar'],
     queryFn: () => getNewProd(),
-    refetchOnReconnect: false
+    refetchOnReconnect: false,
   });
 
   const products = dataProd?.data;
