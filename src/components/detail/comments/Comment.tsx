@@ -48,7 +48,7 @@ const Comment = () => {
       }
     ]
   });
-
+console.log(userData)
   if (commentIsLoading) {
     return (
       <div>

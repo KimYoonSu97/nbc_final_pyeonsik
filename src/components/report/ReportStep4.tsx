@@ -1,26 +1,30 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
+import { Title, ReportButton } from './utility/CommonStyles';
+import { useAtom } from 'jotai';
+import { stepAtom } from 'src/globalState/jotai';
 
 const ReportStep4 = () => {
   const navigate = useNavigate();
+  const [, setStep] = useAtom(stepAtom);
 
   return (
     <S.ReportInner>
-      <h3 className="reportEnd">
+      <S.Title>
         제보해 주셔서 감사합니다.
         <br />
         빠른 시일 내에 문제를 해결하겠습니다.
-      </h3>
-      <button
-        className="goHome"
+      </S.Title>
+      <S.ReportButton
         onClick={() => {
           navigate('/');
-          window.location.reload();
+          // window.location.reload();
+          setStep(1)
         }}
       >
         메인 화면으로 돌아가기
-      </button>
+      </S.ReportButton>
     </S.ReportInner>
   );
 };
@@ -28,25 +32,12 @@ const ReportStep4 = () => {
 export default ReportStep4;
 
 const S = {
-  ReportInner: styled.div`
-    .reportEnd {
-      font-size: 24px;
-      font-weight: bold;
-      line-height: 32px;
-      letter-spacing: -1.5px;
-      margin-bottom: 34px;
-      margin-bottom: 40px;
-    }
-    .goHome {
-      width: 210px;
-      padding: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: left;
-      border-radius: 5px;
-      color: #fff;
-      background-color: #f02826;
-      letter-spacing: -1px;
-    }
+  ReportInner: styled.div``,
+  Title: styled(Title)`
+    margin-bottom: 34px;
+  `,
+  ReportButton: styled(ReportButton)`
+    background-color: #f02826;
+    letter-spacing: -1px;
   `
 };
