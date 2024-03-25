@@ -32,6 +32,8 @@ const ProdReviewList = () => {
     queryFn: () => getSwiperData()
   });
 
+  console.log(dataProd)
+
   const products = useMemo(() => {
     return dataProd?.pages
       .map((data) => {
@@ -42,6 +44,7 @@ const ProdReviewList = () => {
   const swipers = dataSwiper?.data as Swiper[];
   const navigate = useNavigate();
 
+    // console.log(swipers)
   const { ref } = useInView({
     threshold: 0.7,
     onChange: (inView) => {

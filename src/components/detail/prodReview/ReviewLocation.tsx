@@ -24,6 +24,10 @@ const ReviewLocation = () => {
     return prod.prodId === product?.id && prod.userId === userId;
   });
 
+  const plusReview = swiperData?.data?.find((prod) => {
+    return prod.prodId === id && prod.userId === userId;
+  });
+
   return (
     <S.containerWrap>
       <S.containerInner>

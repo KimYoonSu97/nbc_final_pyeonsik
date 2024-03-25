@@ -29,7 +29,7 @@ const ProdReviewSwiper = () => {
         keepPreviousData: true,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
-        staleTime: Infinity
+        staleTime: Infinity,
       }
     ]
   });

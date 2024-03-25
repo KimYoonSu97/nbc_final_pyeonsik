@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getNewProd } from 'src/api/product';
 import { Product } from 'src/types/types';
-import { ERROR_IMG, IMAGE_EMPTY } from 'src/utility/guide';
+import { ERROR_IMG, IMAGE_EMPTY, NON_MEMBER } from 'src/utility/guide';
 import { FlexBoxAlignCenter, FlexBoxCenter, FlexBoxColum } from 'src/styles/styleBox';
 
 import styled from 'styled-components';
@@ -12,8 +12,14 @@ import EvaluationGood from './EvaluationGood';
 import { useNavigate } from 'react-router';
 import ProgressCircle from 'src/components/ProgressCircle';
 import { setBrandName } from 'src/function/setBrandName';
+import useLoginUserId from 'src/hooks/useLoginUserId';
+import { useAtom } from 'jotai';
+import { userAtom } from 'src/globalState/jotai';
+import { toast } from 'react-toastify';
 
 const NewReview = () => {
+  const userId = useLoginUserId();
+  const [userLogin, setUserLogin] = useAtom(userAtom);
   const navigate = useNavigate();
 
   const { isLoading: lodingProd, data: dataProd } = useQuery({
@@ -37,6 +43,10 @@ const NewReview = () => {
   };
 
   const clickNewReview = () => {
+    if(!userId && !userLogin){
+      toast(NON_MEMBER);
+      return ;
+    }
     navigate('/review_list');
   };
 
