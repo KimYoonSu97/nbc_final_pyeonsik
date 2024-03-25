@@ -269,7 +269,7 @@ const S = {
     }};
   `,
 
-  Icon: styled.div`
+  Icon: styled.li`
     width: 20px;
     height: 20px;
     background-color: black;
@@ -291,7 +291,7 @@ const S = {
     z-index: 0;
   `,
 
-  ProfileImg: styled.div<ImageProps>`
+  ProfileImg: styled.li<ImageProps>`
     cursor: pointer;
 
     position: relative;

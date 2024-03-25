@@ -1,136 +1,98 @@
-import React, {  useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import useLoginUserId from 'src/hooks/useLoginUserId';
-import supabase from 'src/lib/supabaseClient';
 import styled from 'styled-components';
 import { IconAllReview } from 'src/components/icons';
 import { useNavigate } from 'react-router';
 import { getProdData, getSwiperData } from 'src/api/ReviewSwiper';
-import { CardSwiper } from 'react-card-rotate-swiper';
-import { ERROR_IMG } from 'src/utility/guide';
+import ProdCardSwiper from './ProdCardSwiper';
+import { useAtom } from 'jotai';
+import { swiperStep } from 'src/globalState/jotai';
+import ReviewImage from './ReviewImage';
+import { Product } from 'src/types/types';
 
 const ProdReviewSwiper = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useAtom(swiperStep);
   const userId = useLoginUserId();
   const navigate = useNavigate();
 
-  const { data: swiperData } = useQuery(['swiper'], getSwiperData);
-  const { data: prodData } = useQuery(['products'], getProdData);
+  const [{ data: swiperData, isLoading: swiperLoading }, { data: prodData, isLoading: prodIsLoading }] = useQueries({
+    queries: [
+      {
+        queryKey: ['swiper'],
+        queryFn: getSwiperData,
+        keepPreviousData: true,
+      },
+      {
+        queryKey: ['products'],
+        queryFn: getProdData,
+        keepPreviousData: true,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        staleTime: Infinity
+      }
+    ]
+  });
 
-
-
-const filterprodData = prodData?.filter((prod) => {
-      return !swiperData?.data?.some((swiperProd) => {
-        return prod.id === swiperProd.prodId && swiperProd.userId === userId;
-      });
-     });
-
-
-  const onDropToLike = async (id: string) => {
-    const addReview = {
-      prodId: id,
-      isGood: true,
-      userId: userId
-    };
-    await supabase.from('swiper').insert([addReview]);
-    setStep(step+1)
-  };
-
-  const onDropToDisLike = async (id: string) => {
-    const addReview = {
-      prodId: id,
-      isGood: false,
-      userId: userId
-    };
-    await supabase.from('swiper').insert([addReview]);
-    setStep(step+1)
-  };
-
-  const cardsSwipe = (dir: any, id: string) => {
-    if (dir === 'left') {
-      onDropToLike(id);
-    } else if (dir === 'right') {
-      onDropToDisLike(id);
-    }
-  };
-
-  const skip = () => {
-    setStep(step+1)
-  };
+  const filterprodData = prodData?.filter((prod) => {
+    return !swiperData?.data?.find((swiperProd) => {
+      return prod.id === swiperProd.prodId && swiperProd.userId === userId;
+    });
+  });
 
   return (
-    <>
-      <S.containerWrap>
-        <S.containerInner>
-          <S.ProdReviewWrap>
-            <S.ReviewDisLike>
-              <div>
-                <img src="/images/ReviewLike.png" draggable="false" />
-                <h1>또 사먹을래요!</h1>
-              </div>
-            </S.ReviewDisLike>
-            {step === filterprodData?.length || filterprodData === undefined ? (
-              <S.ReviewEndWrap>
-                <div>
-                  <p>
-                    앗! 더이상 남은<span>신상품 카드가 없어요!</span>
-                  </p>
-                  <button onClick={() => navigate('/review_list')}>리뷰 보러가기</button>
-                </div>
-              </S.ReviewEndWrap>
-            ) : (
-              <S.Div>
-                {filterprodData?.map((prod, index) => {
-                  return (
-                    <div key={prod.id}>
-                      {step === index && (
-                        <CardSwiper
-                          onSwipe={(dir: any) => cardsSwipe(dir, prod.id)}
-                          className={'card'}
-                          contents={
-                            <div className="cardWrap">
-                              <div>
-                                <img src={prod.prodImg} alt="상품 사진 없음" onError={ERROR_IMG} draggable="false" />
-                              </div>
-                              <h3 className="text">{prod.prodName}</h3>
-                            </div>
-                          }
-                        ></CardSwiper>
-                      )}
+    <S.containerWrap>
+      <S.ProdReviewWrap>
+        <S.ReviewImageWrap>
+          <ReviewImage type={'like'} />
+        </S.ReviewImageWrap>
+        {step === filterprodData?.length || filterprodData === undefined ? (
+          <S.ReviewEndWrap>
+            <div>
+              <p>
+                앗! 더이상 남은<span>신상품 카드가 없어요!</span>
+              </p>
+              <button onClick={() => navigate('/review_list')}>리뷰 보러가기</button>
+            </div>
+          </S.ReviewEndWrap>
+        ) : (
+          <S.CardWrap>
+            {filterprodData?.map((prod: Product, index) => {
+              return (
+                <div key={prod.id}>
+                  {step === index && (
+                    <div>
+                      <ProdCardSwiper type={'products'} prod={prod} />
                     </div>
-                  );
-                })}
-              </S.Div>
-            )}
-            <S.ReviewDisLike>
-              <div>
-                <img src="/images/ReviewDisLike.png" draggable="false" />
-                <h1>그만 먹을래요!</h1>
-              </div>
-            </S.ReviewDisLike>
-          </S.ProdReviewWrap>
-          
-            {step !== filterprodData?.length && (
-              <S.SkipButtonWrap>
-                <S.SkipButton onClick={skip}>SKIP!</S.SkipButton>
-              </S.SkipButtonWrap>
-            )}
-          <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
-            <p>
-              <IconAllReview />
-              <span>신상품 리뷰 보기</span>
-            </p>
-          </S.AllReviewsWrap>
-        </S.containerInner>
-      </S.containerWrap>
-    </>
+                  )}
+                </div>
+              );
+            })}
+          </S.CardWrap>
+        )}
+        <S.ReviewImageWrap>
+          <ReviewImage type={'disLike'} />
+        </S.ReviewImageWrap>
+      </S.ProdReviewWrap>
+      {step !== filterprodData?.length && (
+        <S.SkipButtonWrap>
+          <S.SkipButton onClick={() => setStep(step + 1)}>SKIP!</S.SkipButton>
+        </S.SkipButtonWrap>
+      )}
+      <S.AllReviewsWrap onClick={() => navigate('/review_list')}>
+        <p>
+          <IconAllReview />
+          <span>신상품 리뷰 보기</span>
+        </p>
+      </S.AllReviewsWrap>
+    </S.containerWrap>
   );
 };
 
 export default ProdReviewSwiper;
 
 const S = {
-  Div: styled.div`
+  CardWrap: styled.div`
     position: relative;
     left: 0px;
     top: 0px;
@@ -204,10 +166,9 @@ const S = {
     border-radius: 10px;
     overflow: hidden;
     background-color: #fff;
-  `,
-  containerInner: styled.div`
     padding: 70px 0px 74px 0px;
   `,
+
   ProdReviewWrap: styled.div`
     display: flex;
     justify-content: center;
@@ -217,8 +178,7 @@ const S = {
     width: 100%;
     height: 100%;
   `,
-  ReviewLike: styled.div`
-    cursor: pointer;
+  ReviewImageWrap: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -227,22 +187,8 @@ const S = {
     background: #fff;
     border-radius: 50%;
     box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    h1 {
-      font-size: 18px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 24px;
-      letter-spacing: -1.5px;
-    }
   `,
   ReviewDisLike: styled.div`
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -251,19 +197,6 @@ const S = {
     background: #fff;
     border-radius: 50%;
     box-shadow: 0px 0px 10px rgba(206, 212, 218, 0.5);
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    h1 {
-      font-size: 18px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 24px;
-      letter-spacing: -1.5px;
-    }
   `,
   ProductWrap: styled.div`
     position: relative;

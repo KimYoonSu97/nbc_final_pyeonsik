@@ -7,7 +7,7 @@ export type CommentType = {
   userId: string | undefined;
 };
 
-const getCommentDataByPostId = async (postId: string) => {
+const getCommentDataByPostId = async (postId:string) => {
   const { data } = await supabase
     .from('detail_comments')
     .select('*,users("*")')
@@ -40,7 +40,7 @@ const deleteCommentData = async (id: string) => {
   await supabase.from('detail_comments').delete().eq('id', id);
 };
 
-const updateCommentData = async (comment: any) => {
+const updateCommentData = async (comment:any) => {
   await supabase.from('detail_comments').update([comment]).eq('id', comment.id);
 };
 

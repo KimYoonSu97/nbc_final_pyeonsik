@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Location, Route, Routes, useLocation } from 'react-router-dom';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { GlobalFont } from 'src/styles/GlobalFont';
@@ -21,10 +21,10 @@ import ReviewList from 'src/pages/ReviewList';
 import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper';
 import ReviewLocation from 'src/components/detail/prodReview/ReviewLocation';
 
+
 const Router = () => {
   const location = useLocation();
   let state = location.state as { backgroundLocation?: Location };
-  console.log("스테이트",state)
 
   return (
     <>

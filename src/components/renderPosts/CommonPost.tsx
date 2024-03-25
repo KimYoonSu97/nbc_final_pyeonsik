@@ -19,7 +19,7 @@ const CommonPost = ({ item: postItem }: Props) => {
     <S.Area>
       <S.Container key={id} to={`/detail/${item.id}`} state={{ backgroundLocation: location }}>
         <S.UserArea>
-          <S.ProfileImg $url={profileImg} />
+          <S.ProfileImg $url={profileImg} alt='유저 이미지'/>
           <S.Level>Lv.점장</S.Level>
           <S.Nickname_Category>{nickname}</S.Nickname_Category>
           <S.Caption>님의</S.Caption>
@@ -55,7 +55,7 @@ const S = {
     display: flex;
     align-items: center;
   `,
-  ProfileImg: styled.div<ImgProps>`
+  ProfileImg: styled.img<ImgProps>`
     width: 30px;
     height: 30px;
     border-radius: 100px;

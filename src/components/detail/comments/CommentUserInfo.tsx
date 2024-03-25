@@ -14,7 +14,7 @@ interface Props {
 const CommentUserInfo = ({ users }: Props) => {
   return (
     <>
-      <S.ProfileImg src={users.profileImg} />
+      <S.ProfileImg src={users.profileImg} alt='유저 프로필 이미지' />
       <UserLevel level={users.level} />
       <S.Nickname>{users.nickname}</S.Nickname>
     </>

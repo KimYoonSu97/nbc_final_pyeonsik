@@ -378,7 +378,14 @@
 ┃ ┃ ┣ 📜PostCards.tsx<br/>
 ┃ ┃ ┗ 📜PostForMain.tsx<br/>
 ┃ ┣ 📂report<br/>
-┃ ┃ ┗ 📜ReportIcon.tsx<br/>
+┃ ┃ ┣ 📂utility<br/>
+┃ ┃ ┃ ┗ 📜Email.ts<br/>
+┃ ┃ ┣ 📜Report.tsx<br/>
+┃ ┃ ┣ 📜ReportIcon.tsx<br/>
+┃ ┃ ┣ 📜ReportStep1.tsx<br/>
+┃ ┃ ┣ 📜ReportStep2.tsx<br/>
+┃ ┃ ┣ 📜ReportStep3.tsx<br/>
+┃ ┃ ┗ 📜ReportStep4.tsx<br/>
 ┃ ┣ 📂search<br/>
 ┃ ┃ ┣ 📜NoSearchResult.tsx<br/>
 ┃ ┃ ┣ 📜Prodfilter.ts<br/>
