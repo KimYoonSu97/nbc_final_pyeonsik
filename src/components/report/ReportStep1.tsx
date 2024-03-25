@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import useLoginUserId from 'src/hooks/useLoginUserId';
 import { EMAIL_CHECK } from 'src/utility/guide';
@@ -14,7 +14,6 @@ const ReportStep1 = () => {
   const [email, setEmail] = useAtom(emailAtom);
   const [, setStep] = useAtom(stepAtom);
   const [selectedInquiry1, setSelectedInquiry1] = useAtom(inquiry1Atom);
-  console.log(selectedInquiry1)
 
   const userId = useLoginUserId();
 
@@ -24,17 +23,19 @@ const ReportStep1 = () => {
       return;
     }
   };
+  
+  const selectedUser = selectedInquiry1 === '유저 신고'
 
   const handleNextButton = () => {
-    if (selectedInquiry1 === '유저 신고' && email.trim() !== '') {
-      if ((selectedInquiry1 === '유저 신고' && email.trim() !== '', !isValidEmail(email))) {
+    if (selectedUser && email.trim() !== '') {
+      if ((selectedUser && email.trim() !== '', !isValidEmail(email))) {
         toast(EMAIL_CHECK);
       } else {
         setStep(2);
       }
     } else if (selectedInquiry1 === '오류 제보' || selectedInquiry1 === '기타') {
       setStep(3);
-    } else if (userId && selectedInquiry1 === '유저 신고') {
+    } else if (userId && selectedUser) {
       setStep(2);
     } else {
       toast('항목을 선택해 주세요.');
@@ -52,7 +53,9 @@ const ReportStep1 = () => {
           <span>편식을 사용하면서 오류나 궁금한 점이 있다면 자유롭게 문의 남겨주세요.</span>
         </h2>
       </S.TitleWrap>
-      {userId ? null : (
+      {userId ? (
+        null && undefined
+      ) : (
         <S.EmailWrap>
           <S.OptionTitle>이메일</S.OptionTitle>
           <input
@@ -69,6 +72,7 @@ const ReportStep1 = () => {
         <S.OptionBox>
           {options1.map((option) => (
             <S.Option
+              aria-label="step1Option"
               key={option}
               className={`option ${selectedInquiry1 === option ? 'selected' : ''}`}
               onClick={() => setSelectedInquiry1(option)}
@@ -77,7 +81,12 @@ const ReportStep1 = () => {
             </S.Option>
           ))}
         </S.OptionBox>
-        <S.ReportButton onClick={handleNextButton} className={isStep1Complete ? 'complete' : ''}>
+        <S.ReportButton
+          aria-label="step1Complete"
+          type="button"
+          onClick={handleNextButton}
+          className={isStep1Complete ? 'complete' : ''}
+        >
           선택 완료
         </S.ReportButton>
       </S.OptionWrap>
@@ -88,9 +97,7 @@ const ReportStep1 = () => {
 export default ReportStep1;
 
 const S = {
-  ReportInner: styled.div`
-    
-  `,
+  ReportInner: styled.div``,
   TitleWrap: styled.div`
     h1 {
       font-size: 32px;
@@ -147,16 +154,10 @@ const S = {
       background-color: #f02826;
     }
   `,
-  OptionTitle: styled(Title)`
-
-  `,
+  OptionTitle: styled(Title)``,
   OptionBox: styled.div`
     margin-bottom: 40px;
   `,
-  Option: styled(Option)`
-    
-  `,
-  ReportButton: styled(ReportButton)`
-    
-  `
+  Option: styled(Option)``,
+  ReportButton: styled(ReportButton)``
 };

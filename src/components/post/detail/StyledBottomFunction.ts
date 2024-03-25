@@ -25,7 +25,7 @@ export const S = {
 
   FunctionButton: styled.button`
     height: 24px;
-
+    cursor: pointer;
     display: flex;
     justify-content: center;
 

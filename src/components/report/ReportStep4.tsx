@@ -19,7 +19,6 @@ const ReportStep4 = () => {
       <S.ReportButton
         onClick={() => {
           navigate('/');
-          // window.location.reload();
           setStep(1)
         }}
       >

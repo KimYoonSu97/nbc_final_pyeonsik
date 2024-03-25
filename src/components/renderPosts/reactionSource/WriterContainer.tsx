@@ -45,7 +45,7 @@ const WriterContainer = ({ isModal, post, writer }: WriterContainerProps) => {
   return (
     <>
       <S.WriterImgBox>
-        <S.WriterImg src={writer.profileImg} />
+        <S.WriterImg src={writer.profileImg} alt='유저 이미지'/>
       </S.WriterImgBox>
       <S.WriterContainer>
         <div>

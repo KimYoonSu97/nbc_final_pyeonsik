@@ -40,7 +40,7 @@ const deleteCommentData = async (id: string) => {
   await supabase.from('detail_comments').delete().eq('id', id);
 };
 
-const updateCommentData = async (comment: any) => {
+const updateCommentData = async (comment:any) => {
   await supabase.from('detail_comments').update([comment]).eq('id', comment.id);
 };
 

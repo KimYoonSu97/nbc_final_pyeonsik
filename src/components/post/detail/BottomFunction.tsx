@@ -82,26 +82,26 @@ const BottomFunction = ({ userId, post }: BottomFunctionProps) => {
     <>
       {!id && (
         <S.FunctionButtonBox $location={pathname}>
-          <S.FunctionButton className="comments">
+          <S.FunctionButton className="comments" aria-label='댓글 갯수'>
             <IconComment />
           </S.FunctionButton>
           <S.FunctionCount $location={pathname}>{commentCountData}</S.FunctionCount>
         </S.FunctionButtonBox>
       )}
       <S.FunctionButtonBox $location={pathname}>
-        <S.FunctionButton onClick={() => clickFunction('like')}>
+        <S.FunctionButton onClick={() => clickFunction('like')} aria-label='좋아요 버튼'>
           {postLike ? <IconLike /> : <IconUnLike />}
         </S.FunctionButton>
         <S.FunctionCount $location={pathname}>{postLikeList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox $location={pathname}>
-        <S.FunctionButton onClick={() => clickFunction('quotation')}>
+        <S.FunctionButton onClick={() => clickFunction('quotation')} aria-label='게시물 인용 버튼'>
           {postQuotation ? <IconQuotation /> : <IconUnQuotation />}
         </S.FunctionButton>
         <S.FunctionCount $location={pathname}>{postQuotationList?.length}</S.FunctionCount>
       </S.FunctionButtonBox>
       <S.FunctionButtonBox $location={pathname}>
-        <S.FunctionButton onClick={() => clickFunction('bookmark')}>
+        <S.FunctionButton onClick={() => clickFunction('bookmark')} aria-label='북마크 버튼'>
           {postBookmark ? <IconBookmark /> : <IconUnBookmark />}
         </S.FunctionButton>
         <S.FunctionCount $location={pathname}>{postBookmarkList?.length}</S.FunctionCount>
