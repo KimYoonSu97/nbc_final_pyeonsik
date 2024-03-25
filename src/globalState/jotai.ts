@@ -46,6 +46,8 @@ export const userSettingEmail = atom<string>('');
 
 export const userSignUp = atom<boolean>(false);
 
+export const swiperStep = atom<number>(0);
+
 //고객센터 전역변수
 export const emailAtom = atom<string>('')
 export const inquiry1Atom = atom<string>('')

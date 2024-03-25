@@ -8,7 +8,7 @@ interface Props {
 
 const UserLevel = ({ level }: Props) => {
   return (
-    <S.Level>
+    <S.Level as='li'>
       <S.Leveltext>Lv. {level}</S.Leveltext>
     </S.Level>
   );

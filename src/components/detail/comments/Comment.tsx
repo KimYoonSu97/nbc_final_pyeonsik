@@ -48,7 +48,7 @@ const Comment = () => {
       }
     ]
   });
-console.log(userData)
+  console.log('댓글 렌더링')
   if (commentIsLoading) {
     return (
       <div>
@@ -66,7 +66,7 @@ console.log(userData)
         </S.CommentInputArea>
       )}
       <S.CommentRenderArea>
-        {commentData?.map((comment) => {
+        {commentData?.map((comment:CommentDataType) => {
           return <CommentForMap key={comment.id} comment={comment as CommentDataType} />;
         })}
       </S.CommentRenderArea>

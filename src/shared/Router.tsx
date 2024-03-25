@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Location, Route, Routes, useLocation } from 'react-router-dom';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { GlobalFont } from 'src/styles/GlobalFont';
@@ -20,6 +20,7 @@ import Report from 'src/pages/ReportPage';
 import ReviewList from 'src/pages/ReviewList';
 import ProdReviewSwiper from 'src/components/detail/prodReview/ProdReviewSwiper';
 import ReviewLocation from 'src/components/detail/prodReview/ReviewLocation';
+
 
 const Router = () => {
   const location = useLocation();

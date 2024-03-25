@@ -1,12 +1,9 @@
-
-import Report from 'src/components/report/Report';
-
+import Report from "src/components/report/Report";
 
 
 const ReportPage = () => {
-  return <><Report/></>
-};
+    return <Report/>
+}
 
 export default ReportPage;
-
 

@@ -8,6 +8,7 @@ const CreatedAt = ({ createdAt }: CreatedAtProps) => {
   let createdAtMilli = new Date(createdAt).getTime();
   let nowTimeStamp = new Date().getTime();
   let timeDifference = Math.floor((nowTimeStamp - createdAtMilli) / 1000 / 60);
+  console.log('렌더링')
 
   const formatTimeDifference = (timeDifference: number) => {
     if (timeDifference < 1) {
@@ -36,4 +37,4 @@ const CreatedAt = ({ createdAt }: CreatedAtProps) => {
   return <>{formatTimeDifference(timeDifference)}</>;
 };
 
-export default CreatedAt;
+export default React.memo(CreatedAt);

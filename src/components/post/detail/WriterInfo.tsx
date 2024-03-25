@@ -6,7 +6,7 @@ const WriterInfo = (post: Post) => {
 
   return (
     <div>
-      <img src={postWriter.profileImg} />
+      <img src={postWriter.profileImg} alt='작성자 이미지'/>
       <div>작성자 등급</div>
       <div>{postWriter.nickname}</div>
       <div>{post.created_at}</div>

@@ -57,7 +57,7 @@ const CommentForMap = ({ comment }: Props) => {
   if (reCommentIsLoading) {
     return <ProgressCircle />;
   }
-
+  console.log('댓글 렌더링')
   return (
     <>
       <S.CommentArea>
